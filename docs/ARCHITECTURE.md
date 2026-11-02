@@ -1,0 +1,66 @@
+# Persona construction and runtime contract
+
+## Identity and scope
+
+Resolve one scholarly identity using public identifiers and disambiguate names,
+affiliations and fields before collection. Confirm consequential scope choices.
+The simulation label and `private_beliefs_inferred: false` are mandatory.
+
+## Construction lifecycle
+
+1. Define a charter, identity, intended scope, modes and excluded claims.
+2. Build a bibliographic census; distinguish papers from duplicates, notices and independent contributions.
+3. Select a review-centered behavioral corpus; use original research where its role is justified.
+4. Freeze holdout selection before substantive holdout reading. Record split and authorization.
+5. Acquire only authorized sources; preserve bytes, hashes, locators and access restrictions.
+6. Parse deterministically and assess structural defects separately from scientific interpretation.
+7. Extract each training paper with question, argument, evidence hierarchy, conditions, counterevidence and limitations.
+8. Synthesize rules across papers; preserve contradictory papers, topic dependence and temporal change.
+9. Check author specificity against independently handled comparator evidence.
+10. Build a versioned canonical candidate with separate reasoning, judgment, uncertainty, writing and dialogue policies.
+11. Conduct an independent pre-holdout challenge; bind findings to the current candidate.
+12. Freeze the candidate hash and evaluate on withheld material; record actual methods and limits.
+13. Build a training-only knowledge projection bound to the released candidate.
+14. Run runtime boundary tests; publish a release decision with separate validation axes.
+
+These stages are a workflow specification; this repository's Python utilities do not
+automate corpus acquisition, semantic extraction, independent evaluation or dialogue.
+
+## Validation axes
+
+| Axis | What it establishes | What it cannot establish alone |
+|---|---|---|
+| Evidence integrity | IDs, hashes, locators and source/rule linkage | Semantic support or researcher agreement |
+| Predictive persona evaluation | Performance on a declared withheld evaluation | Human agreement or actual personal beliefs |
+| Human validation | A documented expert/rater assessment | Automatic generalization to all topics |
+| Runtime validation | Retrieval, binding and mode boundaries | Scientific correctness of every answer |
+
+Numerical acceptance thresholds are versioned operating choices, not universal
+scientific standards. Do not publish historical internal scores as general benchmarks.
+Data quantity targets should be justified for the scholar and scope; this public
+framework imposes no universal minimum paper count or score threshold.
+
+## Rule record
+
+Keep stable rule ID, category, bounded statement, conditions, exceptions, supporting
+and contradicting paper IDs, provenance locators, topic/time dependence, specificity,
+confidence and status. Author order can guide selection but does not prove ownership
+of individual sentences or ideas in a coauthored paper.
+
+## Runtime
+
+Resolve the exact author/version/build; verify binding using the package's documented
+hash convention; retrieve only authorized non-holdout material. Separate paper facts
+from persona-rule inference. Fresh literature is external evidence, not retrospective
+knowledge of the researcher. Apply writing style after reasoning and judgment.
+Return `OUTSIDE_PERSONA_COVERAGE` or `NEED_MORE_EVIDENCE` when appropriate.
+
+Discussion among personas is interpretive consultation, not new empirical evidence.
+Do not mix identities or treat consultation output as training data automatically.
+
+## Updates
+
+New papers, corrections, retractions, provenance errors, counterexamples and scope
+changes trigger controlled reopening. Preserve prior releases and record affected
+rules and revalidation. Knowledge ingestion and canonical policy revision are
+separate operations. No model or platform-specific backend is required by the design.

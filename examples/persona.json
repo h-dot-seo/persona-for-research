@@ -1,0 +1,17 @@
+{
+  "author_id": "synthetic-author",
+  "version": "0.1.0",
+  "build_id": "synthetic-demo",
+  "identity": {
+    "display_name": "Synthetic example; no real researcher",
+    "simulation_only": true,
+    "private_beliefs_inferred": false
+  },
+  "rules": [],
+  "validation": {
+    "evidence_integrity": "NOT_PERFORMED",
+    "persona_predictive": "NOT_PERFORMED",
+    "human_validation": "NOT_PERFORMED",
+    "runtime_validation": "SYNTHETIC_MECHANICAL_EXAMPLE"
+  }
+}
