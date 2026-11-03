@@ -63,3 +63,11 @@ that structural path. Seven regression cases cover both intake routes, each nest
 level, retained legitimate quotes, raw-section omission, claim types, malformed
 shapes and preflight ordering. All 49 local tests, publication/manifest checks and
 compilation pass. No semantic privacy detection is claimed.
+
+Read-only release comparison: 59 local tests passed. Ten new cases cover identical
+and wrapped packages, build-only changes, added/removed sources, changed source
+hashes and observations, cross-identity/tamper/legacy rejection, nonmutation and the
+CLI success/error paths. Publication scan, manifest verification and compilation
+passed. Comparisons are structural and do not approve canonical policy changes.
+Independent review identified a numeric-type equality gap before publication;
+canonical JSON hashing and an integer/float regression close it.

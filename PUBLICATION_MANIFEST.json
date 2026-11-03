@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.7.1-runtime-projection",
+  "release": "0.8.0-release-comparison",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 40,
+  "file_count": 42,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 11026,
-      "sha256": "2a402f19d349f13a9190493c665b26928ff40794159ffb6c4f322ca01e719a45"
+      "bytes": 11969,
+      "sha256": "0f7ad7cdfca85f6151dcad18c9e3b0f7c103f9730ba533eae12dad493aa47b54"
     },
     {
       "path": "RIGHTS.md",
@@ -50,13 +50,18 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 4225,
-      "sha256": "8807d3ce7249f63f3a2fbbca6e87c14d949e2a48a1d1b3529c1a02dd9fe938d2"
+      "bytes": 4778,
+      "sha256": "a445ee98256d11ffbcac1b1b71a239f94f2964d1eb5012ec8b82ea985f372514"
     },
     {
       "path": "audit_publication.py",
       "bytes": 1969,
       "sha256": "349bfe9f189da2beaee4d655ba05b8f080f79b5fe7518097eafb6beea5459d08"
+    },
+    {
+      "path": "compare_releases.py",
+      "bytes": 3781,
+      "sha256": "c736ed013d5455dfaca5a61a0acc7bc78c48c3c646a2b7d81c6ef011c8cb99cb"
     },
     {
       "path": "corpus_files.py",
@@ -152,6 +157,11 @@
       "path": "test_cli_e2e.py",
       "bytes": 1464,
       "sha256": "b611e2c4c9f6f61338dff434e3e5b2effc019fb3556fc91d75f773590eea31bb"
+    },
+    {
+      "path": "test_compare_releases.py",
+      "bytes": 5189,
+      "sha256": "3c4ff3093b4c9adbf610722e663677173ab72031f1811e476204c349013b8978"
     },
     {
       "path": "test_corpus_files.py",

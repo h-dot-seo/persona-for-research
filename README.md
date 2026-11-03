@@ -146,6 +146,23 @@ accidental export of extra fields; it is not anonymization or detection of sensi
 text placed inside a legitimate quote or other supported string. Source permissions
 and split controls remain necessary before intake and before sharing output.
 
+## Review a candidate release
+
+```sh
+python compare_releases.py previous-package.json candidate-package.json
+```
+
+This read-only comparison accepts bound packages or the wrapper emitted by the
+workflow CLIs. It validates both package hashes and scholarly identities, then
+lists added, removed and structurally modified paper records, source-hash changes,
+observation changes and changes to the rule payload. Evidence or rule changes yield
+`REVIEW_REQUIRED`; version/build changes alone do not imply new evidence. It never
+uses Python numeric equality to compare payloads: canonical JSON hashes distinguish
+integer, floating-point and boolean values while ignoring object-key ordering. It never
+updates either package or approves a release. Paper IDs must remain consistently
+curated; changed hashes do not establish corrections, retractions or a researcher's
+change of mind. Legacy packages without a bound knowledge payload must be rebuilt.
+
 ## Verified observation intake
 
 ```sh
