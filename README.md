@@ -46,6 +46,17 @@ review; they cannot automatically enter a canonical package. Actual LLM inferenc
 and external transmission are explicitly false. Real provider adapters are disabled.
 See [extraction contract and review requirements](docs/EXTRACTION_CONTRACT.md).
 
+### Record operator decisions without automatic promotion
+
+`operator_review.py` creates a deferred review template and applies explicitly
+recorded decisions to a separate revision candidate. Decisions bind the complete
+candidate bundle and exact input corpus. Targets are explicit, occupied dimensions
+require an exact prior-component hash for replacement, and deferred/rejected items
+are never silently incorporated. Proposed claim types remain separate from reviewed
+classifications, with candidate/review provenance retained in reasoning cards.
+Reviewer identity is a recorded declaration, not authenticated proof of human review.
+See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
+
 ## Included
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.

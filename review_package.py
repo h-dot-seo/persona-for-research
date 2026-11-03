@@ -44,7 +44,9 @@ def render(value, question, topic):
         for dimension, component in card['components'].items():
             lines.append(f"  [{display(card['evidence_stance'])}] {display(card['rule_id'])} | {display(card['paper_id'])} | "
                          f"{display(dimension)} [{display(component['claim_type'])}]: {display(component['text'])} "
-                         f"({display(component['locator'])})")
+                         f"({display(component['locator'])})" +
+                         (f" [origin={display(component['origin'])}; proposed={display(component['proposed_claim_type'])}]"
+                          if 'origin' in component else ''))
     missing = application['evidence_coverage']['missing_dimensions']
     lines.append('Missing supplied records: ' + (', '.join(missing) if missing else 'none (coverage only)'))
     observation_checks = sum(r.get('evidence_verification') == 'EXACT_QUOTE_MATCH_ONLY' for r in rules)

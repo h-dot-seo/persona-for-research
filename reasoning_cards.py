@@ -3,6 +3,8 @@ import copy
 
 DIMENSIONS = ('question_framing', 'alternative_explanation', 'evidence_standard',
               'falsification_check', 'uncertainty')
+REVIEW_FIELDS = ('origin', 'candidate_id', 'candidate_bundle_sha256',
+                 'operator_review_sha256', 'proposed_claim_type')
 
 
 def validate_components(components):
@@ -16,6 +18,19 @@ def validate_components(components):
                 raise ValueError('reasoning component needs text, locator and evidence_quote')
         if record.get('claim_type') not in ('explicit_statement', 'operator_interpretation'):
             raise ValueError('reasoning component must distinguish statement from interpretation')
+        if any(k in record for k in REVIEW_FIELDS):
+            if any(k not in record for k in REVIEW_FIELDS):
+                raise ValueError('review provenance must be complete')
+            if record['origin'] != 'operator_reviewed_mock_candidate':
+                raise ValueError('unsupported reviewed candidate origin')
+            if not isinstance(record['candidate_id'], str) or not record['candidate_id'].strip():
+                raise ValueError('review provenance needs a candidate ID')
+            for field in ('candidate_bundle_sha256', 'operator_review_sha256'):
+                digest = record[field]
+                if not isinstance(digest, str) or len(digest) != 64 or any(c not in '0123456789abcdef' for c in digest):
+                    raise ValueError('review provenance needs valid payload hashes')
+            if record['proposed_claim_type'] not in ('explicit_statement', 'operator_interpretation'):
+                raise ValueError('review provenance needs a supported proposed claim type')
 
 
 def card(rule):

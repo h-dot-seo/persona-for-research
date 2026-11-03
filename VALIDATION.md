@@ -117,3 +117,11 @@ cases cover unlisted ordinary/cache files, missing/changed files, canonical path
 duplicate/case aliases, narrow metadata exclusions and symlink read rejection.
 The synthetic mock performs no AI inference or external transmission. Independent
 code review passed; real-model quality and prompt-injection resistance are not evaluated.
+
+Operator-review gate: 115 local tests passed. Twelve new cases cover exact bundle/
+corpus binding, target isolation, explicit replacement, rejected/deferred decisions,
+unknown/oversized fields, fabricated quotes, provider isolation, default-defer
+templates and the real CLI extraction-to-revision-to-view/comparison chain.
+Independent adversarial review found and verified a fix for shared Python-reference
+aliasing that could otherwise alter untargeted counterevidence. No canonical update,
+actual human authentication, external model call or real-scholar evaluation occurred.

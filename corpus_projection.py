@@ -1,13 +1,13 @@
 """Project only documented runtime fields; not an anonymizer or access control."""
 import copy
-from reasoning_cards import validate_components
+from reasoning_cards import validate_components, REVIEW_FIELDS
 
 PAPER_FIELDS = ('paper_id', 'author_id', 'split', 'runtime_knowledge_eligible',
     'authorized', 'source_sha256', 'locator', 'kind', 'year', 'topic',
     'source_file', 'source_verification', 'segments_sha256')
 OBSERVATION_FIELDS = ('method', 'condition', 'limitation', 'locator', 'topic',
     'stance', 'claim_type', 'evidence_quote', 'evidence_verification')
-COMPONENT_FIELDS = ('text', 'locator', 'evidence_quote', 'claim_type', 'evidence_verification')
+COMPONENT_FIELDS = ('text', 'locator', 'evidence_quote', 'claim_type', 'evidence_verification') + REVIEW_FIELDS
 
 
 def runtime_papers(corpus):

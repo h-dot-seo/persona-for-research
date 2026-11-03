@@ -28,8 +28,9 @@ The version-1 request contains:
 
 Prior annotations and unknown metadata are not included in requests. Source text
 is kept in the local mock request but omitted from output; only bounded returned
-quotes and candidate text survive. The request hash and preflight-persona hash
-identify the deterministic inputs, not an approved canonical release or a signature.
+quotes and candidate text survive. The request hash, exact input-corpus hash and
+preflight-persona hash identify deterministic inputs, not an approved canonical
+release or a signature.
 
 `ExtractionProvider` defines the future method interface. The current runner accepts
 only the built-in `MockProvider`, not arbitrary implementations or subclasses.
@@ -67,9 +68,10 @@ The result cannot be passed directly to `build()` and no canonical update occurs
    explicit statement, a paraphrase or an operator interpretation.
 3. Preserve counterevidence, conditions, limitations and coauthor attribution limits.
 4. Reject private-belief, personal-memory or researcher-reproduction claims.
-5. If approved, deliberately curate a separate observation input and run the normal
-   intake/release review workflow. This release has no automatic approval/promotion
-   endpoint and the adapter never edits a canonical package.
+5. Record explicit decisions through the [operator review gate](OPERATOR_REVIEW.md)
+   or deliberately curate a separate observation input. Inspect the resulting
+   revision candidate before any canonical adoption. There is no automatic approval
+   or promotion endpoint, and the adapter never edits a canonical package.
 
 Synthetic tests verify mechanical boundaries only. No actual AI quality, semantic
 extraction quality or researcher fidelity has been evaluated. Treating source text
