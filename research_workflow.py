@@ -9,6 +9,7 @@ from reasoning_cards import card, validate_components
 from verification_receipt import VerifiedCorpus
 from evidence_coverage import coverage
 from corpus_projection import runtime_papers
+from strict_json import load
 
 
 def build(corpus):
@@ -115,7 +116,7 @@ def main():
     p.add_argument('corpus', type=Path); p.add_argument('--question', required=True); p.add_argument('--topic', required=True)
     a = p.parse_args()
     try:
-        package = build(json.loads(a.corpus.read_text(encoding='utf-8')))
+        package = build(load(a.corpus))
         result = dict(package=package, application=apply(package, a.question, a.topic))
     except (ValueError, OSError, KeyError, TypeError) as e:
         p.exit(1, str(e) + '\n')

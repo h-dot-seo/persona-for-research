@@ -7,6 +7,7 @@ from pathlib import Path
 from observation_input import verified_corpus
 from research_workflow import build, apply
 from corpus_projection import runtime_papers
+from strict_json import load
 
 
 def sections(text):
@@ -71,7 +72,7 @@ def main():
     p.add_argument('--question',required=True); p.add_argument('--topic',required=True)
     a=p.parse_args()
     try:
-        corpus=load_sources(json.loads(a.manifest.read_text(encoding='utf-8')),a.source_root)
+        corpus=load_sources(load(a.manifest),a.source_root)
         package=build(corpus)
         result=dict(package=package,application=apply(package,a.question,a.topic),
                     boundary='Local bytes and quoted sections verified; publication authenticity and semantic support unverified')

@@ -76,10 +76,14 @@ def main():
     parser.add_argument('--source-kind', choices=['library-read', 'original-bytes'], default='library-read')
     parser.add_argument('--expected-original-sha256')
     args = parser.parse_args()
-    raw = sys.stdin.buffer.read() if args.input == '-' else Path(args.input).read_bytes()
     if args.expected_original_sha256 and args.source_kind != 'original-bytes':
         parser.error('Original-byte hash verification requires original-bytes input, never reconstructed Library text.')
-    result = sanitize(json.loads(raw))
+    try:
+        from strict_json import loads
+        raw = sys.stdin.buffer.read() if args.input == '-' else Path(args.input).read_bytes()
+        result = sanitize(loads(raw))
+    except (ValueError, OSError, TypeError, RecursionError) as exc:
+        parser.exit(1, str(exc) + '\n')
     if args.source_kind == 'original-bytes':
         actual = hashlib.sha256(raw).hexdigest()
         result['original_sha256'] = actual

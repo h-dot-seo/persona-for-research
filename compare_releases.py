@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 from persona import payload_sha256, validate
+from strict_json import load
 
 
 def checked_package(value):
@@ -61,8 +62,7 @@ def main():
     parser.add_argument('candidate', type=Path)
     args = parser.parse_args()
     try:
-        result = compare(json.loads(args.previous.read_text(encoding='utf-8')),
-                         json.loads(args.candidate.read_text(encoding='utf-8')))
+        result = compare(load(args.previous), load(args.candidate))
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.exit(1, str(exc) + '\n')
     print(json.dumps(result, ensure_ascii=False, indent=2))

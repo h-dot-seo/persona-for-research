@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.8.1-workflow-validation",
+  "release": "0.8.2-strict-json",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 45,
+  "file_count": 47,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 12126,
-      "sha256": "aafe05fee00605c23318bc12f1508538bc263389a0e3334fa3db7bac4b6852bc"
+      "bytes": 12518,
+      "sha256": "5fc26636c3e574fac1ddb7acdbd2853ced75eaa5bd50738603ed4c44d54cfb54"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 5425,
-      "sha256": "dd8063838693487d02a9236f2eea17ac254e71b7087ec581ca3f25ea2621a225"
+      "bytes": 5826,
+      "sha256": "4bca9de1c81f5e654c4b991cf9ae62f5e8d05746677bbc8a9ea939ef7dfb7d25"
     },
     {
       "path": "audit_publication.py",
@@ -60,13 +60,13 @@
     },
     {
       "path": "compare_releases.py",
-      "bytes": 3781,
-      "sha256": "c736ed013d5455dfaca5a61a0acc7bc78c48c3c646a2b7d81c6ef011c8cb99cb"
+      "bytes": 3717,
+      "sha256": "da13a1529920a6140df9e7e5953105ef80f3b099bbe8cba2dd3334b6959cb1e0"
     },
     {
       "path": "corpus_files.py",
-      "bytes": 4031,
-      "sha256": "e39ced391fe2e340324cc9c757aa097766d7c43a10056ed6653ebd203cdfd42e"
+      "bytes": 4026,
+      "sha256": "fc9b1301c3b7994952f2fd5d26279ac0efb5e99be0b732edf67d243c3ef7b09a"
     },
     {
       "path": "corpus_projection.py",
@@ -135,13 +135,13 @@
     },
     {
       "path": "observation_input.py",
-      "bytes": 3517,
-      "sha256": "41e78f37f0df9445569eb00c8a12b0a0c6c8777b675bfb3a05a678432e31434d"
+      "bytes": 3512,
+      "sha256": "cbfd5b1f48aae1b83122e4083e0963b902a8e2b23a8c74e71e003dc466ab0412"
     },
     {
       "path": "persona.py",
-      "bytes": 3380,
-      "sha256": "a536bd66495b9ffb7fdf2f0be49425e851f0b2cf78eaff87c8c8c0ebb1fd56bd"
+      "bytes": 3315,
+      "sha256": "b2d8ac583c4f479f3d437401f36da84157517c3e2377f3c114496ddcadd690f8"
     },
     {
       "path": "reasoning_cards.py",
@@ -150,13 +150,18 @@
     },
     {
       "path": "research_workflow.py",
-      "bytes": 7735,
-      "sha256": "8c33076ef154b3037d15f69e4b76ad4d23adb3d75711ad631e526b52bd9142c2"
+      "bytes": 7730,
+      "sha256": "67097bb77f04a701516f3d584c02c6b9e7e30f90d4f27c6321e1f796f56cdcc4"
     },
     {
       "path": "safe_canonical_read.py",
-      "bytes": 4520,
-      "sha256": "14ada7664e4dc1719375fa363e9056ba8f01ca8be94e00eea6a821a9a068de77"
+      "bytes": 4678,
+      "sha256": "c1a41c723f5938f14176971e8b6f13f8c2be1060e49282a01f41cf6208f09b59"
+    },
+    {
+      "path": "strict_json.py",
+      "bytes": 1342,
+      "sha256": "f00c58583669b4ed52167821982539602c7f23460790e086ad3be6e0557f4677"
     },
     {
       "path": "test_cli_e2e.py",
@@ -212,6 +217,11 @@
       "path": "test_research_workflow.py",
       "bytes": 1802,
       "sha256": "6e46edae3645e9f266e21c764c7a26bbb618a5ea893812943d0ee296cb819c91"
+    },
+    {
+      "path": "test_strict_json.py",
+      "bytes": 3625,
+      "sha256": "7ff257fc3cf3652a2d0007ca9efe50ae287b262b0738eaf7cac3b050c82993ad"
     },
     {
       "path": "test_verification_receipt.py",

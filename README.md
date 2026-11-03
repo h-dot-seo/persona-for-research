@@ -11,6 +11,12 @@ are included in this repository.
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 
+CLI JSON inputs reject duplicate object keys, non-finite numbers (including
+overflowing exponents), and more than 128 nested containers. Ambiguous repeated
+authorization/split fields are errors, not a last-value-wins choice. This applies
+to source intake, package validation/comparison and the projection helper; it does
+not authenticate an authorization declaration or grant source access.
+
 ## Included
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.

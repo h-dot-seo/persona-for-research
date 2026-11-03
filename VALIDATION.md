@@ -80,3 +80,9 @@ round-trip covers local byte/quote checks, reasoning/coverage, candidate disagre
 release comparison, source tampering and unchanged prior packages. Publication,
 manifest and compilation checks passed. See docs/WORKFLOW_REVIEW.md for user-facing
 limitations and real-corpus evaluation prerequisites; no model or real corpus used.
+
+Strict JSON boundaries: 69 local tests passed. Duplicate authorization/split keys,
+non-finite/overflowing numbers and excessive container nesting are rejected. Tests
+exercise all six CLI boundaries, Unicode/finite inputs and preserved original-byte
+hash checks. Publication scan, manifest and compilation checks passed. Parsing
+guards remove ambiguity; they do not authenticate declared permissions.

@@ -8,6 +8,7 @@ from research_workflow import build, apply
 from reasoning_cards import validate_components
 from verification_receipt import VerifiedCorpus
 from corpus_projection import runtime_papers
+from strict_json import load
 
 
 def verified_corpus(corpus, *, _local_source_ids=()):
@@ -51,7 +52,7 @@ def main():
     p.add_argument('corpus',type=Path); p.add_argument('--question',required=True); p.add_argument('--topic',required=True)
     a=p.parse_args()
     try:
-        package=build(verified_corpus(json.loads(a.corpus.read_text(encoding='utf-8'))))
+        package=build(verified_corpus(load(a.corpus)))
         result=dict(package=package,application=apply(package,a.question,a.topic),
                     boundary='Exact quote and supplied segment hash checked; source authenticity and semantic support unverified')
     except (ValueError,OSError,KeyError,TypeError) as e:

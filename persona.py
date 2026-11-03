@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from strict_json import load
 
 
 def payload_sha256(value):
@@ -62,8 +63,7 @@ def main():
     p.add_argument('persona', type=Path); p.add_argument('knowledge', type=Path)
     args = p.parse_args()
     try:
-        errors = validate(json.loads(args.persona.read_text(encoding='utf-8')),
-                          json.loads(args.knowledge.read_text(encoding='utf-8')))
+        errors = validate(load(args.persona), load(args.knowledge))
     except (OSError, ValueError, TypeError, AttributeError) as exc:
         errors = [str(exc)]
     print(json.dumps({'mechanically_valid': not errors, 'errors': errors,
