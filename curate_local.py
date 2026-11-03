@@ -27,13 +27,7 @@ def template(manifest, paper_id):
                              'stance':None, 'reasoning':{}})
 
 
-def append_observation(manifest, card, root):
-    if not isinstance(card, dict) or set(card) != {'schema','manifest_sha256','paper_id','observation'} or card['schema'] != SCHEMA:
-        raise ValueError('manual observation card has missing or unsupported fields')
-    _paper(manifest, card['paper_id'])
-    if card['manifest_sha256'] != payload_sha256(manifest):
-        raise ValueError('stale manifest binding; create a fresh card and inspect the current evidence')
-    obs=card['observation']
+def validate_manual_observation(obs):
     if not isinstance(obs,dict) or not REQUIRED <= set(obs) or set(obs)-REQUIRED-{'stance','reasoning'}:
         raise ValueError('manual observation needs explicit fields; verification or model provenance cannot be supplied')
     if any(not isinstance(obs[k],str) or not obs[k].strip() for k in REQUIRED):
@@ -43,6 +37,16 @@ def append_observation(manifest, card, root):
     for component in obs.get('reasoning',{}).values() if isinstance(obs.get('reasoning',{}),dict) else ():
         if not isinstance(component,dict) or set(component) != {'text','locator','evidence_quote','claim_type'}:
             raise ValueError('manual reasoning components accept only text, locator, evidence_quote and claim_type')
+
+
+def append_observation(manifest, card, root):
+    if not isinstance(card, dict) or set(card) != {'schema','manifest_sha256','paper_id','observation'} or card['schema'] != SCHEMA:
+        raise ValueError('manual observation card has missing or unsupported fields')
+    _paper(manifest, card['paper_id'])
+    if card['manifest_sha256'] != payload_sha256(manifest):
+        raise ValueError('stale manifest binding; create a fresh card and inspect the current evidence')
+    obs=card['observation']
+    validate_manual_observation(obs)
     result=json.loads(json.dumps(manifest,ensure_ascii=False,allow_nan=False))  # JSON value semantics detach shared lists.
     paper=next(p for p in result['papers'] if p['paper_id']==card['paper_id'])
     paper['observations'].append(copy.deepcopy(obs))

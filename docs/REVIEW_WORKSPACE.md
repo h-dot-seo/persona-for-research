@@ -91,3 +91,7 @@ scientific execution or authenticated reviewer is used by this synthetic example
 ```sh
 python -m unittest test_review_workspace -v
 ```
+
+If inspecting the catalog reveals an unsupported manual observation, correct it
+upstream with [manual evidence revision](MANUAL_EVIDENCE_REVISION.md), rebuild the
+package, and start a new workspace rather than relabeling existing bindings.

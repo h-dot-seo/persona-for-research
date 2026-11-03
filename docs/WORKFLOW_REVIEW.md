@@ -268,3 +268,12 @@ reasoning dimensions without filling them. Synthetic CLI tests manually insert a
 later-review citation and an unsupported plan to confirm temporal, uncertainty and
 missing-link warnings survive. Initial reports are snapshots; edits require explicit
 reruns. Fresh links require a newly bound design template and manual step review.
+
+### Reassessing a manual interpretation
+
+A synthetic reassessment now changes one research observation's overly strong
+attribution label, preserves the superseded text in an unsigned audit, rechecks
+all revised corpus quotes, rebuilds a new package and starts a fresh review folder.
+This closes the append-only manual curation gap without rewriting source hashes,
+model provenance or downstream bindings. It does not establish that the correction
+is correct or that the declared operator is a real authenticated reviewer.

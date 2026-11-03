@@ -1,0 +1,35 @@
+{
+  "schema": "persona.manual-observation-revision.v1",
+  "manifest_sha256": "ebb7afc991d34749a0b315f7a4bcadc19828b41807e61b9f1ded410f400c4870",
+  "paper_id": "synthetic-0",
+  "observation_index": 0,
+  "previous_observation_sha256": "ca624fe999904b4fccd550e77c00c8223b186305e92fdc902da06fcc9e8a1019",
+  "observation": {
+    "method": "compare competing models before choosing an experiment",
+    "condition": "models predict distinct outcomes",
+    "limitation": "Synthetic source only; this framing requires semantic review and is not an established individual author claim.",
+    "locator": "synthetic section 1",
+    "topic": "model design",
+    "evidence_quote": "Compare competing models",
+    "claim_type": "operator_interpretation",
+    "stance": "support",
+    "reasoning": {
+      "question_framing": {
+        "text": "Which competing explanation should a synthetic comparison distinguish?",
+        "locator": "synthetic section 1",
+        "evidence_quote": "Compare competing models",
+        "claim_type": "operator_interpretation"
+      },
+      "uncertainty": {
+        "text": "The supplied sentence does not establish a particular researcher's complete method.",
+        "locator": "synthetic section 1",
+        "evidence_quote": "Compare competing models",
+        "claim_type": "operator_interpretation"
+      }
+    }
+  },
+  "operator_id": "synthetic-manual-reviewer",
+  "revision_reason": "The method/condition framing goes beyond the short stored quote; preserve it as an operator interpretation, not an individual author claim.",
+  "new_version": "2",
+  "new_build_id": "synthetic-manual-reassessed"
+}

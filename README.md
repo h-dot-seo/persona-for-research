@@ -383,3 +383,10 @@ claim generator runs; the documented synthetic research/review CLI journey is ex
 local-loader result. One command prepares empty bound answer/link/design templates,
 an exact evidence-reference catalog, initial gap reports and next-command argument
 arrays. It does not select relevant evidence or generate an answer, link or plan.
+
+## Reassess manually curated evidence
+
+[Manual evidence revision](docs/MANUAL_EVIDENCE_REVISION.md) changes one pinned
+observation under unchanged source bytes, records the explicit reason and old/new
+claims in a separate audit file, and requires a new version/build. All revised
+corpus quotes are checked; scientific correctness and reviewer identity are not.

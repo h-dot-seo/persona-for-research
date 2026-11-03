@@ -95,3 +95,7 @@ python -m unittest test_curate_local -v
 Use [the review workspace starter](REVIEW_WORKSPACE.md) with `manual-result.json`
 to create empty bound answer/link/design files, a complete exact-reference catalog,
 and visible missing-work reports in one new private folder.
+
+For an existing manually authored observation that needs correction, use
+[explicit evidence revision](MANUAL_EVIDENCE_REVISION.md): a pinned old observation,
+new version/build, full local checks and a separate before/after audit artifact.
