@@ -80,3 +80,19 @@ across distinct papers, and contested patterns. Each supporting/challenging item
 retains paper ID, locator, year and research/review type. Challenge observations
 produce challenge prompts, not recommendations. This deterministic grouping is
 not semantic synthesis or proof that a method is unique to an individual author.
+
+## Verified observation intake
+
+```sh
+python observation_input.py examples/observed-corpus.json --question "Which experiment?" --topic "model design"
+```
+
+The input adds `segments` (locator-to-text mapping), `segments_sha256` (SHA-256 of
+sorted compact UTF-8 JSON with ensure_ascii=False), and observation `evidence_quote`
+and `claim_type` (`explicit_statement` or `operator_interpretation`). Only authorized
+training segments are inspected. Quotes must occur exactly at their locator; altered
+segment hashes and fabricated quotes fail. Full segments are removed before package
+construction; observation quotes and their verification labels reach application
+steps. Supplied text/hash agreement does not authenticate publications or prove that
+the interpretation follows from the quote. No parser, LLM or search service is called.
+Only short synthetic text is included in the distributed example.

@@ -25,6 +25,9 @@ def build(corpus):
             rules.append(dict(rule_id=f'rule-{len(rules)+1}', **{k: observation[k] for k in required},
                               stance=observation.get('stance', 'support'),
                               source_kind=paper['kind'], year=paper['year'],
+                              claim_type=observation.get('claim_type', 'operator_interpretation'),
+                              evidence_quote=observation.get('evidence_quote'),
+                              evidence_verification=observation.get('evidence_verification', 'NOT_PERFORMED'),
                               paper_id=paper['paper_id'], evidence_type='operator_curated_paper_observation',
                               attribution='coauthored work; individual ownership not established'))
             if rules[-1]['stance'] not in ('support', 'challenge'):
@@ -62,6 +65,9 @@ def apply(package, question, topic):
             steps.append(dict(rule_id=rule['rule_id'], paper_id=rule['paper_id'], locator=rule['locator'],
                               planning_prompt=f"For {question}: {'challenge' if rule.get('stance') == 'challenge' else 'consider'} {rule['method']}",
                               evidence_stance=rule.get('stance', 'support'),
+                              claim_type=rule.get('claim_type', 'operator_interpretation'),
+                              evidence_quote=rule.get('evidence_quote'),
+                              evidence_verification=rule.get('evidence_verification', 'NOT_PERFORMED'),
                               applicability_to_check=rule['condition'], limitation=rule['limitation'],
                               status='SYSTEM_INFERENCE_REQUIRES_REVIEW'))
     for pattern in patterns.values():

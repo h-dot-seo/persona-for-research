@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.3.0-linked-workflows",
+  "release": "0.4.0-evidence-contracts",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 17,
+  "file_count": 20,
   "files": [
     {
       "path": ".gitignore",
@@ -29,6 +29,11 @@
       "sha256": "d3bcc14f2a10c9449a77cc5d34766dac509ce5ef85a4e28a5cbd47678cc1c30a"
     },
     {
+      "path": "examples/observed-corpus.json",
+      "bytes": 2245,
+      "sha256": "9e028c9f23ef76a1015a1d188f00fe41e478d1e4798cb7f58dfc7e500b994296"
+    },
+    {
       "path": "examples/persona.json",
       "bytes": 480,
       "sha256": "d832cb6ae2a0e5221d49ebc47d8b45c6c3c5db8f6f0d7c6ff27be1d28c4ba2ef"
@@ -37,6 +42,11 @@
       "path": "examples/research-corpus.json",
       "bytes": 1605,
       "sha256": "6fc802e4744a9bd808f16681dc9b9f5162e952ff85420761ceef1c4bdc3f427c"
+    },
+    {
+      "path": "observation_input.py",
+      "bytes": 2360,
+      "sha256": "b97e19d05ffdaa6b770071a4f32ea7da315b5727543446a6cdd90e4da5e0074e"
     },
     {
       "path": "persona.py",
@@ -50,13 +60,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 4358,
-      "sha256": "dc0513ff836b46694ffd343b6ca74f71d19209651b7fe2dc1905b02a72e7ccbf"
+      "bytes": 5272,
+      "sha256": "6582df82f4a79d84116ed61bcefef1a52d50efa77f86fdb4f77d097df78f6eb3"
     },
     {
       "path": "research_workflow.py",
-      "bytes": 5228,
-      "sha256": "378c3d9d5363e6d76b04c29d04a7ea8f846d80a4b0c6465c6569a3d4465aa04c"
+      "bytes": 5787,
+      "sha256": "c780bd159a2c199f477806432bc5c89c80732d29f86cd1433446622ad65e48e9"
     },
     {
       "path": "RIGHTS.md",
@@ -79,6 +89,11 @@
       "sha256": "d44e577e21d1708712076f225b983e9dbf00d6fe6532945718aec20a82b4b8d9"
     },
     {
+      "path": "test_observation_input.py",
+      "bytes": 1636,
+      "sha256": "1a81257188eb82128b1ff6192172177c16e68e306a2fd1c5b888ee1d12f32d86"
+    },
+    {
       "path": "test_persona.py",
       "bytes": 1674,
       "sha256": "1072b659ff7a8ea21544e5e41982aa19b6acb25e7ee9bb31ab0adf70d8e8dbff"
@@ -90,8 +105,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 1377,
-      "sha256": "9091a35fb36558937fe2c887db9f7215db909cb48f79075f52e49825fef1b242"
+      "bytes": 1522,
+      "sha256": "f5f4c43c3d1d91ccf034c33966298f7c21105b49491e2d8133ef8b107f1a5e70"
     }
   ]
 }
