@@ -1,6 +1,6 @@
 {
   "project": "persona-for-research",
-  "release": "0.11.0-operator-review",
+  "release": "0.12.0-review-target-inventory",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 15618,
-      "sha256": "a61c6473dadfafb9e2596721d6efb2c1819f922e7b8ead04cda9a35f9e1727fc"
+      "bytes": 15834,
+      "sha256": "ce87958e958af70ff11d59111717cf2856fcbc8fae41dffff66b0248d0581a57"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 8569,
-      "sha256": "3ba82070b3ca3291d26aa39a1f8fcd550db7ba0ac7a23400d7c5acb88c24632f"
+      "bytes": 9048,
+      "sha256": "2bcc953963b13060aee574711a2ee9c9ade24ed037cb84a7955dc9003819e112"
     },
     {
       "path": "audit_publication.py",
@@ -85,8 +85,8 @@
     },
     {
       "path": "docs/OPERATOR_REVIEW.md",
-      "bytes": 5132,
-      "sha256": "502de32882ab506efb026de1510e1aa638088f876008f62ceded9fffcce36e18"
+      "bytes": 6320,
+      "sha256": "ab73517406b89e1a9f0d615a174bbb17e47c52b55cd9b40bac6649ed3483e399"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -160,8 +160,8 @@
     },
     {
       "path": "operator_review.py",
-      "bytes": 8689,
-      "sha256": "16c7e7ab396f8f35348c2578f8f2130d658cc0ff0996b4f929e36f4afa0278c7"
+      "bytes": 11470,
+      "sha256": "27193dc3dbdeaf916d1b19a78697e12bb521c5ca13732c64af9217ea1e4efa88"
     },
     {
       "path": "persona.py",
@@ -240,8 +240,8 @@
     },
     {
       "path": "test_operator_review.py",
-      "bytes": 12722,
-      "sha256": "07d6ae59a1779e78615aa6863c7c19e255843cf573bdc70e3cf24665737acf2d"
+      "bytes": 18141,
+      "sha256": "a0044765cf65bcb1f8d1517a286cda7be824cd9b4acfa64748615ccad08d1923"
     },
     {
       "path": "test_pattern_source_identity.py",

@@ -31,6 +31,40 @@ def review_template(corpus, bundle, reviewer_id):
                         review_note='Pending operator review.') for c in bundle['candidates']])
 
 
+def target_inventory(corpus, bundle):
+    """List all same-paper targets in input order, without selection or approval."""
+    base = validate_candidate_bundle(corpus, bundle)
+    positions = [(pi, oi) for pi, p in enumerate(corpus['papers'])
+                 for oi, _ in enumerate(p['observations'])]
+    rows = []
+    for candidate in bundle['candidates']:
+        targets = []
+        for rule, (pi, oi) in zip(base['persona']['rules'], positions):
+            if rule['paper_id'] != candidate['paper_id']:
+                continue
+            dimension = candidate['dimension']
+            raw = corpus['papers'][pi]['observations'][oi].get('reasoning', {}).get(dimension)
+            targets.append(dict(target_rule_id=rule['rule_id'], target_paper_id=rule['paper_id'],
+                observation={key: copy.deepcopy(rule[key]) for key in
+                    ('method', 'condition', 'limitation', 'locator', 'topic', 'stance', 'claim_type',
+                     'evidence_quote', 'evidence_verification', 'attribution')},
+                occupancy='EMPTY' if raw is None else 'OCCUPIED',
+                expected_component_sha256=None if raw is None else payload_sha256(raw),
+                existing_component=copy.deepcopy(rule.get('reasoning', {}).get(dimension))))
+        rows.append(dict(candidate_id=candidate['candidate_id'], paper_id=candidate['paper_id'],
+            dimension=candidate['dimension'], candidate_text=candidate['candidate_text'],
+            proposed_claim_type=candidate['proposed_claim_type'], locator=candidate['locator'],
+            evidence_quote=candidate['evidence_quote'], targets=targets))
+    return dict(status='TARGET_INVENTORY_ONLY', candidate_bundle_sha256=payload_sha256(bundle),
+        input_corpus_sha256=payload_sha256(corpus), candidates=rows,
+        selection_performed=False, semantic_validation='NOT_PERFORMED',
+        canonical_update_performed=False,
+        boundary='All same-paper observations are listed in input order, not ranked by relevance. '
+                 'Source membership and quote checks do not establish semantic fit or author ownership. '
+                 'No target, operation or approval is inferred. Retain explicit operator decisions; '
+                 'hashes identify the full input component, not only the displayed projection.')
+
+
 def prepare_revision(corpus, bundle, review, new_version, new_build_id):
     base = validate_candidate_bundle(corpus, bundle)  # No provider is called.
     if not isinstance(review, dict) or set(review) != REVIEW_KEYS:
@@ -130,11 +164,18 @@ def main():
     parser.add_argument('review', type=Path, nargs='?')
     parser.add_argument('--new-version')
     parser.add_argument('--new-build-id')
-    parser.add_argument('--template', action='store_true')
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument('--template', action='store_true')
+    modes.add_argument('--targets', action='store_true')
     parser.add_argument('--reviewer-id')
     args = parser.parse_args()
     try:
-        if args.template:
+        if args.targets:
+            if any(value is not None for value in
+                   (args.review, args.new_version, args.new_build_id, args.reviewer_id)):
+                raise ValueError('target inventory mode cannot apply review decisions or record a reviewer')
+            result = target_inventory(load(args.corpus), load(args.candidates))
+        elif args.template:
             if args.review is not None or args.new_version is not None or args.new_build_id is not None:
                 raise ValueError('template mode cannot apply review decisions')
             result = review_template(load(args.corpus), load(args.candidates), args.reviewer_id)

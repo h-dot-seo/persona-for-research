@@ -10,7 +10,7 @@ from unittest.mock import patch
 from compare_releases import compare
 from extraction_adapter import MockProvider, extract_candidates
 from observation_input import verified_corpus
-from operator_review import prepare_revision, review_template
+from operator_review import prepare_revision, review_template, target_inventory
 from persona import payload_sha256
 from research_workflow import build
 from review_package import render
@@ -56,6 +56,91 @@ class OperatorReviewTests(unittest.TestCase):
     def test_review_does_not_invoke_provider(self):
         with patch.object(MockProvider, 'extract', side_effect=AssertionError('provider called')):
             self.run_review()
+
+    def test_inventory_keeps_all_same_paper_targets_without_selecting(self):
+        challenge = copy.deepcopy(self.corpus['papers'][0]['observations'][0])
+        challenge['stance'] = 'challenge'
+        challenge['topic'] = 'different synthetic topic'
+        self.corpus['papers'][0]['observations'].append(challenge)
+        self.bind()
+        before = copy.deepcopy((self.corpus, self.bundle))
+        with patch.object(MockProvider, 'extract', side_effect=AssertionError('provider called')):
+            inventory = target_inventory(self.corpus, self.bundle)
+        self.assertFalse(inventory['selection_performed'])
+        self.assertNotIn('package', inventory)
+        for row in inventory['candidates']:
+            self.assertEqual([t['target_rule_id'] for t in row['targets']], ['rule-1', 'rule-2'])
+            self.assertEqual([t['observation']['stance'] for t in row['targets']], ['support', 'challenge'])
+            self.assertEqual(row['targets'][1]['observation']['topic'], 'different synthetic topic')
+            self.assertTrue(all(t['occupancy'] == 'EMPTY' for t in row['targets']))
+            self.assertTrue(all(t['expected_component_sha256'] is None for t in row['targets']))
+            self.assertTrue(all('operation' not in t and 'decision' not in t for t in row['targets']))
+        self.assertEqual((self.corpus, self.bundle), before)
+        inventory['candidates'][0]['targets'][0]['observation']['method'] = 'modified output'
+        self.assertEqual((self.corpus, self.bundle), before)
+        self.corpus['papers'][0]['observations'][0]['reasoning'] = {}
+        challenge['reasoning'] = self.corpus['papers'][0]['observations'][0]['reasoning']
+        self.bind()
+        self.assertEqual(target_inventory(self.corpus, self.bundle),
+                         target_inventory(json.loads(json.dumps(self.corpus)), self.bundle))
+
+    def test_inventory_full_prior_hash_and_projected_component_support_replace(self):
+        self.corpus = json.loads(Path('examples/reasoning-corpus.json').read_text())
+        raw = self.corpus['papers'][0]['observations'][0]['reasoning']['uncertainty']
+        raw['unlisted_synthetic_note'] = 'SYNTHETIC_HIDDEN_MARKER'
+        self.bind()
+        inventory = target_inventory(self.corpus, self.bundle)
+        self.assertNotIn('SYNTHETIC_HIDDEN_MARKER', json.dumps(inventory))
+        self.assertNotIn('segments', json.dumps(inventory))
+        for decision, row in zip(self.review['decisions'], inventory['candidates']):
+            target = row['targets'][0]
+            self.assertEqual(target['occupancy'], 'OCCUPIED')
+            prior = self.corpus['papers'][0]['observations'][0]['reasoning'][row['dimension']]
+            self.assertEqual(target['expected_component_sha256'], payload_sha256(prior))
+            decision['operation'] = 'replace'
+            decision['expected_component_sha256'] = target['expected_component_sha256']
+        self.assertEqual(self.run_review()['status'], 'REVIEWED_REVISION_CANDIDATE')
+
+    def test_inventory_stale_inputs_and_unauthorized_sources_fail(self):
+        for field, value in [('authorized', False), ('split', 'holdout')]:
+            corpus = copy.deepcopy(self.corpus)
+            corpus['papers'][1][field] = value
+            with self.assertRaises(ValueError):
+                target_inventory(corpus, self.bundle)
+        stale = copy.deepcopy(self.corpus)
+        stale['papers'][0]['observations'][0]['method'] = 'changed synthetic method'
+        with self.assertRaises(ValueError):
+            target_inventory(stale, self.bundle)
+        bundle = copy.deepcopy(self.bundle)
+        bundle['candidates'][0]['candidate_text'] += ' altered'
+        changed = target_inventory(self.corpus, bundle)
+        self.assertNotEqual(changed['candidate_bundle_sha256'], payload_sha256(self.bundle))
+        bundle['candidates'][0]['evidence_quote'] = 'fabricated synthetic quote'
+        with self.assertRaises(ValueError):
+            target_inventory(self.corpus, bundle)
+
+    def test_inventory_empty_targets_do_not_create_an_observation(self):
+        self.corpus['papers'][0]['observations'] = []
+        self.bind()
+        inventory = target_inventory(self.corpus, self.bundle)
+        self.assertTrue(all(row['targets'] == [] for row in inventory['candidates']))
+        self.assertFalse(inventory['selection_performed'])
+
+    def test_inventory_cli_and_incompatible_modes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            corpus, bundle = root / 'corpus.json', root / 'bundle.json'
+            corpus.write_text(json.dumps(self.corpus))
+            bundle.write_text(json.dumps(self.bundle))
+            args = [sys.executable, 'operator_review.py', str(corpus), str(bundle), '--targets']
+            result = subprocess.run(args, capture_output=True, text=True, timeout=20)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout), target_inventory(self.corpus, self.bundle))
+            for extras in (['--template'], ['--reviewer-id', 'synthetic'],
+                           ['--new-version', '2'], [str(root / 'review.json')]):
+                result = subprocess.run(args + extras, capture_output=True, text=True, timeout=20)
+                self.assertNotEqual(result.returncode, 0)
+                self.assertEqual(result.stdout, '')
 
     def test_json_equivalent_aliases_cannot_modify_untargeted_records(self):
         for mode in ('shared_reasoning', 'shared_observation_list'):

@@ -55,6 +55,9 @@ require an exact prior-component hash for replacement, and deferred/rejected ite
 are never silently incorporated. Proposed claim types remain separate from reviewed
 classifications, with candidate/review provenance retained in reasoning cards.
 Reviewer identity is a recorded declaration, not authenticated proof of human review.
+Its `--targets` mode lists all same-paper observations and exact prior-component
+hashes without selecting targets or generating approvals, so operators can inspect
+both support and challenge records before deciding.
 See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
 
 ## Included

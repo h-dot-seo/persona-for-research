@@ -17,13 +17,26 @@ approve deployment. Only synthetic mock candidate bundles are currently supporte
    Every decision is `defer`. No approval or target is inferred. Save the JSON,
    inspect source context and the candidate bundle, then explicitly edit decisions.
    Do not automatically fill accept decisions for real evidence.
-3. Submit the operator-authored review as a separate file:
+3. Inspect all existing same-paper targets before writing an acceptance:
+
+   ```sh
+   python operator_review.py corpus.json candidates.json --targets
+   ```
+
+   This read-only inventory includes support and challenge observations in input
+   order, including different topics. It does not rank relevance, select a target,
+   recommend an operation or record approval. Empty target lists stay empty.
+   Candidate locators and target observation/component locators remain separate.
+   Occupied dimensions include their displayed component and the exact original
+   component hash needed for an explicitly chosen replacement. The hash includes
+   undisplayed metadata; displayed fields are projected and cannot reconstruct it.
+4. Submit the operator-authored review as a separate file:
 
    ```sh
    python operator_review.py corpus.json candidates.json review.json --new-version 2 --new-build-id reviewed-candidate
    ```
 
-4. Retain the resulting separate JSON artifact. If it contains `package`, inspect
+5. Retain the resulting separate JSON artifact. If it contains `package`, inspect
    it with `review_package.py` and compare it with the previous package using
    `compare_releases.py`. Canonical adoption remains a separate explicit decision.
 
@@ -31,6 +44,13 @@ The tool writes only stdout and never overwrites input files. Keep the original
 corpus, candidate bundle and review record: hashes identify those artifacts but
 do not replace them or function as signatures. Existing bundles lacking the new
 exact `input_corpus_sha256` binding must be regenerated before review.
+
+An inventory validates bundle self-consistency and records its current hash; it
+does not authenticate the original producer. Edited candidate text may form a new
+valid bundle with a different hash. Compare retained references and never treat an
+inventory as an approved review. A review bound to the old hash cannot apply to the
+new bundle. Inventory mode accepts no review file, reviewer ID or version/build
+arguments, and cannot be combined with template mode.
 
 ## Review fields
 

@@ -125,3 +125,10 @@ templates and the real CLI extraction-to-revision-to-view/comparison chain.
 Independent adversarial review found and verified a fix for shared Python-reference
 aliasing that could otherwise alter untargeted counterevidence. No canonical update,
 actual human authentication, external model call or real-scholar evaluation occurred.
+
+Read-only target inventory: 120 local tests passed. Five new cases exercise all
+same-paper support/challenge targets without selection, projected component fields
+with exact original replacement hashes, stale corpus/invalid source rejection,
+empty target lists, no provider calls or mutation, and actual CLI mode conflicts.
+The inventory is not a signature: changed valid candidate text produces a new
+bundle hash, while an existing review remains bound to its original bundle.
