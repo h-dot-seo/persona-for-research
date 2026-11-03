@@ -1,0 +1,69 @@
+{
+  "schema": "synthetic-answer-holdout-labels.v1",
+  "dataset_id": "synthetic-two-model-labels-v1",
+  "synthetic_only": true,
+  "split": "holdout",
+  "persona_sha256": "8d88d869b9afefec6f38a6f21c1c13594429e7f96055e9d3b4d83fa0ef0edab3",
+  "knowledge_papers_sha256": "1ce435437d63870bae47447a6ec1564d17df45f2b595cf186ee0f656442d8c6e",
+  "question_sha256": "4cd8dd19c419004e54c427c2c5ba603a1e312e6686ce667e90abb8605aed0262",
+  "expected_claims": [
+    {
+      "claim_id": "criterion",
+      "claim_type": "source_quote",
+      "citations": [
+        {
+          "reference": {
+            "paper_id": "synthetic-1",
+            "observation_index": 0,
+            "dimension": "falsification_check"
+          },
+          "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_claim_type": "explicit_statement",
+          "role": "context"
+        }
+      ]
+    },
+    {
+      "claim_id": "comparison",
+      "claim_type": "operator_synthesis",
+      "citations": [
+        {
+          "reference": {
+            "paper_id": "synthetic-0",
+            "observation_index": 0,
+            "dimension": "alternative_explanation"
+          },
+          "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+          "source_claim_type": "operator_interpretation",
+          "role": "support"
+        },
+        {
+          "reference": {
+            "paper_id": "synthetic-1",
+            "observation_index": 0,
+            "dimension": "falsification_check"
+          },
+          "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_claim_type": "explicit_statement",
+          "role": "challenge"
+        }
+      ]
+    },
+    {
+      "claim_id": "conclusion",
+      "claim_type": "operator_synthesis",
+      "citations": [
+        {
+          "reference": {
+            "paper_id": "synthetic-1",
+            "observation_index": 0,
+            "dimension": "falsification_check"
+          },
+          "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+          "source_claim_type": "explicit_statement",
+          "role": "context"
+        }
+      ]
+    }
+  ]
+}

@@ -212,3 +212,15 @@ outputs are refused; failed or timed-out commands retain diagnostic artifacts wi
 claiming completion. Fixed candidate decisions remain synthetic fixture data, while
 answer review stays deferred and intentional uncertainty gaps remain visible. No new
 research schema, real model call, source acquisition or scientific validation was added.
+
+## Separate synthetic label evaluation (2026-11-03)
+
+The quickstart was rerun, its package/draft frozen through a real CLI, and a separate
+CLI then compared the metadata with manually specified synthetic holdout-role labels.
+The intentional conclusion citation omission yielded3 matches/1 missing (precision1.0,
+recall0.75); the expected challenge remained1/1. These are label-agreement counts,
+not answer correctness or real holdout performance. The public teaching labels are
+not blinded. Freeze has no label argument and strips raw text; evaluate cannot read
+or update a corpus. Negative cases cover wrong references/roles, missing counterevidence,
+claim-type mismatches, empty outputs, stale/tampered artifacts and split-boundary
+violations. No model or actual scholar data was used.

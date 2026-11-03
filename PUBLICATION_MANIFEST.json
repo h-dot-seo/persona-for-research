@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.25.0-runnable-synthetic-journey",
+  "release": "0.26.0-synthetic-label-evaluation",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 96,
+  "file_count": 100,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 20435,
-      "sha256": "3db9f7656bfb2526eb8fc405e517e07a3f80d86735b070e7a1ab87855445af59"
+      "bytes": 20948,
+      "sha256": "e20d70ae839185b6a2bf79896e7b8480d5f6c1f39116f95b1dc43aec49840297"
     },
     {
       "path": "RIGHTS.md",
@@ -169,14 +169,24 @@
       "sha256": "114f506f6749005736090ef9d545e8ea17d2b4331d4ba19626171b21a43f0d7c"
     },
     {
+      "path": "docs/SYNTHETIC_EVALUATION.md",
+      "bytes": 5937,
+      "sha256": "f426662213014a48aeed6398c5f6c26a5de62c8ddc4503289ec9d1288cc9f949"
+    },
+    {
       "path": "docs/TOPIC_DISCOVERY.md",
       "bytes": 3213,
       "sha256": "4a0cd5e652db0df0b8f3448bcf1b4397d987c11b600a22551672319467da12f4"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 12834,
-      "sha256": "cb3e2cc1a8782295d9a9dc25e265f87b6be1123b1630c68d411b4b43e4b59d15"
+      "bytes": 13623,
+      "sha256": "aebcb00850ea670f479e2d9f943296ec8991c5db7fe8d0106267d7e2a62275bd"
+    },
+    {
+      "path": "evaluate_synthetic.py",
+      "bytes": 12196,
+      "sha256": "e0b647634763b82e10a56427b472b8e696cbfaea647c534d4378af458674d877"
     },
     {
       "path": "evidence_coverage.py",
@@ -222,6 +232,11 @@
       "path": "examples/research-corpus.json",
       "bytes": 1556,
       "sha256": "96277049be32ea616e8005fed5aa3deda11c9114e9d62478f2b13eb7750daff1"
+    },
+    {
+      "path": "examples/synthetic-holdout-labels.json",
+      "bytes": 2228,
+      "sha256": "5f5cb7ed76b81e8ea61418172441e0350ab5b158b802ede6f9586efff41ad7c5"
     },
     {
       "path": "examples/synthetic-sources/synthetic-0.md",
@@ -447,6 +462,11 @@
       "path": "test_strict_json.py",
       "bytes": 3625,
       "sha256": "7ff257fc3cf3652a2d0007ca9efe50ae287b262b0738eaf7cac3b050c82993ad"
+    },
+    {
+      "path": "test_synthetic_evaluation.py",
+      "bytes": 9278,
+      "sha256": "842445719e7fc1d5b328c49004230d2da3df8ca8631a966d6cea1788501df044"
     },
     {
       "path": "test_synthetic_walkthrough.py",

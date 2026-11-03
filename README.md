@@ -351,3 +351,12 @@ and review warnings. See [reader scope disclosure](docs/EVIDENCE_SCOPE.md).
 with explicit bridges, assumptions and defeaters. It rejects circular dependencies,
 keeps rejected premises visible and never transfers citations automatically. See
 [argument-map review](docs/ARGUMENT_MAP.md).
+
+### Synthetic label evaluation, kept separate from modeling
+
+`evaluate_synthetic.py freeze` captures validated answer/citation metadata without
+reading labels. Its separate `evaluate` command measures exact agreement with
+explicit synthetic holdout-role labels: citation matches/omissions, challenge
+preservation, and answer/source claim-type distinctions. No aggregate score,
+researcher-fidelity claim or semantic validation is provided. See
+[synthetic evaluation and its limits](docs/SYNTHETIC_EVALUATION.md).
