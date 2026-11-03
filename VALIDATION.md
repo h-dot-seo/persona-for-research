@@ -55,3 +55,11 @@ Coverage-diagnostic increment: 42 local tests passed. Six new cases verify parti
 and absent coverage, statement/interpretation and quote-match counts, duplicate-paper
 counting, challenge links and complete-field boundaries. Publication scan, manifest
 verification and compilation passed. Counts are descriptive, not scholarly scores.
+
+Runtime-projection hardening: independent adversarial review found unknown nested
+metadata could escape into knowledge and reasoning cards, including explicitly
+labeled holdout extras. A supported-field projection and scalar-type checks close
+that structural path. Seven regression cases cover both intake routes, each nesting
+level, retained legitimate quotes, raw-section omission, claim types, malformed
+shapes and preflight ordering. All 49 local tests, publication/manifest checks and
+compilation pass. No semantic privacy detection is claimed.

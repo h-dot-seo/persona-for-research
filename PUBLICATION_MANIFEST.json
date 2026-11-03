@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.7.0-evidence-coverage",
+  "release": "0.7.1-runtime-projection",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 38,
+  "file_count": 40,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 10452,
-      "sha256": "5f20f438cb924565c51d0b7dce736755a4eca234e054dad19b01b9b66f01ce2d"
+      "bytes": 11026,
+      "sha256": "2a402f19d349f13a9190493c665b26928ff40794159ffb6c4f322ca01e719a45"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 3674,
-      "sha256": "3d982706bb3628311434f53f79b27e059dbaa776240bd842d3f7fabacba98a5b"
+      "bytes": 4225,
+      "sha256": "8807d3ce7249f63f3a2fbbca6e87c14d949e2a48a1d1b3529c1a02dd9fe938d2"
     },
     {
       "path": "audit_publication.py",
@@ -62,6 +62,11 @@
       "path": "corpus_files.py",
       "bytes": 3876,
       "sha256": "cabd143dc7791741fc3b8923528fde35e6c405bc5fa8305090d05e287c7a55bb"
+    },
+    {
+      "path": "corpus_projection.py",
+      "bytes": 3080,
+      "sha256": "1fd6b7c3e46a590c905819e743da2b6dbe0a6ffe29f29a285d2f196b9d47daf5"
     },
     {
       "path": "docs/ARCHITECTURE.md",
@@ -135,8 +140,8 @@
     },
     {
       "path": "research_workflow.py",
-      "bytes": 7699,
-      "sha256": "1a30e2c46af3e8e4f745aafafc34286de2fb64953a0cb0df4fdfe61c93879629"
+      "bytes": 7735,
+      "sha256": "4735a325416c8a17fca63a7b0b77d7698f8a2d7997050cb76181cba4104eee79"
     },
     {
       "path": "safe_canonical_read.py",
@@ -152,6 +157,11 @@
       "path": "test_corpus_files.py",
       "bytes": 2659,
       "sha256": "898ce7d58ab4c977a74cd7303ba3db9ce87e1fc47111e9025b6e481794c86815"
+    },
+    {
+      "path": "test_corpus_projection.py",
+      "bytes": 3591,
+      "sha256": "a86409d0f578f9879c3cd5a30284fbf9e42577d46ba68f7473d0647afc4f5a8c"
     },
     {
       "path": "test_evidence_coverage.py",

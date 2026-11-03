@@ -8,6 +8,7 @@ from methodology_trajectory import summarize
 from reasoning_cards import card, validate_components
 from verification_receipt import VerifiedCorpus
 from evidence_coverage import coverage
+from corpus_projection import runtime_papers
 
 
 def build(corpus):
@@ -15,7 +16,7 @@ def build(corpus):
     verified = isinstance(corpus, VerifiedCorpus)
     if verified and not corpus.unchanged():
         raise ValueError('verified corpus changed after intake; verify again')
-    papers = copy.deepcopy(corpus['papers'])
+    papers = runtime_papers(corpus)
     for paper in papers:
         paper['source_verification'] = ('LOCAL_BYTES_SHA256_MATCH'
             if verified and paper.get('paper_id') in corpus.local_source_ids else 'NOT_PERFORMED')

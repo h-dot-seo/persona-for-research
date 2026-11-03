@@ -138,6 +138,14 @@ that a persona is ready, representative, accurate or scientifically validated.
 There is no confidence score, universal corpus-size threshold or automatic source
 acquisition. Use the missing dimensions to guide authorized manual evidence review.
 
+Runtime packages now project only documented paper, observation and reasoning
+component fields. Full source `segments` and unknown nested metadata are omitted
+from both verified and unverified builds. Supported scalar fields are type-checked,
+and observation claim types are restricted to statement/interpretation. This closes
+accidental export of extra fields; it is not anonymization or detection of sensitive
+text placed inside a legitimate quote or other supported string. Source permissions
+and split controls remain necessary before intake and before sharing output.
+
 ## Verified observation intake
 
 ```sh
