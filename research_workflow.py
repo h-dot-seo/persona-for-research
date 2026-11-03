@@ -7,6 +7,7 @@ from persona import payload_sha256, validate
 from methodology_trajectory import summarize
 from reasoning_cards import card, validate_components
 from verification_receipt import VerifiedCorpus
+from evidence_coverage import coverage
 
 
 def build(corpus):
@@ -101,6 +102,8 @@ def apply(package, question, topic):
                 reasoning_cards=[result for rule in persona['rules']
                     if rule['topic'].casefold() == topic.casefold()
                     for result in [card(rule)] if result is not None],
+                evidence_coverage=coverage([rule for rule in persona['rules']
+                    if rule['topic'].casefold() == topic.casefold()]),
                 processing=dict(mode='DETERMINISTIC_OPERATOR_CURATED', llm_used=False,
                                 automatic_extraction=False),
                 semantic_validation='NOT_PERFORMED')

@@ -126,6 +126,18 @@ knowledge-paper payload into the persona hash, detecting later source metadata,
 authorization, quote or observation edits. Legacy packages without this additional
 binding retain their previous validation behavior and should be rebuilt.
 
+### Coverage diagnostics
+
+`evidence_coverage` describes the topic-matched input: original/review paper IDs,
+observation counts and per-reasoning-dimension evidence links, claim-type counts,
+quote-match counts and missing dimensions. It distinguishes no observations from
+observations lacking reasoning components. Repeated observations do not multiply
+the distinct-paper count. Challenge records retain their own rule links.
+`ALL_DIMENSIONS_REPRESENTED` means only that each field has a supplied record, not
+that a persona is ready, representative, accurate or scientifically validated.
+There is no confidence score, universal corpus-size threshold or automatic source
+acquisition. Use the missing dimensions to guide authorized manual evidence review.
+
 ## Verified observation intake
 
 ```sh

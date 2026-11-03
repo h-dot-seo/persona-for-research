@@ -50,3 +50,8 @@ quote-only versus local-byte verification, changed intake rejection, serialized
 receipt loss, knowledge payload tampering and caller-data isolation. Publication,
 manifest and compilation checks passed. The receipt is an in-process integrity
 mechanism, not authentication against a Python caller or source authenticity proof.
+
+Coverage-diagnostic increment: 42 local tests passed. Six new cases verify partial
+and absent coverage, statement/interpretation and quote-match counts, duplicate-paper
+counting, challenge links and complete-field boundaries. Publication scan, manifest
+verification and compilation passed. Counts are descriptive, not scholarly scores.
