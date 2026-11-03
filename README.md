@@ -32,6 +32,20 @@ Recorded checks are not rerun against source files by this renderer. It is not a
 confidence/readiness judgment or a new interpretation of the researcher. Control
 characters in supplied text are escaped to prevent forged terminal lines.
 
+## AI-assisted candidate contract (mock only)
+
+```sh
+python extraction_adapter.py examples/reasoning-corpus.json --mock-response examples/mock-extraction-response.json
+```
+
+The provider-neutral request/response contract is implemented with a synthetic
+canned-response mock only. It verifies the full source authorization/split boundary
+and supplied segment hashes before invocation, then checks every proposed source,
+locator and quote. Results remain candidates requiring human semantic/attribution
+review; they cannot automatically enter a canonical package. Actual LLM inference
+and external transmission are explicitly false. Real provider adapters are disabled.
+See [extraction contract and review requirements](docs/EXTRACTION_CONTRACT.md).
+
 ## Included
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.

@@ -108,3 +108,12 @@ forgery, absent topic, tampering/legacy rejection, nonmutation, terminal control
 UTF-8 output and CLI failure without partial output. The end-to-end subprocess
 test includes the renderer. Publication scan, manifest and compilation passed.
 The renderer reports recorded checks only and does not reverify source bytes.
+
+Mock extraction contract and exact publication inventory: 103 local tests passed.
+Ten adapter cases verify pre-invocation authorization/holdout/hash gates, allowed
+request fields, response schema/quote limits, candidate-only status, absent automatic
+promotion, rejected external providers and real CLI success/failure. Seven manifest
+cases cover unlisted ordinary/cache files, missing/changed files, canonical paths,
+duplicate/case aliases, narrow metadata exclusions and symlink read rejection.
+The synthetic mock performs no AI inference or external transmission. Independent
+code review passed; real-model quality and prompt-injection resistance are not evaluated.

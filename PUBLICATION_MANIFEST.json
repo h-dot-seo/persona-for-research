@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.9.0-compact-review",
+  "release": "0.10.0-mock-extraction-contract",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 51,
+  "file_count": 56,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,13 +25,13 @@
     },
     {
       "path": "PUBLICATION.md",
-      "bytes": 1042,
-      "sha256": "d0eb77be8d3f46f7c954cb4108270e72c6ca1208a8410e3ae42393afe83c5308"
+      "bytes": 1600,
+      "sha256": "90a1fba0481a79195865ecfdeeaad8e6e1653a7f1529c77a61650281228328f6"
     },
     {
       "path": "README.md",
-      "bytes": 14172,
-      "sha256": "5aae07cf82661eb2cecc053125ade62aaf338e5a461268131b96b57d67562860"
+      "bytes": 14920,
+      "sha256": "a4dbf7eed8f90564b1ac39728f0806795fa8f24194bdb6f45999e4aa999dd298"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 7321,
-      "sha256": "274de6183b3481d358dd5ed6a0b8d2b4b61d0bf72c1d160cdb9a07d095a0e7af"
+      "bytes": 7990,
+      "sha256": "af21910a1b0be5b282dd6c8cb59d71381115090b7d5407396cb531c53ff9cf30"
     },
     {
       "path": "audit_publication.py",
@@ -79,6 +79,11 @@
       "sha256": "5e638755e7674a75447ea55895ed66afb1358ce1991385fea9097a546c0dc2d0"
     },
     {
+      "path": "docs/EXTRACTION_CONTRACT.md",
+      "bytes": 4389,
+      "sha256": "bf86ed02d438f74ed61e4ae5846aa75c97a2cf6c35a27e7f0728c7f173145a60"
+    },
+    {
       "path": "docs/WORKFLOW_REVIEW.md",
       "bytes": 4270,
       "sha256": "6f112197a133a73d638265206fbc9d8e776615c201f22b74168a3132291ffb1f"
@@ -97,6 +102,11 @@
       "path": "examples/knowledge.json",
       "bytes": 204,
       "sha256": "55dd5325600b761c46fb99e2a4911f51d00042edbf125bea9e7131c18f653eff"
+    },
+    {
+      "path": "examples/mock-extraction-response.json",
+      "bytes": 556,
+      "sha256": "9cb85badb7fb86d90ead77c1804cba7059d870b725a205f0e3765b1334fdd1c2"
     },
     {
       "path": "examples/observed-corpus.json",
@@ -127,6 +137,11 @@
       "path": "examples/synthetic-sources/synthetic-1.md",
       "bytes": 108,
       "sha256": "0c279b364cce4ef0c6e50b83127b7ff448d85a26ad019df28e3ac20cd2a2414d"
+    },
+    {
+      "path": "extraction_adapter.py",
+      "bytes": 5870,
+      "sha256": "17c5676d72b30c7b1b1373e6ca4a41a7a26a4a305b0ea9c595076a98a14cf8c9"
     },
     {
       "path": "methodology_trajectory.py",
@@ -194,6 +209,11 @@
       "sha256": "e66ca33c74013c8392ec8dd800ec6569d6503dbd22db33faab0440cfd76d1ca2"
     },
     {
+      "path": "test_extraction_adapter.py",
+      "bytes": 6353,
+      "sha256": "1a3d9840e6bf66bb565d380a495c8c78922901170f5de4f7df9b7764776e8e03"
+    },
+    {
       "path": "test_intake_errors.py",
       "bytes": 2372,
       "sha256": "b1632cab953e674c5925b06752f48da9d9d5d8520fe1448045c4e84fb4c126b0"
@@ -249,6 +269,11 @@
       "sha256": "6e02746e59fd095b41d1be04ed68217f2166f8294ebbe46c6bb9df319160c34d"
     },
     {
+      "path": "test_verify_manifest.py",
+      "bytes": 5814,
+      "sha256": "27de5cf31e76d679e8d3cab88cc878d15c86447001416cf5de323c4237820d1c"
+    },
+    {
       "path": "test_workflow_roundtrip.py",
       "bytes": 4210,
       "sha256": "787eba3e16f63231cb3f22a2fd6bed25060fe9e4be1ff82318edab9b6bde69b1"
@@ -260,8 +285,8 @@
     },
     {
       "path": "verify_manifest.py",
-      "bytes": 1141,
-      "sha256": "1e57854f4e6c88c31ed38a6d7d9481f8c5a57ceaba18de039251f7f66b471f05"
+      "bytes": 4323,
+      "sha256": "1b3fd802b5db2493a7945aa670867a02eb98a7cc89ce9ad93224848a62490f7c"
     }
   ]
 }
