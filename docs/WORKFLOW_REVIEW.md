@@ -224,3 +224,21 @@ not blinded. Freeze has no label argument and strips raw text; evaluate cannot r
 or update a corpus. Negative cases cover wrong references/roles, missing counterevidence,
 claim-type mismatches, empty outputs, stale/tampered artifacts and split-boundary
 violations. No model or actual scholar data was used.
+
+## Local preparation without claim extraction (synthetic, 2026-11-03)
+
+The file loader previously required users to calculate hashes and discover exact
+section locators before the first usable manifest. A synthetic selection now runs
+through `prepare_local_manifest.py` to the existing manifest format, then a manual
+fixture observation is verified by the actual `corpus_files.py` CLI. Only headings,
+counts and hashes are prepared; bodies and author claims are not extracted. Whole-
+selection authorization/holdout checks precede filesystem access, all path checks
+precede byte reads, and stale supplied hashes or preexisting observations are rejected.
+The prepared inventory is excluded from runtime knowledge. No real source, metadata
+API, full-text acquisition or external model was used.
+
+Independent review reproduced a source-path replacement window. The shared reader
+now pins a regular descriptor and checks path/identity before body reads, with a
+regression for an outside-root symlink substituted after preflight. Detected changes
+during reading also reject. This is not a guarantee against every hostile filesystem
+race; the stable-source assumption remains explicit.

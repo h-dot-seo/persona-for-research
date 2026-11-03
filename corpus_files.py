@@ -3,6 +3,8 @@ import argparse
 import copy
 import hashlib
 import json
+import os
+import stat
 from pathlib import Path
 from observation_input import verified_corpus
 from research_workflow import build, apply
@@ -28,16 +30,16 @@ def sections(text):
     return result
 
 
-def load_sources(manifest, root):
+def source_paths(manifest, root):
+    """Preflight the entire authorized selection before any source-byte read."""
     runtime_papers(manifest)  # Reject selected shape errors and unauthorized input before filesystem access.
-    corpus=copy.deepcopy(manifest)
     root=Path(root).resolve(strict=True)
     # Check the entire corpus boundary before opening any supplied paper.
     seen=set(); paths=[]
-    for paper in corpus['papers']:
+    for paper in manifest['papers']:
         if (paper.get('authorized') is not True or paper.get('split')!='training'
                 or paper.get('runtime_knowledge_eligible') is not True
-                or paper.get('author_id')!=corpus.get('author_id')):
+                or paper.get('author_id')!=manifest.get('author_id')):
             raise ValueError('only author-matched authorized training files are allowed')
         pid=paper.get('paper_id')
         if not isinstance(pid,str) or not pid or pid in seen:
@@ -55,8 +57,37 @@ def load_sources(manifest, root):
         if resolved.suffix.lower() not in ('.md','.txt'):
             raise ValueError('only UTF-8 Markdown/text sources are supported')
         paths.append(resolved)
+    return paths
+
+
+def read_source_bytes(path):
+    """Pin a regular descriptor and reject detected replacements before reading."""
+    path=Path(path)
+    if path.resolve(strict=True)!=path:
+        raise ValueError('selected source path changed after preflight')
+    flags=os.O_RDONLY | getattr(os,'O_BINARY',0) | getattr(os,'O_NOFOLLOW',0) | getattr(os,'O_NONBLOCK',0)
+    descriptor=os.open(path,flags)
+    try:
+        opened=os.fstat(descriptor);current=path.stat(follow_symlinks=False)
+        if (path.resolve(strict=True)!=path or not stat.S_ISREG(opened.st_mode)
+                or not stat.S_ISREG(current.st_mode)
+                or (opened.st_dev,opened.st_ino)!=(current.st_dev,current.st_ino)):
+            raise ValueError('selected source identity changed after preflight')
+        with os.fdopen(descriptor,'rb') as stream:
+            descriptor=None
+            raw=stream.read();after=os.fstat(stream.fileno())
+            if (opened.st_size,opened.st_mtime_ns,opened.st_ctime_ns)!=(after.st_size,after.st_mtime_ns,after.st_ctime_ns):
+                raise ValueError('selected source changed while reading')
+            return raw
+    finally:
+        if descriptor is not None:os.close(descriptor)
+
+
+def load_sources(manifest, root):
+    paths=source_paths(manifest, root)
+    corpus=copy.deepcopy(manifest)
     for paper,path in zip(corpus['papers'],paths):
-        raw=path.read_bytes()
+        raw=read_source_bytes(path)
         if hashlib.sha256(raw).hexdigest()!=paper.get('source_sha256'):
             raise ValueError('source byte hash mismatch: '+paper['paper_id'])
         segment_map=sections(raw.decode('utf-8'))

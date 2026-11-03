@@ -360,3 +360,11 @@ explicit synthetic holdout-role labels: citation matches/omissions, challenge
 preservation, and answer/source claim-type distinctions. No aggregate score,
 researcher-fidelity claim or semantic validation is provided. See
 [synthetic evaluation and its limits](docs/SYNTHETIC_EVALUATION.md).
+
+### Prepare authorized local source files
+
+`prepare_local_manifest.py` fills byte hashes and section-locator inventory for an
+explicit training-only file selection, leaving observations empty. The result uses
+the existing manifest format and feeds `corpus_files.py` after manual curation.
+No full body, claim extraction, publication lookup or model call is added. See
+[local input preparation](docs/LOCAL_INPUT_PREPARATION.md).

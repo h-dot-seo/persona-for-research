@@ -1,0 +1,33 @@
+{
+  "author_id": "synthetic-scholar",
+  "version": "1",
+  "build_id": "synthetic-build",
+  "papers": [
+    {
+      "paper_id": "synthetic-0",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "locator": "synthetic fixture",
+      "kind": "research",
+      "year": 2020,
+      "topic": "model design",
+      "observations": [],
+      "source_file": "synthetic-0.md"
+    },
+    {
+      "paper_id": "synthetic-1",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "locator": "synthetic fixture",
+      "kind": "review",
+      "year": 2021,
+      "topic": "model design",
+      "observations": [],
+      "source_file": "synthetic-1.md"
+    }
+  ]
+}
