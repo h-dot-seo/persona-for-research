@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.34-pattern-transfer-review",
+  "release": "0.35-evidence-detail-review",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 128,
+  "file_count": 130,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 24174,
-      "sha256": "e416dc8fd16f49ffcc943062cfef2136f5c702bb107dab51e3cd5e79bc29db6e"
+      "bytes": 24545,
+      "sha256": "e4a1e620a785ae1c3f1cba4775c7957c9740c29e6bb46c3f69dc32bf839b91ef"
     },
     {
       "path": "RIGHTS.md",
@@ -144,6 +144,11 @@
       "sha256": "73e99dcb918c29c15bd6e7157ed4075ceefe5a13e3c47ba8e215b4bd8f0bee99"
     },
     {
+      "path": "docs/EVIDENCE_DETAILS.md",
+      "bytes": 4059,
+      "sha256": "5c7c995c7a423cb0c2ce6e05108deb9c8a80dae15ff09094ce32b7d7b7d8dee2"
+    },
+    {
       "path": "docs/EVIDENCE_SCOPE.md",
       "bytes": 3856,
       "sha256": "688cc5ed39ff416ecc1b9e6664e46a3ee132b88ce7f50ffa40da546b5272f33c"
@@ -230,8 +235,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 19395,
-      "sha256": "5d5e8bc2eecb8b9c98679b83b9770511e24accffda3579d924bf890431b58a0f"
+      "bytes": 19633,
+      "sha256": "0cea5efb2c61865925d1256b2afca96210d524eeb9af0ccf72ea62248549c4fb"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -390,8 +395,8 @@
     },
     {
       "path": "review_package.py",
-      "bytes": 4498,
-      "sha256": "32b5bf0025271ff3389a3f398241c29e5ff9e5e1e5e7856676069252e90e778e"
+      "bytes": 8639,
+      "sha256": "8d7e58df48ead8dc8e60ccdb70a185d20907d05d1f8e353875926cbfc65b87ee"
     },
     {
       "path": "review_workspace.py",
@@ -562,6 +567,11 @@
       "path": "test_research_workflow.py",
       "bytes": 1802,
       "sha256": "6e46edae3645e9f266e21c764c7a26bbb618a5ea893812943d0ee296cb819c91"
+    },
+    {
+      "path": "test_review_details.py",
+      "bytes": 7815,
+      "sha256": "6fb3d895698c2b31c62595ff8d7c2967275ccd8f35fb058da41b3ca7189ed36e"
     },
     {
       "path": "test_review_journey.py",

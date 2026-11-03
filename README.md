@@ -420,3 +420,9 @@ is inferred from the evidence inventory.
 pattern, applicability and answer/design artifacts. It exposes unresolved conditions,
 missing challenge-role uses and absent falsification criteria without generating or
 rebinding any claims. Exact references and enclosing-observation context are distinguished.
+
+For a source-by-source check before selecting a method, use
+`review_package.py ... --evidence-details`: exact observation/component references,
+individual missing reasoning dimensions and complete mock-review provenance remain
+visible. See [evidence detail walkthrough](docs/EVIDENCE_DETAILS.md). The default
+compact rows also preserve the observation's own claim type.

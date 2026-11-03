@@ -316,3 +316,7 @@ full context and answer/design reviews. Exact component/observation matches rema
 separate; an observation-level condition judgment is not component approval. Role
 matches are structural traces, not correctness or causal validation, and no artifact
 content is auto-migrated. This reuses existing forms instead of another authoring schema.
+
+Use the optional [evidence detail view](EVIDENCE_DETAILS.md) when aggregate coverage
+could conceal gaps in an individual observation. It preserves exact references and
+claim labels without choosing a method or filling missing reasoning.
