@@ -7,9 +7,11 @@ from pathlib import Path
 from research_workflow import build, apply
 from reasoning_cards import validate_components
 from verification_receipt import VerifiedCorpus
+from corpus_projection import runtime_papers
 
 
 def verified_corpus(corpus, *, _local_source_ids=()):
+    runtime_papers(corpus)  # Validate selected shapes and the full authorization boundary first.
     result = copy.deepcopy(corpus)
     # Reject unauthorized identity/split boundaries before inspecting any source text.
     for paper in result['papers']:

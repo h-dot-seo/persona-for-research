@@ -12,11 +12,11 @@ from corpus_projection import runtime_papers
 
 
 def build(corpus):
-    author = corpus['author_id']
     verified = isinstance(corpus, VerifiedCorpus)
     if verified and not corpus.unchanged():
         raise ValueError('verified corpus changed after intake; verify again')
     papers = runtime_papers(corpus)
+    author = corpus['author_id']
     for paper in papers:
         paper['source_verification'] = ('LOCAL_BYTES_SHA256_MATCH'
             if verified and paper.get('paper_id') in corpus.local_source_ids else 'NOT_PERFORMED')

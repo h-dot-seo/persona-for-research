@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from observation_input import verified_corpus
 from research_workflow import build, apply
+from corpus_projection import runtime_papers
 
 
 def sections(text):
@@ -27,6 +28,7 @@ def sections(text):
 
 
 def load_sources(manifest, root):
+    runtime_papers(manifest)  # Reject selected shape errors and unauthorized input before filesystem access.
     corpus=copy.deepcopy(manifest)
     root=Path(root).resolve(strict=True)
     # Check the entire corpus boundary before opening any supplied paper.

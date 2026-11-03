@@ -12,6 +12,11 @@ COMPONENT_FIELDS = ('text', 'locator', 'evidence_quote', 'claim_type', 'evidence
 
 def runtime_papers(corpus):
     """Reject corpus authorization failures before projecting observation records."""
+    if not isinstance(corpus, dict):
+        raise ValueError('corpus must be an object')
+    for field in ('author_id', 'version', 'build_id'):
+        if not isinstance(corpus.get(field), str) or not corpus[field].strip():
+            raise ValueError('corpus author_id, version and build_id must be nonempty strings')
     papers = corpus.get('papers')
     if not isinstance(papers, list) or not papers:
         raise ValueError('at least one authorized training paper is required')

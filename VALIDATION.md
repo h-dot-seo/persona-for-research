@@ -71,3 +71,12 @@ CLI success/error paths. Publication scan, manifest verification and compilation
 passed. Comparisons are structural and do not approve canonical policy changes.
 Independent review identified a numeric-type equality gap before publication;
 canonical JSON hashing and an integer/float regression close it.
+
+End-to-end/invalid-input review: 63 local tests passed. Invalid corpus/paper/observation
+container types and selected metadata shapes now fail common preflight before
+source-file access; this is not complete annotation validation. Tested CLI rejection
+cases emit no traceback or partial JSON. A real subprocess
+round-trip covers local byte/quote checks, reasoning/coverage, candidate disagreement,
+release comparison, source tampering and unchanged prior packages. Publication,
+manifest and compilation checks passed. See docs/WORKFLOW_REVIEW.md for user-facing
+limitations and real-corpus evaluation prerequisites; no model or real corpus used.

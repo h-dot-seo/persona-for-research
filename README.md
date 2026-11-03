@@ -8,6 +8,9 @@ unpublished opinions, personal memories and private communications are outside s
 No actual researcher persona, article corpus, knowledge database or validation scores
 are included in this repository.
 
+For the complete synthetic CLI round-trip, current UX limits and prerequisites
+for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
+
 ## Included
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.
