@@ -310,3 +310,11 @@ for an explicit reference year, preserving the complete design and unused
 counterevidence. It distinguishes research/review metadata without assigning
 ownership of ideas or claiming historical validity. See
 [publication scope review](docs/PUBLICATION_SCOPE.md).
+
+### Evidence-bound answer drafts
+
+`answer_draft.py` ties operator-supplied answer claims to fixed observation/component
+references and records hash-bound, per-claim review decisions. Stored-quote equality
+is separate from semantic support, source verification and author attribution.
+Rejected claims and uncited observations remain visible. See
+[answer-draft review](docs/ANSWER_DRAFT.md).

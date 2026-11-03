@@ -152,3 +152,15 @@ actual CLI JSON/text, input nonmutation, no provider calls stale link rejection,
 This does not construct a historical persona or prove research/review ownership.
 Real evaluation still requires permissions, identity/source dates and independent
 scholarly judgment; no real sources were collected or transmitted.
+
+## Answer-claim review (synthetic, 2026-11-03)
+
+The synthetic two-model question now has a reviewable answer draft, rather than only
+a proposed design. An operator synthesis cites an earlier research interpretation
+and a later review's explicit criterion with distinct support/challenge roles. A
+separate quotation matches the stored criterion exactly. Actual CLI tests create
+a review template, record judgments, and display the full evidence-linked answer.
+Changing claim text, question, citation role or uncertainty makes the review stale.
+No source quote becomes an individual author's claim, and no retained judgment
+becomes scientific validation. All input prose and decisions remain synthetic,
+operator supplied; no real model, researcher data or external API is used.
