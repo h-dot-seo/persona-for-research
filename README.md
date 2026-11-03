@@ -71,3 +71,12 @@ Applications retain rule/paper/locator links and are labeled system inference.
 Coauthor attribution remains uncertain. No LLM, automatic paper extraction,
 cross-paper generalization, scientific validation or real researcher data is included.
 Synthetic source hashes are placeholders, not receipts for real publications.
+
+### Repetition and counterevidence
+
+Observations may declare `stance: support` (default) or `challenge`. Application
+groups exact method/condition pairs, distinguishing a single paper, repetition
+across distinct papers, and contested patterns. Each supporting/challenging item
+retains paper ID, locator, year and research/review type. Challenge observations
+produce challenge prompts, not recommendations. This deterministic grouping is
+not semantic synthesis or proof that a method is unique to an individual author.

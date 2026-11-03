@@ -1,6 +1,6 @@
 {
   "project": "persona-for-research",
-  "release": "0.2.0-local-workflows",
+  "release": "0.3.0-linked-workflows",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
@@ -50,13 +50,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 3830,
-      "sha256": "b1a4849f785852254c3136ea88345a4f6d04d773c6ee0643b6c9e091e66287ef"
+      "bytes": 4358,
+      "sha256": "dc0513ff836b46694ffd343b6ca74f71d19209651b7fe2dc1905b02a72e7ccbf"
     },
     {
       "path": "research_workflow.py",
-      "bytes": 3939,
-      "sha256": "9aca11c994e2fcdf69b6baf9d853bf447d74b561efcf43a469f03adb1c6eb021"
+      "bytes": 5228,
+      "sha256": "378c3d9d5363e6d76b04c29d04a7ea8f846d80a4b0c6465c6569a3d4465aa04c"
     },
     {
       "path": "RIGHTS.md",
@@ -85,13 +85,13 @@
     },
     {
       "path": "test_research_workflow.py",
-      "bytes": 1098,
-      "sha256": "67494dd4a280a21b13cdd4c98a434744fbda09f84ba63ce0f7151c096190fb9f"
+      "bytes": 1802,
+      "sha256": "6e46edae3645e9f266e21c764c7a26bbb618a5ea893812943d0ee296cb819c91"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 1277,
-      "sha256": "26d2ecc9d2568591ba229687a626ef36b714632a611d80c03fe57f59bea9c05c"
+      "bytes": 1377,
+      "sha256": "9091a35fb36558937fe2c887db9f7215db909cb48f79075f52e49825fef1b242"
     }
   ]
 }

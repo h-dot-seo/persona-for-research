@@ -20,3 +20,14 @@ class ResearchTests(unittest.TestCase):
             with self.assertRaises(ValueError): build(c)
         p=build(self.corpus); p['persona']['rules'][0]['method']='changed'
         with self.assertRaises(ValueError): apply(p,'Question','model design')
+
+    def test_repeated_and_contested_patterns(self):
+        result=apply(build(self.corpus),'Which model?', 'model design')
+        self.assertEqual(result['patterns'][0]['classification'],'REPEATED_OBSERVATION')
+        self.corpus['papers'][1]['observations'][0]['stance']='challenge'
+        package=build(self.corpus)
+        result=apply(package,'Which model?', 'model design')
+        self.assertEqual(result['patterns'][0]['classification'],'CONTESTED')
+        self.assertEqual(result['patterns'][0]['challenging'][0]['source_kind'],'review')
+        self.assertEqual(result,apply(package,'Which model?', 'model design'))
+        self.assertIn('challenge',result['steps'][1]['planning_prompt'])

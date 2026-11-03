@@ -23,8 +23,12 @@ def build(corpus):
             if any(not isinstance(observation.get(k), str) or not observation[k].strip() for k in required):
                 raise ValueError('observation needs method, condition, limitation, locator and topic')
             rules.append(dict(rule_id=f'rule-{len(rules)+1}', **{k: observation[k] for k in required},
+                              stance=observation.get('stance', 'support'),
+                              source_kind=paper['kind'], year=paper['year'],
                               paper_id=paper['paper_id'], evidence_type='operator_curated_paper_observation',
                               attribution='coauthored work; individual ownership not established'))
+            if rules[-1]['stance'] not in ('support', 'challenge'):
+                raise ValueError('observation stance must be support or challenge')
     persona = dict(author_id=author, version=corpus['version'], build_id=corpus['build_id'],
                    identity=dict(simulation_only=True, private_beliefs_inferred=False),
                    rules=rules, trajectory=sorted(trajectory, key=lambda r: (r['year'], r['paper_id'])),
@@ -46,16 +50,26 @@ def apply(package, question, topic):
         raise ValueError('; '.join(errors))
     known = {p['paper_id'] for p in knowledge['papers']}
     steps = []
+    patterns = {}
     for rule in persona['rules']:
         if rule['paper_id'] not in known:
             raise ValueError('unbound rule evidence')
         if rule['topic'].casefold() == topic.casefold():
+            key = (rule['method'], rule['condition'])
+            pattern = patterns.setdefault(key, dict(method=rule['method'], condition=rule['condition'], supporting=[], challenging=[]))
+            pattern['supporting' if rule.get('stance', 'support') == 'support' else 'challenging'].append(
+                dict(paper_id=rule['paper_id'], locator=rule['locator'], year=rule.get('year'), source_kind=rule.get('source_kind')))
             steps.append(dict(rule_id=rule['rule_id'], paper_id=rule['paper_id'], locator=rule['locator'],
-                              planning_prompt=f"For {question}: consider {rule['method']}",
+                              planning_prompt=f"For {question}: {'challenge' if rule.get('stance') == 'challenge' else 'consider'} {rule['method']}",
+                              evidence_stance=rule.get('stance', 'support'),
                               applicability_to_check=rule['condition'], limitation=rule['limitation'],
                               status='SYSTEM_INFERENCE_REQUIRES_REVIEW'))
+    for pattern in patterns.values():
+        pattern['classification'] = ('CONTESTED' if pattern['challenging'] else
+            'REPEATED_OBSERVATION' if len({r['paper_id'] for r in pattern['supporting']}) > 1 else 'SINGLE_PAPER_OBSERVATION')
+        pattern['inference_boundary'] = 'Exact method/condition grouping; no claim of author-specific or causal validity'
     return dict(question=question, status='PLANNING_SCAFFOLD' if steps else 'OUTSIDE_PERSONA_COVERAGE',
-                simulation_only=True, steps=steps, trajectory=persona['trajectory'],
+                simulation_only=True, steps=steps, patterns=list(patterns.values()), trajectory=persona['trajectory'],
                 semantic_validation='NOT_PERFORMED')
 
 
