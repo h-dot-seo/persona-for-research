@@ -105,3 +105,11 @@ discovery → publication timeline/compact review sequence. The operator chooses
 an existing matching key rather than needing to inspect the full package manually.
 Labels are grouped only by the same casefold rule used at runtime, with no topic
 recommendation or semantic search. See [TOPIC_DISCOVERY.md](TOPIC_DISCOVERY.md).
+
+## Link different approaches explicitly
+
+`python -m unittest test_reasoning_links -v` exercises a later synthetic review's
+falsification criterion qualifying an earlier research observation's alternative
+explanation, despite different methods and topics. An operator-authored, hash-bound
+sidecar links existing nodes; it is not automated synthesis or an author-attributed
+reasoning chain. No new canonical policy is created. See [REASONING_LINKS.md](REASONING_LINKS.md).

@@ -62,6 +62,11 @@ See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
 
 ## Included
 
+`reasoning_links.py` reviews manually supplied links between source observations or
+reasoning components, including different methods, topics and publication years.
+Links remain operator interpretations, separate from endpoint claim types and
+canonical rules. See [cross-publication links](docs/REASONING_LINKS.md).
+
 Use `topic_inventory.py package.json --format text` to discover available exact-topic
 scopes before planning or review. It lists existing observation topics and coverage,
 without semantic merging, ranking or automatic selection. See [topic discovery](docs/TOPIC_DISCOVERY.md).

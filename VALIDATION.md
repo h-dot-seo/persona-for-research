@@ -158,3 +158,12 @@ component/claim/stance coverage, multiple topics and both stances in one paper,
 duplicate hashes, empty topics, tampering/holdout rejection, no mutation/provider
 or source reads, and safe text output. Actual CLI intake → discovery → timeline/
 compact review uses a returned topic key. No semantic retrieval or ranking occurs.
+
+Explicit cross-publication links: 154 local tests passed. Ten new cases cover
+different methods/topics and backward-year links, separate source/edge claim types,
+empty templates, endpoint indexes and missing dimensions, stale bindings/reordered
+records, authorization, strict schema/duplicates/self-links, preserved conflicts
+and cycles, same-source flags, metadata exclusion, recorded checks and safe text.
+Actual CLI intake → empty template → explicitly simulated link → JSON/text review
+runs without mutation, source rereads or provider calls. No link validity or real
+researcher reasoning process is inferred.
