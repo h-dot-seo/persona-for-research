@@ -405,3 +405,11 @@ research/review observations in time order beside an explicit target context.
 Operators record consider/exclude/defer, condition comparisons, uncertainty and
 counterevidence; excluded and deferred evidence stays visible. No applicability,
 scientific validity or researcher-specific reasoning is inferred.
+
+## Review tentative method patterns
+
+[Operator pattern hypotheses](docs/PATTERN_HYPOTHESES.md) connect explicitly selected
+research/review observations without rewriting their different wording. Original
+claims, counterevidence, publication order, rival explanations and missing falsifiers
+remain visible. No semantic pattern, distinctive scholar trait or recommendation
+is inferred from the evidence inventory.

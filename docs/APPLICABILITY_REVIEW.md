@@ -87,3 +87,8 @@ sanitization, rights clearance or permission to publish excerpts.
 ```sh
 python -m unittest test_applicability_review -v
 ```
+
+For a tentative recurring method across publications, first record an explicit
+[operator pattern hypothesis](PATTERN_HYPOTHESES.md) with rival explanations and
+falsification criteria. Such a pattern does not automatically make it applicable
+to the new context or populate this worksheet.

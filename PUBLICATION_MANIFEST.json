@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.32-applicability-review",
+  "release": "0.33-operator-pattern-hypotheses",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 122,
+  "file_count": 125,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 23375,
-      "sha256": "b4143739df339c5e48620b6ca0f6a9e642ff162a90f4905fb158249420f1a161"
+      "bytes": 23788,
+      "sha256": "5c6748aa24bf6eba9236999fb8d987c8d8ed14319f760a153dc388e798127909"
     },
     {
       "path": "RIGHTS.md",
@@ -115,8 +115,8 @@
     },
     {
       "path": "docs/APPLICABILITY_REVIEW.md",
-      "bytes": 5555,
-      "sha256": "955f411a8efe8ece169ade3d486f5342ef05478cfb2d70ef4eabf4efdc97be75"
+      "bytes": 5844,
+      "sha256": "23a0bfeb8d52ba8a57dc7409d917b973448bd0478a22e8b7dbff30c089d85749"
     },
     {
       "path": "docs/ARCHITECTURE.md",
@@ -174,6 +174,11 @@
       "sha256": "ab73517406b89e1a9f0d615a174bbb17e47c52b55cd9b40bac6649ed3483e399"
     },
     {
+      "path": "docs/PATTERN_HYPOTHESES.md",
+      "bytes": 5378,
+      "sha256": "48bfb1c15d32814550101636251416bb2043c5779afe584dc39b8b3170c28630"
+    },
+    {
       "path": "docs/PUBLICATION_SCOPE.md",
       "bytes": 3013,
       "sha256": "c073d0389afc554e5b43ca52cf0e601d57ff2721866d2f32b7e6ab3953957f24"
@@ -220,8 +225,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 18124,
-      "sha256": "fae19063309812878b3a3df66c7ac7ef3dcb22d74be2f319401e9dd3df13e672"
+      "bytes": 18756,
+      "sha256": "319b7591e661898e6eab91ed71c265c28afd9971e162935e9188914680fe876c"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -327,6 +332,11 @@
       "path": "operator_review.py",
       "bytes": 11470,
       "sha256": "27193dc3dbdeaf916d1b19a78697e12bb521c5ca13732c64af9217ea1e4efa88"
+    },
+    {
+      "path": "pattern_hypotheses.py",
+      "bytes": 8846,
+      "sha256": "d16874ce4ca1d754f9cc4f18e257e6a582d2d8483193f2e03ec30cdcba1e5543"
     },
     {
       "path": "persona.py",
@@ -492,6 +502,11 @@
       "path": "test_operator_review.py",
       "bytes": 18141,
       "sha256": "a0044765cf65bcb1f8d1517a286cda7be824cd9b4acfa64748615ccad08d1923"
+    },
+    {
+      "path": "test_pattern_hypotheses.py",
+      "bytes": 6926,
+      "sha256": "55b4a4d65e3af43a7605f388a5fdcd1050ef79276c67837adde41b47a3c123d4"
     },
     {
       "path": "test_pattern_source_identity.py",

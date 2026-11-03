@@ -296,3 +296,13 @@ limitation and supplied reasoning beside a user-declared new context. All defaul
 are deferred. Operator exclusions and counterevidence remain visible; changing the
 context requires a fresh bound form. Synthetic tests validate record preservation
 and gaps, not whether the operator's comparison or proposed research is sound.
+
+### Cross-publication operator pattern hypotheses
+
+Exact-string trajectory summaries did not offer a place to review a proposed pattern
+across differently worded observations. The manual pattern sheet now links explicit
+support/challenge references with scope, rival explanation, falsification criterion
+and uncertainty. Synthetic cases distinguish multiple components from multiple
+papers, flag shared source hashes and keep a review counterargument separate from
+the operator's proposed pattern. It neither discovers patterns nor validates actual
+researcher thought or semantic support; new-context application remains separate.
