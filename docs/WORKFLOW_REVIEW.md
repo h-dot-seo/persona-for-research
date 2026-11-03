@@ -75,3 +75,12 @@ establishes mechanical behavior only.
    tools do not require such transmission. No credentials or paid API are needed.
 
 No real-scholar validation has been performed or authorized by this demo.
+
+## Publication-year review
+
+Run `python -m unittest test_publication_timeline -v` for a second real CLI scenario:
+an earlier synthetic question-framing/method record, a later review challenge and
+a same-year research support record. The JSON and text timeline retain all three,
+their locators and separate claim types. Missing question framing is not copied
+between records. This adds a reviewable chronological artifact, not an inferred
+intellectual biography. See [PUBLICATION_TIMELINE.md](PUBLICATION_TIMELINE.md).

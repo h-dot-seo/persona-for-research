@@ -132,3 +132,13 @@ with exact original replacement hashes, stale corpus/invalid source rejection,
 empty target lists, no provider calls or mutation, and actual CLI mode conflicts.
 The inventory is not a signature: changed valid candidate text produces a new
 bundle hash, while an existing review remains bound to its original bundle.
+
+Publication timeline: 129 local tests passed. Nine new cases cover chronological
+support/challenge and research/review records, duplicate source hashes, independent
+component locators and missing question framing, exact topic filtering, mismatched
+rules/bindings/authorization, raw metadata exclusion, recorded-check label types,
+stable paper ordering, UTF-8/control handling, and a real intake-to-JSON/text CLI
+round-trip. No actual researcher, external inference or career narrative is tested.
+Independent review found identical text for raw versus quote-verified inputs;
+recorded source/observation/component labels now distinguish them, with a regression
+test and the explicit not-rechecked boundary retained.

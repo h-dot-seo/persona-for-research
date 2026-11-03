@@ -62,6 +62,11 @@ See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
 
 ## Included
 
+`publication_timeline.py` creates a chronological JSON or compact text review of
+supplied questions, methods and evidence. It keeps research/review sources,
+support/challenge records and explicit-statement/interpretation labels separate,
+without inferring a career narrative. See the [timeline workflow](docs/PUBLICATION_TIMELINE.md).
+
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.
 - Logical JSON binding validator (`persona.py`) and a holdout-redacting projection helper (`safe_canonical_read.py`).
 - Synthetic templates and tests; a portable agent workflow in `SKILL.md`.

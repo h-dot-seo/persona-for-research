@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.12.0-review-target-inventory",
+  "release": "0.13.0-publication-timeline",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 59,
+  "file_count": 62,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 15834,
-      "sha256": "ce87958e958af70ff11d59111717cf2856fcbc8fae41dffff66b0248d0581a57"
+      "bytes": 16170,
+      "sha256": "0dbce1e34e818e6172d4b2a824f1e1444f51736f4de847b01b63a1b8f77992b2"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 9048,
-      "sha256": "2bcc953963b13060aee574711a2ee9c9ade24ed037cb84a7955dc9003819e112"
+      "bytes": 9763,
+      "sha256": "97dd950990478a05e0e7d4ff379545552bdc8cb025fd384a11626da270357369"
     },
     {
       "path": "audit_publication.py",
@@ -89,9 +89,14 @@
       "sha256": "ab73517406b89e1a9f0d615a174bbb17e47c52b55cd9b40bac6649ed3483e399"
     },
     {
+      "path": "docs/PUBLICATION_TIMELINE.md",
+      "bytes": 4094,
+      "sha256": "7ba4ec811490ae4cf6a6bacd9432ad7fc20bc222d6491fda42072f50ca7dd38c"
+    },
+    {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 4270,
-      "sha256": "6f112197a133a73d638265206fbc9d8e776615c201f22b74168a3132291ffb1f"
+      "bytes": 4789,
+      "sha256": "4cf7fa4179de19d30c393f218d2304eec7dfaefb33bf640268c0848c962de07d"
     },
     {
       "path": "evidence_coverage.py",
@@ -167,6 +172,11 @@
       "path": "persona.py",
       "bytes": 3427,
       "sha256": "938e47989d38a9bace1b264f8406311d1f30698ddb1b31b3a1e9c8a2977aa3fc"
+    },
+    {
+      "path": "publication_timeline.py",
+      "bytes": 8271,
+      "sha256": "d75fe6f6ffa7acd13e4b67ad9f9ba75c1bf5dad76b907f8475bf66cad540be9e"
     },
     {
       "path": "reasoning_cards.py",
@@ -252,6 +262,11 @@
       "path": "test_persona.py",
       "bytes": 1639,
       "sha256": "75d1aef54772e03abe598784940976a3145f4c2f88bf397e298d362963754ea7"
+    },
+    {
+      "path": "test_publication_timeline.py",
+      "bytes": 9431,
+      "sha256": "046d43a1c46440d3e824a0413e2551a5da88e408beb89605c6933692b1e2a52a"
     },
     {
       "path": "test_reasoning_cards.py",
