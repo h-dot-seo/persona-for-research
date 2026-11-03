@@ -8,6 +8,18 @@ unpublished opinions, personal memories and private communications are outside s
 No actual researcher persona, article corpus, knowledge database or validation scores
 are included in this repository.
 
+## Start here: one synthetic command
+
+```sh
+python synthetic_walkthrough.py ../persona-synthetic-demo
+```
+
+Use a new directory outside this repository; its parent must already exist. The
+runner executes 15 real CLI stages, never overwrites a prior run, and leaves answer
+review deferred. Read `reader-scope.txt` first, then the generated `START_HERE.txt`
+for the full reading order. No LLM or real scholar material is used. See the
+[complete quickstart and recovery guide](docs/QUICKSTART.md).
+
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 

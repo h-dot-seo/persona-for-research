@@ -199,3 +199,16 @@ Actual CLI tests reconstruct this map, reject cycles/self-references and source-
 conclusions, preserve rejected/deferred premises, and invalidate stale draft/review
 bindings. Review order is deterministic navigation, not real researcher cognition or
 logical validity. The map does not transfer citations or infer a model reasoning trace.
+
+## Runnable first-use journey (synthetic, 2026-11-03)
+
+Manual setup had accumulated many bound JSON artifacts and CLI commands. The new
+`synthetic_walkthrough.py` runs 15 existing commands into a new external directory
+and gives an explicit reading order, command log and completion marker. A direct
+cloud invocation completed the full intake→mock review revision→answer/design→scope/
+argument/lineage sequence. The actual test CLI also succeeds from another working
+directory with spaces/Unicode in output paths. Existing directories and repository
+outputs are refused; failed or timed-out commands retain diagnostic artifacts without
+claiming completion. Fixed candidate decisions remain synthetic fixture data, while
+answer review stays deferred and intentional uncertainty gaps remain visible. No new
+research schema, real model call, source acquisition or scientific validation was added.
