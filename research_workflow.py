@@ -74,7 +74,7 @@ def apply(package, question, topic):
     errors = validate(persona, knowledge)
     if errors:
         raise ValueError('; '.join(errors))
-    known = {p['paper_id'] for p in knowledge['papers']}
+    known = {p['paper_id']: p for p in knowledge['papers']}
     steps = []
     patterns = {}
     for rule in persona['rules']:
@@ -84,7 +84,8 @@ def apply(package, question, topic):
             key = (rule['method'], rule['condition'])
             pattern = patterns.setdefault(key, dict(method=rule['method'], condition=rule['condition'], supporting=[], challenging=[]))
             pattern['supporting' if rule.get('stance', 'support') == 'support' else 'challenging'].append(
-                dict(paper_id=rule['paper_id'], locator=rule['locator'], year=rule.get('year'), source_kind=rule.get('source_kind')))
+                dict(paper_id=rule['paper_id'], locator=rule['locator'], year=rule.get('year'),
+                     source_kind=rule.get('source_kind'), source_sha256=known[rule['paper_id']]['source_sha256']))
             steps.append(dict(rule_id=rule['rule_id'], paper_id=rule['paper_id'], locator=rule['locator'],
                               planning_prompt=f"For {question}: {'challenge' if rule.get('stance') == 'challenge' else 'consider'} {rule['method']}",
                               evidence_stance=rule.get('stance', 'support'),
@@ -94,9 +95,20 @@ def apply(package, question, topic):
                               applicability_to_check=rule['condition'], limitation=rule['limitation'],
                               status='SYSTEM_INFERENCE_REQUIRES_REVIEW'))
     for pattern in patterns.values():
-        pattern['classification'] = ('CONTESTED' if pattern['challenging'] else
-            'REPEATED_OBSERVATION' if len({r['paper_id'] for r in pattern['supporting']}) > 1 else 'SINGLE_PAPER_OBSERVATION')
-        pattern['inference_boundary'] = 'Exact method/condition grouping; no claim of author-specific or causal validity'
+        pattern['distinct_source_hash_count'] = len({r['source_sha256']
+            for r in pattern['supporting'] + pattern['challenging']})
+        if not pattern['supporting']:
+            pattern['classification'] = 'CHALLENGE_ONLY'
+        elif pattern['challenging']:
+            pattern['classification'] = 'CONTESTED'
+        elif len({r['paper_id'] for r in pattern['supporting']}) == 1:
+            pattern['classification'] = 'SINGLE_PAPER_OBSERVATION'
+        elif pattern['distinct_source_hash_count'] == 1:
+            pattern['classification'] = 'MULTIPLE_RECORDS_SAME_SOURCE_HASH'
+        else:
+            pattern['classification'] = 'REPEATED_OBSERVATION'
+        pattern['inference_boundary'] = ('Exact method/condition grouping; no claim of author-specific or causal validity. '
+            'Identical hashes flag shared source content; different hashes do not establish independent publications or replication.')
     return dict(question=question, status='PLANNING_SCAFFOLD' if steps else 'OUTSIDE_PERSONA_COVERAGE',
                 simulation_only=True, steps=steps, patterns=list(patterns.values()), trajectory=persona['trajectory'],
                 methodology_trajectory=summarize([rule for rule in persona['rules']

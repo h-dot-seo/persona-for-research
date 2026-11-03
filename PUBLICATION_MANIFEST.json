@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.8.3-runtime-authorization",
+  "release": "0.8.4-source-repetition",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 48,
+  "file_count": 49,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 12778,
-      "sha256": "73d54e005da37a645d14dcde14f9e49ddea4b9dcf093a8bbe18dc11462013170"
+      "bytes": 13365,
+      "sha256": "ed9a28b001957994514f0c5cdb953d1718dc44f16657f66d378c77ecbff7cca8"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 6305,
-      "sha256": "010a5f9986972cbee845ccde309366bdfde59d8d9b9b203d56ae616b81b09b6a"
+      "bytes": 6759,
+      "sha256": "4b218e7714b0e11161ec3db423e897b53b1673278b5df43d742c3d2b609bcf12"
     },
     {
       "path": "audit_publication.py",
@@ -150,8 +150,8 @@
     },
     {
       "path": "research_workflow.py",
-      "bytes": 7730,
-      "sha256": "67097bb77f04a701516f3d584c02c6b9e7e30f90d4f27c6321e1f796f56cdcc4"
+      "bytes": 8415,
+      "sha256": "8c249b84e7eaff33fbfd787efebc8f9ec2d0a5e5be1fa8b32fa1e197210ed065"
     },
     {
       "path": "safe_canonical_read.py",
@@ -202,6 +202,11 @@
       "path": "test_observation_input.py",
       "bytes": 1636,
       "sha256": "1a81257188eb82128b1ff6192172177c16e68e306a2fd1c5b888ee1d12f32d86"
+    },
+    {
+      "path": "test_pattern_source_identity.py",
+      "bytes": 2576,
+      "sha256": "7cd843c9cb6ef67e2cbb39a49220feccda38e3013689200394d02ab4735113d0"
     },
     {
       "path": "test_persona.py",

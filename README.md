@@ -90,6 +90,15 @@ retains paper ID, locator, year and research/review type. Challenge observations
 produce challenge prompts, not recommendations. This deterministic grouping is
 not semantic synthesis or proof that a method is unique to an individual author.
 
+Repetition now requires distinct supplied source hashes as well as distinct paper
+IDs. Multiple supporting IDs sharing one hash are labeled
+`MULTIPLE_RECORDS_SAME_SOURCE_HASH`, and each pattern reports
+`distinct_source_hash_count`. Identical hashes flag shared source content; different
+hashes do not establish independent publications or experiments. Observations and
+IDs remain intact. Patterns containing only challenges are `CHALLENGE_ONLY`, while
+mixed support/challenge remains `CONTESTED`. Coverage paper counts are ID counts,
+not independently authenticated publication counts.
+
 ### Methodology over publication time
 
 Application output also includes `methodology_trajectory`, scoped to the requested

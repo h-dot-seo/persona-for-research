@@ -93,3 +93,10 @@ without the newer knowledge binding. Four regression cases cover missing, false
 and truthy nonboolean values, allowed legacy/current packages and standalone CLI
 rejection. Publication scan, manifest and compilation checks passed. Declared
 authorization remains an input contract, not independently verified permission.
+
+Source-repetition classification: 78 local tests passed. Independent review
+reproduced two byte-verified IDs pointing to one file being counted as repeated
+paper evidence. Five new cases verify same-file grouping, distinct hashes,
+single-paper repeated observations, mixed stances and challenge-only patterns.
+All observations remain available; hash differences do not imply independence.
+Publication scan, manifest verification and compilation passed.
