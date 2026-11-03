@@ -1,0 +1,49 @@
+{
+  "author_id": "synthetic-scholar",
+  "version": "1",
+  "build_id": "synthetic-build",
+  "papers": [
+    {
+      "paper_id": "synthetic-0",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "locator": "synthetic fixture",
+      "kind": "research",
+      "year": 2020,
+      "topic": "model design",
+      "observations": [
+        {
+          "method": "compare competing models before choosing an experiment",
+          "condition": "models predict distinct outcomes",
+          "limitation": "simulation only; no real author attribution",
+          "locator": "synthetic section 1",
+          "topic": "model design"
+        }
+      ]
+    },
+    {
+      "paper_id": "synthetic-1",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "locator": "synthetic fixture",
+      "kind": "review",
+      "year": 2021,
+      "topic": "model design",
+      "observations": [
+        {
+          "method": "compare competing models before choosing an experiment",
+          "condition": "models predict distinct outcomes",
+          "limitation": "simulation only; no real author attribution",
+          "locator": "synthetic section 1",
+          "topic": "model design"
+        }
+      ]
+    }
+  ]
+}

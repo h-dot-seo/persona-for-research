@@ -55,3 +55,19 @@ Enforce split authorization before retrieval; never rely on redaction to repair 
 See [lifecycle](docs/ARCHITECTURE.md), [workflow](SKILL.md),
 [publication boundary](PUBLICATION.md) and [security](SECURITY.md).
 No license has been selected by the owner yet; see [rights](RIGHTS.md).
+
+## Paper-to-research-plan workflow
+
+```sh
+python research_workflow.py examples/research-corpus.json --question "Which experiment discriminates models?" --topic "model design"
+```
+
+The JSON result contains a hash-bound persona/knowledge package, chronological
+research/review trajectory and a question-specific planning scaffold. Input papers
+must be explicitly authorized, author-matched, training-only and runtime-eligible.
+Each operator-curated observation supplies method, topic, condition, limitation and
+locator. Exact topic matching determines coverage; unmatched topics abstain.
+Applications retain rule/paper/locator links and are labeled system inference.
+Coauthor attribution remains uncertain. No LLM, automatic paper extraction,
+cross-paper generalization, scientific validation or real researcher data is included.
+Synthetic source hashes are placeholders, not receipts for real publications.
