@@ -86,3 +86,10 @@ non-finite/overflowing numbers and excessive container nesting are rejected. Tes
 exercise all six CLI boundaries, Unicode/finite inputs and preserved original-byte
 hash checks. Publication scan, manifest and compilation checks passed. Parsing
 guards remove ambiguity; they do not authenticate declared permissions.
+
+Legacy runtime authorization: 73 local tests passed. The shared validator now
+requires exact boolean authorization for every runtime paper, including packages
+without the newer knowledge binding. Four regression cases cover missing, false
+and truthy nonboolean values, allowed legacy/current packages and standalone CLI
+rejection. Publication scan, manifest and compilation checks passed. Declared
+authorization remains an input contract, not independently verified permission.

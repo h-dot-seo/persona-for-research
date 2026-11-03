@@ -48,6 +48,8 @@ def validate(persona, knowledge):
             seen.add(paper_id)
         if row.get('author_id') != persona.get('author_id'):
             errors.append('cross-author runtime record')
+        if row.get('authorized') is not True:
+            errors.append('runtime paper authorization required')
         if row.get('split') != 'training' or row.get('runtime_knowledge_eligible') is not True:
             errors.append('ineligible runtime paper')
         digest = row.get('source_sha256', '')

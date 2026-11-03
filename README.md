@@ -133,7 +133,10 @@ adapter attests that source bytes were checked. Receipts are not signatures or a
 security boundary against Python callers. New packages also bind the complete
 knowledge-paper payload into the persona hash, detecting later source metadata,
 authorization, quote or observation edits. Legacy packages without this additional
-binding retain their previous validation behavior and should be rebuilt.
+binding lack that tamper check and should be rebuilt. Every runtime paper, including
+legacy records, must explicitly declare `authorized: true`; missing values, false
+and truthy substitutes such as `1` or `"true"` are rejected at validation/application.
+This declaration is a required gate, not proof of permission or source rights.
 
 ### Coverage diagnostics
 
