@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.22.0-integrated-review",
+  "release": "0.23.0-reader-evidence-scope",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 87,
+  "file_count": 90,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 19242,
-      "sha256": "59b68f195cb99cce056cedd2e17557963ec4277d9add829babd2b5aabed13dac"
+      "bytes": 19605,
+      "sha256": "967bb1971cd57d485a8a3cd95e15451c5baa3e4be78cbe1617091853b4c208c9"
     },
     {
       "path": "RIGHTS.md",
@@ -119,6 +119,11 @@
       "sha256": "73e99dcb918c29c15bd6e7157ed4075ceefe5a13e3c47ba8e215b4bd8f0bee99"
     },
     {
+      "path": "docs/EVIDENCE_SCOPE.md",
+      "bytes": 3856,
+      "sha256": "688cc5ed39ff416ecc1b9e6664e46a3ee132b88ce7f50ffa40da546b5272f33c"
+    },
+    {
       "path": "docs/EXTRACTION_CONTRACT.md",
       "bytes": 4502,
       "sha256": "6b9079ca68ee0720d2aa2228a53a12c611f716a892a0947930b98429279b417f"
@@ -155,13 +160,18 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 10412,
-      "sha256": "f4e362cd5b2e26cd737862e32b323792d7d4cf81c360cb009dc54488823ef462"
+      "bytes": 11195,
+      "sha256": "bf52a9f6ec7bc909f1c59abd5b3d39fceed37be0fcb4187a7b8d6b8dceb223d2"
     },
     {
       "path": "evidence_coverage.py",
       "bytes": 2177,
       "sha256": "28ef95a0efc94da471de80be14e0f1603399fc5eeeedeef5cfd89a6929acc4a6"
+    },
+    {
+      "path": "evidence_scope.py",
+      "bytes": 12975,
+      "sha256": "f26efdcb33ba1d5afe7e1e1d3d721a41a985576851c158e391707c50e31e9737"
     },
     {
       "path": "examples/file-corpus.json",
@@ -322,6 +332,11 @@
       "path": "test_evidence_coverage.py",
       "bytes": 3064,
       "sha256": "e66ca33c74013c8392ec8dd800ec6569d6503dbd22db33faab0440cfd76d1ca2"
+    },
+    {
+      "path": "test_evidence_scope.py",
+      "bytes": 9713,
+      "sha256": "5a8b634fd33d93c6cdc51a5c73e2c259e95085cc3d210fdafb463e28086fe648"
     },
     {
       "path": "test_extraction_adapter.py",

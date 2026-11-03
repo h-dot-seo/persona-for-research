@@ -176,3 +176,15 @@ a gap found while integrating the previously design-only publication-scope repor
 Actual CLI JSON/text tests preserve full source details and missing falsification,
 reject different question wording/stale artifacts, and never collapse an observation
 with its component. No scores, automatic author attribution or real AI calls are used.
+
+## Reader scope disclosure (synthetic, 2026-11-03)
+
+A final consultation reader could mistake several paper IDs and repeated citations
+for independent support. The synthetic journey now explicitly tests two paper IDs
+sharing one source hash, repeated claim/step uses and an unused paper sharing an
+active hash. `evidence_scope.py` preserves all IDs but counts distinct hash groups,
+reports mixed bibliographic labels, and separates active references from unused
+links. The shorter reader view keeps answer claims, declared review state, missing
+uncertainty, design gaps and recorded mock/curated origin visible. Rejected claims
+remain included and labeled; this is not an approved-answer selector or a fidelity
+score. Actual CLI tests use no external model or real author material.

@@ -325,3 +325,10 @@ Rejected claims and uncited observations remain visible. See
 into one packet. Its exact-reference index connects uses without inferring agreement;
 mechanical prompts expose missing uncertainty, recorded review decisions and timing
 warnings, including answer-only citations. See [integrated review](docs/REVIEW_JOURNEY.md).
+
+### Reader evidence-scope disclosure
+
+`evidence_scope.py` shows the answer/design scope without treating repeated paper
+IDs or citations as independent evidence. It groups supplied source hashes, keeps
+unused records and recorded mock origin distinct, and preserves missing uncertainty
+and review warnings. See [reader scope disclosure](docs/EVIDENCE_SCOPE.md).
