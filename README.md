@@ -62,6 +62,11 @@ See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
 
 ## Included
 
+`design_scenario.py` traces operator-authored proposed research steps to explicit
+reasoning links, retaining unreferenced counterevidence and missing design fields.
+It does not generate experiments or turn source claims into author recommendations.
+See [proposal traceability](docs/DESIGN_SCENARIO.md).
+
 `reasoning_links.py` reviews manually supplied links between source observations or
 reasoning components, including different methods, topics and publication years.
 Links remain operator interpretations, separate from endpoint claim types and

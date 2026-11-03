@@ -113,3 +113,11 @@ falsification criterion qualifying an earlier research observation's alternative
 explanation, despite different methods and topics. An operator-authored, hash-bound
 sidecar links existing nodes; it is not automated synthesis or an author-attributed
 reasoning chain. No new canonical policy is created. See [REASONING_LINKS.md](REASONING_LINKS.md).
+
+## Trace a design proposal
+
+`python -m unittest test_design_scenario -v` connects a research question and an
+explicitly simulated model-comparison proposal to a later review's criterion link.
+The source criterion remains separate from a missing proposal falsification field,
+and unused counterevidence stays visible. This is an operator-authored scenario,
+not generated experimental advice. See [DESIGN_SCENARIO.md](DESIGN_SCENARIO.md).

@@ -167,3 +167,11 @@ and cycles, same-source flags, metadata exclusion, recorded checks and safe text
 Actual CLI intake → empty template → explicitly simulated link → JSON/text review
 runs without mutation, source rereads or provider calls. No link validity or real
 researcher reasoning process is inferred.
+
+Design-scenario traceability: 164 local tests passed. Ten new cases cover source
+versus proposal attribution, missing criteria not borrowed from sources, unlinked
+steps and unreferenced challenges, package/link binding changes, strict schema,
+explicit conflicting roles and distinct-link counts, empty templates, alias-safe
+nonmutation, no provider/source access and escaped text. Real CLI intake → links →
+empty proposal template → explicitly simulated design → JSON/text review succeeds.
+No experimental design quality, source applicability or researcher fidelity is scored.
