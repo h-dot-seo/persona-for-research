@@ -137,3 +137,18 @@ before auditing the final design. Earlier retained components can be covered by
 their own declared stage, while pre-chain inherited history remains unaudited even
 if later replaced. Missing intermediate changes are not automatically bridged.
 See [DESIGN_CHAIN.md](DESIGN_CHAIN.md).
+
+## Publication-year scope review (synthetic, 2026-11-03)
+
+The two-model design scenario combines an earlier original research observation
+and a later review criterion. Running its real CLI through
+`python -m unittest test_publication_scope -v` exposed a practical reviewer gap:
+publication years were visible but cross-year use was not explicitly marked.
+The new JSON/text scope audit requires a reference year, flags both endpoints of
+each used link, retains unreferenced challenge links and missing proposal fields,
+and never infers a date from question prose. Before-year records are not approved,
+and same-year order remains unresolved. All nine synthetic cases pass, including
+actual CLI JSON/text, input nonmutation, no provider calls stale link rejection, and invalid endpoint-year rejection (including unused links).
+This does not construct a historical persona or prove research/review ownership.
+Real evaluation still requires permissions, identity/source dates and independent
+scholarly judgment; no real sources were collected or transmitted.

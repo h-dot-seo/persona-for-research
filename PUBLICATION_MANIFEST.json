@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.19.0-declared-revision-chain",
+  "release": "0.20.0-publication-scope",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 78,
+  "file_count": 81,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 18072,
-      "sha256": "e189664859751a203f606a0af38645b4e3ac8e3bc5c2e8502052c7b74d48b8f6"
+      "bytes": 18466,
+      "sha256": "308b8d53104f4044abc718bce076407c07a2abcc853a79e3b2aae70e0f9b2636"
     },
     {
       "path": "RIGHTS.md",
@@ -119,6 +119,11 @@
       "sha256": "ab73517406b89e1a9f0d615a174bbb17e47c52b55cd9b40bac6649ed3483e399"
     },
     {
+      "path": "docs/PUBLICATION_SCOPE.md",
+      "bytes": 3013,
+      "sha256": "c073d0389afc554e5b43ca52cf0e601d57ff2721866d2f32b7e6ab3953957f24"
+    },
+    {
       "path": "docs/PUBLICATION_TIMELINE.md",
       "bytes": 4185,
       "sha256": "f7231f3b1154ad551c604ec8c171d7990a1774de114f4ccc6c06cdf6a6b817e5"
@@ -135,8 +140,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 7759,
-      "sha256": "10eb79cf09c5676f14bbeec903969ce193254e85c38e48511372c48b7b9b636b"
+      "bytes": 8815,
+      "sha256": "fd41acecb705af80515a059376859710e9e82ab9c7e22b771653166eeb589477"
     },
     {
       "path": "evidence_coverage.py",
@@ -212,6 +217,11 @@
       "path": "persona.py",
       "bytes": 3427,
       "sha256": "938e47989d38a9bace1b264f8406311d1f30698ddb1b31b3a1e9c8a2977aa3fc"
+    },
+    {
+      "path": "publication_scope.py",
+      "bytes": 6553,
+      "sha256": "b4ecf5d54f8e38fbb0ca89d02b59ac021a9487f83957016fd3bba618a1e7718f"
     },
     {
       "path": "publication_timeline.py",
@@ -322,6 +332,11 @@
       "path": "test_persona.py",
       "bytes": 1639,
       "sha256": "75d1aef54772e03abe598784940976a3145f4c2f88bf397e298d362963754ea7"
+    },
+    {
+      "path": "test_publication_scope.py",
+      "bytes": 7622,
+      "sha256": "60fcb8e0f35e64d1c12dbd3068708b4e556904fb143c2baf31ceca54c9fb969c"
     },
     {
       "path": "test_publication_timeline.py",

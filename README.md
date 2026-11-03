@@ -302,3 +302,11 @@ are omitted from the output package, but the authorized short observation quotes
 retained. A byte hash proves agreement with a supplied file, not its publisher or
 scholarly correctness. PDF/OCR, article acquisition and semantic extraction remain
 unimplemented. Keep real inputs and generated packages outside the public repository.
+
+### Publication-year scope of a proposed design
+
+`publication_scope.py` marks later-publication and same-year unresolved endpoints
+for an explicit reference year, preserving the complete design and unused
+counterevidence. It distinguishes research/review metadata without assigning
+ownership of ideas or claiming historical validity. See
+[publication scope review](docs/PUBLICATION_SCOPE.md).
