@@ -142,3 +142,12 @@ round-trip. No actual researcher, external inference or career narrative is test
 Independent review found identical text for raw versus quote-verified inputs;
 recorded source/observation/component labels now distinguish them, with a regression
 test and the explicit not-rechecked boundary retained.
+
+Runtime source/rule consistency: 136 local tests passed. Seven new cases reject
+rehashed source/rule mismatches, added/removed/reordered rules and inconsistent
+recorded quote labels across planning, compact review and timeline. Comparisons
+remain diagnostic; legacy authorized planning with matching source observations
+still works. Tests verify no input mutation, provider/source-file access or partial
+CLI output. This does not authenticate consistently rewritten inputs.
+Independent review also found that planning returned a cached trajectory without
+checking it; planning now reconstructs that summary from validated source fields.

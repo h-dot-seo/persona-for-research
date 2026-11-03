@@ -84,3 +84,16 @@ a same-year research support record. The JSON and text timeline retain all three
 their locators and separate claim types. Missing question framing is not copied
 between records. This adds a reviewable chronological artifact, not an inferred
 intellectual biography. See [PUBLICATION_TIMELINE.md](PUBLICATION_TIMELINE.md).
+
+## Reject inconsistent runtime copies
+
+Run `python -m unittest test_rule_source_consistency -v` to reproduce a candidate
+whose rule copies differ from its source observations despite recomputed package
+hashes. Release comparison still reports structural differences for diagnosis;
+planning, compact review and timeline reject the inconsistent candidate without
+partial output. Supported recorded quote checks must also agree between source
+observations/components and their rule copies. This is a structural consistency
+check. Planning reconstructs its all-paper trajectory from validated source fields
+instead of relaying a saved summary. This is
+not a signature, source-file recheck or semantic validation. Consistently
+altered source annotations still require real review.

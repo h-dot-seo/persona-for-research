@@ -67,6 +67,37 @@ def build(corpus):
     return dict(persona=persona, knowledge=knowledge)
 
 
+def validated_source_rules(package):
+    """Check runtime rule/source agreement; hashes and recorded labels are not signatures.
+
+    Call after package hash/authorization validation. Rebuild structural rules from
+    source observations, then restore only supported recorded quote labels. This
+    does not reopen sources or manufacture a current verification receipt.
+    """
+    persona = package['persona']
+    corpus = {key: persona[key] for key in ('author_id', 'version', 'build_id')}
+    corpus['papers'] = package['knowledge']['papers']
+    papers = runtime_papers(corpus)
+    expected = build(corpus)['persona']['rules']
+    records = [(paper, obs) for paper in papers for obs in paper['observations']]
+    for paper in papers:
+        if paper.get('source_verification', 'NOT_PERFORMED') not in ('NOT_PERFORMED', 'LOCAL_BYTES_SHA256_MATCH'):
+            raise ValueError('unsupported recorded source verification label')
+    for rule, (paper, obs) in zip(expected, records):
+        label = obs.get('evidence_verification', 'NOT_PERFORMED')
+        if label not in ('NOT_PERFORMED', 'EXACT_QUOTE_MATCH_ONLY'):
+            raise ValueError('unsupported recorded quote verification label')
+        rule['evidence_verification'] = label
+        for dimension, component in obs.get('reasoning', {}).items():
+            label = component.get('evidence_verification', 'NOT_PERFORMED')
+            if label not in ('NOT_PERFORMED', 'EXACT_QUOTE_MATCH_ONLY'):
+                raise ValueError('unsupported recorded quote verification label')
+            rule['reasoning'][dimension]['evidence_verification'] = label
+    if payload_sha256(persona.get('rules')) != payload_sha256(expected):
+        raise ValueError('persona rules do not match the bound source observations and recorded checks')
+    return papers
+
+
 def apply(package, question, topic):
     if not question.strip() or not topic.strip():
         raise ValueError('question and explicit topic required')
@@ -74,6 +105,9 @@ def apply(package, question, topic):
     errors = validate(persona, knowledge)
     if errors:
         raise ValueError('; '.join(errors))
+    source_papers = validated_source_rules(package)
+    trajectory = sorted([{key: paper[key] for key in ('paper_id', 'year', 'kind', 'topic')}
+                         for paper in source_papers], key=lambda row: (row['year'], row['paper_id']))
     known = {p['paper_id']: p for p in knowledge['papers']}
     steps = []
     patterns = {}
@@ -110,7 +144,7 @@ def apply(package, question, topic):
         pattern['inference_boundary'] = ('Exact method/condition grouping; no claim of author-specific or causal validity. '
             'Identical hashes flag shared source content; different hashes do not establish independent publications or replication.')
     return dict(question=question, status='PLANNING_SCAFFOLD' if steps else 'OUTSIDE_PERSONA_COVERAGE',
-                simulation_only=True, steps=steps, patterns=list(patterns.values()), trajectory=persona['trajectory'],
+                simulation_only=True, steps=steps, patterns=list(patterns.values()), trajectory=trajectory,
                 methodology_trajectory=summarize([rule for rule in persona['rules']
                     if rule['topic'].casefold() == topic.casefold()]),
                 reasoning_cards=[result for rule in persona['rules']

@@ -52,8 +52,9 @@ rejected input. No actual researcher, external service or model is used.
 
 The tool checks package hashes, authorization and training-only eligibility, then
 validates source observations. It checks saved rules against rebuilt source-derived
-rules, except recorded quote-verification labels, and rejects conflicting source
-IDs, years, paper kinds or method records. It ignores cached trajectory/application
+rules, including agreement of supported recorded quote-verification labels, and
+rejects conflicting source IDs, years, paper kinds or method records. The same
+consistency check protects planning and compact review. It ignores cached trajectory/application
 summaries and derives its timeline from knowledge observations. Hashes establish
 self-consistency, not authenticity of the source or producer.
 

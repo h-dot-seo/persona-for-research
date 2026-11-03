@@ -6,10 +6,9 @@ import sys
 from pathlib import Path
 
 from compare_releases import checked_package
-from corpus_projection import runtime_papers
 from persona import payload_sha256
 from reasoning_cards import DIMENSIONS
-from research_workflow import build
+from research_workflow import validated_source_rules
 from review_package import display
 from strict_json import load
 
@@ -20,15 +19,6 @@ BOUNDARY = ('Publication years order supplied records, not research decisions or
     'coauthored work does not establish individual ownership or private beliefs. Recorded '
     'quote/byte checks are not rechecked here. No semantic support or researcher fidelity '
     'is established. No LLM, external transmission or canonical update is performed.')
-
-
-def _without_quote_labels(value):
-    if isinstance(value, dict):
-        return {key: _without_quote_labels(item) for key, item in value.items()
-                if key != 'evidence_verification'}
-    if isinstance(value, list):
-        return [_without_quote_labels(item) for item in value]
-    return value
 
 
 def _check_label(value, verified):
@@ -44,11 +34,7 @@ def timeline(value, topic):
     persona = package['persona']
     corpus = {key: persona[key] for key in ('author_id', 'version', 'build_id')}
     corpus['papers'] = package['knowledge']['papers']
-    papers = runtime_papers(corpus)
-    rebuilt = build(corpus)  # Validate source observations, without inventing a verification receipt.
-    if payload_sha256(_without_quote_labels(persona.get('rules'))) != payload_sha256(
-            _without_quote_labels(rebuilt['persona']['rules'])):
-        raise ValueError('persona rules do not match the bound source observations')
+    papers = validated_source_rules(package)
     years = {}
     matching_papers = []
     for paper in sorted(papers, key=lambda p: (p['year'], p['paper_id'])):

@@ -226,6 +226,11 @@ workflow CLIs. It validates both package hashes and scholarly identities, then
 lists added, removed and structurally modified paper records, source-hash changes,
 observation changes and changes to the rule payload. Evidence or rule changes yield
 `REVIEW_REQUIRED`; version/build changes alone do not imply new evidence. It never
+approves a candidate for runtime use. Planning, compact review and timeline views
+add a source/rule consistency check, including supported recorded quote labels.
+A comparison can diagnose an inconsistent candidate that these runtime views reject.
+Fix its source observations and rebuild rather than editing rule copies or hashes.
+Hash/label agreement is not source authentication or new semantic verification. It never
 uses Python numeric equality to compare payloads: canonical JSON hashes distinguish
 integer, floating-point and boolean values while ignoring object-key ordering. It never
 updates either package or approves a release. Paper IDs must remain consistently
