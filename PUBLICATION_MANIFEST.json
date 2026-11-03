@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.23.0-reader-evidence-scope",
+  "release": "0.24.0-declared-argument-map",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 90,
+  "file_count": 93,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 19605,
-      "sha256": "967bb1971cd57d485a8a3cd95e15451c5baa3e4be78cbe1617091853b4c208c9"
+      "bytes": 19940,
+      "sha256": "6396fde9b327c09853c54d8b69c0a3b50ba71e3313ef6b896ddbb5485bbfcdfa"
     },
     {
       "path": "RIGHTS.md",
@@ -57,6 +57,11 @@
       "path": "answer_draft.py",
       "bytes": 12699,
       "sha256": "1b348e64107b9da84658e626411590229d4ac6c7c253c62888c39fcd6dc6cbac"
+    },
+    {
+      "path": "argument_map.py",
+      "bytes": 10127,
+      "sha256": "a54a9888f796a45dc12a6a5c9a4fada5d60c149fe0319cac6289294fb75d83db"
     },
     {
       "path": "audit_design_chain.py",
@@ -102,6 +107,11 @@
       "path": "docs/ARCHITECTURE.md",
       "bytes": 3985,
       "sha256": "5e638755e7674a75447ea55895ed66afb1358ce1991385fea9097a546c0dc2d0"
+    },
+    {
+      "path": "docs/ARGUMENT_MAP.md",
+      "bytes": 3757,
+      "sha256": "595a67ffbd7f3deebb290d8bb9751bc51559e962dadd5d9e17006fb9530045b1"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -160,8 +170,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 11195,
-      "sha256": "bf52a9f6ec7bc909f1c59abd5b3d39fceed37be0fcb4187a7b8d6b8dceb223d2"
+      "bytes": 11933,
+      "sha256": "0a5efc7063ba1ff81108a504ea41592a63787e7f86324ffe025ed249a318a055"
     },
     {
       "path": "evidence_coverage.py",
@@ -292,6 +302,11 @@
       "path": "test_answer_draft.py",
       "bytes": 10714,
       "sha256": "d1c5da7322a7139f62f8f83af844380017d378b052be5ef9d58e225cc827c3dc"
+    },
+    {
+      "path": "test_argument_map.py",
+      "bytes": 7811,
+      "sha256": "633a048636aea9938d4aadc06e728215ef59f009ef195e5d9a3e9838300dbd25"
     },
     {
       "path": "test_cli_e2e.py",

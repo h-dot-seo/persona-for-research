@@ -332,3 +332,10 @@ warnings, including answer-only citations. See [integrated review](docs/REVIEW_J
 IDs or citations as independent evidence. It groups supplied source hashes, keeps
 unused records and recorded mock origin distinct, and preserves missing uncertainty
 and review warnings. See [reader scope disclosure](docs/EVIDENCE_SCOPE.md).
+
+### Operator-declared argument steps
+
+`argument_map.py` connects existing answer premises to operator-synthesis conclusions
+with explicit bridges, assumptions and defeaters. It rejects circular dependencies,
+keeps rejected premises visible and never transfers citations automatically. See
+[argument-map review](docs/ARGUMENT_MAP.md).

@@ -188,3 +188,14 @@ links. The shorter reader view keeps answer claims, declared review state, missi
 uncertainty, design gaps and recorded mock/curated origin visible. Rejected claims
 remain included and labeled; this is not an approved-answer selector or a fidelity
 score. Actual CLI tests use no external model or real author material.
+
+## Premise-to-conclusion review (synthetic, 2026-11-03)
+
+Source-linked answer claims still left the logical bridge between claims implicit.
+The synthetic journey now proposes a third conclusion from a quoted review criterion
+and a research interpretation using `argument_map.py`. The operator must state the
+bridge and assumptions; a missing defeater and an uncited conclusion remain explicit.
+Actual CLI tests reconstruct this map, reject cycles/self-references and source-quote
+conclusions, preserve rejected/deferred premises, and invalidate stale draft/review
+bindings. Review order is deterministic navigation, not real researcher cognition or
+logical validity. The map does not transfer citations or infer a model reasoning trace.
