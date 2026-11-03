@@ -27,3 +27,14 @@ Second increment: 6 tests passed; failure boundaries and deterministic repeated 
 Third increment: 8 tests passed, including supplied-evidence rejection and deterministic output. No external model/search integration tested.
 
 Fourth increment: CLI end-to-end scenarios and failure recovery added. Local tests: 9 passed. Remote CI status is recorded separately in the private development log.
+
+Cloud methodology chronology increment: 18 standard-library tests passed locally,
+including 9 new synthetic cases for research/review separation, duplicate-paper
+counting, same-year disagreement, cross-year variation, challenge-only evidence,
+exact-condition separation, quote provenance, stable chronological order and input
+authorization. Publication scan and byte-manifest verification passed. No remote
+CI run or real-scholar validity evaluation is claimed for this uncommitted increment.
+
+Fifth increment: 12 local tests passed. New CLI paths, source boundaries, deterministic output and tamper/no-overwrite checks are covered. See private development log for remote matrix CI.
+
+Combined cloud verification: local-file intake and chronology integration passed 21 tests; source ZIP and per-file hashes matched the handoff. No real corpus was used.

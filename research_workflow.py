@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 from persona import payload_sha256, validate
+from methodology_trajectory import summarize
 
 
 def build(corpus):
@@ -76,6 +77,8 @@ def apply(package, question, topic):
         pattern['inference_boundary'] = 'Exact method/condition grouping; no claim of author-specific or causal validity'
     return dict(question=question, status='PLANNING_SCAFFOLD' if steps else 'OUTSIDE_PERSONA_COVERAGE',
                 simulation_only=True, steps=steps, patterns=list(patterns.values()), trajectory=persona['trajectory'],
+                methodology_trajectory=summarize([rule for rule in persona['rules']
+                    if rule['topic'].casefold() == topic.casefold()]),
                 semantic_validation='NOT_PERFORMED')
 
 

@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.4.1-e2e-validation",
+  "release": "0.5.0-source-chronology",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 24,
+  "file_count": 31,
   "files": [
     {
       "path": ".gitattributes",
@@ -24,14 +24,54 @@
       "sha256": "9582424c530015ffed444c118b0a8f46e9b4a4f64989775c4d534e1049ffdd32"
     },
     {
+      "path": "PUBLICATION.md",
+      "bytes": 1042,
+      "sha256": "d0eb77be8d3f46f7c954cb4108270e72c6ca1208a8410e3ae42393afe83c5308"
+    },
+    {
+      "path": "README.md",
+      "bytes": 7668,
+      "sha256": "eb4c6e417a8480e3e3c4c52947c516c4dd79239211ade1ce79dcba61ba45b8f9"
+    },
+    {
+      "path": "RIGHTS.md",
+      "bytes": 952,
+      "sha256": "7b403cfda5978399a0a9aac7b2af267234d6ff3e6baad234883a972e9767068a"
+    },
+    {
+      "path": "SECURITY.md",
+      "bytes": 1324,
+      "sha256": "9bcf7ee3f4b484ed2af153569946f72fadcf6d8a06a599433e4d80e8525d8f36"
+    },
+    {
+      "path": "SKILL.md",
+      "bytes": 1595,
+      "sha256": "37b3801d3c0b9fee09a59bc9f42d25b584d8b7c90c9e6914c807ef74c5fc51a6"
+    },
+    {
+      "path": "VALIDATION.md",
+      "bytes": 2515,
+      "sha256": "34010e7002823e317eacdcda61a9032f01cbfc46c903224c8d996db28856b75c"
+    },
+    {
       "path": "audit_publication.py",
       "bytes": 1969,
       "sha256": "349bfe9f189da2beaee4d655ba05b8f080f79b5fe7518097eafb6beea5459d08"
     },
     {
+      "path": "corpus_files.py",
+      "bytes": 3815,
+      "sha256": "df0cf05ef718ad37fdd9047886f5418dfe8406f8212fddeee2587f5293546036"
+    },
+    {
       "path": "docs/ARCHITECTURE.md",
       "bytes": 3985,
       "sha256": "5e638755e7674a75447ea55895ed66afb1358ce1991385fea9097a546c0dc2d0"
+    },
+    {
+      "path": "examples/file-corpus.json",
+      "bytes": 1838,
+      "sha256": "28964c3e90f93e710c8343989be968a99a032876f2701ae9f5a918cbfd3b629f"
     },
     {
       "path": "examples/knowledge.json",
@@ -54,6 +94,21 @@
       "sha256": "96277049be32ea616e8005fed5aa3deda11c9114e9d62478f2b13eb7750daff1"
     },
     {
+      "path": "examples/synthetic-sources/synthetic-0.md",
+      "bytes": 110,
+      "sha256": "d8d28f83ca37718cf65c8be96260d89593fcf17b3b665a9508741ed77bb5e826"
+    },
+    {
+      "path": "examples/synthetic-sources/synthetic-1.md",
+      "bytes": 108,
+      "sha256": "0c279b364cce4ef0c6e50b83127b7ff448d85a26ad019df28e3ac20cd2a2414d"
+    },
+    {
+      "path": "methodology_trajectory.py",
+      "bytes": 2790,
+      "sha256": "cafb52f6c890f145321a5105c246ac3fc2f21d11a8daa2f8d661d7e0118fb8d8"
+    },
+    {
       "path": "observation_input.py",
       "bytes": 2814,
       "sha256": "62c3df9fdf22b949e7cd676786a78cc404b5a43b1bf6d4b7627f00a7d3200aa5"
@@ -64,24 +119,9 @@
       "sha256": "b0fe8644e076795294c15df3a19f7e3defda143cbe6b4f198512d88c8c24d594"
     },
     {
-      "path": "PUBLICATION.md",
-      "bytes": 1042,
-      "sha256": "d0eb77be8d3f46f7c954cb4108270e72c6ca1208a8410e3ae42393afe83c5308"
-    },
-    {
-      "path": "README.md",
-      "bytes": 5783,
-      "sha256": "de8de8f01c9add9509e35ebc9700d1314413c22f7a260d2b2a2e33c55d91b460"
-    },
-    {
       "path": "research_workflow.py",
-      "bytes": 5787,
-      "sha256": "c780bd159a2c199f477806432bc5c89c80732d29f86cd1433446622ad65e48e9"
-    },
-    {
-      "path": "RIGHTS.md",
-      "bytes": 952,
-      "sha256": "7b403cfda5978399a0a9aac7b2af267234d6ff3e6baad234883a972e9767068a"
+      "bytes": 5987,
+      "sha256": "cdd70235a0232c44f8c55c0b124e75cb3da45b76049c848e251fe89aa37afe42"
     },
     {
       "path": "safe_canonical_read.py",
@@ -89,19 +129,19 @@
       "sha256": "14ada7664e4dc1719375fa363e9056ba8f01ca8be94e00eea6a821a9a068de77"
     },
     {
-      "path": "SECURITY.md",
-      "bytes": 1324,
-      "sha256": "9bcf7ee3f4b484ed2af153569946f72fadcf6d8a06a599433e4d80e8525d8f36"
-    },
-    {
-      "path": "SKILL.md",
-      "bytes": 1595,
-      "sha256": "37b3801d3c0b9fee09a59bc9f42d25b584d8b7c90c9e6914c807ef74c5fc51a6"
-    },
-    {
       "path": "test_cli_e2e.py",
       "bytes": 1464,
       "sha256": "b611e2c4c9f6f61338dff434e3e5b2effc019fb3556fc91d75f773590eea31bb"
+    },
+    {
+      "path": "test_corpus_files.py",
+      "bytes": 2659,
+      "sha256": "898ce7d58ab4c977a74cd7303ba3db9ce87e1fc47111e9025b6e481794c86815"
+    },
+    {
+      "path": "test_methodology_trajectory.py",
+      "bytes": 4153,
+      "sha256": "1d6f18551427723dda19bcc43555b05d1e379f1eccba8d4f7134bc24fc7d1bfe"
     },
     {
       "path": "test_observation_input.py",
@@ -117,11 +157,6 @@
       "path": "test_research_workflow.py",
       "bytes": 1802,
       "sha256": "6e46edae3645e9f266e21c764c7a26bbb618a5ea893812943d0ee296cb819c91"
-    },
-    {
-      "path": "VALIDATION.md",
-      "bytes": 1662,
-      "sha256": "952ee65b5a6590c592e1fc427576112f5d3a1b5caf9d2c4343a763b8d1e4b773"
     },
     {
       "path": "verify_manifest.py",

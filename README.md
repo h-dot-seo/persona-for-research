@@ -81,6 +81,19 @@ retains paper ID, locator, year and research/review type. Challenge observations
 produce challenge prompts, not recommendations. This deterministic grouping is
 not semantic synthesis or proof that a method is unique to an individual author.
 
+### Methodology over publication time
+
+Application output also includes `methodology_trajectory`, scoped to the requested
+topic. Exact topic/method/condition groups retain every observation with rule and
+paper IDs, source locator, limitation, quote, claim type and verification label.
+Chronological year buckets separate support from challenge and original research
+from reviews. Distinct-paper counts do not imply independent replication.
+Within-year disagreement and cross-year stance variation are reported separately;
+a later challenge never automatically overwrites earlier evidence. These are
+system-generated descriptions of the supplied publication record, not claims of
+career stage, personal belief, individual authorship or a change of mind. Missing
+years do not establish inactivity. No actual biography or career source is ingested.
+
 ## Verified observation intake
 
 ```sh
@@ -106,3 +119,20 @@ with Python 3.10 and 3.12. Actions are commit-pinned; token permissions are read
 checkout does not persist credentials, no secrets or deployment steps are used.
 The manifest describes LF-normalized published files, enforced by .gitattributes.
 External model/search behavior and scientific meaning are not evaluated by CI.
+
+## Read authorized local source files
+
+```sh
+python corpus_files.py examples/file-corpus.json --source-root examples/synthetic-sources --question "Which experiment?" --topic "model design"
+```
+
+The manifest adds a portable relative `source_file` for each paper and the exact
+`source_sha256` of its UTF-8 .md/.txt bytes. Each document must have unique `## Section`
+headings; observation locators equal those headings. The adapter preflights identity,
+training split and authorization, confines resolved paths to the selected root,
+checks actual file bytes, parses sections, checks quotes and constructs the existing
+research package/plan. It does not scan directories or download papers. Full sections
+are omitted from the output package, but the authorized short observation quotes are
+retained. A byte hash proves agreement with a supplied file, not its publisher or
+scholarly correctness. PDF/OCR, article acquisition and semantic extraction remain
+unimplemented. Keep real inputs and generated packages outside the public repository.
