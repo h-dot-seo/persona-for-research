@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.21.0-answer-draft-review",
+  "release": "0.22.0-integrated-review",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 84,
+  "file_count": 87,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 18857,
-      "sha256": "69be987eb577ea9f6efe8073cae853c5a08aa100c94bbfcd7988cde1cc661d37"
+      "bytes": 19242,
+      "sha256": "59b68f195cb99cce056cedd2e17557963ec4277d9add829babd2b5aabed13dac"
     },
     {
       "path": "RIGHTS.md",
@@ -144,14 +144,19 @@
       "sha256": "64ace67fab77a4a8de323e4c4e111b2b2c17a63eb28b4b9269e3d4103b5a7697"
     },
     {
+      "path": "docs/REVIEW_JOURNEY.md",
+      "bytes": 3392,
+      "sha256": "114f506f6749005736090ef9d545e8ea17d2b4331d4ba19626171b21a43f0d7c"
+    },
+    {
       "path": "docs/TOPIC_DISCOVERY.md",
       "bytes": 3213,
       "sha256": "4a0cd5e652db0df0b8f3448bcf1b4397d987c11b600a22551672319467da12f4"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 9592,
-      "sha256": "9188883bb6eaf3c1e5db6f28e3ff92193bf87bc6a8b3aba66d00d7bf4521c4e1"
+      "bytes": 10412,
+      "sha256": "f4e362cd5b2e26cd737862e32b323792d7d4cf81c360cb009dc54488823ef462"
     },
     {
       "path": "evidence_coverage.py",
@@ -252,6 +257,11 @@
       "path": "research_workflow.py",
       "bytes": 10467,
       "sha256": "e8a7adef087d8b017bc47682cbcf11d4fcc4b0112065471c680d2cc95870a845"
+    },
+    {
+      "path": "review_journey.py",
+      "bytes": 9437,
+      "sha256": "6a9b8614e39f857ba33ab0e3ee2c8c795fb0a003b0f9e9eb8da2b00bb491ac7c"
     },
     {
       "path": "review_package.py",
@@ -372,6 +382,11 @@
       "path": "test_research_workflow.py",
       "bytes": 1802,
       "sha256": "6e46edae3645e9f266e21c764c7a26bbb618a5ea893812943d0ee296cb819c91"
+    },
+    {
+      "path": "test_review_journey.py",
+      "bytes": 7468,
+      "sha256": "987f012f8988edb4e9a5db30accdba2475de4809378f684b596647fc0982c0d3"
     },
     {
       "path": "test_review_package.py",

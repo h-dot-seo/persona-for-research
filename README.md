@@ -318,3 +318,10 @@ references and records hash-bound, per-claim review decisions. Stored-quote equa
 is separate from semantic support, source verification and author attribution.
 Rejected claims and uncited observations remain visible. See
 [answer-draft review](docs/ANSWER_DRAFT.md).
+
+### Integrated answer/design review
+
+`review_journey.py` combines answer claims, design steps and publication-year review
+into one packet. Its exact-reference index connects uses without inferring agreement;
+mechanical prompts expose missing uncertainty, recorded review decisions and timing
+warnings, including answer-only citations. See [integrated review](docs/REVIEW_JOURNEY.md).

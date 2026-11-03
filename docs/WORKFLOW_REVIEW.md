@@ -164,3 +164,15 @@ Changing claim text, question, citation role or uncertainty makes the review sta
 No source quote becomes an individual author's claim, and no retained judgment
 becomes scientific validation. All input prose and decisions remain synthetic,
 operator supplied; no real model, researcher data or external API is used.
+
+## Integrated review navigation (synthetic, 2026-11-03)
+
+The answer/design/timeline journey previously required comparing independent reports
+by hand. `review_journey.py` now shows an exact-reference reverse index across answer
+claims, design steps and unused links, plus mechanical review prompts. A source used
+as answer challenge and design constraint retains both distinct operator roles and
+the source's own claim label. Answer-only later citations are also flagged; this was
+a gap found while integrating the previously design-only publication-scope report.
+Actual CLI JSON/text tests preserve full source details and missing falsification,
+reject different question wording/stale artifacts, and never collapse an observation
+with its component. No scores, automatic author attribution or real AI calls are used.
