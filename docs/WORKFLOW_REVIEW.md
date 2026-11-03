@@ -258,3 +258,13 @@ review counterargument as operator interpretation, not an author statement. This
 reduces editing friction, not scientific curation work. Real evaluation still needs
 permitted source material, knowledgeable reviewers, explicit attribution criteria
 and independent held-out evaluation; none is supplied by the synthetic CLI test.
+
+### From manual observations to review artifacts
+
+The manual local fixture now continues through a new workspace starter into the
+existing answer/design review commands. It removes repeated template setup and
+reference lookup, exposes empty-work warnings immediately, and lists missing
+reasoning dimensions without filling them. Synthetic CLI tests manually insert a
+later-review citation and an unsupported plan to confirm temporal, uncertainty and
+missing-link warnings survive. Initial reports are snapshots; edits require explicit
+reruns. Fresh links require a newly bound design template and manual step review.

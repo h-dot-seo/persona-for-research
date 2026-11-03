@@ -376,3 +376,10 @@ let you write one source-bound method/condition/limitation and optional reasonin
 component at a time. Explicit stance and attribution choices, full-corpus local
 quote checks and stale-card rejection preserve the review boundary. No model or
 claim generator runs; the documented synthetic research/review CLI journey is executable.
+
+## Start a local answer/design review
+
+[Create a review workspace](docs/REVIEW_WORKSPACE.md) from an existing package or
+local-loader result. One command prepares empty bound answer/link/design templates,
+an exact evidence-reference catalog, initial gap reports and next-command argument
+arrays. It does not select relevant evidence or generate an answer, link or plan.

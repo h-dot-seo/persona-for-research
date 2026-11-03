@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.28-manual-local-observations",
+  "release": "0.29-review-workspace",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 109,
+  "file_count": 112,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 21850,
-      "sha256": "15cdf0d987f8da5e0db2745b34d6189acf26bd4ff01c2ac433f2bddfe9ce6ed0"
+      "bytes": 22221,
+      "sha256": "57cec4d234d0f7cc721d57d6c5fb293d0ea8ab3fd13300835a4a58e7bfec653b"
     },
     {
       "path": "RIGHTS.md",
@@ -150,8 +150,8 @@
     },
     {
       "path": "docs/MANUAL_LOCAL_OBSERVATIONS.md",
-      "bytes": 5608,
-      "sha256": "85fccaadeda3a4f16d123ce4f0675752133def2c359cba427cdd53f76948b9b1"
+      "bytes": 5875,
+      "sha256": "d686e0103dce9f5925e37458a992208a3963e27d7ee71dc52c7ccd5dbf5a3355"
     },
     {
       "path": "docs/OPERATOR_REVIEW.md",
@@ -184,6 +184,11 @@
       "sha256": "114f506f6749005736090ef9d545e8ea17d2b4331d4ba19626171b21a43f0d7c"
     },
     {
+      "path": "docs/REVIEW_WORKSPACE.md",
+      "bytes": 5648,
+      "sha256": "92afe22081e47aef68d92c28f17bd578f873a1a4a5b3fdc5c823122d925616ef"
+    },
+    {
       "path": "docs/SYNTHETIC_EVALUATION.md",
       "bytes": 5937,
       "sha256": "f426662213014a48aeed6398c5f6c26a5de62c8ddc4503289ec9d1288cc9f949"
@@ -195,8 +200,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 15790,
-      "sha256": "5636983b97a9089e26b023c0f7f28d1334e5ade143372b83ee70437291a7052c"
+      "bytes": 16408,
+      "sha256": "d3c6d7735c548a3ada732992575b42c69899e61a2dada1591d2c51cd11c8dd63"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -342,6 +347,11 @@
       "path": "review_package.py",
       "bytes": 4498,
       "sha256": "32b5bf0025271ff3389a3f398241c29e5ff9e5e1e5e7856676069252e90e778e"
+    },
+    {
+      "path": "review_workspace.py",
+      "bytes": 6630,
+      "sha256": "c88e8a19790adb0a02b0e71d54e19e92ee1c16e2d97b23726fd6094566ffd84a"
     },
     {
       "path": "safe_canonical_read.py",
@@ -492,6 +502,11 @@
       "path": "test_review_package.py",
       "bytes": 4880,
       "sha256": "c8ff80b6fc248c0af42cc47d06a6bfa756c5a9ee0e5858bf284aa2c7712c48fb"
+    },
+    {
+      "path": "test_review_workspace.py",
+      "bytes": 7623,
+      "sha256": "5aee3f9bda49747b376fbfcc179b6e6c52f3187f10358f2f7cb8dd1ad623843c"
     },
     {
       "path": "test_rule_source_consistency.py",

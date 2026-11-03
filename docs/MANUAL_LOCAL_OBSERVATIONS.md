@@ -89,3 +89,9 @@ attribution. The synthetic example cannot establish real researcher representati
 ```sh
 python -m unittest test_curate_local -v
 ```
+
+## Continue to an answer/design review
+
+Use [the review workspace starter](REVIEW_WORKSPACE.md) with `manual-result.json`
+to create empty bound answer/link/design files, a complete exact-reference catalog,
+and visible missing-work reports in one new private folder.
