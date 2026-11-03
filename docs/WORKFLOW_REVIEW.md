@@ -242,3 +242,8 @@ now pins a regular descriptor and checks path/identity before body reads, with a
 regression for an outside-root symlink substituted after preflight. Detected changes
 during reading also reject. This is not a guarantee against every hostile filesystem
 race; the stable-source assumption remains explicit.
+
+The first Windows CI run exposed a test-only path comparison mismatch between a
+Windows8.3 temporary-directory alias and its resolved path. The read-once assertion
+now compares resolved paths; source-reader behavior was unchanged. The corrected
+commit is verified again across the full CI matrix.

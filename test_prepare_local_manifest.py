@@ -80,7 +80,7 @@ class PrepareLocalManifestTests(unittest.TestCase):
         original=read_source_bytes;calls=[]
         def read(path):calls.append(path);return original(path)
         with patch('prepare_local_manifest.read_source_bytes',read):result=prepare(self.selection,self.root)
-        self.assertEqual(calls,[self.root/'paper.md'])
+        self.assertEqual(calls,[(self.root/'paper.md').resolve()])
         result['papers'][0]['observations'].append('changed output')
         self.assertEqual(self.selection['papers'][0]['observations'],[])
 

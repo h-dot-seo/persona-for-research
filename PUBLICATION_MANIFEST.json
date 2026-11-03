@@ -1,6 +1,6 @@
 {
   "project": "persona-for-research",
-  "release": "0.27.0-local-input-preparation",
+  "release": "0.27.1-local-input-path-test",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
@@ -185,8 +185,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 14804,
-      "sha256": "963fd02f12a82fed675476c12d3c1657712feb2ec3f889019ee58c81ca698f98"
+      "bytes": 15102,
+      "sha256": "4153006f30318d7029cb85c4843d5346c67b8f485b731a6794821dd748d0d44a"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -430,8 +430,8 @@
     },
     {
       "path": "test_prepare_local_manifest.py",
-      "bytes": 10029,
-      "sha256": "aeeb5204d332d162d7d25edf9a66b4d1201784eb307896c48c26376490df89ed"
+      "bytes": 10041,
+      "sha256": "89f8b9121ef36eb0dbfb68c1f4735b19afee0e775a7b1a842197273dc03f7182"
     },
     {
       "path": "test_publication_scope.py",
