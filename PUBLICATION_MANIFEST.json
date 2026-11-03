@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.8.4-source-repetition",
+  "release": "0.9.0-compact-review",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 49,
+  "file_count": 51,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 13365,
-      "sha256": "ed9a28b001957994514f0c5cdb953d1718dc44f16657f66d378c77ecbff7cca8"
+      "bytes": 14172,
+      "sha256": "5aae07cf82661eb2cecc053125ade62aaf338e5a461268131b96b57d67562860"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 6759,
-      "sha256": "4b218e7714b0e11161ec3db423e897b53b1673278b5df43d742c3d2b609bcf12"
+      "bytes": 7321,
+      "sha256": "274de6183b3481d358dd5ed6a0b8d2b4b61d0bf72c1d160cdb9a07d095a0e7af"
     },
     {
       "path": "audit_publication.py",
@@ -80,8 +80,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 3919,
-      "sha256": "6c0715151258a08c0965be43bda94e9e9ba32036f817cd4f60334d9b3ba377bd"
+      "bytes": 4270,
+      "sha256": "6f112197a133a73d638265206fbc9d8e776615c201f22b74168a3132291ffb1f"
     },
     {
       "path": "evidence_coverage.py",
@@ -154,6 +154,11 @@
       "sha256": "8c249b84e7eaff33fbfd787efebc8f9ec2d0a5e5be1fa8b32fa1e197210ed065"
     },
     {
+      "path": "review_package.py",
+      "bytes": 4312,
+      "sha256": "3ad39a405b9c73914622e0622f64db7d684307fca89bd408743841e68dc2f8b4"
+    },
+    {
       "path": "safe_canonical_read.py",
       "bytes": 4678,
       "sha256": "c1a41c723f5938f14176971e8b6f13f8c2be1060e49282a01f41cf6208f09b59"
@@ -224,6 +229,11 @@
       "sha256": "6e46edae3645e9f266e21c764c7a26bbb618a5ea893812943d0ee296cb819c91"
     },
     {
+      "path": "test_review_package.py",
+      "bytes": 4880,
+      "sha256": "c8ff80b6fc248c0af42cc47d06a6bfa756c5a9ee0e5858bf284aa2c7712c48fb"
+    },
+    {
       "path": "test_runtime_authorization.py",
       "bytes": 2595,
       "sha256": "424d07f6a638425fc6ff851d65881e1831f7496d321892d1b51b27746605c5f2"
@@ -240,8 +250,8 @@
     },
     {
       "path": "test_workflow_roundtrip.py",
-      "bytes": 3793,
-      "sha256": "4621f01f33623fe6a1dbb43ed8f0c73f80e43e6faa7855dd01ed56f35c4b8419"
+      "bytes": 4210,
+      "sha256": "787eba3e16f63231cb3f22a2fd6bed25060fe9e4be1ff82318edab9b6bde69b1"
     },
     {
       "path": "verification_receipt.py",

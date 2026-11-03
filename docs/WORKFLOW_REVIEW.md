@@ -18,7 +18,9 @@ reasoning fixture and invokes actual CLI subprocesses, not just Python functions
    resulting exact method/condition group becomes contested.
 3. `compare_releases.py` compares the original and candidate outputs, requests
    review and leaves both packages unchanged.
-4. Tampered source bytes are rejected without emitting a partial package.
+4. `review_package.py` renders the bound candidate with explicit support/challenge
+   and limitations, recomputing the view rather than trusting a saved summary.
+5. Tampered source bytes are rejected without emitting a partial package.
 
 Expected checkpoints: two byte-checked sources, one reasoning card, partial
 dimension coverage, a contested candidate and `REVIEW_REQUIRED` comparison.
@@ -31,6 +33,7 @@ The same tools can be run directly with authorized files:
 python corpus_files.py examples/file-corpus.json --source-root examples/synthetic-sources --question "Which experiment?" --topic "model design"
 python observation_input.py examples/reasoning-corpus.json --question "Which explanation?" --topic "model design"
 python compare_releases.py previous-package.json candidate-package.json
+python review_package.py candidate-package.json --question "Which explanation?" --topic "model design"
 ```
 
 The first two commands demonstrate different supplied fixtures. They do not
@@ -45,8 +48,9 @@ generated packages outside this public repository; review content before sharing
   Topic matching is exact and case-insensitive, not semantic retrieval.
 - Reasoning components are operator-written. Missing components remain missing.
 - Raw JSON is useful for auditing but verbose: the two-source demonstration
-  produces roughly 16 KB for a single reasoning card. There is no conversational
-  scholar simulation or compact human-facing review interface yet.
+  produces roughly 16 KB for a single reasoning card. The read-only review renderer
+  provides a compact text view without adding interpretation or suppressing
+  contrary evidence. There is still no conversational scholar simulation.
 - Chronology orders publications. It does not establish career stages, personal
   beliefs, author-specific causation or intellectual change.
 

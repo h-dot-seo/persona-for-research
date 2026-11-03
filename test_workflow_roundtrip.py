@@ -56,6 +56,12 @@ class WorkflowRoundtripTests(unittest.TestCase):
             self.assertEqual(result['status'], 'REVIEW_REQUIRED')
             self.assertFalse(result['canonical_update_performed'])
             self.assertTrue(result['modified_papers'][0]['observations_changed'])
+            reviewed = self.run_cli('review_package.py', new_path, '--question',
+                                    'Which competing explanation?', '--topic', 'model design')
+            self.assertEqual(reviewed.returncode, 0, reviewed.stderr)
+            self.assertIn('CONTESTED:', reviewed.stdout)
+            self.assertIn('[support]', reviewed.stdout)
+            self.assertIn('[challenge]', reviewed.stdout)
             self.assertEqual(old_path.read_text(), before.stdout)
             self.assertEqual(new_path.read_text(), after.stdout)
             for paper in corpus['papers']:

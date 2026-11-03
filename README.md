@@ -17,6 +17,21 @@ authorization/split fields are errors, not a last-value-wins choice. This applie
 to source intake, package validation/comparison and the projection helper; it does
 not authenticate an authorization declaration or grant source access.
 
+## Compact review
+
+```sh
+python review_package.py saved-package.json --question "Which explanation?" --topic "model design"
+```
+
+The UTF-8 text view validates both package bindings and recomputes the application
+for the explicit question/topic; saved wrapper summaries are ignored. It shows all
+matched support/challenge records, author/version/build identity, source IDs and locators, conditions, limitations,
+reasoning claim types, missing supplied records and recorded check counts. It never
+silently truncates contrary evidence. Larger corpora produce longer views.
+Recorded checks are not rerun against source files by this renderer. It is not a
+confidence/readiness judgment or a new interpretation of the researcher. Control
+characters in supplied text are escaped to prevent forged terminal lines.
+
 ## Included
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.

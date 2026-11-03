@@ -100,3 +100,11 @@ paper evidence. Five new cases verify same-file grouping, distinct hashes,
 single-paper repeated observations, mixed stances and challenge-only patterns.
 All observations remain available; hash differences do not imply independence.
 Publication scan, manifest verification and compilation passed.
+
+Compact-review increment: 86 local tests passed. The real CLI renders a bound
+synthetic candidate in 17 lines rather than its roughly 16 KB JSON package, with
+all matched support/challenge records preserved. Eight tests cover wrapper-summary
+forgery, absent topic, tampering/legacy rejection, nonmutation, terminal controls,
+UTF-8 output and CLI failure without partial output. The end-to-end subprocess
+test includes the renderer. Publication scan, manifest and compilation passed.
+The renderer reports recorded checks only and does not reverify source bytes.
