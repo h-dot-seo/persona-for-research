@@ -129,3 +129,11 @@ review flow to the final design and replays the exact package transition without
 calling a provider. Source claim labels, reviewed interpretations, selected evidence
 routes and missing proposal criteria remain distinct. Inherited mock origins stay
 outside the one-revision audit scope. See [DESIGN_LINEAGE.md](DESIGN_LINEAGE.md).
+
+## Review iterative provenance
+
+`python -m unittest test_design_chain -v` performs two explicit review transitions
+before auditing the final design. Earlier retained components can be covered by
+their own declared stage, while pre-chain inherited history remains unaudited even
+if later replaced. Missing intermediate changes are not automatically bridged.
+See [DESIGN_CHAIN.md](DESIGN_CHAIN.md).

@@ -62,6 +62,10 @@ See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
 
 ## Included
 
+`audit_design_chain.py` verifies consecutive declared mock-review revisions and maps
+retained final evidence to its introducing stage. Final component coverage remains
+separate from unaudited initial history. See [linear revision-chain audit](docs/DESIGN_CHAIN.md).
+
 `audit_design_lineage.py` replays one declared mock candidate review and checks that
 it exactly reproduces the package behind a design scenario. It traces selected
 evidence and missing proposal fields while flagging inherited origins outside that

@@ -184,3 +184,10 @@ origins on unused dimensions. Read-only/provider isolation, JSON equivalence and
 text exclusion are checked. Independent probes confirmed unused inherited origins
 remain incomplete even with no proposed steps. No complete historical provenance,
 authenticated review or scientific validity is asserted.
+
+Declared revision-chain audit: 180 local tests passed. Eight new cases cover
+two-stage add/replace replay, repeated candidate IDs, exact projected continuity,
+skipped/reordered stages, changed counterevidence/new sources, stale replacements,
+identity reuse, and initial history warnings surviving replacement. Final marker
+coverage is separate from pre-chain history. Actual two-review CLI → chain audit,
+JSON-equivalent aliases, no provider/source access and raw-text exclusion are tested.

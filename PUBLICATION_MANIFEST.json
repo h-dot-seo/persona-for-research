@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.18.0-single-revision-design-audit",
+  "release": "0.19.0-declared-revision-chain",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 75,
+  "file_count": 78,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 17805,
-      "sha256": "f4f137f10940a09424118316c05a41e6ecd27ab626ef9f7bdc55147ccffc1a27"
+      "bytes": 18072,
+      "sha256": "e189664859751a203f606a0af38645b4e3ac8e3bc5c2e8502052c7b74d48b8f6"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,13 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 12736,
-      "sha256": "0e2dec428884f997a9fbd807331df596f6ffc19e582b3a597df34188b0bdfc12"
+      "bytes": 13230,
+      "sha256": "ce062eef7043101abd7c878d84025bba252dbc92322be6b7c16e839285274bcb"
+    },
+    {
+      "path": "audit_design_chain.py",
+      "bytes": 8446,
+      "sha256": "eb4197bd0601446b7f55b3b21714b9eb391b86e604e73180f0215d6eec05a811"
     },
     {
       "path": "audit_design_lineage.py",
@@ -87,6 +92,11 @@
       "path": "docs/ARCHITECTURE.md",
       "bytes": 3985,
       "sha256": "5e638755e7674a75447ea55895ed66afb1358ce1991385fea9097a546c0dc2d0"
+    },
+    {
+      "path": "docs/DESIGN_CHAIN.md",
+      "bytes": 4452,
+      "sha256": "3a020a61e0396c703bcc7a4187aa0435c91749fec162f1162c3727702f27d57f"
     },
     {
       "path": "docs/DESIGN_LINEAGE.md",
@@ -125,8 +135,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 7361,
-      "sha256": "9b9a63402376cecb2cc1cd132e1ab8640407aa5582e625caf9c365a352fd0910"
+      "bytes": 7759,
+      "sha256": "10eb79cf09c5676f14bbeec903969ce193254e85c38e48511372c48b7b9b636b"
     },
     {
       "path": "evidence_coverage.py",
@@ -257,6 +267,11 @@
       "path": "test_corpus_projection.py",
       "bytes": 3591,
       "sha256": "a86409d0f578f9879c3cd5a30284fbf9e42577d46ba68f7473d0647afc4f5a8c"
+    },
+    {
+      "path": "test_design_chain.py",
+      "bytes": 11027,
+      "sha256": "081c76f3334b79361af932ae56c851f7d5bb05f62b1e8c2e80673ba95342bfba"
     },
     {
       "path": "test_design_lineage.py",
