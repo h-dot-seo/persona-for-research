@@ -62,6 +62,10 @@ See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
 
 ## Included
 
+Use `topic_inventory.py package.json --format text` to discover available exact-topic
+scopes before planning or review. It lists existing observation topics and coverage,
+without semantic merging, ranking or automatic selection. See [topic discovery](docs/TOPIC_DISCOVERY.md).
+
 `publication_timeline.py` creates a chronological JSON or compact text review of
 supplied questions, methods and evidence. It keeps research/review sources,
 support/challenge records and explicit-statement/interpretation labels separate,

@@ -97,3 +97,11 @@ check. Planning reconstructs its all-paper trajectory from validated source fiel
 instead of relaying a saved summary. This is
 not a signature, source-file recheck or semantic validation. Consistently
 altered source annotations still require real review.
+
+## Discover a scope first
+
+`python -m unittest test_topic_inventory -v` exercises a real intake → topic
+discovery → publication timeline/compact review sequence. The operator chooses
+an existing matching key rather than needing to inspect the full package manually.
+Labels are grouped only by the same casefold rule used at runtime, with no topic
+recommendation or semantic search. See [TOPIC_DISCOVERY.md](TOPIC_DISCOVERY.md).

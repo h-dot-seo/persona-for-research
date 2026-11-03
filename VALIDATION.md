@@ -151,3 +151,10 @@ still works. Tests verify no input mutation, provider/source-file access or part
 CLI output. This does not authenticate consistently rewritten inputs.
 Independent review also found that planning returned a cached trajectory without
 checking it; planning now reconstructs that summary from validated source fields.
+
+Topic discovery: 144 local tests passed. Eight new cases cover exact/Unicode
+casefold groups, whitespace and synonym separation, observation-only scopes,
+component/claim/stance coverage, multiple topics and both stances in one paper,
+duplicate hashes, empty topics, tampering/holdout rejection, no mutation/provider
+or source reads, and safe text output. Actual CLI intake → discovery → timeline/
+compact review uses a returned topic key. No semantic retrieval or ranking occurs.

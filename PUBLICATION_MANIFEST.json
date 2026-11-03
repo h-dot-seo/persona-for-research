@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.14.0-runtime-source-consistency",
+  "release": "0.15.0-topic-discovery",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 63,
+  "file_count": 66,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 16589,
-      "sha256": "5d166400dfd996dc822257f647a10f07bd13edf84641e50810ca04e613138787"
+      "bytes": 16867,
+      "sha256": "7f34b9bba1eb4aff9d85aa77d166f97f4dcd1a980caf71152e51a4e8b27c9e27"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 10401,
-      "sha256": "0522a898d1dfc367f0599857de1e1c027e53ba89bbc86370eed868a3cac76859"
+      "bytes": 10886,
+      "sha256": "30180c5b0987411cdba85415ee89e5af37d86ae015f443116b32411e25a7a51f"
     },
     {
       "path": "audit_publication.py",
@@ -94,9 +94,14 @@
       "sha256": "f7231f3b1154ad551c604ec8c171d7990a1774de114f4ccc6c06cdf6a6b817e5"
     },
     {
+      "path": "docs/TOPIC_DISCOVERY.md",
+      "bytes": 3213,
+      "sha256": "4a0cd5e652db0df0b8f3448bcf1b4397d987c11b600a22551672319467da12f4"
+    },
+    {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 5566,
-      "sha256": "835c59192dc854c33aa1a5f8b17add04913f5b53b84c2a5f1cce5f5965af36ab"
+      "bytes": 5999,
+      "sha256": "11d8705a038950c11e18650d214bb0940896413c950cb86c436f8e8d3d9c7940"
     },
     {
       "path": "evidence_coverage.py",
@@ -299,6 +304,11 @@
       "sha256": "7ff257fc3cf3652a2d0007ca9efe50ae287b262b0738eaf7cac3b050c82993ad"
     },
     {
+      "path": "test_topic_inventory.py",
+      "bytes": 8937,
+      "sha256": "b7235408b30d9939374a3d2f0795ea9d4180f9136834e7863ec39fab70e93254"
+    },
+    {
       "path": "test_verification_receipt.py",
       "bytes": 3396,
       "sha256": "6e02746e59fd095b41d1be04ed68217f2166f8294ebbe46c6bb9df319160c34d"
@@ -312,6 +322,11 @@
       "path": "test_workflow_roundtrip.py",
       "bytes": 4210,
       "sha256": "787eba3e16f63231cb3f22a2fd6bed25060fe9e4be1ff82318edab9b6bde69b1"
+    },
+    {
+      "path": "topic_inventory.py",
+      "bytes": 5788,
+      "sha256": "9484db555ee3b42af9792b7848881a09b846fbe674026ab142c5df7b49d58f57"
     },
     {
       "path": "verification_receipt.py",
