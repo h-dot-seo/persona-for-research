@@ -96,3 +96,13 @@ construction; observation quotes and their verification labels reach application
 steps. Supplied text/hash agreement does not authenticate publications or prove that
 the interpretation follows from the quote. No parser, LLM or search service is called.
 Only short synthetic text is included in the distributed example.
+
+## End-to-end and CI verification
+
+`test_cli_e2e.py` runs the synthetic workflow through actual CLI subprocesses and
+checks failed inputs and reproducible output. GitHub Actions runs standard-library
+tests, publication scanning and manifest byte verification on Linux and Windows
+with Python 3.10 and 3.12. Actions are commit-pinned; token permissions are read-only,
+checkout does not persist credentials, no secrets or deployment steps are used.
+The manifest describes LF-normalized published files, enforced by .gitattributes.
+External model/search behavior and scientific meaning are not evaluated by CI.

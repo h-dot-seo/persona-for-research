@@ -9,6 +9,12 @@ from research_workflow import build, apply
 
 def verified_corpus(corpus):
     result = copy.deepcopy(corpus)
+    # Reject unauthorized identity/split boundaries before inspecting any source text.
+    for paper in result['papers']:
+        if (paper.get('authorized') is not True or paper.get('split') != 'training'
+                or paper.get('runtime_knowledge_eligible') is not True
+                or paper.get('author_id') != result.get('author_id')):
+            raise ValueError('only author-matched authorized runtime training evidence may be inspected')
     for paper in result['papers']:
         if paper.get('authorized') is not True or paper.get('split') != 'training':
             raise ValueError('only authorized training evidence may be inspected')
