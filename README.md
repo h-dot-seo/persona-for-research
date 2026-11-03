@@ -368,3 +368,11 @@ explicit training-only file selection, leaving observations empty. The result us
 the existing manifest format and feeds `corpus_files.py` after manual curation.
 No full body, claim extraction, publication lookup or model call is added. See
 [local input preparation](docs/LOCAL_INPUT_PREPARATION.md).
+
+## Manually structure selected local evidence
+
+After local input preparation, [manual observation cards](docs/MANUAL_LOCAL_OBSERVATIONS.md)
+let you write one source-bound method/condition/limitation and optional reasoning
+component at a time. Explicit stance and attribution choices, full-corpus local
+quote checks and stale-card rejection preserve the review boundary. No model or
+claim generator runs; the documented synthetic research/review CLI journey is executable.

@@ -247,3 +247,14 @@ The first Windows CI run exposed a test-only path comparison mismatch between a
 Windows8.3 temporary-directory alias and its resolved path. The read-once assertion
 now compares resolved paths; source-reader behavior was unchanged. The corrected
 commit is verified again across the full CI matrix.
+
+### Manual local observation journey
+
+Local preparation previously ended by asking operators to edit a full manifest or
+copy observation JSON from another fixture. Small manifest-bound manual cards now
+support one explicitly authored observation at a time and validate all current
+local evidence before append. A synthetic research/review journey preserves a
+review counterargument as operator interpretation, not an author statement. This
+reduces editing friction, not scientific curation work. Real evaluation still needs
+permitted source material, knowledgeable reviewers, explicit attribution criteria
+and independent held-out evaluation; none is supplied by the synthetic CLI test.
