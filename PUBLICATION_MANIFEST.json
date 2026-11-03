@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.17.0-design-scenario-traceability",
+  "release": "0.18.0-single-revision-design-audit",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 72,
+  "file_count": 75,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 17488,
-      "sha256": "7b18cdbf0ef929fc89ab0776b9b78690fcb08469a6c3eefb60f914f9d4b13564"
+      "bytes": 17805,
+      "sha256": "f4f137f10940a09424118316c05a41e6ecd27ab626ef9f7bdc55147ccffc1a27"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,13 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 12093,
-      "sha256": "4a7bae7aa74117c1f76ac3307928b61edcc8fd169acf1748bd545650dc558da2"
+      "bytes": 12736,
+      "sha256": "0e2dec428884f997a9fbd807331df596f6ffc19e582b3a597df34188b0bdfc12"
+    },
+    {
+      "path": "audit_design_lineage.py",
+      "bytes": 8194,
+      "sha256": "a7d378c968d65b66c3fe232beebe3528ea66c85fdb0135c1e010c47d7530fa45"
     },
     {
       "path": "audit_publication.py",
@@ -82,6 +87,11 @@
       "path": "docs/ARCHITECTURE.md",
       "bytes": 3985,
       "sha256": "5e638755e7674a75447ea55895ed66afb1358ce1991385fea9097a546c0dc2d0"
+    },
+    {
+      "path": "docs/DESIGN_LINEAGE.md",
+      "bytes": 4293,
+      "sha256": "320d40bb6aa07026a4d3ba12bbb50bdc3da49e03b5d18403ab4bb81eee8f4577"
     },
     {
       "path": "docs/DESIGN_SCENARIO.md",
@@ -115,8 +125,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 6909,
-      "sha256": "b8b303f6a43f85c4b4c564220049073e0d9217084c08dfd25fabcfd3f2fa580c"
+      "bytes": 7361,
+      "sha256": "9b9a63402376cecb2cc1cd132e1ab8640407aa5582e625caf9c365a352fd0910"
     },
     {
       "path": "evidence_coverage.py",
@@ -247,6 +257,11 @@
       "path": "test_corpus_projection.py",
       "bytes": 3591,
       "sha256": "a86409d0f578f9879c3cd5a30284fbf9e42577d46ba68f7473d0647afc4f5a8c"
+    },
+    {
+      "path": "test_design_lineage.py",
+      "bytes": 12103,
+      "sha256": "9bc74329c8c39a1bb83acc753c9b50ab0184a074c12f5fbba30c988474cbc77e"
     },
     {
       "path": "test_design_scenario.py",

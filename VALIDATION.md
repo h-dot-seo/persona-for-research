@@ -175,3 +175,12 @@ explicit conflicting roles and distinct-link counts, empty templates, alias-safe
 nonmutation, no provider/source access and escaped text. Real CLI intake → links →
 empty proposal template → explicitly simulated design → JSON/text review succeeds.
 No experimental design quality, source applicability or researcher fidelity is scored.
+
+One-revision design lineage: 172 local tests passed. Eight new cases exercise the
+actual mock→operator-review→design→audit CLI sequence, proposed/reviewed claim labels,
+selected evidence routes and missing criteria, exact replay despite recomputed
+hashes, stale sources/candidates/reviews, rejected/deferred reviews and inherited
+origins on unused dimensions. Read-only/provider isolation, JSON equivalence and raw
+text exclusion are checked. Independent probes confirmed unused inherited origins
+remain incomplete even with no proposed steps. No complete historical provenance,
+authenticated review or scientific validity is asserted.

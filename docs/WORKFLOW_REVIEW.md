@@ -121,3 +121,11 @@ explicitly simulated model-comparison proposal to a later review's criterion lin
 The source criterion remains separate from a missing proposal falsification field,
 and unused counterevidence stays visible. This is an operator-authored scenario,
 not generated experimental advice. See [DESIGN_SCENARIO.md](DESIGN_SCENARIO.md).
+
+## Replay the candidate provenance
+
+`python -m unittest test_design_lineage -v` connects the mock candidate and declared
+review flow to the final design and replays the exact package transition without
+calling a provider. Source claim labels, reviewed interpretations, selected evidence
+routes and missing proposal criteria remain distinct. Inherited mock origins stay
+outside the one-revision audit scope. See [DESIGN_LINEAGE.md](DESIGN_LINEAGE.md).

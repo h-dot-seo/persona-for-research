@@ -62,6 +62,11 @@ See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
 
 ## Included
 
+`audit_design_lineage.py` replays one declared mock candidate review and checks that
+it exactly reproduces the package behind a design scenario. It traces selected
+evidence and missing proposal fields while flagging inherited origins outside that
+replay. See [single-revision lineage audit](docs/DESIGN_LINEAGE.md).
+
 `design_scenario.py` traces operator-authored proposed research steps to explicit
 reasoning links, retaining unreferenced counterevidence and missing design fields.
 It does not generate experiments or turn source claims into author recommendations.
