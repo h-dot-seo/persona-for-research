@@ -99,3 +99,8 @@ package, and start a new workspace rather than relabeling existing bindings.
 After an upstream package revision, [compare evidence-use impact](REVISION_IMPACT.md)
 before manually rebuilding old drafts and plans. A zero-reference empty starter
 is not proof that a revision has no scientific consequences.
+
+Before drafting a new plan, use [source-to-context applicability review](APPLICABILITY_REVIEW.md)
+to record explicit comparisons between supplied methods/conditions and your new
+research context. Every topic-matched observation starts deferred; no method is
+selected or transferred into an answer/design automatically.

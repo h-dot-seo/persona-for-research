@@ -286,3 +286,13 @@ endpoint records with old citation roles and design-link uses. Synthetic tests k
 the review counterargument visible while a research observation's claim label
 changes. Affected IDs are scoped to compared uses, not a whole-corpus impact score;
 index reuse/reordering remains an explicit identity limitation. No artifact migrates.
+
+### New-context applicability remains a human judgment
+
+A synthetic system with shared predictions cannot simply inherit a source method's
+stated distinct-outcomes condition. The applicability worksheet now presents every
+exact-topic observation, its research/review kind, publication scope, condition,
+limitation and supplied reasoning beside a user-declared new context. All defaults
+are deferred. Operator exclusions and counterevidence remain visible; changing the
+context requires a fresh bound form. Synthetic tests validate record preservation
+and gaps, not whether the operator's comparison or proposed research is sound.

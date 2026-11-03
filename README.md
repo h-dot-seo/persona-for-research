@@ -397,3 +397,11 @@ corpus quotes are checked; scientific correctness and reviewer identity are not.
 against a revised package, retaining before/after claims, counterarguments and
 publication scope. It identifies affected old claims/steps without rebinding them;
 same-position correspondence is not semantic identity or scientific validation.
+
+## Compare methods with a new research context
+
+[Applicability review](docs/APPLICABILITY_REVIEW.md) places topic-matched original
+research/review observations in time order beside an explicit target context.
+Operators record consider/exclude/defer, condition comparisons, uncertainty and
+counterevidence; excluded and deferred evidence stays visible. No applicability,
+scientific validity or researcher-specific reasoning is inferred.

@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.31-revision-impact",
+  "release": "0.32-applicability-review",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 119,
+  "file_count": 122,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 22938,
-      "sha256": "1d89c214af59bd0afafeacf757c10e0b16c7b09f61f9fc03033b537f55820eb5"
+      "bytes": 23375,
+      "sha256": "b4143739df339c5e48620b6ca0f6a9e642ff162a90f4905fb158249420f1a161"
     },
     {
       "path": "RIGHTS.md",
@@ -57,6 +57,11 @@
       "path": "answer_draft.py",
       "bytes": 12699,
       "sha256": "1b348e64107b9da84658e626411590229d4ac6c7c253c62888c39fcd6dc6cbac"
+    },
+    {
+      "path": "applicability_review.py",
+      "bytes": 9934,
+      "sha256": "975b64f5cf4a7260ba8fd88d06049fb76a0f42988a41458d4febf9a7731a2b96"
     },
     {
       "path": "argument_map.py",
@@ -107,6 +112,11 @@
       "path": "docs/ANSWER_DRAFT.md",
       "bytes": 3581,
       "sha256": "bececed97412ca0c26936ca7e1bdbc9380313e416780ef7e3d52b79a26807086"
+    },
+    {
+      "path": "docs/APPLICABILITY_REVIEW.md",
+      "bytes": 5555,
+      "sha256": "955f411a8efe8ece169ade3d486f5342ef05478cfb2d70ef4eabf4efdc97be75"
     },
     {
       "path": "docs/ARCHITECTURE.md",
@@ -190,8 +200,8 @@
     },
     {
       "path": "docs/REVIEW_WORKSPACE.md",
-      "bytes": 6117,
-      "sha256": "c0bea35b65691459d0c2edd885d164d7a806ae5be62c3e0957c4451220168d5c"
+      "bytes": 6437,
+      "sha256": "2a23c7369135f39cb045ef888e810ef0485ba32efb1fd8a176050d06929d45b2"
     },
     {
       "path": "docs/REVISION_IMPACT.md",
@@ -210,8 +220,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 17493,
-      "sha256": "9fbf7d399510bc6c2477fd852c3246a17561e6a538421ea87162db35bc41db0a"
+      "bytes": 18124,
+      "sha256": "fae19063309812878b3a3df66c7ac7ef3dcb22d74be2f319401e9dd3df13e672"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -397,6 +407,11 @@
       "path": "test_answer_draft.py",
       "bytes": 10714,
       "sha256": "d1c5da7322a7139f62f8f83af844380017d378b052be5ef9d58e225cc827c3dc"
+    },
+    {
+      "path": "test_applicability_review.py",
+      "bytes": 7792,
+      "sha256": "8e6a515349f5fe923922ef7b7c7e86014ca58d01d605ab8bfd4ab1416d529363"
     },
     {
       "path": "test_argument_map.py",
