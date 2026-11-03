@@ -44,3 +44,9 @@ cover per-component quote/locator checks, claim-type separation, missing dimensi
 challenge stance, holdout rejection, malformed dimensions, tamper detection and
 deterministic nonmutating output. Publication and manifest checks passed. Inputs
 are synthetic; no LLM, automatic extraction or semantic assessment was performed.
+
+Verification-receipt increment: 36 local tests passed, including forged JSON labels,
+quote-only versus local-byte verification, changed intake rejection, serialized
+receipt loss, knowledge payload tampering and caller-data isolation. Publication,
+manifest and compilation checks passed. The receipt is an in-process integrity
+mechanism, not authentication against a Python caller or source authenticity proof.

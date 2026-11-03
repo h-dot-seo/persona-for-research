@@ -34,6 +34,8 @@ def validate(persona, knowledge):
     if not isinstance(papers, list):
         errors.append('papers must be an array')
         papers = []
+    if 'knowledge_papers_sha256' in persona and persona['knowledge_papers_sha256'] != payload_sha256(papers):
+        errors.append('knowledge papers payload hash mismatch')
     seen = set()
     for row in papers:
         if not isinstance(row, dict):

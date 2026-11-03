@@ -6,11 +6,24 @@ from pathlib import Path
 from persona import payload_sha256, validate
 from methodology_trajectory import summarize
 from reasoning_cards import card, validate_components
+from verification_receipt import VerifiedCorpus
 
 
 def build(corpus):
     author = corpus['author_id']
-    papers = corpus['papers']
+    verified = isinstance(corpus, VerifiedCorpus)
+    if verified and not corpus.unchanged():
+        raise ValueError('verified corpus changed after intake; verify again')
+    papers = copy.deepcopy(corpus['papers'])
+    for paper in papers:
+        paper['source_verification'] = ('LOCAL_BYTES_SHA256_MATCH'
+            if verified and paper.get('paper_id') in corpus.local_source_ids else 'NOT_PERFORMED')
+        for observation in paper['observations']:
+            observation['evidence_verification'] = 'EXACT_QUOTE_MATCH_ONLY' if verified else 'NOT_PERFORMED'
+            components = observation.get('reasoning', {})
+            validate_components(components)
+            for component in components.values():
+                component['evidence_verification'] = 'EXACT_QUOTE_MATCH_ONLY' if verified else 'NOT_PERFORMED'
     if not papers:
         raise ValueError('at least one authorized training paper is required')
     rules = []
@@ -40,6 +53,7 @@ def build(corpus):
                 rules[-1]['reasoning'] = copy.deepcopy(observation['reasoning'])
     persona = dict(author_id=author, version=corpus['version'], build_id=corpus['build_id'],
                    identity=dict(simulation_only=True, private_beliefs_inferred=False),
+                   knowledge_papers_sha256=payload_sha256(papers),
                    rules=rules, trajectory=sorted(trajectory, key=lambda r: (r['year'], r['paper_id'])),
                    semantic_validation='NOT_PERFORMED')
     knowledge = dict(author_id=author, version=corpus['version'], build_id=corpus['build_id'],

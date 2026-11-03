@@ -6,9 +6,10 @@ import json
 from pathlib import Path
 from research_workflow import build, apply
 from reasoning_cards import validate_components
+from verification_receipt import VerifiedCorpus
 
 
-def verified_corpus(corpus):
+def verified_corpus(corpus, *, _local_source_ids=()):
     result = copy.deepcopy(corpus)
     # Reject unauthorized identity/split boundaries before inspecting any source text.
     for paper in result['papers']:
@@ -40,7 +41,7 @@ def verified_corpus(corpus):
                 component['evidence_verification'] = 'EXACT_QUOTE_MATCH_ONLY'
         # The downstream package carries observation evidence; supplied text is not copied wholesale.
         del paper['segments']
-    return result
+    return VerifiedCorpus(result, _local_source_ids)
 
 
 def main():

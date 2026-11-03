@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.6.0-reasoning-cards",
+  "release": "0.6.1-verification-receipts",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 34,
+  "file_count": 36,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9022,
-      "sha256": "aee74e0e22ea509c2b55cb2407d3dde6930e642602f353887511b0b82b15c2fa"
+      "bytes": 9698,
+      "sha256": "45dfb56ce5a5fcea3e0d4b521ec67ce4ef0aacfea03c39cb917f0da710a28bfb"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 2926,
-      "sha256": "1a679196ece905bfd8426d6553ea5e46f2fe7a63f980f9e20c4efb07fb4c471e"
+      "bytes": 3337,
+      "sha256": "e12d7e2b0b76b9a1fc242c29bbc2465e6ba4c640dae8fcb6b6224948dbe18880"
     },
     {
       "path": "audit_publication.py",
@@ -60,8 +60,8 @@
     },
     {
       "path": "corpus_files.py",
-      "bytes": 3815,
-      "sha256": "df0cf05ef718ad37fdd9047886f5418dfe8406f8212fddeee2587f5293546036"
+      "bytes": 3876,
+      "sha256": "cabd143dc7791741fc3b8923528fde35e6c405bc5fa8305090d05e287c7a55bb"
     },
     {
       "path": "docs/ARCHITECTURE.md",
@@ -115,13 +115,13 @@
     },
     {
       "path": "observation_input.py",
-      "bytes": 3266,
-      "sha256": "a54d2d2b1076518cda9ce1d24267f19d11ba1b5007b2ac84c69826cc387674aa"
+      "bytes": 3374,
+      "sha256": "a462a2880ba9a379a9512ec0f36a1e4454855e769aabcb8bffc4fd31db771cf4"
     },
     {
       "path": "persona.py",
-      "bytes": 3206,
-      "sha256": "b0fe8644e076795294c15df3a19f7e3defda143cbe6b4f198512d88c8c24d594"
+      "bytes": 3380,
+      "sha256": "a536bd66495b9ffb7fdf2f0be49425e851f0b2cf78eaff87c8c8c0ebb1fd56bd"
     },
     {
       "path": "reasoning_cards.py",
@@ -130,8 +130,8 @@
     },
     {
       "path": "research_workflow.py",
-      "bytes": 6595,
-      "sha256": "d84bac8935baa24be26fdb34bb71d1b5b78feaf1312b09dc0bbc21c786ba9b16"
+      "bytes": 7511,
+      "sha256": "7d41b52ad386a49ae2e38ef8aa2daec2414d335ee590887ae8e674cc54929985"
     },
     {
       "path": "safe_canonical_read.py",
@@ -172,6 +172,16 @@
       "path": "test_research_workflow.py",
       "bytes": 1802,
       "sha256": "6e46edae3645e9f266e21c764c7a26bbb618a5ea893812943d0ee296cb819c91"
+    },
+    {
+      "path": "test_verification_receipt.py",
+      "bytes": 3396,
+      "sha256": "6e02746e59fd095b41d1be04ed68217f2166f8294ebbe46c6bb9df319160c34d"
+    },
+    {
+      "path": "verification_receipt.py",
+      "bytes": 750,
+      "sha256": "02907cb0334caa4a6be6113245a451379727685feba332f9038e2fc9c260c813"
     },
     {
       "path": "verify_manifest.py",

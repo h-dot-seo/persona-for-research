@@ -114,8 +114,17 @@ All cards are manually curated input, not reconstructed private thoughts. Output
 Use only permitted source text and short authorized quotations; full sections are
 not copied into the output. The unverified `research_workflow.py` path performs
 structural checks only; verification labels supplied directly to it are not
-independent verification receipts. Nothing here authenticates a publication or
+independent verification receipts and are reset to `NOT_PERFORMED`. Nothing here authenticates a publication or
 establishes that a researcher personally endorses a reasoning component.
+
+Verified intake returns an in-process receipt bound to the complete curated input.
+Changing that input before building fails. A JSON round-trip loses the receipt;
+run the intake again rather than trusting saved status strings. Only the local-file
+adapter attests that source bytes were checked. Receipts are not signatures or a
+security boundary against Python callers. New packages also bind the complete
+knowledge-paper payload into the persona hash, detecting later source metadata,
+authorization, quote or observation edits. Legacy packages without this additional
+binding retain their previous validation behavior and should be rebuilt.
 
 ## Verified observation intake
 

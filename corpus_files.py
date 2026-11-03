@@ -60,7 +60,7 @@ def load_sources(manifest, root):
         paper['segments']=segment_map
         paper['segments_sha256']=hashlib.sha256(json.dumps(segment_map,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
         paper['source_verification']='LOCAL_BYTES_SHA256_MATCH'
-    return verified_corpus(corpus)
+    return verified_corpus(corpus, _local_source_ids=[p['paper_id'] for p in corpus['papers']])
 
 
 def main():
