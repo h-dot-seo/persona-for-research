@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.33-operator-pattern-hypotheses",
+  "release": "0.34-pattern-transfer-review",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 125,
+  "file_count": 128,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 23788,
-      "sha256": "5c6748aa24bf6eba9236999fb8d987c8d8ed14319f760a153dc388e798127909"
+      "bytes": 24174,
+      "sha256": "e416dc8fd16f49ffcc943062cfef2136f5c702bb107dab51e3cd5e79bc29db6e"
     },
     {
       "path": "RIGHTS.md",
@@ -115,8 +115,8 @@
     },
     {
       "path": "docs/APPLICABILITY_REVIEW.md",
-      "bytes": 5844,
-      "sha256": "23a0bfeb8d52ba8a57dc7409d917b973448bd0478a22e8b7dbff30c089d85749"
+      "bytes": 6132,
+      "sha256": "c0417ae1885c80de0419952245af643df0dc6820bdd3fda119fe24ebfddbc4e8"
     },
     {
       "path": "docs/ARCHITECTURE.md",
@@ -175,8 +175,13 @@
     },
     {
       "path": "docs/PATTERN_HYPOTHESES.md",
-      "bytes": 5378,
-      "sha256": "48bfb1c15d32814550101636251416bb2043c5779afe584dc39b8b3170c28630"
+      "bytes": 5678,
+      "sha256": "20ddcd36176c600cb7354ab2f3216ea41f79e92915c882cb474f6acfaf454ed6"
+    },
+    {
+      "path": "docs/PATTERN_TRANSFER_REVIEW.md",
+      "bytes": 5294,
+      "sha256": "ac37de126a6bee53803a52389d938c566c5544d154741f34d08d84c1776182bc"
     },
     {
       "path": "docs/PUBLICATION_SCOPE.md",
@@ -225,8 +230,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 18756,
-      "sha256": "319b7591e661898e6eab91ed71c265c28afd9971e162935e9188914680fe876c"
+      "bytes": 19395,
+      "sha256": "5d5e8bc2eecb8b9c98679b83b9770511e24accffda3579d924bf890431b58a0f"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -337,6 +342,11 @@
       "path": "pattern_hypotheses.py",
       "bytes": 8846,
       "sha256": "d16874ce4ca1d754f9cc4f18e257e6a582d2d8483193f2e03ec30cdcba1e5543"
+    },
+    {
+      "path": "pattern_transfer_review.py",
+      "bytes": 8706,
+      "sha256": "b010c852093fd29c43b98e6a33f6a89fab394fa8e9551ba171f12139f0145169"
     },
     {
       "path": "persona.py",
@@ -512,6 +522,11 @@
       "path": "test_pattern_source_identity.py",
       "bytes": 2576,
       "sha256": "7cd843c9cb6ef67e2cbb39a49220feccda38e3013689200394d02ab4735113d0"
+    },
+    {
+      "path": "test_pattern_transfer_review.py",
+      "bytes": 6973,
+      "sha256": "6e1b0a38f8726fc4f76b7c4f9d202814e434586e6fe902a2057625e0aa39bc1f"
     },
     {
       "path": "test_persona.py",

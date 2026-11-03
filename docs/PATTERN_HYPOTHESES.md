@@ -100,3 +100,8 @@ the synthetic tests.
 ```sh
 python -m unittest test_pattern_hypotheses -v
 ```
+
+When a proposed pattern informs a new question, use
+[pattern-to-context trace review](PATTERN_TRANSFER_REVIEW.md) to compare its exact
+evidence routes with an existing applicability form and answer/design artifacts.
+It preserves missing counterarguments and conditions without migrating any fields.

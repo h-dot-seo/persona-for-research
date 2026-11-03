@@ -306,3 +306,13 @@ and uncertainty. Synthetic cases distinguish multiple components from multiple
 papers, flag shared source hashes and keep a review counterargument separate from
 the operator's proposed pattern. It neither discovers patterns nor validates actual
 researcher thought or semantic support; new-context application remains separate.
+
+### Pattern-to-proposal trace continuity
+
+A synthetic comparison-first pattern was linked to a new plan even though its source
+condition was excluded in the target context. The integrated trace now displays that
+overlap, preserves the pattern's challenge source and missing falsifier, and includes
+full context and answer/design reviews. Exact component/observation matches remain
+separate; an observation-level condition judgment is not component approval. Role
+matches are structural traces, not correctness or causal validation, and no artifact
+content is auto-migrated. This reuses existing forms instead of another authoring schema.

@@ -92,3 +92,8 @@ For a tentative recurring method across publications, first record an explicit
 [operator pattern hypothesis](PATTERN_HYPOTHESES.md) with rival explanations and
 falsification criteria. Such a pattern does not automatically make it applicable
 to the new context or populate this worksheet.
+
+For a selected pattern already being considered in a proposal,
+[trace the pattern, context and answer/design together](PATTERN_TRANSFER_REVIEW.md).
+Excluded/deferred context decisions remain visible beside exact evidence uses;
+sharing a reference is not evidence of correct application.

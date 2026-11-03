@@ -413,3 +413,10 @@ research/review observations without rewriting their different wording. Original
 claims, counterevidence, publication order, rival explanations and missing falsifiers
 remain visible. No semantic pattern, distinctive scholar trait or recommendation
 is inferred from the evidence inventory.
+
+## Trace a pattern into a new proposal
+
+[Pattern-to-context review](docs/PATTERN_TRANSFER_REVIEW.md) joins existing manual
+pattern, applicability and answer/design artifacts. It exposes unresolved conditions,
+missing challenge-role uses and absent falsification criteria without generating or
+rebinding any claims. Exact references and enclosing-observation context are distinguished.
