@@ -1,9 +1,11 @@
 """Apply operator-curated paper observations as a bounded research planning scaffold."""
 import argparse
+import copy
 import json
 from pathlib import Path
 from persona import payload_sha256, validate
 from methodology_trajectory import summarize
+from reasoning_cards import card, validate_components
 
 
 def build(corpus):
@@ -33,6 +35,9 @@ def build(corpus):
                               attribution='coauthored work; individual ownership not established'))
             if rules[-1]['stance'] not in ('support', 'challenge'):
                 raise ValueError('observation stance must be support or challenge')
+            if 'reasoning' in observation:
+                validate_components(observation['reasoning'])
+                rules[-1]['reasoning'] = copy.deepcopy(observation['reasoning'])
     persona = dict(author_id=author, version=corpus['version'], build_id=corpus['build_id'],
                    identity=dict(simulation_only=True, private_beliefs_inferred=False),
                    rules=rules, trajectory=sorted(trajectory, key=lambda r: (r['year'], r['paper_id'])),
@@ -79,6 +84,11 @@ def apply(package, question, topic):
                 simulation_only=True, steps=steps, patterns=list(patterns.values()), trajectory=persona['trajectory'],
                 methodology_trajectory=summarize([rule for rule in persona['rules']
                     if rule['topic'].casefold() == topic.casefold()]),
+                reasoning_cards=[result for rule in persona['rules']
+                    if rule['topic'].casefold() == topic.casefold()
+                    for result in [card(rule)] if result is not None],
+                processing=dict(mode='DETERMINISTIC_OPERATOR_CURATED', llm_used=False,
+                                automatic_extraction=False),
                 semantic_validation='NOT_PERFORMED')
 
 

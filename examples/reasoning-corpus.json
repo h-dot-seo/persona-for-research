@@ -1,0 +1,76 @@
+{
+  "author_id": "synthetic-scholar",
+  "version": "1",
+  "build_id": "synthetic-build",
+  "papers": [
+    {
+      "paper_id": "synthetic-0",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "locator": "synthetic fixture",
+      "kind": "research",
+      "year": 2020,
+      "topic": "model design",
+      "observations": [
+        {
+          "method": "compare competing models before choosing an experiment",
+          "condition": "models predict distinct outcomes",
+          "limitation": "simulation only; no real author attribution",
+          "locator": "synthetic section 1",
+          "topic": "model design",
+          "evidence_quote": "Compare competing models",
+          "claim_type": "explicit_statement",
+          "reasoning": {
+            "alternative_explanation": {
+              "text": "Consider an alternative explanation.",
+              "locator": "synthetic reasoning",
+              "evidence_quote": "Compare explanations.",
+              "claim_type": "operator_interpretation"
+            },
+            "uncertainty": {
+              "text": "State uncertainty.",
+              "locator": "synthetic reasoning",
+              "evidence_quote": "State uncertainty.",
+              "claim_type": "explicit_statement"
+            }
+          }
+        }
+      ],
+      "segments": {
+        "synthetic section 1": "Compare competing models before designing an experiment.",
+        "synthetic reasoning": "Compare explanations. State uncertainty."
+      },
+      "segments_sha256": "a5ce98728eb5b75d3da13def68cc13b8c3dcc4f2cce3af6ba3d735669eda5505"
+    },
+    {
+      "paper_id": "synthetic-1",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "source_sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "locator": "synthetic fixture",
+      "kind": "review",
+      "year": 2021,
+      "topic": "model design",
+      "observations": [
+        {
+          "method": "compare competing models before choosing an experiment",
+          "condition": "models predict distinct outcomes",
+          "limitation": "simulation only; no real author attribution",
+          "locator": "synthetic section 1",
+          "topic": "model design",
+          "evidence_quote": "Compare competing models",
+          "claim_type": "explicit_statement"
+        }
+      ],
+      "segments": {
+        "synthetic section 1": "Compare competing models before designing an experiment."
+      },
+      "segments_sha256": "91b9b406e58ce529f2a93de73df8dae67e5b03d6b2f1d9c3ef27ea8b0c76ba3d"
+    }
+  ]
+}

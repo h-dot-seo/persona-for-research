@@ -38,3 +38,9 @@ CI run or real-scholar validity evaluation is claimed for this uncommitted incre
 Fifth increment: 12 local tests passed. New CLI paths, source boundaries, deterministic output and tamper/no-overwrite checks are covered. See private development log for remote matrix CI.
 
 Combined cloud verification: local-file intake and chronology integration passed 21 tests; source ZIP and per-file hashes matched the handoff. No real corpus was used.
+
+Reasoning-card increment: 29 local standard-library tests passed. Eight new cases
+cover per-component quote/locator checks, claim-type separation, missing dimensions,
+challenge stance, holdout rejection, malformed dimensions, tamper detection and
+deterministic nonmutating output. Publication and manifest checks passed. Inputs
+are synthetic; no LLM, automatic extraction or semantic assessment was performed.

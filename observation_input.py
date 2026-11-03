@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 from research_workflow import build, apply
+from reasoning_cards import validate_components
 
 
 def verified_corpus(corpus):
@@ -31,6 +32,12 @@ def verified_corpus(corpus):
             if obs.get('claim_type') not in ('explicit_statement', 'operator_interpretation'):
                 raise ValueError('claim_type must distinguish statement from interpretation')
             obs['evidence_verification'] = 'EXACT_QUOTE_MATCH_ONLY'
+            components = obs.get('reasoning', {})
+            validate_components(components)
+            for component in components.values():
+                if component['evidence_quote'] not in segments.get(component['locator'], ''):
+                    raise ValueError('reasoning quote not found at its source locator')
+                component['evidence_verification'] = 'EXACT_QUOTE_MATCH_ONLY'
         # The downstream package carries observation evidence; supplied text is not copied wholesale.
         del paper['segments']
     return result

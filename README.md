@@ -94,6 +94,29 @@ system-generated descriptions of the supplied publication record, not claims of
 career stage, personal belief, individual authorship or a change of mind. Missing
 years do not establish inactivity. No actual biography or career source is ingested.
 
+### Evidence-linked reasoning cards
+
+```sh
+python observation_input.py examples/reasoning-corpus.json --question "Which explanation?" --topic "model design"
+```
+
+An observation may include a `reasoning` object with `question_framing`,
+`alternative_explanation`, `evidence_standard`, `falsification_check` and/or
+`uncertainty`. Each supplied component requires `text`, `locator`, `evidence_quote`
+and `claim_type` (`explicit_statement` or `operator_interpretation`). The verified
+intake checks each component's quote independently against its own source section.
+Application output preserves these labels in `reasoning_cards`, reports missing
+dimensions without filling them, and retains challenge/support stance and coauthor
+attribution uncertainty. A verified quote does not verify the interpretation.
+
+All cards are manually curated input, not reconstructed private thoughts. Output
+`processing` explicitly reports that no LLM or automatic extraction was used.
+Use only permitted source text and short authorized quotations; full sections are
+not copied into the output. The unverified `research_workflow.py` path performs
+structural checks only; verification labels supplied directly to it are not
+independent verification receipts. Nothing here authenticates a publication or
+establishes that a researcher personally endorses a reasoning component.
+
 ## Verified observation intake
 
 ```sh

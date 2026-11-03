@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.5.0-source-chronology",
+  "release": "0.6.0-reasoning-cards",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 31,
+  "file_count": 34,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 7668,
-      "sha256": "eb4c6e417a8480e3e3c4c52947c516c4dd79239211ade1ce79dcba61ba45b8f9"
+      "bytes": 9022,
+      "sha256": "aee74e0e22ea509c2b55cb2407d3dde6930e642602f353887511b0b82b15c2fa"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 2515,
-      "sha256": "34010e7002823e317eacdcda61a9032f01cbfc46c903224c8d996db28856b75c"
+      "bytes": 2926,
+      "sha256": "1a679196ece905bfd8426d6553ea5e46f2fe7a63f980f9e20c4efb07fb4c471e"
     },
     {
       "path": "audit_publication.py",
@@ -89,6 +89,11 @@
       "sha256": "10c6ef0162f7fcbe3b17f56e8db348ec4085e3f8b583e0430222175df5a6105e"
     },
     {
+      "path": "examples/reasoning-corpus.json",
+      "bytes": 2812,
+      "sha256": "15bcbfed7192d1b8da4ba72a990f363046903f2eed50f797b5bc7dac97017b11"
+    },
+    {
       "path": "examples/research-corpus.json",
       "bytes": 1556,
       "sha256": "96277049be32ea616e8005fed5aa3deda11c9114e9d62478f2b13eb7750daff1"
@@ -110,8 +115,8 @@
     },
     {
       "path": "observation_input.py",
-      "bytes": 2814,
-      "sha256": "62c3df9fdf22b949e7cd676786a78cc404b5a43b1bf6d4b7627f00a7d3200aa5"
+      "bytes": 3266,
+      "sha256": "a54d2d2b1076518cda9ce1d24267f19d11ba1b5007b2ac84c69826cc387674aa"
     },
     {
       "path": "persona.py",
@@ -119,9 +124,14 @@
       "sha256": "b0fe8644e076795294c15df3a19f7e3defda143cbe6b4f198512d88c8c24d594"
     },
     {
+      "path": "reasoning_cards.py",
+      "bytes": 1932,
+      "sha256": "27db4d72cf07098157d4efbe3076eb3a0d5e589a31bf328a1ba7d315b1a54793"
+    },
+    {
       "path": "research_workflow.py",
-      "bytes": 5987,
-      "sha256": "cdd70235a0232c44f8c55c0b124e75cb3da45b76049c848e251fe89aa37afe42"
+      "bytes": 6595,
+      "sha256": "d84bac8935baa24be26fdb34bb71d1b5b78feaf1312b09dc0bbc21c786ba9b16"
     },
     {
       "path": "safe_canonical_read.py",
@@ -152,6 +162,11 @@
       "path": "test_persona.py",
       "bytes": 1639,
       "sha256": "75d1aef54772e03abe598784940976a3145f4c2f88bf397e298d362963754ea7"
+    },
+    {
+      "path": "test_reasoning_cards.py",
+      "bytes": 4287,
+      "sha256": "bbc2128a3f141b969231c9553d238ecfca4b03014774bcca2bb70317add510ee"
     },
     {
       "path": "test_research_workflow.py",
