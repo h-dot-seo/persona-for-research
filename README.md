@@ -390,3 +390,10 @@ arrays. It does not select relevant evidence or generate an answer, link or plan
 observation under unchanged source bytes, records the explicit reason and old/new
 claims in a separate audit file, and requires a new version/build. All revised
 corpus quotes are checked; scientific correctness and reviewer identity are not.
+
+## Trace evidence-use changes
+
+[Revision impact](docs/REVISION_IMPACT.md) compares old answer/design references
+against a revised package, retaining before/after claims, counterarguments and
+publication scope. It identifies affected old claims/steps without rebinding them;
+same-position correspondence is not semantic identity or scientific validation.

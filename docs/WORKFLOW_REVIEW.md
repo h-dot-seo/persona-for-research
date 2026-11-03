@@ -277,3 +277,12 @@ all revised corpus quotes, rebuilds a new package and starts a fresh review fold
 This closes the append-only manual curation gap without rewriting source hashes,
 model provenance or downstream bindings. It does not establish that the correction
 is correct or that the declared operator is a real authenticated reviewer.
+
+### Impact of a manual reassessment on old reasoning artifacts
+
+Rebuilding a package invalidated old bindings but did not identify which of their
+evidence uses changed. The read-only impact report now connects before/after exact
+endpoint records with old citation roles and design-link uses. Synthetic tests keep
+the review counterargument visible while a research observation's claim label
+changes. Affected IDs are scoped to compared uses, not a whole-corpus impact score;
+index reuse/reordering remains an explicit identity limitation. No artifact migrates.

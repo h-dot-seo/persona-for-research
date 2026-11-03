@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.30-manual-evidence-revision",
+  "release": "0.31-revision-impact",
   "date": "2026-11-03",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 116,
+  "file_count": 119,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 22583,
-      "sha256": "3e3c70187231b33ae28c2c1135232b9dc682b8807cd7f3a2f9f917e388a0ae9d"
+      "bytes": 22938,
+      "sha256": "1d89c214af59bd0afafeacf757c10e0b16c7b09f61f9fc03033b537f55820eb5"
     },
     {
       "path": "RIGHTS.md",
@@ -150,8 +150,8 @@
     },
     {
       "path": "docs/MANUAL_EVIDENCE_REVISION.md",
-      "bytes": 5341,
-      "sha256": "7bb79bb46ac973dd6575ce023d565f716c977a9153365ecd15be9e7ddb678c33"
+      "bytes": 5572,
+      "sha256": "5a50ce397368a3705ced883622c1aab14d14201aacad6cd5d4b92b73e7372e89"
     },
     {
       "path": "docs/MANUAL_LOCAL_OBSERVATIONS.md",
@@ -190,8 +190,13 @@
     },
     {
       "path": "docs/REVIEW_WORKSPACE.md",
-      "bytes": 5889,
-      "sha256": "2ab4f6a331765f4b1df89872b694b19e8cdc1679a2c9606315feac1015b97205"
+      "bytes": 6117,
+      "sha256": "c0bea35b65691459d0c2edd885d164d7a806ae5be62c3e0957c4451220168d5c"
+    },
+    {
+      "path": "docs/REVISION_IMPACT.md",
+      "bytes": 4281,
+      "sha256": "392e3d15cc9c20286fda1d80c340609bcb0b6cddf7ba984e9e97c28315cbe67d"
     },
     {
       "path": "docs/SYNTHETIC_EVALUATION.md",
@@ -205,8 +210,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 16931,
-      "sha256": "dc6d9793ddfbc3f299930fbc886220da4aa404383a28f3391e2d7cd605cc9ec4"
+      "bytes": 17493,
+      "sha256": "9fbf7d399510bc6c2477fd852c3246a17561e6a538421ea87162db35bc41db0a"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -369,6 +374,11 @@
       "sha256": "5450a01941b1c7ff743b74e9c2d5267ca57cb581e01d200496ed6e3ca1d5b9cf"
     },
     {
+      "path": "revision_impact.py",
+      "bytes": 7428,
+      "sha256": "3f4f99b605aaa9a834bb9ab8d2859cdcc2dce88add0aae9584e868b95572f79a"
+    },
+    {
       "path": "safe_canonical_read.py",
       "bytes": 4678,
       "sha256": "c1a41c723f5938f14176971e8b6f13f8c2be1060e49282a01f41cf6208f09b59"
@@ -527,6 +537,11 @@
       "path": "test_revise_local.py",
       "bytes": 9501,
       "sha256": "e6aa091cc4cf26e9fe13a485906b485248364b0071f8eaaeb7962ca83eadcc8e"
+    },
+    {
+      "path": "test_revision_impact.py",
+      "bytes": 8594,
+      "sha256": "e21c016620ff3806c533e4317e42c4d2564fe49e5c6479abf719c763ef2859d6"
     },
     {
       "path": "test_rule_source_consistency.py",

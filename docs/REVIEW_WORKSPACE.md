@@ -95,3 +95,7 @@ python -m unittest test_review_workspace -v
 If inspecting the catalog reveals an unsupported manual observation, correct it
 upstream with [manual evidence revision](MANUAL_EVIDENCE_REVISION.md), rebuild the
 package, and start a new workspace rather than relabeling existing bindings.
+
+After an upstream package revision, [compare evidence-use impact](REVISION_IMPACT.md)
+before manually rebuilding old drafts and plans. A zero-reference empty starter
+is not proof that a revision has no scientific consequences.

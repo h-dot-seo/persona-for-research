@@ -87,3 +87,7 @@ used in the synthetic demonstration.
 ```sh
 python -m unittest test_revise_local -v
 ```
+
+Before migrating existing answer/design work, use the read-only
+[revision impact report](REVISION_IMPACT.md) to trace old citation and link uses to
+changed or missing same-position evidence. It does not automatically rebind them.
