@@ -7,6 +7,42 @@ through the existing answer, argument, research-journey and input-card workflows
 No provider is called and no source bytes are reread. This is a review bridge, not
 a researcher chat, an endorsed answer or authenticated model/human provenance.
 
+## Try the opt-in synthetic route
+
+```sh
+python synthetic_walkthrough.py ../persona-answer-demo --candidate-source offline-import --research-journey --import-answers
+```
+
+This runs 34 actual CLI stages. `--import-answers` requires `--research-journey`,
+adds seven stages and accepts no caller-supplied response or review file. Three
+fixed invented candidates are explicitly adopted and one is rejected by fixture
+code, not a reusable automatic-review policy. The original comparison text differs
+from its reviewed text. The rejected parent-observation citation remains historical;
+all separate answer-review decisions stay deferred. Read `answer-proposals.txt`,
+then `research-journey.txt` and the detailed `reader-scope.txt`.
+
+To include fresh synthetic source checks, imported method-use proposals and the
+passive local HTML report, run:
+
+```sh
+python synthetic_walkthrough.py ../persona-complete-answer-demo --candidate-source offline-import --research-journey --recheck-sources --review-method-use --import-method-use --html-review --import-answers
+```
+
+That runs 46 stages. Source, pattern, application and answer proposal histories
+stay distinct. Seven new commands prepare scope/handoff/empty response, import,
+create a deferred adoption form, render explicit fixture review and export the
+history-preserving draft. The existing answer-review and argument commands then
+bind the new envelope. No-flag modes keep their existing counts and outputs.
+With mock extraction plus the required journey only, answer import runs 32 stages.
+No model, provider, external transmission or browser runs in any mode. Source
+rechecking reads only the explicitly generated invented local files.
+
+Use a new directory outside the repository. Failed commands preserve diagnostics
+and `commands.json` but never `COMPLETE.json`; retry into a new folder. Completion
+is only a successful synthetic demonstration, not scientific or browser validation.
+For independently authored material, follow the manual commands below instead of
+modifying the demo into an automatic approval tool.
+
 ## Select scope before preparing a handoff
 
 ```sh

@@ -224,3 +224,10 @@ Only explicitly adopted claims contribute answer/argument routes; historical
 candidate citations are not active evidence. Recreate the separately deferred
 answer review and argument bindings after adoption, and keep the question identical
 to the explicit context/design. No pattern use or semantic support is inferred.
+
+To exercise imported answer history end to end, add `--import-answers` to the
+synthetic journey command. This adds seven CLI stages (34 with offline-import
+extraction, or 46 with every extension). The input is canned and fixture-only;
+there is no external candidate/review option or real provider call. Final answer
+review stays deferred, and original/rejected proposal citations never substitute
+for adopted claim citations. See [answer proposals](ANSWER_PROPOSALS.md).

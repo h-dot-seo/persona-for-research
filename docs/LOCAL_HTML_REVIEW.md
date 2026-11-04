@@ -131,3 +131,9 @@ migrating decisions. A selected live-source check still requires an explicit sou
 root on every command. Text/JSON/HTML retain the same review semantics, with an added
 per-file consistency record. The browser presentation verification limit remains
 unchanged; this is a local input convenience, not approval or source authority.
+
+The optional synthetic `--import-answers` mode also displays the complete answer
+proposal/adoption history, alongside pattern and method-application history. With
+all extensions the runner executes 46 CLI stages. This changes no browser QA
+claim: parsing, escaping and exact JSON snapshots are not visual/keyboard/print
+verification. No browser retry or restriction bypass is performed.

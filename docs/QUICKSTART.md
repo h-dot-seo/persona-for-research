@@ -167,7 +167,7 @@ Use `research_journey.py ... --format html` with the same original inputs for a
 single read-only local view. It inspects once, preserves every field in a reversible
 snapshot, links only exact references, and has no scripts, external resources or
 approval controls. Add `--html-review` to the synthetic extended demo for one extra
-CLI stage (39 with all current options). Existing JSON/text modes are unchanged.
+CLI stage (39 with the preceding options, or 46 when also importing answer fixtures). Existing JSON/text modes are unchanged.
 The static/security/CLI checks are automated; actual-browser visual, keyboard and
 print QA is currently blocked by the cloud environment's socket restriction.
 See [local HTML review](LOCAL_HTML_REVIEW.md) for the reading order, privacy limits
@@ -200,3 +200,20 @@ forms plus deferred context assessments. Its relative-file selection has no chos
 pattern or optional source/review/method inputs, so it is intentionally not a ready
 input card. Follow the documented dependency order and preserve old files; no
 scientific choices, automatic rebinding or source reads are added.
+
+## Imported answer intent, with separate final review
+
+Add `--import-answers` to a `--research-journey` demo. Seven real commands create
+an explicit evidence scope, prepare/import canned proposals, record fixed invented
+adoption decisions, render their review and export a complete-history answer draft.
+The original, rewritten and rejected text survives answer/design, argument,
+evidence-scope, research-journey and optional passive HTML reports. No final answer
+is retained automatically: the independent answer review remains all-deferred.
+
+The minimal offline-import extraction route has 34 stages. All options together
+have 46 stages; use the complete command in [answer proposals](ANSWER_PROPOSALS.md).
+The mode accepts no external response/review files, creates no provider request,
+and leaves unsupported conclusions, method conditions and argument defeaters visible.
+Source-checking, method-use and HTML flags remain independent explicit options.
+Earlier modes and failure/no-overwrite rules are unchanged. Actual browser QA is
+still blocked and unverified, even when a static HTML report is written.

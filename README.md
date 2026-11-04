@@ -89,7 +89,10 @@ AI/Codex handoff and import a separately produced response. Explicit candidate
 adoption preserves original, rewritten and rejected history in the existing answer,
 argument and research-journey flows. The separate answer review still starts deferred.
 No provider is called, no researcher speech is generated, and citation presence is
-not semantic support. This optional standalone route is not yet a demo-runner flag.
+not semantic support. Add `--import-answers` to the synthetic `--research-journey`
+command to try seven more real CLI stages with canned candidates and explicit
+fixture decisions. With all options above, the complete flow has 46 stages; all
+final answer judgments remain deferred. See [the quickstart](docs/QUICKSTART.md).
 
 ## Compact review
 

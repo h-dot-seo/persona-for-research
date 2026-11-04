@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.52-offline-answer-proposals",
+  "release": "0.53-imported-answer-walkthrough",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 178,
+  "file_count": 179,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 31844,
-      "sha256": "59ceeb5b47eed0557e9a7b6543544b2a02a6207bd2862e6b5b86df3a5da385d1"
+      "bytes": 32083,
+      "sha256": "e753968c0a69c7235105fb0c951467d18a4fb925a466d056df2c712a7baba875"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 36681,
-      "sha256": "7a701a39e6638d658682915211d0eb3dc61572f2707f3a96d87859c863155f9e"
+      "bytes": 39653,
+      "sha256": "3fc58415a42b5ec31a2b30497c9a99a8d7b879179400ec16c14af385ac798f8d"
     },
     {
       "path": "answer_draft.py",
@@ -130,8 +130,8 @@
     },
     {
       "path": "docs/ANSWER_PROPOSALS.md",
-      "bytes": 9357,
-      "sha256": "5cc0fde7ccd1ef0aea43dfd7e42d85b1c464f4d10cd780b6a6014f3e4149b7fb"
+      "bytes": 11424,
+      "sha256": "d311b43fb1646233d28a9cb4f03ef2d3ca167f7138cc12d07a1f5e1294742b9a"
     },
     {
       "path": "docs/APPLICABILITY_REVIEW.md",
@@ -200,8 +200,8 @@
     },
     {
       "path": "docs/LOCAL_HTML_REVIEW.md",
-      "bytes": 8476,
-      "sha256": "b380dec13988a4e336e7439481fa8733d1dfa593eca361fbb37e625ff79f95df"
+      "bytes": 8864,
+      "sha256": "23d2ee83b2c857caeb3cebfaa658739aaae7eb3659643b29f2970882bb0d8aeb"
     },
     {
       "path": "docs/LOCAL_INPUT_PREPARATION.md",
@@ -275,8 +275,8 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 11486,
-      "sha256": "577c2a67a49e908cd1c95552b4dea4f2b5b2f348e7303c99d1eee9ecb7912be8"
+      "bytes": 12642,
+      "sha256": "97cf0b4f0e98900b3b350d866f1ce7d97e125195ebcef21e889ee56f02ca21b3"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -285,8 +285,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 14316,
-      "sha256": "36758e9959eef442adef936943091fe9b8eecf72d634bcaefdc1bcb9c8d4d2eb"
+      "bytes": 14788,
+      "sha256": "e1007734235a89c772b4fd080cbe80de5d4cf732a6d10a00840739c626b2a9c3"
     },
     {
       "path": "docs/REVIEW_JOURNEY.md",
@@ -575,8 +575,8 @@
     },
     {
       "path": "synthetic_walkthrough.py",
-      "bytes": 28144,
-      "sha256": "ee9bbf2a593a489ab65927fb2271625eadd37294321487f2e3d635a6ceb3d5b8"
+      "bytes": 32694,
+      "sha256": "9e5a013d33befe722db7ada6c0d04824879bea8e79819bfdb9b72d7610014109"
     },
     {
       "path": "test_answer_draft.py",
@@ -592,6 +592,11 @@
       "path": "test_answer_proposals.py",
       "bytes": 18811,
       "sha256": "99ced45dc29c7d1e4cf131ff9af4f087471620f0536049f59816f931b18e433d"
+    },
+    {
+      "path": "test_answer_walkthrough.py",
+      "bytes": 13617,
+      "sha256": "cd493ccb91984830042e2724c72fbb576dd93c7d38e9553330e307776205481c"
     },
     {
       "path": "test_applicability_review.py",

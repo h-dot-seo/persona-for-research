@@ -15,7 +15,11 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False):
+def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False, import_answers=False):
+    if type(import_answers) is not bool:
+        raise ValueError('import_answers must be a boolean')
+    if import_answers and not research_journey:
+        raise ValueError('import_answers requires research_journey')
     if type(html_review) is not bool:
         raise ValueError('html_review must be a boolean')
     if html_review and not research_journey:
@@ -72,6 +76,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
           'Live recheck mode writes invented local source files; read source-recheck.txt first.\n') if recheck_sources else '') +
         ('Method-use mode also writes method-applications.txt; considered use is not scientific approval.\n' if review_method_use else '') +
         ('Imported method-use mode retains original/reviewed/rejected synthetic proposals; no model is called.\n' if import_method_use else '') +
+        ('Imported answer mode retains canned original/reviewed/rejected claims; adoption does not retain the final answer.\n' if import_answers else '') +
         ('HTML review mode starts with passive local research-journey.html; open it yourself after completion.\n' if html_review else '') +
         'commands.json records actual CLI argument arrays (not shell commands).\n'
         'If any stage fails, keep this folder for diagnosis and rerun into a NEW directory.\n')
@@ -142,7 +147,10 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
                     dict(role='challenge', reference=links['links'][0]['from_ref'])]),
             dict(claim_id='conclusion', claim_type='operator_synthesis', text='Choose an observation only after checking discriminating predictions.',
                 uncertainty='Synthetic proposal, not empirical evidence.', citations=[])]
-        write('draft.json', draft)
+        if import_answers:
+            _import_answer_fixture(command, write, path, package_path, links, draft)
+        else:
+            write('draft.json', draft)
         command('answer_draft.py', [package_path, path('draft.json'), '--review-template', '--reviewer-id', 'synthetic-review-pending'], 'answer-review.json')
         argument = command('argument_map.py', [package_path, path('draft.json'), '--review', path('answer-review.json'),
             '--template', '--operator-id', 'synthetic-map-operator'], 'empty-argument.json')
@@ -171,6 +179,10 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
                 research_journey_answer_status=journey['answer_review_status'],
                 research_journey_is_synthetic=True,
                 read_first=['research-journey.txt', 'pattern-review.txt', *receipt['read_first']])
+        if import_answers:
+            receipt.update(answer_candidate_source='offline-import', answer_import_is_synthetic_fixture=True,
+                answer_adoption_scope='CANNED_FIXTURE_DECISIONS_NOT_SCIENTIFIC_APPROVAL',
+                read_first=['answer-proposals.txt', *receipt['read_first']])
         if review_method_use:
             receipt.update(method_application_status=journey['method_application_review']['status'],
                 read_first=['method-applications.txt', *receipt['read_first']])
@@ -197,6 +209,50 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
                 pass
         raise
 
+
+
+def _import_answer_fixture(command, write, path, package_path, links, draft):
+    """Only fixed invented inputs; never accept caller-supplied candidates or decisions."""
+    scope = command('answer_proposals.py', ['template', package_path, '--question', QUESTION,
+        '--topic', 'model design', '--reference-year', '2020', '--operator-id',
+        'synthetic-answer-fixture-operator'], 'empty-answer-scope.json')
+    earlier = copy.deepcopy(links['links'][0]['to_ref'])
+    later = copy.deepcopy(links['links'][0]['from_ref'])
+    unused_parent = dict(earlier, dimension=None)
+    scope['evidence_refs'] = [earlier, later, unused_parent]
+    write('synthetic-answer-scope.json', scope)
+    command('answer_proposals.py', ['prepare', package_path, path('synthetic-answer-scope.json')], 'answer-handoff.json')
+    response = command('answer_proposals.py', ['response-template', package_path,
+        path('synthetic-answer-scope.json'), path('answer-handoff.json')], 'empty-answer-response.json')
+    response['candidates'] = [{key:copy.deepcopy(value) for key,value in claim.items() if key != 'claim_id'}
+        for claim in draft['claims']]
+    response['candidates'][1]['text'] = 'Original canned answer comparison before explicit reviewer rewrite.'
+    response['candidates'].append(dict(text='Rejected synthetic answer overgeneralization, kept only as history.',
+        claim_type='operator_synthesis', uncertainty='Unsupported invented alternative.',
+        citations=[dict(reference=unused_parent, role='support')]))
+    write('synthetic-answer-response.json', response)
+    write('synthetic-answer-provenance.json', dict(provider_id='synthetic-no-provider', model_id='synthetic-no-model',
+        run_id='synthetic-answer-fixture', operator_id='synthetic-fixture-operator', execution_location='unknown'))
+    bundle = command('answer_proposals.py', ['import', package_path, path('synthetic-answer-scope.json'),
+        path('answer-handoff.json'), path('synthetic-answer-response.json'), path('synthetic-answer-provenance.json')],
+        'answer-candidates.json')
+    review = command('answer_proposals.py', ['review-template', package_path, path('answer-candidates.json'),
+        '--reviewer-id', 'synthetic-answer-adoption-reviewer'], 'deferred-answer-adoption.json')
+    ids = ['answer-candidate-'+str(index) for index in range(1,5)]
+    if ([row['candidate_id'] for row in bundle['candidates']] != ids or
+            [row['proposed_claim'] for row in bundle['candidates']] != response['candidates'] or
+            [row['candidate_id'] for row in review['decisions']] != ids or
+            any(row['decision'] != 'defer' or 'reviewed_claim' in row for row in review['decisions'])):
+        raise ValueError('synthetic answer candidate/template fixture changed; inspect before continuing')
+    for index, claim in enumerate(draft['claims']):
+        review['decisions'][index].update(decision='accept', reviewed_claim=copy.deepcopy(claim),
+            review_note='Fixed invented adoption decision only, not general automatic approval or final answer review.')
+    review['decisions'][3].update(decision='reject', review_note='Rejected invented alternative remains historical, not active evidence.')
+    write('synthetic-answer-adoption.json', review)
+    command('answer_proposals.py', ['review', package_path, path('answer-candidates.json'),
+        path('synthetic-answer-adoption.json'), '--format', 'text'], 'answer-proposals.txt', False)
+    command('answer_proposals.py', ['export', package_path, path('answer-candidates.json'),
+        path('synthetic-answer-adoption.json')], 'draft.json')
 
 
 def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False):
@@ -334,8 +390,9 @@ def main():
     parser.add_argument('--review-method-use', action='store_true')
     parser.add_argument('--import-method-use', action='store_true')
     parser.add_argument('--html-review', action='store_true')
+    parser.add_argument('--import-answers', action='store_true')
     args = parser.parse_args()
-    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use, html_review=args.html_review)
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use, html_review=args.html_review, import_answers=args.import_answers)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

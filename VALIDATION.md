@@ -2,7 +2,52 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.52 (offline answer proposals with full adoption history).
+Current local source release: v0.53 (opt-in synthetic imported-answer walkthrough).
+
+- `python -m unittest discover -q`: 685 synthetic tests passed locally.
+- `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 180 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- A standalone complete 46-command CLI route passed with imported extraction,
+  pattern, method-application and answer histories, current invented source-file
+  checks, JSON/text and passive HTML. Answer-review decisions remained all deferred.
+- The minimal mock-extraction + journey + answer-import route passed at 32 commands.
+  The existing no-answer-import full route remains 39 commands.
+
+Most recent separately verified remote baseline: v0.52, commit
+[`c5d00385397e27719b14e267d83434d6d9a54e2b`](https://github.com/h-dot-seo/persona-for-research/commit/c5d00385397e27719b14e267d83434d6d9a54e2b),
+with 675 tests. This is a prior-commit record, not a claim of remote CI for v0.53.
+
+- [GitHub Actions run 41792621542](https://github.com/h-dot-seo/persona-for-research/actions/runs/41792621542):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Ten new tests cover actual full/minimal CLI routes, seven separately injected stage
+failures, option/type validation before writes, rejection of external-response
+arguments, canned-candidate/deferred-template contract guards, complete history
+through passive HTML, separate final answer review, inactive rejected references,
+non-inherited conclusion citations, and stale review/argument bindings after a
+history-only edit. Each failed new stage leaves diagnostics but no COMPLETE marker.
+
+The previous 39-stage inventory is compared with an independently captured v0.52
+baseline. Only runtime paths and JSON formatting are normalized. Because legacy
+report dictionary order varies across subprocess hash seeds, the HTML comparison
+uses its exact JSON snapshot and tag/ID/href/attribute inventory, not byte equality
+or visual layout. Dedicated normalization coverage includes Windows separators
+and preserves unrelated backslashes. No expected scientific data is altered.
+
+An independent read-only review passed 62 focused/adjacent tests and found no
+blocker in fixture gating, default compatibility, history, defer or failure handling.
+
+This demo accepts no external candidate/review files and invokes no provider. Its
+three adopted/one rejected answer candidates are fixed invented fixture decisions,
+not a general automatic approval policy. The final answer review is separate and
+entirely deferred. Source matches do not establish semantic support, rights,
+researcher fidelity or authenticated human review. Actual-browser visual/keyboard/
+print QA remains **BLOCKED/unverified**; no browser retry or bypass was attempted.
+
+## Prior v0.52 answer proposal checks
+
+Local source release at this snapshot: v0.52 (offline answer proposals with full adoption history).
 
 - `python -m unittest discover -q`: 675 synthetic tests passed locally.
 - `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
