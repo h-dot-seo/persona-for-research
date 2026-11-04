@@ -50,6 +50,18 @@ handoff](#opt-in-recorded-answer-context) is a separate capability. Read
 `START_HERE.txt`, then use `research-journey.json` alongside the text reports.
 The fixture's accepted bridges demonstrate recorded decisions, not your approval.
 
+For a compact companion to steps 1 and 2 below, set `RUN` to that output directory
+and select the active step explicitly:
+
+```sh
+python argument_map.py "$RUN/revision.json" "$RUN/draft.json" "$RUN/argument.json" --review "$RUN/answer-review.json" --step-id late --format text
+```
+
+The [focused bridge view](ARGUMENT_MAP.md#focus-on-one-active-bridge) puts its endpoint
+claims and direct citations beside the bridge. It discloses omitted full histories
+and identifies the complete fresh report; it does not replace the journey's exact
+routes, method context, current source checks or full proposal review below.
+
 1. **Start at `late`.** Find `argument_review.steps[]` by `step_id`, not array
    position. Its reviewed bridge connects `comparison` to `conclusion`: “The canned
    reviewer proposes choosing an observation only after the synthetic comparison.”

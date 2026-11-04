@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.66-trajectory-condition-example",
+  "release": "0.67-focused-argument-step",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 220,
+  "file_count": 221,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 36349,
-      "sha256": "dcc4dead94100ab329f8979b45c3175abc4060d5d104b774ed82de4cf72d7e0a"
+      "bytes": 36648,
+      "sha256": "3a2871cffd104a74d0b626a340b23554c4a42c4f762740a041bf1a659f040f19"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 89663,
-      "sha256": "8235666bf9ec3ec4f67d5d23be443733b2d268bb8342dc0a97f5437db50cca35"
+      "bytes": 95507,
+      "sha256": "308a0cb80c6cff152de14bf37915ed36aa474725cb99fe40aba1058434506094"
     },
     {
       "path": "answer_context.py",
@@ -80,8 +80,8 @@
     },
     {
       "path": "argument_map.py",
-      "bytes": 12309,
-      "sha256": "cad34540fba7f090c51bc8b84d11bad5580fd333216d09ba9f7143dd2ed0d09d"
+      "bytes": 21552,
+      "sha256": "40477af31ff21fa5c5dabb325f83c8cf80a98b96c96d9b4f52384c540fad8aaf"
     },
     {
       "path": "argument_proposals.py",
@@ -170,13 +170,13 @@
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
-      "bytes": 4747,
-      "sha256": "fe6af907e0e00442912251dfe29345bd03dc278414490ae1a94b7c798962ca76"
+      "bytes": 8210,
+      "sha256": "531fd34157ef50c7519553a008afccf1608686c20aab39e45e1adf91771df02e"
     },
     {
       "path": "docs/ARGUMENT_PROPOSALS.md",
-      "bytes": 19780,
-      "sha256": "bf7c3ccf4b6ac5ea50fd94219e1517883c01d8fbe550417c92abb580a30b7f3e"
+      "bytes": 20392,
+      "sha256": "1ee9ff58ad08892935fdf59a50157630334cf5448514abfbdfa36f1f5c22ae3f"
     },
     {
       "path": "docs/CITATION_EXPLANATIONS.md",
@@ -752,6 +752,11 @@
       "path": "test_argument_replay_reuse.py",
       "bytes": 13771,
       "sha256": "c80e27ea5842d200c71cad05d36713f95828f50e4c69b1bb7128e2d9417638ea"
+    },
+    {
+      "path": "test_argument_step_view.py",
+      "bytes": 20103,
+      "sha256": "bc84e9355fe13f42f53aa165beb0b280d1f640e63cf95347e502139b136e0ac1"
     },
     {
       "path": "test_argument_walkthrough.py",

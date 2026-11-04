@@ -2,6 +2,92 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.67 (explicit single-active-argument-step companion).
+
+- `python -m unittest discover -q`: 957 synthetic tests passed locally in 824.274 seconds.
+- `python -m compileall -q .`: passed; 138 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 222 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 221 exact allowlisted entries and file hashes.
+
+Most recent separately verified remote baseline: v0.66, commit
+[`18f0bdae5c7d7c6ce2f3df1d2c53f36974c41dda`](https://github.com/h-dot-seo/persona-for-research/commit/18f0bdae5c7d7c6ce2f3df1d2c53f36974c41dda),
+with 942 tests. This is a prior-commit record, not a claim of remote CI for v0.67.
+
+- [GitHub Actions run 41840652118](https://github.com/h-dot-seo/persona-for-research/actions/runs/41840652118):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+- A separate read-only v0.66 audit became available after its publication. It found
+  no concrete defect in the example, documented distinctions or local file digests;
+  it did not run tests, authenticate sources or inspect a browser. The earlier
+  publication-time statement that no separate audit was recorded is preserved below.
+
+The only changed runtime module is `argument_map.py`; the other 55 non-test modules
+match v0.66. Existing full inspection/rendering APIs and default outputs remain
+unchanged. New raw-input `inspect_step` / `render_step` and opt-in `--step-id` select
+an exact active manual/adopted step only after complete ordinary inspection.
+Unknown, rejected-candidate and empty-map selections fail. Invalid unselected
+active graphs and stale complete-history bindings still reject.
+
+The companion preserves the selected inspected step and original imported proposal,
+complete endpoint claim/citation/explanation records, separate answer-review
+judgments/notes, premise order, declaration versus review order and same-conclusion
+alternatives. Uncited conclusions remain uncited; upstream nonendpoint claims are
+not silently treated as premises. Accepted argument adoption does not approve
+endpoint claims, source interpretations or logical inference.
+
+The view identifies the complete fresh inspection and all original JSON-compatible
+inputs by logical-content hashes, with absent/supplied review distinguished. These
+are not raw file-byte hashes, authentication or a verified companion-file link.
+Other step/claim IDs and known omitted history/context containers are explicit;
+complete histories are not embedded. Regeneration requires the same raw files and
+options without the selector. Recorded context is either absent or historical;
+current journey context, method use and source recheck are NOT_EVALUATED_HERE.
+The view is not an archival replacement, an accepted map or a review decision.
+
+Focused mode alone bounds complete indented inspection JSON including its newline
+before selection, then both focused JSON/text encodings, at 16 MiB. It does not
+regenerate the complete text report just to inspect JSON. Existing legacy input
+acceptance and output limits are unchanged. Raw objects are not silently normalized
+before ordinary validation, projected data is detached, and text fields and focused
+inspection errors are escaped.
+
+Fifteen new tests and nine existing map tests passed in final serial focused runs:
+11 manual tests in 0.795 seconds, four imported tests in 18.313 seconds, and nine
+existing tests in 0.306 seconds. Sixteen complete pre-edit default JSON/text
+snapshots remain equivalent. Legacy contextual JSON key ordering can vary across
+processes; expected JSON hashes were canonicalized from the saved pre-edit outputs,
+not replaced with new expectations. Text hashes remain exact.
+One earlier combined focused run was stopped by an external 30-second whole-suite
+wrapper (exit 124 after two tests, during the imported cases). This was not a
+repository CLI timeout or evidence of a runtime failure; final serial runs used
+normal process completion. Actual per-command 30-second CLI limits are unchanged,
+and no concurrency cause is asserted.
+
+A separate final static re-review found no remaining concrete defect. Its focused
+stderr concern was addressed with conditional escaping that preserves default
+errors. An early claim that extra source-component metadata could cause a public
+history-inventory crash was withdrawn after tracing the existing runtime projection,
+which strips those extras. The inventory now uses explicit report-owned paths and
+accurate context-presence labels; regression tests preserve parity with the actual
+full report rather than claiming an unreachable public reproduction. The audit
+ran no tests, provider calls or browser checks.
+
+Independent external-directory CLI checks passed four complete default-output
+comparisons, four focused v1/v2 JSON/text commands, and three expected rejections,
+all within unchanged 30-second command limits. Full JSON objects match the pre-edit
+baseline and full text bytes are identical. The complete synthetic text reports
+were 103,834 / 181,646 bytes; their selected-step companions were 19,650 / 22,149
+bytes, with explicit omission disclosures. This illustrates a navigation-size
+reduction for these fixtures, not a general performance or completeness guarantee.
+Full-report/input digests, exact endpoints, deferred review, absent conclusion
+citations, orders, history paths and escaped malformed-input stderr were checked.
+
+Only synthetic fixtures were used. No real researcher data, source reread, provider
+execution, external transmission or scientific execution was introduced. Browser
+visual/keyboard/print QA remains **BLOCKED/unverified**, with no retry or restriction
+bypass. Earlier failures and limits remain recorded below.
+
+## Prior v0.66 worked publication-trajectory and conditions example
+
 Current local source release: v0.66 (worked publication-trajectory and conditions example).
 
 - `python -m unittest discover -q`: 942 synthetic tests passed locally in 1064.988 seconds.

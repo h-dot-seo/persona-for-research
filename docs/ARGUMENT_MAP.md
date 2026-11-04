@@ -78,6 +78,66 @@ kept apart from topological review order; cycles are rejected only for the accep
 map, not treated as proof of logical validity. Rejected suggestions never become
 direct argument uses. Manual maps retain their original behavior and output shape.
 
+## Focus on one active bridge
+
+Use `--step-id` to co-locate one existing active bridge with its complete endpoint
+claim records and their **direct** citations:
+
+```sh
+python argument_map.py package.json draft.json argument.json --step-id synthetic-step --format text
+python argument_map.py package.json draft.json argument.json --step-id synthetic-step > selected-step.json
+```
+
+Supply the same `--review review.json` used by the map when applicable. Selection
+uses the exact adopted/manual step ID, not a candidate ID, array position or rejected
+proposal ID. It cannot be combined with `--template`. Unknown IDs and empty maps
+fail explicitly. Several bridges can share a conclusion; selecting one gives it no
+priority or approval.
+
+The focused view is a **navigation companion, not a complete report or archive**.
+It retains the selected step's rationale, assumptions, defeater, missing fields
+and imported original/reviewed origin; premise order; full endpoint claim text,
+uncertainty and exact source/citation/explanation records; and separately labeled
+answer-review decisions and notes. Original declaration order remains separate
+from deterministic review order. Upstream nonendpoint claims are not silently
+included as premises. An uncited conclusion stays `NO_CITATIONS_SUPPLIED`.
+
+Explicit omitted-scope information identifies the other steps and claims and
+notes that complete answer/argument proposal, rejected-candidate, review and
+recorded-preparation histories are not embedded. A full-report reference binds
+the complete fresh inspection and all original JSON-compatible inputs, including
+absent versus supplied answer review. These are JSON-content hashes, not raw file-byte
+hashes. A digest identifies content but does not make it available,
+authenticate it or approve it. No companion file is created or guessed. To read or
+save the complete report, repeat the command with the **same raw input files** and
+without `--step-id`:
+
+```sh
+python argument_map.py package.json draft.json argument.json --format text
+python argument_map.py package.json draft.json argument.json > complete-argument.json
+```
+
+Include the same review option on those commands too. Retain the original raw
+inputs and the ordinary complete report when durable history is needed. Do not
+feed the focused view back as an argument map, adoption decision or cached
+inspection. Public `inspect_step(...)` and `render_step(...)` take raw package,
+draft, map, exact step ID and optional declared review, not a saved report.
+
+The complete ordinary map is freshly inspected **before** selection. Invalid
+unselected active steps and stale full-history bindings still fail. The focused
+mode also caps the complete indented inspection JSON, including its final newline,
+at 16 MiB before projection, and separately caps focused JSON/text at 16 MiB.
+Both companion encodings are checked even when JSON is requested.
+These are focused-mode bounds; existing default map behavior is unchanged. It does
+not generate the entire text report merely to make a JSON selection. Nothing is
+silently truncated.
+
+The view performs no source reread, current journey-context comparison or method-use
+review. Recorded answer-preparation context remains historical. It does not infer
+journey routes, a method-to-argument link, citation inheritance, source independence,
+logical validity or researcher agreement. Use the full journey for those supplied
+contexts and keep its review boundaries in force.
+
 ## Read one bridge back to its basis
 
 Follow [Review the basis of one bridge](ARGUMENT_PROPOSALS.md#review-the-basis-of-one-bridge)

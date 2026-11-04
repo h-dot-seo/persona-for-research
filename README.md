@@ -158,6 +158,10 @@ The [bridge-first reading guide](docs/ARGUMENT_PROPOSALS.md#review-the-basis-of-
 follows one synthetic bridge through its exact premise citations, source limits,
 missing explanation and distinct method-use records, then records an assessment
 in a fresh all-deferred review. It creates no new evidence relationship or approval.
+Use the [optional focused bridge view](docs/ARGUMENT_MAP.md#focus-on-one-active-bridge)
+to read one active step with its endpoint claims and direct citations. It freshly
+validates the full map and makes omitted history explicit; it is not a replacement
+for the complete report or a review decision.
 
 ## Compact review
 

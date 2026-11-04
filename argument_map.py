@@ -154,25 +154,183 @@ def _render_inspected(result):
     return output
 
 
+
+STEP_VIEW_SCHEMA = 'persona.argument-step-view.v1'
+MAX_STEP_VIEW_BYTES = 16 * 1024 * 1024
+STEP_VIEW_BOUNDARY = (
+    'Navigation companion only, not an archival or full-report replacement. Full history is NOT '
+    'embedded and no companion file was created. Regenerate the full report with the same raw '
+    'input files and existing options, without --step-id. Accepted bridge adoption does not '
+    'certify endpoint claims or the inference. Only direct endpoint citations are shown; no '
+    'citation transfer, new reasoning, source access or automatic review is performed. Recorded '
+    'answer preparation context is historical, not current journey context. No journey route or '
+    'method-to-argument link is inferred.')
+
+
+def _step_bound(output, label):
+    if len(output.encode('utf-8')) > MAX_STEP_VIEW_BYTES:
+        raise ValueError(label + ' exceeds focused-mode 16 MiB limit')
+    return output
+
+
+def _step_json(value, label):
+    return _step_bound(json.dumps(value, indent=2) + '\n', label)
+
+
+def _history_inventory(report):
+    """Inventory only report-owned history paths, never arbitrary evidence metadata."""
+    rows = []
+    paths = [('answer', 'review'), ('answer', 'proposal_review'), ('proposal_review',)]
+    contexts = [('answer', 'proposal_review', 'research_context_review'),
+                ('proposal_review', 'recorded_answer_context'),
+                ('proposal_review', 'recorded_answer_context', 'reasoning_context')]
+    paths.extend(contexts)
+    for path in (contexts[0], contexts[2]):
+        paths.extend(path + (key,) for key in
+                     ('pattern_review', 'context_review', 'publication_context_review'))
+        paths.append(path + ('pattern_review', 'proposal_review'))
+    for path in paths:
+        value = report
+        for key in path:
+            if not isinstance(value, dict) or key not in value:
+                break
+            value = value[key]
+        else:
+            row = dict(report_path=list(path), content_sha256=payload_sha256(value),
+                       full_content_embedded=False)
+            if path[-1] == 'proposal_review':
+                row['candidate_ids'] = [c['candidate']['candidate_id'] for c in value['candidates']]
+                row['candidate_count'] = len(value['candidates'])
+            rows.append(row)
+    return rows
+
+
+def inspect_step(package, draft, supplied, step_id, declared_review=None):
+    """Validate all raw inputs afresh, then project one active step (never a cached report).
+
+    Focused mode alone additionally bounds complete full JSON and both companion
+    representations to 16 MiB, failing rather than truncating. Legacy APIs are unchanged.
+    """
+    report = inspect(package, draft, supplied, declared_review)
+    # Do not normalize raw inputs before ordinary inspection. Preserve every applicable
+    # imported-report bound; this additional bound is deliberately focused-mode only.
+    _step_json(report, 'Complete full JSON report')
+    _text(step_id, 'step_id', 128)
+    selected = next((row for row in report['steps'] if row['step_id'] == step_id), None)
+    if selected is None:
+        raise ValueError('step_id must name exactly one active declared step')
+    answer = report['answer']
+    endpoint_ids = selected['premise_claim_ids'] + [selected['conclusion_claim_id']]
+    claims = {row['claim_id']: row for row in answer['claims']}
+    decisions = {row['claim_id']: row for row in answer.get('review', {}).get('decisions', [])}
+    imported = 'proposal_review' in report
+    declared_ids = report['declared_step_ids'] if imported else [row['step_id'] for row in supplied['steps']]
+    other_steps = [row['step_id'] for row in report['steps'] if row['step_id'] != step_id]
+    other_claims = [row['claim_id'] for row in answer['claims'] if row['claim_id'] not in endpoint_ids]
+    reference = dict(
+        kind=('imported-argument-inspection:' + supplied['schema']) if imported else 'manual-argument-map-inspection',
+        hash_semantics='Logical JSON content SHA256, not raw file bytes or authentication; '
+            'the full-report reference identifies an inspection object, not an existing report file.',
+        full_report_sha256=payload_sha256(report),
+        raw_package_sha256=payload_sha256(package), raw_draft_sha256=payload_sha256(draft),
+        raw_supplied_map_sha256=payload_sha256(supplied),
+        raw_declared_review_sha256=payload_sha256(declared_review),
+        declared_review_supplied=declared_review is not None,
+        full_history_embedded=False, companion_file_created=False,
+        regeneration='Use the same raw input files and existing options without --step-id.')
+    if imported:
+        reference['argument_content_sha256'] = report['argument_content_sha256']
+    histories = _history_inventory(report)
+    recorded_context_present = any(row['report_path'][-1] in
+        ('recorded_answer_context', 'reasoning_context', 'research_context_review') for row in histories)
+    view = dict(schema=STEP_VIEW_SCHEMA, status='SINGLE_ACTIVE_STEP_NAVIGATION_VIEW',
+        question=answer['question'], argument_status=report['status'], answer_status=answer['status'],
+        selected_step=selected, endpoint_claim_ids=endpoint_ids,
+        endpoint_claims=[claims[key] for key in endpoint_ids],
+        endpoint_answer_reviews=[dict(claim_id=key,
+            status='DECLARED_REVIEW_RECORDED' if key in decisions else 'NOT_SUPPLIED',
+            decision=decisions.get(key), reviewer_id=answer.get('review', {}).get('reviewer_id'),
+            reviewer_identity='RECORDED_NOT_AUTHENTICATED' if key in decisions else 'NOT_SUPPLIED',
+            review_sha256=answer.get('review_sha256')) for key in endpoint_ids],
+        declared_step_ids=declared_ids,
+        review_order_step_ids=[row['step_id'] for row in report['steps']],
+        review_order_claim_ids=report['review_order_claim_ids'],
+        answer_claim_ids=[row['claim_id'] for row in answer['claims']],
+        same_conclusion_alternative_step_ids=[row['step_id'] for row in report['steps']
+            if row['step_id'] != step_id and row['conclusion_claim_id'] == selected['conclusion_claim_id']],
+        full_report_reference=reference,
+        omitted_scope=dict(other_step_ids=other_steps, other_step_count=len(other_steps),
+            nonendpoint_claim_ids=other_claims, nonendpoint_claim_count=len(other_claims),
+            complete_answer_report_embedded=False, complete_answer_uncited_observation_count=len(answer['uncited_observations']),
+            complete_candidate_review_context_histories=histories,
+            history_scope='Complete answer and argument candidate, review and context histories are omitted; '
+                'selected original proposals and endpoint review decisions are excerpts only.'),
+        recorded_answer_preparation_context=('HISTORICAL_ONLY_FULL_CONTEXT_OMITTED'
+            if recorded_context_present else 'NOT_SUPPLIED'),
+        current_journey_context='NOT_EVALUATED_HERE', method_use='NOT_EVALUATED_HERE',
+        source_recheck='NOT_EVALUATED_HERE', citation_transfer='NOT_PERFORMED',
+        logical_validation='NOT_PERFORMED', automatic_review='NOT_PERFORMED',
+        processing=dict(provider_invoked=False, external_transmission=False, source_reread=False),
+        boundary=STEP_VIEW_BOUNDARY, argument_boundary=report['boundary'], answer_boundary=answer['boundary'])
+    view = copy.deepcopy(view)
+    _step_json(view, 'Focused JSON report')
+    _render_step_inspected(view)
+    return view
+
+
+def _render_step_inspected(view):
+    """Render only a freshly inspected local projection; escape every supplied scalar/key."""
+    lines = ['Single active argument step | NAVIGATION COMPANION', STEP_VIEW_BOUNDARY]
+    def emit(value, depth=0):
+        prefix = '  ' * depth
+        if isinstance(value, dict):
+            for key, child in value.items():
+                if isinstance(child, (dict, list)):
+                    lines.append(prefix + display(key) + ':')
+                    emit(child, depth + 1)
+                else:
+                    lines.append(prefix + display(key) + ': ' + display(child))
+            if not value: lines.append(prefix + '{}')
+        elif isinstance(value, list):
+            for index, child in enumerate(value):
+                lines.append(prefix + '[' + str(index) + ']')
+                emit(child, depth + 1)
+            if not value: lines.append(prefix + '[]')
+        else:
+            lines.append(prefix + display(value))
+    emit(view)
+    return _step_bound('\n'.join(lines) + '\n', 'Focused text report')
+
+
+def render_step(package, draft, supplied, step_id, declared_review=None):
+    """Render one step only after complete ordinary inspection of raw inputs."""
+    return _render_step_inspected(inspect_step(package, draft, supplied, step_id, declared_review))
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('package', type=Path); parser.add_argument('draft', type=Path)
     parser.add_argument('map', type=Path, nargs='?'); parser.add_argument('--review', type=Path)
     parser.add_argument('--template', action='store_true'); parser.add_argument('--operator-id')
+    parser.add_argument('--step-id')
     parser.add_argument('--format', choices=('json', 'text'), default='json'); args = parser.parse_args()
     try:
         package, draft = load(args.package), load(args.draft); declared = load(args.review) if args.review else None
         if args.template:
-            if args.map or args.format != 'json': raise ValueError('empty map template needs JSON and no map input')
+            if args.map or args.format != 'json' or args.step_id is not None: raise ValueError('empty map template needs JSON and no map input')
             output = json.dumps(template(package, draft, args.operator_id, declared), indent=2) + '\n'
         else:
             if args.map is None or args.operator_id is not None: raise ValueError('supply a map without operator override')
             supplied = load(args.map)
-            output = render(package, draft, supplied, declared) if args.format == 'text' else json.dumps(inspect(package, draft, supplied, declared), indent=2) + '\n'
+            if args.step_id is not None:
+                output = (render_step(package, draft, supplied, args.step_id, declared) if args.format == 'text'
+                    else _step_json(inspect_step(package, draft, supplied, args.step_id, declared), 'Focused JSON report'))
+            else:
+                output = render(package, draft, supplied, declared) if args.format == 'text' else json.dumps(inspect(package, draft, supplied, declared), indent=2) + '\n'
             if isinstance(supplied, dict) and supplied.get('schema') in ('persona.reviewed-argument-proposals.v1', 'persona.reviewed-argument-proposals.v2'):
                 from argument_proposals import MAX_OUTPUT_BYTES
                 if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES: raise ValueError('imported argument output exceeds 16 MiB')
-    except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc) + '\n')
+    except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc:
+        parser.exit(1, (display(str(exc)) if args.step_id is not None else str(exc)) + '\n')
     sys.stdout.buffer.write(output.encode('utf-8'))
 
 
