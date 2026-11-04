@@ -30,7 +30,9 @@ BOUNDARY = ('These are imported method-pattern proposals and recorded operator i
     'No provider call, external transmission or original source reread is performed here.')
 
 
-def prepare_handoff(value, topic):
+def prepare_handoff(value, topic, *, include_evidence_reasons=False):
+    if type(include_evidence_reasons) is not bool:
+        raise ValueError('include_evidence_reasons must be a boolean')
     package, papers = _sources(value)
     # Reuse full-package year, source/rule, author, eligibility and authorization checks.
     pattern_template(package, 'preflight-only')
@@ -66,15 +68,22 @@ def prepare_handoff(value, topic):
             'Every result is an unapproved proposal requiring explicit review; return only the bound response contract.'
         ], processing=dict(provider_invoked=False, external_transmission=False, source_reread=False),
         boundary=BOUNDARY + ' This local artifact can contain private quotes and annotations; preparing it is not permission to transmit it to a provider.')
+    if include_evidence_reasons:
+        result['schema'] = 'persona.pattern-handoff.v2'
+        result['response_contract'].update(candidate_fields=sorted(PROPOSAL_FIELDS | {'evidence_uses'}),
+            evidence_use_fields=['reference', 'role', 'rationale', 'context_boundary'],
+            evidence_use_roles=['support', 'challenge'], nullable_evidence_use_fields=['context_boundary'],
+            evidence_use_coverage='EXACTLY_ONE_PER_DECLARED_REFERENCE_ROLE_PAIR')
+        result['instructions'].append('For every support/challenge reference-role pair provide one evidence use: a concise rationale connecting that record to the proposed pattern, and a context_boundary or null when not supplied. These are proposed justifications to examine, never private reasoning traces or source quotations. Do not borrow a condition or rationale silently from another source.')
     if len(json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')) > MAX_HANDOFF_BYTES:
         raise ValueError('pattern handoff exceeds the 2 MiB logical JSON limit')
     return result
 
 
 def _handoff(value, supplied):
-    if not isinstance(supplied, dict):
+    if not isinstance(supplied, dict) or supplied.get('schema') not in ('persona.pattern-handoff.v1', 'persona.pattern-handoff.v2'):
         raise ValueError('expected a pattern handoff object')
-    expected = prepare_handoff(value, supplied.get('topic'))
+    expected = prepare_handoff(value, supplied.get('topic'), include_evidence_reasons=supplied['schema'].endswith('.v2'))
     if payload_sha256(expected) != payload_sha256(supplied):
         raise ValueError('pattern handoff changed or is stale for the full package')
     return expected
@@ -85,7 +94,8 @@ def response_template(value, handoff):
 
 
 def _inspect_pattern(value, handoff, pattern, operator_id):
-    if not isinstance(pattern, dict) or set(pattern) != PATTERN_FIELDS:
+    reasons = handoff['schema'].endswith('.v2')
+    if not isinstance(pattern, dict) or set(pattern) != PATTERN_FIELDS | ({'evidence_uses'} if reasons else set()):
         raise ValueError('pattern requires explicit hypothesis, scope, references, alternatives and uncertainty fields')
     allowed = {payload_sha256(node['reference']) for node in handoff['evidence_catalog']}
     for field in ('support_refs', 'challenge_refs'):
@@ -94,7 +104,7 @@ def _inspect_pattern(value, handoff, pattern, operator_id):
         if any(payload_sha256(ref) not in allowed for ref in pattern[field]):
             raise ValueError('pattern reference is outside the topic-bound handoff catalog')
     form = pattern_template(value, operator_id)
-    form['hypotheses'] = [copy.deepcopy(pattern)]
+    form['hypotheses'] = [{key: copy.deepcopy(pattern[key]) for key in PATTERN_FIELDS}]
     result = inspect_patterns(value, form)['hypotheses'][0]
     if len({route['evidence']['reference']['paper_id'] for route in result['evidence']}) < 2:
         raise ValueError('cross-publication proposals require at least two distinct paper IDs across support and challenge references')
@@ -106,14 +116,49 @@ def _inspect_pattern(value, handoff, pattern, operator_id):
     result['references_without_supplied_quotes'] = missing
     if missing:
         result['review_prompts'].append('REFERENCES_WITHOUT_SUPPLIED_QUOTES')
+    if reasons:
+        uses = _evidence_uses(pattern)
+        gaps = []
+        for route in result['evidence']:
+            route['evidence_uses'] = [copy.deepcopy(uses[(payload_sha256(route['evidence']['reference']), role)])
+                                      for role in route['declared_roles']]
+            for use in route['evidence_uses']:
+                if use['context_boundary'] is None:
+                    gaps.append(dict(reference=copy.deepcopy(use['reference']), role=use['role'],
+                                     code='CONTEXT_BOUNDARY_NOT_SUPPLIED'))
+        result['evidence_use_gaps'] = gaps
+        if gaps: result['review_prompts'].append('EVIDENCE_USE_CONTEXT_BOUNDARY_NOT_SUPPLIED')
+        result['evidence_use_validation'] = 'REFERENCE_ROLE_COVERAGE_ONLY_NOT_SEMANTIC_SUPPORT'
     return result
 
 
-def _as_pattern(proposal, candidate_id):
-    if not isinstance(proposal, dict) or set(proposal) != PROPOSAL_FIELDS:
+def _evidence_uses(pattern):
+    expected = {(payload_sha256(ref), role) for field, role in (('support_refs', 'support'), ('challenge_refs', 'challenge'))
+                for ref in pattern[field]}
+    supplied = pattern['evidence_uses']
+    if not isinstance(supplied, list) or len(supplied) != len(expected):
+        raise ValueError('provide exactly one evidence use per declared reference-role pair')
+    result = {}
+    for use in supplied:
+        if not isinstance(use, dict) or set(use) != {'reference', 'role', 'rationale', 'context_boundary'}:
+            raise ValueError('evidence use has missing or unknown fields')
+        if use['role'] not in ('support', 'challenge'):
+            raise ValueError('evidence use needs a declared support or challenge role')
+        key = (payload_sha256(use['reference']), use['role'])
+        if key not in expected or key in result:
+            raise ValueError('unknown or duplicate evidence-use reference-role pair')
+        _text(use['rationale'], 'evidence rationale')
+        if use['context_boundary'] is not None: _text(use['context_boundary'], 'context_boundary')
+        result[key] = copy.deepcopy(use)
+    return result
+
+
+def _as_pattern(proposal, candidate_id, *, include_evidence_reasons=False):
+    fields = PROPOSAL_FIELDS | ({'evidence_uses'} if include_evidence_reasons else set())
+    if not isinstance(proposal, dict) or set(proposal) != fields:
         raise ValueError('pattern proposal has missing or unsupported fields')
     return dict(pattern_id=candidate_id, operator_hypothesis=proposal['proposed_hypothesis'],
-                **{key: copy.deepcopy(proposal[key]) for key in PROPOSAL_FIELDS - {'proposed_hypothesis'}})
+                **{key: copy.deepcopy(proposal[key]) for key in fields - {'proposed_hypothesis'}})
 
 
 def import_response(value, handoff, response, provenance):
@@ -126,12 +171,13 @@ def import_response(value, handoff, response, provenance):
     if not isinstance(response['candidates'], list) or len(response['candidates']) > MAX_PROPOSALS:
         raise ValueError('pattern response allows at most 32 candidates')
     rows = []
+    reasons = handoff['schema'].endswith('.v2')
     for index, proposal in enumerate(response['candidates']):
         cid = 'pattern-candidate-' + str(index + 1)
-        report = _inspect_pattern(value, handoff, _as_pattern(proposal, cid), provenance['operator_id'])
+        report = _inspect_pattern(value, handoff, _as_pattern(proposal, cid, include_evidence_reasons=reasons), provenance['operator_id'])
         rows.append(dict(candidate_id=cid, proposed_pattern=copy.deepcopy(proposal),
             review_prompts=report['review_prompts'], status='IMPORTED_PATTERN_PROPOSAL_REQUIRES_REVIEW'))
-    return dict(schema='persona.pattern-proposals.v1', topic=handoff['topic'],
+    return dict(schema='persona.pattern-proposals.v2' if reasons else 'persona.pattern-proposals.v1', topic=handoff['topic'],
         input_package_sha256=handoff['input_package_sha256'],
         import_record=dict(handoff_sha256=payload_sha256(handoff), response_sha256=payload_sha256(response),
                            provenance=copy.deepcopy(provenance)),
@@ -143,7 +189,7 @@ def import_response(value, handoff, response, provenance):
 
 
 def validate_bundle(value, bundle):
-    if not isinstance(bundle, dict) or bundle.get('schema') != 'persona.pattern-proposals.v1':
+    if not isinstance(bundle, dict) or bundle.get('schema') not in ('persona.pattern-proposals.v1', 'persona.pattern-proposals.v2'):
         raise ValueError('expected a pattern proposal bundle')
     rows = bundle.get('candidates')
     if not isinstance(rows, list) or len(rows) > MAX_PROPOSALS:
@@ -156,7 +202,8 @@ def validate_bundle(value, bundle):
         if not isinstance(row, dict) or 'proposed_pattern' not in row:
             raise ValueError('malformed pattern candidate')
         response['candidates'].append(row['proposed_pattern'])
-    expected = import_response(value, prepare_handoff(value, bundle.get('topic')), response, record['provenance'])
+    expected = import_response(value, prepare_handoff(value, bundle.get('topic'),
+        include_evidence_reasons=bundle['schema'].endswith('.v2')), response, record['provenance'])
     if payload_sha256(expected) != payload_sha256(bundle):
         raise ValueError('pattern bundle changed or is stale; import and review again')
     return expected
@@ -171,7 +218,8 @@ def review_template(value, bundle, reviewer_id):
 
 def review_proposals(value, bundle, review):
     bundle = validate_bundle(value, bundle)
-    handoff = prepare_handoff(value, bundle['topic'])
+    reasons = bundle['schema'].endswith('.v2')
+    handoff = prepare_handoff(value, bundle['topic'], include_evidence_reasons=reasons)
     if not isinstance(review, dict) or set(review) != {'proposal_bundle_sha256', 'reviewer_id', 'decisions'}:
         raise ValueError('pattern review has missing or unknown fields')
     if review['proposal_bundle_sha256'] != payload_sha256(bundle):
@@ -199,7 +247,8 @@ def review_proposals(value, bundle, review):
     rows = []
     for candidate in bundle['candidates']:
         cid = candidate['candidate_id']; decision = decisions[cid]
-        original = _inspect_pattern(value, handoff, _as_pattern(candidate['proposed_pattern'], cid), review['reviewer_id'])
+        original = _inspect_pattern(value, handoff, _as_pattern(candidate['proposed_pattern'], cid,
+            include_evidence_reasons=reasons), review['reviewer_id'])
         original.update(claim_type='imported_proposal', status='IMPORTED_PATTERN_PROPOSAL_REQUIRES_REVIEW')
         reviewed = None
         if decision['decision'] == 'accept':
@@ -239,7 +288,8 @@ def inspect_reviewed(value, envelope):
     packet = review_proposals(value, envelope['bundle'], envelope['review'])
     _require_export(packet)
     form = pattern_template(value, packet['reviewer_id'])
-    form['hypotheses'] = [copy.deepcopy(row['reviewed_pattern']) for row in packet['candidates'] if row['decision']=='accept']
+    form['hypotheses'] = [{key:copy.deepcopy(row['reviewed_pattern'][key]) for key in PATTERN_FIELDS}
+                          for row in packet['candidates'] if row['decision']=='accept']
     result = inspect_patterns(value, form)
     result.update(form_sha256=payload_sha256(envelope), worksheet_content_sha256=payload_sha256(form),
         proposal_review=packet, origin='OPERATOR_REVIEWED_IMPORTED_PATTERN_PROPOSALS',
@@ -255,6 +305,11 @@ def inspect_reviewed(value, envelope):
             original_proposal=copy.deepcopy(row['candidate']['proposed_pattern']))
         pattern['review_prompts'] = copy.deepcopy(row['reviewed_inspection']['review_prompts'])
         pattern['references_without_supplied_quotes'] = copy.deepcopy(row['reviewed_inspection']['references_without_supplied_quotes'])
+        if 'evidence_uses' in row['reviewed_pattern']:
+            pattern['evidence'] = copy.deepcopy(row['reviewed_inspection']['evidence'])
+            pattern['evidence_use_gaps'] = copy.deepcopy(row['reviewed_inspection']['evidence_use_gaps'])
+            pattern['evidence_use_validation'] = row['reviewed_inspection']['evidence_use_validation']
+            pattern['proposal_origin']['reviewed_evidence_uses'] = copy.deepcopy(row['reviewed_pattern']['evidence_uses'])
     return result
 
 
@@ -294,6 +349,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
     prepare = commands.add_parser('prepare'); prepare.add_argument('package', type=Path); prepare.add_argument('--topic', required=True)
+    prepare.add_argument('--include-evidence-reasons', action='store_true')
     response = commands.add_parser('response-template'); response.add_argument('package', type=Path); response.add_argument('handoff', type=Path)
     imported = commands.add_parser('import');
     for name in ('package', 'handoff', 'response', 'provenance'): imported.add_argument(name, type=Path)
@@ -305,7 +361,7 @@ def main():
     args = parser.parse_args()
     try:
         package = _load(args.package)
-        if args.command == 'prepare': result = prepare_handoff(package, args.topic)
+        if args.command == 'prepare': result = prepare_handoff(package, args.topic, include_evidence_reasons=args.include_evidence_reasons)
         elif args.command == 'response-template': result = response_template(package, _load(args.handoff))
         elif args.command == 'import': result = import_response(package, _load(args.handoff), _load(args.response), _load(args.provenance))
         elif args.command == 'review-template': result = review_template(package, _load(args.bundle), args.reviewer_id)

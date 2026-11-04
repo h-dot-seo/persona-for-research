@@ -103,6 +103,9 @@ def render(result, *, imported_proposal=False):
         lines.append('  Supporting paper IDs: '+str(pattern['distinct_support_paper_id_count'])+'; all source hashes: '+str(pattern['distinct_source_hash_count'])+' (neither means independent support)')
         for route in pattern['evidence']:
             lines.append('  Declared use: '+', '.join(route['declared_roles']))
+            for use in route.get('evidence_uses', []):
+                lines.append('    '+use['role']+' rationale ['+('imported_proposal' if imported_proposal else 'operator_interpretation')+']: '+display(use['rationale']))
+                lines.append('    Context boundary: '+('NOT_SUPPLIED' if use['context_boundary'] is None else display(use['context_boundary'])))
             node=route['evidence'];_render_endpoint(lines,node)
             obs=node['observation'];lines.append('    Observation topic: '+display(obs['topic']))
             lines.append('    Observation stored quote: '+display(obs['evidence_quote'])+'; recorded check: '+display(obs['evidence_verification']))

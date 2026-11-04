@@ -447,6 +447,9 @@ interpretations. All decisions start deferred. An explicit reviewed envelope kee
 original/revised text, rejected proposals and declared model provenance through
 existing pattern and context review. Acceptance does not approve a method or create
 a design; no model call or external transmission is performed by these tools.
+Optional v2 handoffs request a separate rationale and context boundary for each
+support/challenge reference. Original and reviewed explanations remain distinct,
+and missing boundaries stay visible during new-context review.
 
 ## Trace a pattern into a new proposal
 

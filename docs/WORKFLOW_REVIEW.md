@@ -379,3 +379,15 @@ keeps every original/rejected proposal and review note, and downstream pattern a
 context inspectors replay it instead of stripping model provenance into a manual
 form. Synthetic CLI tests exercise the complete route without actual inference,
 source rereads, external transmission or real researcher material.
+
+### Evidence-use explanations expose the inference bridge
+
+An optional version-two pattern contract requires a concise rationale and nullable
+context boundary for each declared source/role pair. A source appearing in both
+roles needs separate explanations. Accepted review must explicitly provide its
+own explanations for the reviewed references; no model rationale is silently
+inherited. Original, reviewed and rejected reasons stay distinct in pattern and
+transfer reports. Source-specific missing-boundary prompts do not replace existing
+target-context judgments. Version-one canonical payload and rendered-text snapshots
+remain unchanged. These checks validate coverage and provenance, not entailment,
+scientific applicability or a researcher's actual private reasoning.

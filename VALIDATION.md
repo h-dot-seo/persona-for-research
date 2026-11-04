@@ -2,21 +2,29 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.40 (model-assisted method-pattern proposals).
+Current local source release: v0.41 (source-specific evidence-use explanations).
 
-- `python -m unittest discover -q`: 407 synthetic tests passed locally.
+- `python -m unittest discover -q`: 419 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 142 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 143 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
 - Standalone `synthetic_walkthrough.py --candidate-source offline-import`: all 17
   CLI stages completed, imported lineage replay matched, answer review stayed deferred.
 
-Most recent separately verified remote baseline: v0.39, commit
-[`5d233bf2aa9f844d9f09ccf6794296bda049ce8e`](https://github.com/h-dot-seo/persona-for-research/commit/5d233bf2aa9f844d9f09ccf6794296bda049ce8e),
-with 389 tests. This is a prior-commit record, not a claim of remote CI for v0.40.
+Most recent separately verified remote baseline: v0.40, commit
+[`eca37da82808aea80d204423cceb0b7df66a3c55`](https://github.com/h-dot-seo/persona-for-research/commit/eca37da82808aea80d204423cceb0b7df66a3c55),
+with 407 tests. This is a prior-commit record, not a claim of remote CI for v0.41.
 
-- [GitHub Actions run 41767468248](https://github.com/h-dot-seo/persona-for-research/actions/runs/41767468248):
+- [GitHub Actions run 41768955142](https://github.com/h-dot-seo/persona-for-research/actions/runs/41768955142):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twelve additional evidence-use regressions cover exact reference/role coverage,
+source-specific null boundaries, explicit reviewed explanations, removed/dual-role
+references, rejected reasons, version isolation, tampering, rendering and the v2
+CLI. Verified v0.40 canonical payload/text snapshots remain unchanged. Changing
+only a reviewed rationale changes envelope and transfer identity, while the plain
+worksheet projection hash intentionally excludes explanations. Independent probes
+confirmed the complete binding, source-gap preservation and no automatic approval.
 
 Eighteen model-pattern regressions cover the complete real CLI route from topic
 handoff to import, default-deferred review, explicit envelope export, pattern

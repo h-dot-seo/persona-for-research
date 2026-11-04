@@ -52,6 +52,11 @@ def inspect(package,patterns,context,links,proposal,draft,pattern_id):
             context_assessment=assessment,context_match_basis='ENCLOSING_OBSERVATION_ONLY' if assessment else 'NONE',
             declared_context_counterevidence_for=counter_uses,answer_uses=answer_uses,design_uses=design_uses,
             unused_link_uses=uses.get('unreferenced_link_uses',[]),review_prompts=codes)
+        if 'evidence_uses' in route:
+            row['pattern_evidence_uses']=route['evidence_uses']
+            row['pattern_evidence_use_gaps']=[dict(reference=use['reference'],role=use['role'],
+                code='CONTEXT_BOUNDARY_NOT_SUPPLIED') for use in route['evidence_uses'] if use['context_boundary'] is None]
+            if row['pattern_evidence_use_gaps']:codes.append('PATTERN_EVIDENCE_USE_CONTEXT_BOUNDARY_NOT_SUPPLIED')
         rows.append(row)
         prompts.extend(dict(reference=ref,code=code) for code in codes)
     bindings=dict(pattern_form_sha256=patterns_result['form_sha256'],context_form_sha256=context_result['form_sha256'],packet_input_sha256=packet['packet_input_sha256'],pattern_id=pattern_id)
@@ -83,6 +88,9 @@ def render(package,patterns,context,links,proposal,draft,pattern_id):
         lines.append('Pattern '+field+': '+('NOT_SUPPLIED' if pattern[field] is None else display(pattern[field])))
     for route in result['evidence_routes']:
         lines.append('Pattern declared roles: '+', '.join(route['pattern_roles'])+' | '+route['publication_scope'])
+        for use in route.get('pattern_evidence_uses', []):
+            lines.append('  Pattern '+use['role']+' rationale [operator_interpretation]: '+display(use['rationale']))
+            lines.append('  Pattern context boundary: '+('NOT_SUPPLIED' if use['context_boundary'] is None else display(use['context_boundary'])))
         _render_endpoint(lines,route['evidence']);obs=route['evidence']['observation']
         lines.append('  Observation topic: '+display(obs['topic'])+'; quote: '+display(obs['evidence_quote']))
         lines.append('  Trace prompts: '+(', '.join(route['review_prompts']) or 'none detected; not validation'))

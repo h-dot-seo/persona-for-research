@@ -116,6 +116,61 @@ contrary evidence and their review notes. Review identities are recorded, not
 human-authenticated. Hash bindings prevent accidental mismatches; someone who
 constructs a new consistent artifact has made new declarations, not proven history.
 
+## Explain why each source is used: optional v2 contract
+
+To request an explicit evidence-use explanation rather than a bare reference list:
+
+```sh
+python pattern_proposals.py prepare ../package.json --topic "model design" --include-evidence-reasons > ../pattern-handoff-v2.json
+```
+
+This selects the versioned v2 handoff and bundle. Subsequent response-template,
+import, review and export commands infer the contract from the bound artifact.
+Existing v1 requests, bundles, manual forms and rendered reports remain supported;
+the tool never silently upgrades or downgrades them.
+
+In v2, every candidate additionally requires `evidence_uses`. Supply exactly one
+entry for each declared reference/role pair in `support_refs` and `challenge_refs`:
+
+```json
+{
+  "reference": {"paper_id": "synthetic-0", "observation_index": 0, "dimension": null},
+  "role": "support",
+  "rationale": "The recorded method explicitly compares alternative models before selecting a measurement, which motivates this tentative comparison-first hypothesis.",
+  "context_boundary": "The source condition requires predictions that can be distinguished."
+}
+```
+
+This is an illustrative synthetic explanation, not a verified source conclusion.
+For the other selected synthetic paper, supply its own reference, role, rationale
+and context boundary instead of copying this explanation. The same reference used
+for both support and challenge needs two distinct entries. Missing, duplicate,
+extraneous or role-mismatched explanations reject. A rationale must be nonempty
+and at most 2,000 characters. `context_boundary` must be present and either null
+or bounded nonempty text. Null remains a source/role-specific review gap.
+
+An accepted v2 `reviewed_pattern` must explicitly include its own full
+`evidence_uses`, matching the **reviewed** references and roles. Model explanations
+are never copied automatically. When changing a source or role, remove obsolete
+uses and provide the corresponding reviewed explanations. Original model reasons,
+reviewed reasons and rejected reasons all remain visible beside their evidence.
+The selected pattern and transfer report carry these explanations, their roles,
+missing-boundary diagnostics and import/review provenance.
+
+These are concise declared justifications for an evidence use, not private
+researcher thoughts or hidden model reasoning traces. Exact reference coverage
+checks do not establish that a rationale is true, that evidence entails the
+hypothesis, or that the boundary is adequate. A model/reviewer can be mistaken.
+A polished explanation does not remove contrary source stance, missing quotes,
+shared-source warnings or missing falsifiers. The stated `context_boundary` also
+**does not replace the separate target-context applicability assessment**. Existing
+excluded/deferred context decisions remain unresolved in transfer reports.
+
+`worksheet_content_sha256` describes the ordinary accepted pattern projection;
+for v2 it does not include explanations. Use `form_sha256`, which binds the whole
+versioned envelope, plus bundle/review hashes for the complete artifact identity.
+Do not use the projection hash to treat different reasons as equivalent.
+
 ## Continue to existing evidence and context review
 
 ```sh
@@ -159,3 +214,13 @@ prepare/import/default-defer/review/export/pattern/transfer execution, original 
 reviewed roles, rejected counterevidence, stale and tampered history, authorization,
 bounds, missing quotes, deep-copy isolation and model/network/source-read absence.
 No actual model, real researcher material or scientific validation is involved.
+
+Version-two evidence-use regressions run with:
+
+```sh
+python -m unittest test_pattern_evidence_reasons -v
+```
+
+They additionally compare canonical v1 payload and rendered-text hashes captured
+from the verified v0.40 commit, and exercise version isolation, dual-role references,
+explicit reviewed reasons, removed challenges, rejected reasons and context gaps.
