@@ -11,6 +11,53 @@ import synthetic_walkthrough as demo
 
 
 class SyntheticWalkthroughTests(unittest.TestCase):
+    def test_imported_method_use_runs_38_cli_stages_with_both_provenance_layers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'imported method journey'
+            run=subprocess.run([sys.executable,str(demo.ROOT/'synthetic_walkthrough.py'),str(target),
+                '--candidate-source','offline-import','--research-journey','--recheck-sources',
+                '--review-method-use','--import-method-use'],cwd=directory,capture_output=True,timeout=60)
+            self.assertEqual(run.returncode,0,run.stderr);receipt=json.loads(run.stdout)
+            self.assertEqual(receipt['command_count'],38);self.assertEqual(receipt['answer_review_status'],'ALL_DEFERRED')
+            self.assertEqual(receipt['method_application_candidate_source'],'offline-import')
+            self.assertFalse(receipt['llm_used']);self.assertFalse(receipt['external_transmission'])
+            report=json.loads((target/'research-journey.json').read_text());method=report['method_application_review']
+            self.assertEqual([r['decision'] for r in method['proposal_review']['candidates']],['accept','reject'])
+            self.assertIn('proposal_review',method['pattern_review'])
+            self.assertIsNone(method['applications'][0]['failure_condition']);self.assertFalse(method['scientific_execution'])
+            self.assertTrue(report['source_recheck']['all_stored_quotes_match'])
+            default=json.loads((target/'deferred-application-review.json').read_text())
+            self.assertTrue(all(r['decision']=='defer' and 'reviewed_application' not in r for r in default['decisions']))
+            self.assertEqual(method['applications'][0]['decision'],'consider')
+            text=(target/'research-journey.txt').read_text()
+            for phrase in ('Canned synthetic model application rationale','Consider this synthetic comparison hypothesis',
+                           'Rejected synthetic direct-use alternative','Canned imported','Fixed synthetic reviewer'):
+                self.assertIn(phrase,text)
+            self.assertEqual(receipt['read_first'][:3],['source-recheck.txt','application-proposals.txt','method-applications.txt'])
+            self.assertFalse((target/'synthetic-method-applications.json').exists())
+            self.assertTrue((target/'COMPLETE.json').exists());self.assertFalse((target/'FAILED.txt').exists())
+
+    def test_imported_method_use_export_failure_prevents_completion(self):
+        original=demo.subprocess.run
+        def fail(argv,**kwargs):
+            if Path(argv[1]).name=='application_proposals.py' and argv[2]=='export':
+                return subprocess.CompletedProcess(argv,1,stdout=b'',stderr=b'Synthetic application export failure')
+            return original(argv,**kwargs)
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'failed imported application'
+            with patch.object(demo.subprocess,'run',side_effect=fail):
+                with self.assertRaisesRegex(ValueError,'application export failure'):
+                    demo.run(target,research_journey=True,review_method_use=True,import_method_use=True)
+            self.assertTrue((target/'FAILED.txt').exists());self.assertFalse((target/'COMPLETE.json').exists())
+            self.assertFalse((target/'research-journey.json').exists())
+
+    def test_imported_method_use_flags_require_explicit_review_mode_before_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'invalid imported application'
+            with self.assertRaisesRegex(ValueError,'requires review_method_use'):demo.run(target,research_journey=True,import_method_use=True)
+            with self.assertRaisesRegex(ValueError,'boolean'):demo.run(target,research_journey=True,review_method_use=True,import_method_use='yes')
+            self.assertFalse(target.exists())
+
     def test_actual_cli_from_other_cwd_with_unicode_spaces_and_all_artifacts(self):
         before={p:p.read_bytes() for p in (demo.ROOT/'examples').rglob('*') if p.is_file()}
         with tempfile.TemporaryDirectory() as directory:

@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.46-declared-method-application",
+  "release": "0.47-offline-application-proposals",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 159,
+  "file_count": 162,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 29518,
-      "sha256": "69671e48c001ad8b3b84d3b36da3350ce498a4fe7b9afba5ea0b63462b92c83b"
+      "bytes": 29872,
+      "sha256": "4c31312a68e1ca5a045db5ce9f1c752ec20d62faf0f224ee76b1e8d2dc3f3092"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 22142,
-      "sha256": "93fdd58705a0c1f1a8c8ade817bb6f77a26cdcae62e0afcf5f6a05c37da1ce54"
+      "bytes": 23406,
+      "sha256": "564ca870d0df144710cd542fbc006cc1f994a9b6de8787bf18174c4800b1bb0a"
     },
     {
       "path": "answer_draft.py",
@@ -62,6 +62,11 @@
       "path": "applicability_review.py",
       "bytes": 9934,
       "sha256": "975b64f5cf4a7260ba8fd88d06049fb76a0f42988a41458d4febf9a7731a2b96"
+    },
+    {
+      "path": "application_proposals.py",
+      "bytes": 24423,
+      "sha256": "cfd458ca3fbe95b4397f0c50361e0a1d1ad7ac0d7efe2df33c5a2a3f2ae12c9f"
     },
     {
       "path": "argument_map.py",
@@ -124,6 +129,11 @@
       "sha256": "c0417ae1885c80de0419952245af643df0dc6820bdd3fda119fe24ebfddbc4e8"
     },
     {
+      "path": "docs/APPLICATION_PROPOSALS.md",
+      "bytes": 9591,
+      "sha256": "7d5815925e0b0941c9cda82704995f32d1d80089f8a503bbe80262b2d5fa61c4"
+    },
+    {
       "path": "docs/ARCHITECTURE.md",
       "bytes": 3985,
       "sha256": "5e638755e7674a75447ea55895ed66afb1358ce1991385fea9097a546c0dc2d0"
@@ -180,8 +190,8 @@
     },
     {
       "path": "docs/METHOD_APPLICATION.md",
-      "bytes": 7408,
-      "sha256": "074f35932ec2fff80b94631fad134d7342d74bf5ba2fe397fccb1a182a2b20e4"
+      "bytes": 8105,
+      "sha256": "208a709a6cfce8b1d54dcd4c09deac11b681492d7863aef74b91180f9e256335"
     },
     {
       "path": "docs/MODEL_HANDOFF.md",
@@ -235,8 +245,8 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 8356,
-      "sha256": "b6830416d0a1a1f3f6d718d6f1be7616c6b917101be8ae13b3d76df78e6a3401"
+      "bytes": 9132,
+      "sha256": "76221d9fafd4b0e82c493c6568f599704432174af857c2a570f8b62e65ee3fee"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -245,8 +255,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 10645,
-      "sha256": "8e89c5c418c28a8f739541e5fd7253160aea04bf049a0a29a5981e28acf26689"
+      "bytes": 11421,
+      "sha256": "1a80d9f09ee94fb558064f6085a92108b1775eb5e2aead1db6f6f71e29c339fe"
     },
     {
       "path": "docs/REVIEW_JOURNEY.md",
@@ -280,8 +290,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 29436,
-      "sha256": "b5032943a97e002c612509793f87daf11fce6a27acfadb31824b0f2056a8c345"
+      "bytes": 30212,
+      "sha256": "fc90dc879557b6fb023357d72cf554f90661c7541f4a957221012e25e3ca2ef7"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -375,8 +385,8 @@
     },
     {
       "path": "method_application.py",
-      "bytes": 16845,
-      "sha256": "1a6a70784c6895aa68367860176cdd037bf5e72df8d9d7addc9d85093c42d258"
+      "bytes": 17363,
+      "sha256": "8752e4469c00dff6e79778aaa37d46d552fd88ce11a69c701e005427a1aab532"
     },
     {
       "path": "methodology_trajectory.py",
@@ -515,8 +525,8 @@
     },
     {
       "path": "synthetic_walkthrough.py",
-      "bytes": 23314,
-      "sha256": "a0b53392febaa263484f7e932aee7f78391c0a184acafdc2074f332c32485366"
+      "bytes": 27196,
+      "sha256": "522b8bb6c9be4424315ee7a73d096270764ea79f451710431cb1dcb39612b172"
     },
     {
       "path": "test_answer_draft.py",
@@ -527,6 +537,11 @@
       "path": "test_applicability_review.py",
       "bytes": 7792,
       "sha256": "8e6a515349f5fe923922ef7b7c7e86014ca58d01d605ab8bfd4ab1416d529363"
+    },
+    {
+      "path": "test_application_proposals.py",
+      "bytes": 24938,
+      "sha256": "9f577ebb92e0c2519b0cdeb18f1c24e319d33f195339129caeb9f744a3378fd4"
     },
     {
       "path": "test_argument_map.py",
@@ -765,8 +780,8 @@
     },
     {
       "path": "test_synthetic_walkthrough.py",
-      "bytes": 20558,
-      "sha256": "645b22780f3efd67d07fd18fdcb9e3b4c5c296ef7a352b905c46b25d023f0784"
+      "bytes": 24462,
+      "sha256": "ced04f7bbcc29b86bfd8e8684a939d85025c431ea4c70afd1f5cdb5d1c4a26a4"
     },
     {
       "path": "test_topic_inventory.py",

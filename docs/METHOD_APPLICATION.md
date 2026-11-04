@@ -118,3 +118,14 @@ silently selected. The API is read-only and makes no provider/network/source cal
 Keep generated forms outside the public repository and review their contents before
 sharing. No source authenticity, semantic support, actual researcher reasoning,
 authenticated human review or scientific validity is established.
+
+## Offline AI/Codex application proposals
+
+[Application proposals](APPLICATION_PROPOSALS.md) adds a bounded local handoff,
+response import, all-deferred candidate review and history-preserving export.
+`method_application.py` accepts the resulting `reviewed-applications.json` directly,
+reconstructing all original/reviewed/rejected history at consumption. A candidate
+acceptance and a method-application consider/exclude decision remain distinct.
+No model/provider is called, no rejected reference becomes application evidence,
+and unselected design steps remain blank/deferred. Add `--import-method-use` to the
+32-stage demonstration above for the 38-stage fully synthetic proposal-review flow.

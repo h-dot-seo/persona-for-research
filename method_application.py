@@ -73,6 +73,9 @@ def template(package,patterns,context,links,proposal,pattern_id,operator_id):
 
 def inspect(package,patterns,context,links,proposal,pattern_id,form):
     package,patterns,context,links,proposal,pattern_id,form=_detach([package,patterns,context,links,proposal,pattern_id,form])
+    if isinstance(form,dict) and form.get('schema')=='persona.reviewed-application-proposals.v1':
+        from application_proposals import inspect_reviewed
+        return inspect_reviewed(package,patterns,context,links,proposal,pattern_id,form)
     bindings,pattern_review,selected,contextual,design=_prepare(package,patterns,context,links,proposal,pattern_id)
     if not isinstance(form,dict) or set(form)!={'schema','bindings','operator_id','applications'} or form['schema']!=SCHEMA:
         raise ValueError('method application form has missing or unsupported fields')
@@ -183,6 +186,10 @@ def render(package,patterns,context,links,proposal,pattern_id,form):
     lines.extend(['Full supplied pattern review and provenance:',render_patterns(result['pattern_review']).rstrip('\n'),
         'Full supplied context decisions and counterevidence:',render_context(result['context_review']).rstrip('\n'),
         'Unchanged design and all supplied links:',render_design(package,links,proposal).rstrip('\n')])
+    if 'proposal_review' in result:
+        from application_proposals import render_review
+        lines.extend(['Full imported application history (candidate decisions are not application decisions):',
+            render_review(result['proposal_review']).rstrip('\n')])
     output='\n'.join(lines)+'\n'
     if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES: raise ValueError('method application report exceeds 16 MiB')
     return output

@@ -163,3 +163,15 @@ Existing decisions remain unchanged, including conflicts with excluded context.
 Application validation precedes optional live source reads. No-application behavior
 is unchanged. See [method application](METHOD_APPLICATION.md) for the all-deferred
 template, exact-reference rules and 32-stage synthetic source-plus-application demo.
+
+## Imported method-application intent
+
+For the practical pattern-to-design proposal/review path, add `--import-method-use`
+to the extended demo with `--review-method-use`. Combined with offline-import
+extraction, the integrated journey and live synthetic source recheck, this executes
+38 CLI stages. Read `source-recheck.txt`, then `application-proposals.txt` to compare
+original versus explicitly reviewed rationale and rejected alternatives. Both
+pattern and application histories remain visible. Checks are proposed, not executed;
+source matches do not approve methods and all answer claims remain deferred.
+See [application proposals](APPLICATION_PROPOSALS.md) for standalone commands,
+separate candidate/application decisions, export conditions and verification bounds.

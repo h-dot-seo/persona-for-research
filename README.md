@@ -46,6 +46,11 @@ synthetic stages. `method-applications.txt` shows the step-specific rationale,
 conditions, proposed checks and missing failure criteria without modifying the plan
 or promoting references into active evidence. See [method application](docs/METHOD_APPLICATION.md).
 
+Add `--import-method-use` as well to exercise offline AI application proposals and
+explicit review. The complete demo now has 38 stages: original, reviewed and rejected
+application rationales survive the integrated report without changing the design or
+active evidence. No provider is called. See [application proposals](docs/APPLICATION_PROPOSALS.md).
+
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 

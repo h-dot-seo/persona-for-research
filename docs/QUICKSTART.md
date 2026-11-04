@@ -148,3 +148,15 @@ source report: a fixed synthetic constraint is considered for a named step, whil
 excluded source context and missing failure criteria stay visible. The template is
 all-deferred, proposed checks are not executed, and answer review remains deferred.
 See [method application](METHOD_APPLICATION.md). Earlier modes are unchanged.
+
+## Imported method-application intent
+
+For the practical pattern-to-design proposal/review path, add `--import-method-use`
+to the extended demo with `--review-method-use`. Combined with offline-import
+extraction, the integrated journey and live synthetic source recheck, this executes
+38 CLI stages. Read `source-recheck.txt`, then `application-proposals.txt` to compare
+original versus explicitly reviewed rationale and rejected alternatives. Both
+pattern and application histories remain visible. Checks are proposed, not executed;
+source matches do not approve methods and all answer claims remain deferred.
+See [application proposals](APPLICATION_PROPOSALS.md) for standalone commands,
+separate candidate/application decisions, export conditions and verification bounds.

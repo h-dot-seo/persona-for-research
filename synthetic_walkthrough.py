@@ -15,7 +15,11 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False):
+def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False):
+    if type(import_method_use) is not bool:
+        raise ValueError('import_method_use must be a boolean')
+    if import_method_use and not review_method_use:
+        raise ValueError('import_method_use requires review_method_use')
     if type(review_method_use) is not bool:
         raise ValueError('review_method_use must be a boolean')
     if review_method_use and not research_journey:
@@ -62,6 +66,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
         ('Extended mode also writes research-journey.txt with pattern, relationship, context and argument review.\n' if research_journey else '') +
         ('Live recheck mode writes invented local source files; read source-recheck.txt first.\n' if recheck_sources else '') +
         ('Method-use mode also writes method-applications.txt; considered use is not scientific approval.\n' if review_method_use else '') +
+        ('Imported method-use mode retains original/reviewed/rejected synthetic proposals; no model is called.\n' if import_method_use else '') +
         'commands.json records actual CLI argument arrays (not shell commands).\n'
         'If any stage fails, keep this folder for diagnosis and rerun into a NEW directory.\n')
     try:
@@ -148,7 +153,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             '--format', 'text'], 'argument-map.txt', False)
         write('revision-inputs.json', dict(original_corpus=corpus, candidate_bundle=bundle, operator_review=review))
         lineage = command('audit_design_lineage.py', [package_path, path('links.json'), path('proposal.json'), path('revision-inputs.json')], 'lineage.json')
-        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources, review_method_use=review_method_use) if research_journey else None)
+        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources, review_method_use=review_method_use, import_method_use=import_method_use) if research_journey else None)
         write('commands.json', commands)
         receipt = dict(status='SYNTHETIC_WALKTHROUGH_COMPLETE_NOT_VALIDATED', llm_used=False, external_transmission=False,
             human_review_authenticated=False, answer_review_status='ALL_DEFERRED',
@@ -163,6 +168,10 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
         if review_method_use:
             receipt.update(method_application_status=journey['method_application_review']['status'],
                 read_first=['method-applications.txt', *receipt['read_first']])
+        if import_method_use:
+            receipt.update(method_application_candidate_source='offline-import',
+                method_application_import_is_synthetic_fixture=True,
+                read_first=['application-proposals.txt', *receipt['read_first']])
         if recheck_sources:
             receipt.update(current_source_recheck_status=journey['source_recheck']['status'],
                 current_source_recheck_is_synthetic=True,
@@ -181,7 +190,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
 
 
 
-def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False, review_method_use=False):
+def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False, review_method_use=False, import_method_use=False):
     """Fixed invented decisions only, never accept external candidate material."""
     command('pattern_proposals.py', ['prepare', package_path, '--topic', 'model design',
         '--include-evidence-reasons'], 'pattern-handoff.json')
@@ -252,10 +261,40 @@ def _extend_research_journey(command, write, path, package_path, links, *, reche
             required_checks=['Inspect whether synthetic model predictions differ before considering actual use.'],
             failure_condition=None, remaining_uncertainty='This is a fixed invented consideration, not an approved method.',
             evidence_refs=[copy.deepcopy(earlier), copy.deepcopy(later)])
-        write('synthetic-method-applications.json', applications)
-        command('method_application.py', [*method_args, path('synthetic-method-applications.json'), '--format', 'text'],
-            'method-applications.txt', False)
-        args.extend(['--method-applications', path('synthetic-method-applications.json')])
+        application_path = path('synthetic-method-applications.json')
+        if import_method_use:
+            command('application_proposals.py', ['prepare', *method_args], 'application-handoff.json')
+            method_response = command('application_proposals.py', ['response-template', *method_args,
+                path('application-handoff.json')], 'empty-application-response.json')
+            original = {key:copy.deepcopy(value) for key,value in applications['applications'][0].items() if key != 'decision'}
+            original['application_rationale'] = 'Canned synthetic model application rationale before explicit reviewer correction.'
+            rejected = dict(copy.deepcopy(original), proposed_role='method', evidence_refs=[later_observation],
+                application_rationale='Rejected synthetic direct-use alternative; it is not a recommendation.')
+            method_response['candidates'] = [original, rejected]
+            write('synthetic-application-response.json', method_response)
+            write('synthetic-application-provenance.json', dict(provider_id='synthetic-no-provider', model_id='synthetic-no-model',
+                run_id='synthetic-application-fixture', operator_id='synthetic-fixture-operator', execution_location='unknown'))
+            imported = command('application_proposals.py', ['import', *method_args, path('application-handoff.json'),
+                path('synthetic-application-response.json'), path('synthetic-application-provenance.json')], 'application-candidates.json')
+            method_review = command('application_proposals.py', ['review-template', *method_args,
+                path('application-candidates.json'), '--reviewer-id', 'synthetic-application-reviewer'], 'deferred-application-review.json')
+            if [r['candidate_id'] for r in imported['candidates']] != ['application-candidate-1','application-candidate-2'] or any(
+                    r['decision'] != 'defer' for r in method_review['decisions']):
+                raise ValueError('synthetic application candidate fixture changed; inspect before continuing')
+            method_review['decisions'][0].update(decision='accept',
+                review_note='Fixed synthetic reviewer correction only, never approval of a method.',
+                reviewed_application=copy.deepcopy(applications['applications'][0]))
+            method_review['decisions'][1].update(decision='reject', review_note='Rejected synthetic alternative retained as history, not application exclusion.')
+            write('synthetic-application-review.json', method_review)
+            command('application_proposals.py', ['review', *method_args, path('application-candidates.json'),
+                path('synthetic-application-review.json'), '--format', 'text'], 'application-proposals.txt', False)
+            command('application_proposals.py', ['export', *method_args, path('application-candidates.json'),
+                path('synthetic-application-review.json')], 'reviewed-method-applications.json')
+            application_path = path('reviewed-method-applications.json')
+        else:
+            write('synthetic-method-applications.json', applications)
+        command('method_application.py', [*method_args, application_path, '--format', 'text'], 'method-applications.txt', False)
+        args.extend(['--method-applications', application_path])
     if recheck_sources:
         selection = command('source_recheck.py', [package_path, '--template', '--operator-id',
             'synthetic-source-operator'], 'empty-source-selection.json')
@@ -282,8 +321,9 @@ def main():
     parser.add_argument('--research-journey', action='store_true')
     parser.add_argument('--recheck-sources', action='store_true')
     parser.add_argument('--review-method-use', action='store_true')
+    parser.add_argument('--import-method-use', action='store_true')
     args = parser.parse_args()
-    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use)
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

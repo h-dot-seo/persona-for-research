@@ -2,24 +2,40 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.46 (declared pattern-to-step method application).
+Current local source release: v0.47 (offline method-application proposal review).
 
-- `python -m unittest discover -q`: 538 synthetic tests passed locally.
+- `python -m unittest discover -q`: 562 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 160 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 163 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
-- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey --recheck-sources --review-method-use`:
-  all 32 CLI stages completed. The explicitly considered synthetic constraint kept
-  excluded-context overlap and missing failure criteria visible. Two invented source
-  files and five stored records matched; recorded labels and all-deferred answer
-  review remained unchanged. Earlier demo modes passed their regression tests.
+- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey --recheck-sources --review-method-use --import-method-use`:
+  all 38 CLI stages completed. Both imported pattern and application histories,
+  original/reviewed rationales and rejected alternatives remained visible. Source
+  files and five stored records matched; method applicability stayed unverified,
+  the failure criterion stayed missing and all answer claims remained deferred.
+  Earlier demo modes passed their regression tests.
 
-Most recent separately verified remote baseline: v0.45, commit
-[`d18143d7bc9a540bcc32f08cd2c502dc9fc3c719`](https://github.com/h-dot-seo/persona-for-research/commit/d18143d7bc9a540bcc32f08cd2c502dc9fc3c719),
-with 513 tests. This is a prior-commit record, not a claim of remote CI for v0.46.
+Most recent separately verified remote baseline: corrected v0.46, commit
+[`348001719f1ce7415beb7ff9b6ec1db9c8538b62`](https://github.com/h-dot-seo/persona-for-research/commit/348001719f1ce7415beb7ff9b6ec1db9c8538b62),
+with 538 tests. This is a prior-commit record, not a claim of remote CI for v0.47.
 
-- [GitHub Actions run 41776362821](https://github.com/h-dot-seo/persona-for-research/actions/runs/41776362821):
-  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+- [GitHub Actions run 41778499568](https://github.com/h-dot-seo/persona-for-research/actions/runs/41778499568):
+  all four jobs passed for that exact corrected commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-four new synthetic cases cover bounded offline application handoff/import,
+all-deferred review, explicit complete rewrites, multiple alternatives with at most
+one accepted candidate per step, no retargeting, separate candidate/application
+decisions, blank defer for rejected/unproposed steps, original/reviewed/rejected
+history, unsigned provenance, exact references, stale bindings, strict JSON, no
+network/source access and detached reports. Nested imported pattern/application
+histories survive text and JSON. An invalid envelope fails before source reads
+using a valid source selection; the valid flow composes with current byte/quote
+rechecks without changing the method's no-source-read scope. Existing active evidence,
+answer/design uses and argument/transfer reviews stay unchanged. Real CLI import,
+review/export/consumption, 38-stage walkthrough and failure/no-completion behavior
+pass. Independent read-only review found no blockers and prompted stronger source
+read-order and nested-history regressions. No provider was called or authenticated,
+checks were not executed, and accepted declarations did not become method approval.
 
 Twenty-five new synthetic cases cover explicit method-pattern application: every-step
 default defer, consider/exclude prerequisites, missing checks/failure criteria, exact
@@ -39,7 +55,7 @@ CLI now uses explicit intermixed argument parsing, with regression cases for fla
 before, between and after positional inputs. This fixes the observed command-order
 compatibility failure without changing review semantics. The failed attempt remains
 visible in [run 41778017967](https://github.com/h-dot-seo/persona-for-research/actions/runs/41778017967);
-verification of the corrected commit is a separate remote check.
+the corrected commit subsequently passed all four jobs in run 41778499568, as recorded above.
 
 Twenty-nine new source-recheck and walkthrough cases cover exact all-paper selection,
 full preflight before reads, stale/invalid source forms and package/rule disagreement,
