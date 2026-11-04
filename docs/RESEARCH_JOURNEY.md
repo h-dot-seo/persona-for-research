@@ -150,3 +150,16 @@ missing/unmatched quote records generate review gaps, not approval. See
 [current local source recheck](SOURCE_RECHECK.md) for templates, limits and the
 30-stage synthetic demonstration. This new check still does not replay prior
 extraction history, establish authenticity or evaluate scientific support.
+
+## Optional declared method-pattern use (v0.46)
+
+Pass `--method-applications method-applications.json` to include an explicit,
+bound pattern-to-step application form. It records considered/excluded/deferred
+intent, step-specific conditions, proposed checks and failure criteria. A shared
+reference alone does not supply this declaration. Application annotations never add
+answer citations, design uses, active evidence or inherited argument support.
+Existing decisions remain unchanged, including conflicts with excluded context.
+
+Application validation precedes optional live source reads. No-application behavior
+is unchanged. See [method application](METHOD_APPLICATION.md) for the all-deferred
+template, exact-reference rules and 32-stage synthetic source-plus-application demo.

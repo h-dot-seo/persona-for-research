@@ -167,6 +167,52 @@ class SyntheticWalkthroughTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'boolean'):demo.run(target,research_journey=True,recheck_sources='yes')
             self.assertFalse(target.exists())
 
+    def test_method_use_demo_runs_32_stages_without_approving_pattern_application(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'method use journey'
+            result=subprocess.run([sys.executable,str(demo.ROOT/'synthetic_walkthrough.py'),str(target),
+                '--candidate-source','offline-import','--research-journey','--recheck-sources','--review-method-use'],
+                cwd=directory,capture_output=True,timeout=60)
+            self.assertEqual(result.returncode,0,result.stderr);receipt=json.loads(result.stdout)
+            self.assertEqual(receipt['command_count'],32)
+            self.assertEqual(receipt['method_application_status'],'METHOD_APPLICATION_REQUIRES_HUMAN_REVIEW')
+            self.assertEqual(receipt['answer_review_status'],'ALL_DEFERRED')
+            self.assertEqual(receipt['read_first'][:2],['source-recheck.txt','method-applications.txt'])
+            default=json.loads((target/'deferred-method-applications.json').read_text())
+            self.assertTrue(all(row['decision']=='defer' and row['evidence_refs']==[] for row in default['applications']))
+            report=json.loads((target/'research-journey.json').read_text());method=report['method_application_review']
+            self.assertEqual(method['decision_counts'],{'consider':1,'exclude':0,'defer':0})
+            self.assertFalse(method['design_modified']);self.assertFalse(method['scientific_execution'])
+            self.assertTrue(report['source_recheck']['all_stored_quotes_match'])
+            self.assertIsNone(method['applications'][0]['failure_condition'])
+            self.assertIn('CONSIDERED_APPLICATION_HAS_EXCLUDED_SOURCE_CONTEXT',[row['code'] for row in method['review_prompts']])
+            text=(target/'method-applications.txt').read_text()
+            self.assertIn('failure_condition: NOT_SUPPLIED',text);self.assertIn('Required checks (not executed)',text)
+            self.assertTrue((target/'COMPLETE.json').exists());self.assertFalse((target/'FAILED.txt').exists())
+
+    def test_method_review_stage_failure_blocks_completion_without_retry(self):
+        original=demo.subprocess.run
+        def fail(argv,**kwargs):
+            if Path(argv[1]).name=='method_application.py' and '--format' in argv:
+                return subprocess.CompletedProcess(argv,1,stdout=b'',stderr=b'Synthetic method review failure')
+            return original(argv,**kwargs)
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'failed method review'
+            with patch.object(demo.subprocess,'run',side_effect=fail):
+                with self.assertRaisesRegex(ValueError,'method review failure'):
+                    demo.run(target,research_journey=True,review_method_use=True)
+            self.assertTrue((target/'FAILED.txt').exists());self.assertFalse((target/'COMPLETE.json').exists())
+            self.assertFalse((target/'research-journey.json').exists())
+            commands=json.loads((target/'commands.json').read_text())
+            self.assertEqual(commands[-1]['returncode'],1)
+
+    def test_method_use_flags_require_explicit_extended_flow_before_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'invalid method flow'
+            with self.assertRaisesRegex(ValueError,'requires research_journey'):demo.run(target,review_method_use=True)
+            with self.assertRaisesRegex(ValueError,'boolean'):demo.run(target,research_journey=True,review_method_use='yes')
+            self.assertFalse(target.exists())
+
     def test_invalid_candidate_mode_fails_before_directory_creation(self):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory)/'invalid'

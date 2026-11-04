@@ -15,7 +15,11 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False):
+def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False):
+    if type(review_method_use) is not bool:
+        raise ValueError('review_method_use must be a boolean')
+    if review_method_use and not research_journey:
+        raise ValueError('review_method_use requires research_journey')
     if type(recheck_sources) is not bool:
         raise ValueError('recheck_sources must be a boolean')
     if recheck_sources and not research_journey:
@@ -57,6 +61,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
         'Read after completion: reader-scope.txt, review-packet.txt, argument-map.txt, timeline.txt, lineage.json.\n' +
         ('Extended mode also writes research-journey.txt with pattern, relationship, context and argument review.\n' if research_journey else '') +
         ('Live recheck mode writes invented local source files; read source-recheck.txt first.\n' if recheck_sources else '') +
+        ('Method-use mode also writes method-applications.txt; considered use is not scientific approval.\n' if review_method_use else '') +
         'commands.json records actual CLI argument arrays (not shell commands).\n'
         'If any stage fails, keep this folder for diagnosis and rerun into a NEW directory.\n')
     try:
@@ -143,7 +148,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             '--format', 'text'], 'argument-map.txt', False)
         write('revision-inputs.json', dict(original_corpus=corpus, candidate_bundle=bundle, operator_review=review))
         lineage = command('audit_design_lineage.py', [package_path, path('links.json'), path('proposal.json'), path('revision-inputs.json')], 'lineage.json')
-        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources) if research_journey else None)
+        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources, review_method_use=review_method_use) if research_journey else None)
         write('commands.json', commands)
         receipt = dict(status='SYNTHETIC_WALKTHROUGH_COMPLETE_NOT_VALIDATED', llm_used=False, external_transmission=False,
             human_review_authenticated=False, answer_review_status='ALL_DEFERRED',
@@ -155,6 +160,9 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
                 research_journey_answer_status=journey['answer_review_status'],
                 research_journey_is_synthetic=True,
                 read_first=['research-journey.txt', 'pattern-review.txt', *receipt['read_first']])
+        if review_method_use:
+            receipt.update(method_application_status=journey['method_application_review']['status'],
+                read_first=['method-applications.txt', *receipt['read_first']])
         if recheck_sources:
             receipt.update(current_source_recheck_status=journey['source_recheck']['status'],
                 current_source_recheck_is_synthetic=True,
@@ -173,7 +181,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
 
 
 
-def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False):
+def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False, review_method_use=False):
     """Fixed invented decisions only, never accept external candidate material."""
     command('pattern_proposals.py', ['prepare', package_path, '--topic', 'model design',
         '--include-evidence-reasons'], 'pattern-handoff.json')
@@ -231,6 +239,23 @@ def _extend_research_journey(command, write, path, package_path, links, *, reche
     args = [package_path, path('reviewed-patterns.json'), path('synthetic-context.json'), path('links.json'),
         path('proposal.json'), path('draft.json'), path('argument.json'), path('synthetic-publication-relations.json'),
         '--pattern-id', 'synthetic-comparison', '--review', path('answer-review.json')]
+    if review_method_use:
+        method_args = [package_path, path('reviewed-patterns.json'), path('synthetic-context.json'),
+            path('links.json'), path('proposal.json'), '--pattern-id', 'synthetic-comparison']
+        applications = command('method_application.py', [*method_args, '--template', '--operator-id',
+            'synthetic-method-operator'], 'deferred-method-applications.json')
+        if [row['step_id'] for row in applications['applications']] != ['compare']:
+            raise ValueError('synthetic method-use step fixture changed; inspect before continuing')
+        applications['applications'][0].update(decision='consider', proposed_role='constraint',
+            application_rationale='Consider this synthetic comparison hypothesis as a constraint on the named comparison step.',
+            target_condition_comparison='The target has no tested discriminating outcome; the condition remains unmet.',
+            required_checks=['Inspect whether synthetic model predictions differ before considering actual use.'],
+            failure_condition=None, remaining_uncertainty='This is a fixed invented consideration, not an approved method.',
+            evidence_refs=[copy.deepcopy(earlier), copy.deepcopy(later)])
+        write('synthetic-method-applications.json', applications)
+        command('method_application.py', [*method_args, path('synthetic-method-applications.json'), '--format', 'text'],
+            'method-applications.txt', False)
+        args.extend(['--method-applications', path('synthetic-method-applications.json')])
     if recheck_sources:
         selection = command('source_recheck.py', [package_path, '--template', '--operator-id',
             'synthetic-source-operator'], 'empty-source-selection.json')
@@ -256,8 +281,9 @@ def main():
     parser.add_argument('--candidate-source', choices=('mock', 'offline-import'), default='mock')
     parser.add_argument('--research-journey', action='store_true')
     parser.add_argument('--recheck-sources', action='store_true')
+    parser.add_argument('--review-method-use', action='store_true')
     args = parser.parse_args()
-    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources)
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

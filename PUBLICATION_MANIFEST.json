@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.45-live-source-recheck",
+  "release": "0.46-declared-method-application",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 156,
+  "file_count": 159,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 29090,
-      "sha256": "5e8f72743411f90b2de703bf8d6eca2ac59893122c2e6d27511a5dec710bb3ef"
+      "bytes": 29518,
+      "sha256": "69671e48c001ad8b3b84d3b36da3350ce498a4fe7b9afba5ea0b63462b92c83b"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 20603,
-      "sha256": "57702be93083472be9c0079ab073bfc9b3efeca9989c866ce06ff09c98bd7df7"
+      "bytes": 21550,
+      "sha256": "407b206e3d59923b461e009fe2fef5a642fa4c90c42ad8967bd91b88a7227819"
     },
     {
       "path": "answer_draft.py",
@@ -179,6 +179,11 @@
       "sha256": "13e8b638e6b150bcbbdc4321dae27fb525fd9718f64a0583e110687069b4fb33"
     },
     {
+      "path": "docs/METHOD_APPLICATION.md",
+      "bytes": 7408,
+      "sha256": "074f35932ec2fff80b94631fad134d7342d74bf5ba2fe397fccb1a182a2b20e4"
+    },
+    {
       "path": "docs/MODEL_HANDOFF.md",
       "bytes": 9934,
       "sha256": "5225057ba7c03ab4a27732f6b69380904297d73207fe6d7bc2e3f6224273f067"
@@ -230,8 +235,8 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 7820,
-      "sha256": "17d48e5642b9a569ecba6318295ec31b6bbd777382861a69b7f3529c381eaa0f"
+      "bytes": 8356,
+      "sha256": "b6830416d0a1a1f3f6d718d6f1be7616c6b917101be8ae13b3d76df78e6a3401"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -240,8 +245,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 9861,
-      "sha256": "4f8284e881f5a14c3ffbbb34aa923d9aa9cd24c02af6678aab8fc6c1be687d67"
+      "bytes": 10645,
+      "sha256": "8e89c5c418c28a8f739541e5fd7253160aea04bf049a0a29a5981e28acf26689"
     },
     {
       "path": "docs/REVIEW_JOURNEY.md",
@@ -275,8 +280,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 28481,
-      "sha256": "a1590bdcd3a6de11e33a68737f41deb23066c0e037ae471262761a01e01cd02b"
+      "bytes": 29436,
+      "sha256": "b5032943a97e002c612509793f87daf11fce6a27acfadb31824b0f2056a8c345"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -369,6 +374,11 @@
       "sha256": "91a5dd4111f4a6b6b0bb26a535053103384dc46dbb16a02f432b43a2fa4427bc"
     },
     {
+      "path": "method_application.py",
+      "bytes": 16670,
+      "sha256": "dc22bad620684e4098c3aba5d069d1316ac546528f03952efc449793a119b892"
+    },
+    {
       "path": "methodology_trajectory.py",
       "bytes": 2876,
       "sha256": "4a0e0b933a159d28b9143d651e1c09d293392ef6d15b66598db5e3b41375f366"
@@ -455,8 +465,8 @@
     },
     {
       "path": "research_journey.py",
-      "bytes": 18267,
-      "sha256": "d0acf2604b11c7c5f63822b451f2ff2c273bdf19226319be33f16f912c9eebb3"
+      "bytes": 20641,
+      "sha256": "03bdc5c921771e799c2e4a761d22dde5d03494040167af54cd5510ab3bf331a1"
     },
     {
       "path": "research_workflow.py",
@@ -505,8 +515,8 @@
     },
     {
       "path": "synthetic_walkthrough.py",
-      "bytes": 20962,
-      "sha256": "f2597234ee34c410d625162ac015314cfc13bac17ae33c5fc53626e92d9994d1"
+      "bytes": 23314,
+      "sha256": "a0b53392febaa263484f7e932aee7f78391c0a184acafdc2074f332c32485366"
     },
     {
       "path": "test_answer_draft.py",
@@ -592,6 +602,11 @@
       "path": "test_local_model_handoff.py",
       "bytes": 14721,
       "sha256": "40cab61648d49e3bb2d71dcc54cb373f9d052e4c0777f17376ff73685e02a0d9"
+    },
+    {
+      "path": "test_method_application.py",
+      "bytes": 19764,
+      "sha256": "f3b63b53f61d41dce35817cf778e8b163d26cc21ab93e25ba8f1308a669fbdcc"
     },
     {
       "path": "test_methodology_trajectory.py",
@@ -750,8 +765,8 @@
     },
     {
       "path": "test_synthetic_walkthrough.py",
-      "bytes": 16969,
-      "sha256": "cff2cd65933a23f77eedb6e70b849dd707d3233f1f1405d6e9e27e6eedcda26c"
+      "bytes": 20558,
+      "sha256": "645b22780f3efd67d07fd18fdcb9e3b4c5c296ef7a352b905c46b25d023f0784"
     },
     {
       "path": "test_topic_inventory.py",

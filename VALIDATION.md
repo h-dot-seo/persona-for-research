@@ -2,24 +2,36 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.45 (live local source and stored-quote recheck).
+Current local source release: v0.46 (declared pattern-to-step method application).
 
-- `python -m unittest discover -q`: 513 synthetic tests passed locally.
+- `python -m unittest discover -q`: 537 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 157 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 160 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
-- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey --recheck-sources`:
-  all 30 CLI stages completed. Two invented local sources and five stored records
-  matched the fixed package hashes/sections. Historical labels remained unchanged,
-  imported reasoning lineage replay matched, and answer review stayed deferred.
-  Existing 15/17-stage and 25/27-stage modes passed their regression tests.
+- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey --recheck-sources --review-method-use`:
+  all 32 CLI stages completed. The explicitly considered synthetic constraint kept
+  excluded-context overlap and missing failure criteria visible. Two invented source
+  files and five stored records matched; recorded labels and all-deferred answer
+  review remained unchanged. Earlier demo modes passed their regression tests.
 
-Most recent separately verified remote baseline: v0.44, commit
-[`e733b57af4afaf8e0020dbacfdc2da5bc99cd61c`](https://github.com/h-dot-seo/persona-for-research/commit/e733b57af4afaf8e0020dbacfdc2da5bc99cd61c),
-with 484 tests. This is a prior-commit record, not a claim of remote CI for v0.45.
+Most recent separately verified remote baseline: v0.45, commit
+[`d18143d7bc9a540bcc32f08cd2c502dc9fc3c719`](https://github.com/h-dot-seo/persona-for-research/commit/d18143d7bc9a540bcc32f08cd2c502dc9fc3c719),
+with 513 tests. This is a prior-commit record, not a claim of remote CI for v0.46.
 
-- [GitHub Actions run 41774858526](https://github.com/h-dot-seo/persona-for-research/actions/runs/41774858526):
+- [GitHub Actions run 41776362821](https://github.com/h-dot-seo/persona-for-research/actions/runs/41776362821):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-four new synthetic cases cover explicit method-pattern application: every-step
+default defer, consider/exclude prerequisites, missing checks/failure criteria, exact
+selected references, parent/component distinction, target-step-only link membership,
+full stale-input bindings, imported original/reviewed/rejected history, separate
+source/pattern/design/application roles, future/same-year context and no inherited
+conditions. All nine decision/role combinations preserve previous journey semantics
+and active evidence exactly. Optional annotations validate before source rereads;
+legacy no-option snapshots remain exact. Real CLI template/inspection/composition,
+32-stage demonstration and late failure/no-completion behavior pass. Independent
+read-only review found no blockers. Proposed checks were not executed, filled text
+was not scored, and no researcher recommendation or method validation was inferred.
 
 Twenty-nine new source-recheck and walkthrough cases cover exact all-paper selection,
 full preflight before reads, stale/invalid source forms and package/rule disagreement,

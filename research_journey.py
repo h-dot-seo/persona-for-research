@@ -55,12 +55,13 @@ def encode_result(value):
 
 
 def inspect(package, patterns, context, links, proposal, draft, argument, publication_relations,
-            pattern_id, declared_review=None, *, source_selection=None, source_root=None):
+            pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None):
     if (source_selection is None) != (source_root is None):
         raise ValueError('live source recheck needs both source_selection and source_root')
     supplied = dict(zip(INPUT_NAMES, (package, patterns, context, links, proposal, draft, argument,
         publication_relations)), pattern_id=pattern_id, declared_review=declared_review)
     if source_selection is not None: supplied['source_selection'] = source_selection
+    if method_applications is not None: supplied['method_applications'] = method_applications
     values = _inputs(supplied)
     package, patterns, context, links, proposal, draft, argument, publication_relations = [values[k] for k in INPUT_NAMES]
     declared_review = values['declared_review']; pattern_id = values['pattern_id']
@@ -75,6 +76,10 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
     packet = transfer['answer_design_review']; answer = packet['answer']
     relations = transfer['publication_context_review']
     _, papers = _sources(package)
+    application_review = None
+    if method_applications is not None:
+        from method_application import inspect as inspect_applications
+        application_review = inspect_applications(package, patterns, context, links, proposal, pattern_id, values['method_applications'])
     routes = {}
 
     def route(node):
@@ -172,6 +177,18 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
         provenance_history_replay='NOT_PERFORMED', human_review_authenticated=False,
         scientific_validation='NOT_PERFORMED', researcher_fidelity_evaluation='NOT_PERFORMED',
         automatic_approval=False, scientific_execution=False, canonical_update_performed=False, boundary=BOUNDARY)
+    if application_review is not None:
+        by_reference = {row['reference_sha256']: row for row in result['evidence_routes']}
+        for row in result['evidence_routes']: row['method_application_uses'] = []
+        for application in application_review['applications']:
+            for basis in application['evidence']:
+                by_reference[payload_sha256(basis['evidence']['reference'])]['method_application_uses'].append(
+                    dict(step_id=application['step_id'], decision=application['decision'],
+                        proposed_role=application['proposed_role'], claim_type='operator_interpretation',
+                        scope='DECLARED_APPLICATION_BASIS_NOT_ACTIVE_ANSWER_OR_DESIGN_USE'))
+        result['review_agenda'].extend(dict(domain='method_application', **copy.deepcopy(prompt)) for prompt in application_review['review_prompts'])
+        result.update(method_application_review=application_review,
+            method_application_scope='DECLARED_PATTERN_TO_STEP_INTENT_NOT_EXECUTION_OR_CITATION_TRANSFER')
     encode_result(result)
     if source_selection is not None:
         from source_recheck import audit as recheck_sources
@@ -191,14 +208,16 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
 
 
 def render(package, patterns, context, links, proposal, draft, argument, publication_relations,
-           pattern_id, declared_review=None, *, source_selection=None, source_root=None):
+           pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None):
     result = inspect(package, patterns, context, links, proposal, draft, argument, publication_relations, pattern_id, declared_review,
-        source_selection=source_selection, source_root=source_root)
+        source_selection=source_selection, source_root=source_root, method_applications=method_applications)
     lines = ['Source-to-method-to-argument review journey', 'Status: ' + result['status'],
         'Question: ' + display(result['question']), 'Topic: ' + display(result['topic']),
         'Reference year: ' + str(result['reference_year']), 'Journey input sha256: ' + result['journey_input_sha256'],
         'Declared answer review: ' + result['answer_review_status'] + ' (not authenticated approval)', result['boundary'],
         'Review agenda (domain-specific prompts, not severity ranks or a readiness score):']
+    if 'method_application_review' in result:
+        lines.insert(6, 'Declared method application: ' + result['method_application_review']['status'] + ' (proposed checks are not executed)')
     if 'source_recheck' in result:
         lines.insert(6, 'Current local source recheck: ' + result['source_recheck']['status'] + ' (separate from recorded historical labels)')
     for row in result['review_agenda']:
@@ -215,6 +234,8 @@ def render(package, patterns, context, links, proposal, draft, argument, publica
             lines.append('    Current local quote check: ' + row['current_source_recheck']['quote_status'] +
                 '; locator=' + row['current_source_recheck']['locator_status'])
         lines.append('    Pattern roles: ' + (', '.join(row['pattern_roles']) or 'none supplied'))
+        for use in row.get('method_application_uses', []):
+            lines.append('    Declared application basis (not active evidence): ' + display(json.dumps(use, ensure_ascii=True)))
         for field in ('context_uses', 'publication_relationship_basis_uses', 'answer_uses', 'design_uses', 'unused_link_uses', 'direct_argument_uses'):
             for use in row[field]: lines.append('    ' + field + ': ' + display(json.dumps(use, ensure_ascii=True)))
     lines.extend(['Full trajectory and declared publication context:', render_timeline(package, result['topic'], publication_relations).rstrip('\n'),
@@ -223,6 +244,10 @@ def render(package, patterns, context, links, proposal, draft, argument, publica
         'Full operator argument map (no premise-to-conclusion citation transfer):',
         render_argument(package, draft, argument, declared_review).rstrip('\n'),
         'Full reader evidence-scope disclosure:', render_scope(package, links, proposal, draft, result['reference_year'], declared_review).rstrip('\n')])
+    if 'method_application_review' in result:
+        from method_application import render as render_applications
+        lines.extend(['Full declared method-pattern application intent:',
+            render_applications(package, patterns, context, links, proposal, pattern_id, method_applications).rstrip('\n')])
     if 'source_recheck' in result:
         from source_recheck import render as render_source_recheck
         lines.extend(['Full current local source recheck, including unused papers:', render_source_recheck(result['source_recheck']).rstrip('\n')])
@@ -242,12 +267,14 @@ def main():
     for name in INPUT_NAMES: parser.add_argument(name, type=Path)
     parser.add_argument('--pattern-id', required=True); parser.add_argument('--review', type=Path)
     parser.add_argument('--source-selection', type=Path); parser.add_argument('--source-root', type=Path)
+    parser.add_argument('--method-applications', type=Path)
     parser.add_argument('--format', choices=('json', 'text'), default='json'); args = parser.parse_args()
     try:
         values = [_load(getattr(args, name)) for name in INPUT_NAMES] + [args.pattern_id, _load(args.review) if args.review else None]
         if (args.source_selection is None) != (args.source_root is None):
             raise ValueError('live source recheck needs both --source-selection and --source-root')
-        options = dict(source_selection=_load(args.source_selection) if args.source_selection else None, source_root=args.source_root)
+        options = dict(source_selection=_load(args.source_selection) if args.source_selection else None, source_root=args.source_root,
+            method_applications=_load(args.method_applications) if args.method_applications else None)
         output = render(*values, **options).encode('utf-8') if args.format == 'text' else encode_result(inspect(*values, **options))
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc:
         parser.exit(1, str(exc) + '\n')

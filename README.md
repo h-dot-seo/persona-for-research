@@ -40,6 +40,12 @@ to the integrated demo command. This runs 30 synthetic CLI stages. Read the comp
 quote gaps remain explicit, and source hash changes fail closed. See
 [local source recheck](docs/SOURCE_RECHECK.md) to select authorized files explicitly.
 
+Add `--review-method-use` to the extended demo to record how the selected pattern
+is considered for a named design step. Combined with source recheck, this runs 32
+synthetic stages. `method-applications.txt` shows the step-specific rationale,
+conditions, proposed checks and missing failure criteria without modifying the plan
+or promoting references into active evidence. See [method application](docs/METHOD_APPLICATION.md).
+
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 

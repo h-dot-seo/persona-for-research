@@ -139,3 +139,12 @@ against them. Read `source-recheck.txt` before the full integrated report. Exist
 recorded checks remain unchanged; current file/quote checks are separate. Answer
 review stays deferred. Source changes fail closed with no completion marker. See
 [the source-recheck guide](SOURCE_RECHECK.md) for standalone selection and CLI use.
+
+## Explicit method application intent
+
+Add `--review-method-use` to an extended journey. With offline-import reasoning and
+source recheck this runs 32 stages. Read `method-applications.txt` after the compact
+source report: a fixed synthetic constraint is considered for a named step, while
+excluded source context and missing failure criteria stay visible. The template is
+all-deferred, proposed checks are not executed, and answer review remains deferred.
+See [method application](METHOD_APPLICATION.md). Earlier modes are unchanged.

@@ -455,3 +455,18 @@ review decisions. Its no-source JSON/text snapshots remain unchanged. The synthe
 30-stage walkthrough initializes invented local files, compares current versus
 recorded checks and keeps all answer review deferred. It is not source authenticity,
 scientific validation or a replay of missing model/extraction history.
+
+## Declared method application (v0.46)
+
+[Method application](METHOD_APPLICATION.md) adds an explicit selected-pattern to
+existing-step declaration where shared-reference tracing alone was insufficient.
+Default-deferred rows retain application/adaptation rationale, step-specific
+conditions, proposed checks, failure criteria, uncertainty and exact pattern refs.
+Existing design rationale/link notes are not copied or overwritten. Context conflict,
+missing criteria and dates remain prompts; filled text does not validate a method.
+
+Optional journey annotations preserve every existing active-use route and decision.
+References used only for this declaration are not promoted into answer/design use.
+Source/record checks can run alongside it, but cannot approve application. Independent
+read-only probes confirmed all nine decision/role combinations preserve prior review
+semantics; those cases and same-year uncertainty are retained in regression tests.
