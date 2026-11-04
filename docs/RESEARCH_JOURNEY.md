@@ -231,3 +231,9 @@ extraction, or 46 with every extension). The input is canned and fixture-only;
 there is no external candidate/review option or real provider call. Final answer
 review stays deferred, and original/rejected proposal citations never substitute
 for adopted claim citations. See [answer proposals](ANSWER_PROPOSALS.md).
+
+The argument input can also be a [reviewed argument envelope](ARGUMENT_PROPOSALS.md).
+Original, revised and rejected bridge history is preserved alongside any imported
+answer/pattern/application history. Only adopted steps produce direct argument
+routes; premise citations still do not transfer to conclusions. Full envelope
+validation happens before any optional current source-file audit.

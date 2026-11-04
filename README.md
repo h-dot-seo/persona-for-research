@@ -94,6 +94,14 @@ command to try seven more real CLI stages with canned candidates and explicit
 fixture decisions. With all options above, the complete flow has 46 stages; all
 final answer judgments remain deferred. See [the quickstart](docs/QUICKSTART.md).
 
+## Review proposed argument connections
+
+[Argument proposals](docs/ARGUMENT_PROPOSALS.md) prepare an offline handoff over
+explicitly selected existing answer claims. Review tentative bridges, assumptions
+and defeaters before adopting a full-history map. Declaration order stays separate
+from topological review order; rejected suggestions never become argument routes.
+No new claims, researcher reasoning trace, citation transfer or approval is inferred.
+
 ## Compact review
 
 ```sh

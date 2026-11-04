@@ -164,3 +164,8 @@ all original/rejected history included in its raw and logical hashes. Every reop
 revalidates that history. A history-only edit invalidates the card and downstream
 answer-review/argument bindings even if the adopted prose is unchanged. Preparing
 a new card does not repair or approve those artifacts.
+
+The argument slot likewise accepts a [reviewed argument envelope](ARGUMENT_PROPOSALS.md).
+Complete original/adoption/rejection history is pinned, not just the accepted map.
+A history-only edit invalidates the card even if the displayed adopted steps are
+unchanged. Explicit answer-review presence/content remains part of argument binding.

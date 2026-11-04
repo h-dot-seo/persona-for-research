@@ -78,11 +78,18 @@ def _declarations(args,report):
         for row in answer['claims']]
     applications=[{key:copy.deepcopy(row[key]) for key in sorted(APPLICATION_FIELDS)}
         for row in report.get('method_application_review',{}).get('applications',[])]
+    argument=report['argument_review']
+    argument_steps=values['argument'].get('steps')
+    if 'proposal_review' in argument:
+        by_id={row['step_id']:row for row in argument['steps']}
+        argument_steps=[{key:copy.deepcopy(by_id[step_id][key]) for key in
+            ('step_id','premise_claim_ids','conclusion_claim_id','bridge_rationale','assumptions','defeater')}
+            for step_id in argument['declared_step_ids']]
     groups={
         'answer_claims':('claim_id',claims),
         'answer_review_decisions':('claim_id',[] if review is None else review['decisions']),
         'design_steps':('step_id',values['proposal']['steps']),
-        'argument_steps':('step_id',values['argument']['steps']),
+        'argument_steps':('step_id',argument_steps),
         'evidence_links':('link_id',values['links']['links']),
         'publication_relationships':('relation_id',values['publication_relations']['relations']),
         'method_applications':('step_id',applications),
@@ -95,6 +102,14 @@ def _declarations(args,report):
             answer_proposal_decisions=('candidate_id',[dict(candidate_id=row['candidate']['candidate_id'],decision=row['decision'],
                 review_note=row['review_note'],reviewed_claim=copy.deepcopy(row['reviewed_claim'])) for row in packet['candidates']]),
             answer_proposal_import=('record_id',[dict(record_id='declared-import',scope=copy.deepcopy(packet['scope']),
+                import_record=copy.deepcopy(packet['import_record']),reviewer_id=packet['reviewer_id'])]))
+    if 'proposal_review' in argument:
+        packet=argument['proposal_review']
+        groups.update(argument_proposal_candidates=('candidate_id',[dict(candidate_id=row['candidate']['candidate_id'],
+                proposed_step=copy.deepcopy(row['candidate']['proposed_step'])) for row in packet['candidates']]),
+            argument_proposal_decisions=('candidate_id',[dict(candidate_id=row['candidate']['candidate_id'],decision=row['decision'],
+                review_note=row['review_note'],reviewed_step=copy.deepcopy(row['reviewed_step'])) for row in packet['candidates']]),
+            argument_proposal_import=('record_id',[dict(record_id='declared-import',scope=copy.deepcopy(packet['scope']),
                 import_record=copy.deepcopy(packet['import_record']),reviewer_id=packet['reviewer_id'])]))
     return groups
 
@@ -111,7 +126,7 @@ def _records(before,after):
             rows.append(dict(declared_id=key,status=status,changed_fields=_changed_fields(a,b) if a is not None and b is not None else [],
                 previous=copy.deepcopy(a),current=copy.deepcopy(b)))
         groups.append(dict(group=name,id_field=field,
-            scope=('RECORDED_IMPORTED_HISTORY_NOT_OPERATOR_AUTHORSHIP_OR_ACTIVE_EVIDENCE' if name.startswith('answer_proposal_')
+            scope=('RECORDED_IMPORTED_HISTORY_NOT_OPERATOR_AUTHORSHIP_OR_ACTIVE_EVIDENCE' if name.startswith(('answer_proposal_','argument_proposal_'))
                 else 'DECLARED_FIELDS_ONLY_NOT_RESOLVED_EVIDENCE_OR_AUTHENTICATED_REVIEW'),
             previous_id_order=[row[field] for row in previous],current_id_order=[row[field] for row in current],
             order_changed=[row[field] for row in previous]!=[row[field] for row in current],records=rows))
@@ -198,7 +213,7 @@ def render(previous_card,previous_root,current_card,current_root,*,previous_sour
     lines.append('Declared records (resolved source changes are separate):')
     for group in result['declared_record_comparison']:
         lines.append('  '+group['group']+'; declared ID order changed='+str(group['order_changed']))
-        if group['group'].startswith('answer_proposal_'):
+        if group['group'].startswith(('answer_proposal_','argument_proposal_')):
             lines.append('    Recorded imported history, not operator-authored active evidence.')
         for row in group['records']:
             lines.append('    '+display(row['declared_id'])+': '+row['status']+'; fields='+','.join(row['changed_fields']))

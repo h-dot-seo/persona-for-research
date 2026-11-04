@@ -67,3 +67,13 @@ python -m unittest test_argument_map -v
 No LLM, source reread, external API, real scholar corpus or fidelity evaluation is
 used. Real logical and scientific assessment requires authorized sources and
 independent review. An acyclic, fully filled map is not a scientific certification.
+
+## Explicitly adopted imported bridges
+
+[Argument proposals](ARGUMENT_PROPOSALS.md) prepare an offline handoff over explicit
+existing answer claim IDs, import tentative bridges and preserve complete adoption
+history. Use its reviewed envelope as the map input. Accepted bridge origin is
+separate from manual authorship and imported answer origin. Declaration order is
+kept apart from topological review order; cycles are rejected only for the accepted
+map, not treated as proof of logical validity. Rejected suggestions never become
+direct argument uses. Manual maps retain their original behavior and output shape.

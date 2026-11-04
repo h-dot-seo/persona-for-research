@@ -126,3 +126,13 @@ are labeled as recorded imports, not operator authorship or active evidence.
 Rejected-history changes can alter the full draft identity while accepted claim
 fields remain unchanged. Full before/after reports preserve the complete history;
 manual/imported transitions never silently discard it.
+
+## Imported argument declarations
+
+For [argument proposals](ARGUMENT_PROPOSALS.md), step fields are compared in their
+declared order, not the graph's deterministic topological review order. Manual
+raw declaration order and imported candidate-adoption order remain distinct from
+review topology. Additional original-candidate, adoption-decision and declared-import
+groups retain full history without calling it operator authorship or active evidence.
+Changing a rejected bridge can alter argument identity without changing any adopted
+step; manual/imported transitions keep both complete reports.

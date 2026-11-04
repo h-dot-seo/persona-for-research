@@ -2,7 +2,60 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.53 (opt-in synthetic imported-answer walkthrough).
+Current local source release: v0.54 (offline argument proposals with explicit adoption history).
+
+- `python -m unittest discover -q`: 711 synthetic tests passed locally.
+- `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 184 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- A standalone 16-command CLI route prepared an explicit claim scope/handoff,
+  imported canned argument bridges, created a deferred adoption form, rendered
+  explicit synthetic review and exported the complete-history map. It composed
+  imported argument/answer/pattern/application histories in JSON/text/passive HTML,
+  reread selected invented source files, prepared/reopened an input card and
+  compared the manual and imported maps. The accepted late-before-early declaration
+  order remained separate from early-before-late topological review order.
+- Final answer review stayed entirely deferred; all logical/scientific validation
+  remained NOT_PERFORMED. Passive HTML's complete JSON snapshot matched exactly.
+
+Most recent separately verified remote baseline: v0.53, commit
+[`f305daa6b1df8bac5d893cbc929950bccf488091`](https://github.com/h-dot-seo/persona-for-research/commit/f305daa6b1df8bac5d893cbc929950bccf488091),
+with 685 tests. This is a prior-commit record, not a claim of remote CI for v0.54.
+
+- [GitHub Actions run 41794122820](https://github.com/h-dot-seo/persona-for-research/actions/runs/41794122820):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-six new module/integration tests cover explicit selected claim IDs, canonical
+wrapper/inner package binding, exact inherited question context, original/edited
+endpoint restrictions, source-quote conclusion rejection, individually legal rejected
+alternatives versus jointly cyclic accepted maps, complete default-deferred review,
+unique reviewed step IDs, and strict JSON/aggregate bounds. Declared candidate order
+survives decision-list reordering; origin is matched by explicit step ID after
+sorting for graph review. Manual declaration-order changes are not mistaken for
+unchanged topology. Manual/imported comparisons separate adopted declarations from
+full candidate/adoption/import history. Changed rejected graph history alters full
+identity but not adopted content; changed rejected answer history or explicit answer
+review presence/content invalidates the graph's scope. Invalid envelopes fail before
+current source audits. Rejected graph endpoints do not become direct argument uses,
+even when the same claims remain independently active in the answer.
+
+An independent read-only design review identified declaration-order and imported-
+authorship labeling as release-critical constraints. Implementation review
+and regression tests cover those constraints and the inherited-question omission
+found during review. The complete suite also retains the previous no-flag 39-stage
+normalized-inventory check. This record does not claim a separate independent
+post-implementation audit or broad resource stress testing.
+
+No actual researcher data, provider call, external source transmission, new answer
+claim record, inferred researcher speech or automatic citation transfer was used.
+Free-text bridge/assumption content still needs semantic and attribution review;
+structural checks cannot prove supported assertions or sound inference. Actual-
+browser visual/keyboard/print QA remains **BLOCKED/unverified**; no browser retry
+or restriction bypass was attempted.
+
+## Prior v0.53 imported-answer walkthrough checks
+
+Local source release at this snapshot: v0.53 (opt-in synthetic imported-answer walkthrough).
 
 - `python -m unittest discover -q`: 685 synthetic tests passed locally.
 - `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.

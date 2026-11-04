@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.53-imported-answer-walkthrough",
+  "release": "0.54-offline-argument-proposals",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 179,
+  "file_count": 183,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 32083,
-      "sha256": "e753968c0a69c7235105fb0c951467d18a4fb925a466d056df2c712a7baba875"
+      "bytes": 32539,
+      "sha256": "b8dc6fcd565d0a232431c143878a29887e7519585f72c4087517ea91dec25984"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 39653,
-      "sha256": "3fc58415a42b5ec31a2b30497c9a99a8d7b879179400ec16c14af385ac798f8d"
+      "bytes": 43325,
+      "sha256": "63db55b933e662baa5e596de89ef8d010df15214c2512f9cbeb9dca5bd6b21a3"
     },
     {
       "path": "answer_draft.py",
@@ -75,8 +75,13 @@
     },
     {
       "path": "argument_map.py",
-      "bytes": 10127,
-      "sha256": "a54a9888f796a45dc12a6a5c9a4fada5d60c149fe0319cac6289294fb75d83db"
+      "bytes": 11766,
+      "sha256": "41f944cba988a4e2bfbb31da53139c0ae78d05db63da20f2093830f97acaffba"
+    },
+    {
+      "path": "argument_proposals.py",
+      "bytes": 25999,
+      "sha256": "40b46c1d9eb3b14dcc6fa4f03df452eb5d440e9e062c8a320541db3d8a4ff479"
     },
     {
       "path": "audit_design_chain.py",
@@ -150,8 +155,13 @@
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
-      "bytes": 3757,
-      "sha256": "595a67ffbd7f3deebb290d8bb9751bc51559e962dadd5d9e17006fb9530045b1"
+      "bytes": 4374,
+      "sha256": "4adca3fd73a5a3305021addcbce91dcda87b834fc97efb7885f39cf8f0d92556"
+    },
+    {
+      "path": "docs/ARGUMENT_PROPOSALS.md",
+      "bytes": 9103,
+      "sha256": "19a8614750ae18769b5cfe2752fd2a38d51cd85339753a0859a791ab08944098"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -190,13 +200,13 @@
     },
     {
       "path": "docs/JOURNEY_COMPARISON.md",
-      "bytes": 8300,
-      "sha256": "98fed5909374b3faf5dfc72ff5c378ab917299331a7aba972b56cf779de22bcf"
+      "bytes": 8897,
+      "sha256": "4aa5f0f847d79792e69edf36dfd6e60bc6703549a7b022d373fd76e78b3c6fd7"
     },
     {
       "path": "docs/JOURNEY_INPUTS.md",
-      "bytes": 9995,
-      "sha256": "b1cf0f6e5172bb7e711943e33b282f526593052b58dc4d0eab0bd2d2a3d7240e"
+      "bytes": 10335,
+      "sha256": "7c2b04bca717ddf096bfcd51174718e2430009961a29dd664924508143cb82df"
     },
     {
       "path": "docs/LOCAL_HTML_REVIEW.md",
@@ -285,8 +295,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 14788,
-      "sha256": "e1007734235a89c772b4fd080cbe80de5d4cf732a6d10a00840739c626b2a9c3"
+      "bytes": 15180,
+      "sha256": "5e0578eb15eb7da2fb8d1432204fc09a78f9410c635c7a58af283403351b1680"
     },
     {
       "path": "docs/REVIEW_JOURNEY.md",
@@ -420,8 +430,8 @@
     },
     {
       "path": "journey_compare.py",
-      "bytes": 15964,
-      "sha256": "13dfb5f1c63e359efd415ef6e91d8f3abc59de630eaa815c179f785f3e6c7efd"
+      "bytes": 17245,
+      "sha256": "4f76e379af17980aa7a8ca4bd89adc39703a8d1066a9602a2fd4d53d7c5537d6"
     },
     {
       "path": "journey_html.py",
@@ -612,6 +622,16 @@
       "path": "test_argument_map.py",
       "bytes": 7811,
       "sha256": "633a048636aea9938d4aadc06e728215ef59f009ef195e5d9a3e9838300dbd25"
+    },
+    {
+      "path": "test_argument_proposal_integration.py",
+      "bytes": 16880,
+      "sha256": "0074c2bebf3d50294370fae9215aa75aab7d7082aa046965a77b63831a4e8ac3"
+    },
+    {
+      "path": "test_argument_proposals.py",
+      "bytes": 18966,
+      "sha256": "b2dd693ed20cb62998d5449d324ef2d1e6eda3d54b101a7f383054ea83c46b76"
     },
     {
       "path": "test_cli_e2e.py",

@@ -34,6 +34,9 @@ def template(package, draft, operator_id, declared_review=None):
 
 
 def inspect(package, draft, supplied, declared_review=None):
+    if isinstance(supplied, dict) and supplied.get('schema') == 'persona.reviewed-argument-proposals.v1':
+        from argument_proposals import inspect_reviewed
+        return inspect_reviewed(package, draft, supplied, declared_review)
     answer = _answer(package, draft, declared_review)
     if not isinstance(supplied, dict) or set(supplied) != {'draft_sha256', 'review_sha256', 'operator_id', 'steps'}:
         raise ValueError('argument map has missing or unknown fields')
@@ -107,9 +110,15 @@ def render(package, draft, supplied, declared_review=None):
         'Deterministic review order (not actual researcher reasoning): ' + ', '.join(display(x) for x in result['review_order_claim_ids']),
         'Unmapped claims: ' + (', '.join(display(x) for x in result['unmapped_claim_ids']) or 'none (not completeness)'),
         'Premise-only claims: ' + (', '.join(display(x) for x in result['premise_only_claim_ids']) or 'none')]
+    if 'proposal_review' in result:
+        lines.append('Map origin: operator-adopted imported bridges, not wholly operator-authored text or researcher reasoning.')
+        lines.append('Declared step order (separate from review topology): '+', '.join(display(key) for key in result['declared_step_ids']))
+        lines.append('Current inspection invokes no provider. Historical generation and reviewer identity are declared, not authenticated.')
     for row in result['steps']:
         lines.append('Step ' + display(row['step_id']) + ' [operator_interpretation]: ' +
             ', '.join(display(x) for x in row['premise_claim_ids']) + ' -> ' + display(row['conclusion_claim_id']))
+        if 'proposal_origin' in row:
+            lines.append('  Bridge origin: '+display(row['origin'])+'; recorded candidate='+display(row['proposal_origin']['candidate_id']))
         lines.append('  Bridge rationale: ' + display(row['bridge_rationale']))
         lines.append('  Assumptions: ' + (' | '.join(display(x) for x in row['assumptions']) or 'NOT_SUPPLIED'))
         lines.append('  Defeater: ' + ('NOT_SUPPLIED' if row['defeater'] is None else display(row['defeater'])))
@@ -119,10 +128,17 @@ def render(package, draft, supplied, declared_review=None):
                     node['declared_review_decision'] + '; direct citations=' + str(node['direct_citation_count']) + '; ' + node['evidence_status'])
                 lines.append('    Uncertainty: ' + ('NOT_SUPPLIED' if node['uncertainty'] is None else display(node['uncertainty'])))
         lines.append('  Citation transfer: NOT_PERFORMED; logical validation: NOT_PERFORMED')
-    lines.append('Map boundary: ' + BOUNDARY)
+    lines.append('Map boundary: ' + result.get('boundary', BOUNDARY))
     lines.append('Full answer claims, source citations and recorded review decisions:')
     lines.append(render_answer(result['answer']).rstrip('\n'))
-    return '\n'.join(lines) + '\n'
+    if 'proposal_review' in result:
+        from argument_proposals import render_review, MAX_OUTPUT_BYTES
+        lines.append('Full imported argument proposal/adoption history:')
+        lines.append(render_review(result['proposal_review']).rstrip('\n'))
+    output='\n'.join(lines) + '\n'
+    if 'proposal_review' in result and len(output.encode('utf-8'))>MAX_OUTPUT_BYTES:
+        raise ValueError('imported argument text report exceeds 16 MiB')
+    return output
 
 
 def main():
@@ -140,7 +156,10 @@ def main():
             if args.map is None or args.operator_id is not None: raise ValueError('supply a map without operator override')
             supplied = load(args.map)
             output = render(package, draft, supplied, declared) if args.format == 'text' else json.dumps(inspect(package, draft, supplied, declared), indent=2) + '\n'
-    except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc: parser.exit(1, str(exc) + '\n')
+            if isinstance(supplied, dict) and supplied.get('schema') == 'persona.reviewed-argument-proposals.v1':
+                from argument_proposals import MAX_OUTPUT_BYTES
+                if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES: raise ValueError('imported argument output exceeds 16 MiB')
+    except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc) + '\n')
     sys.stdout.buffer.write(output.encode('utf-8'))
 
 
