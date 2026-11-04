@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.58-contextual-answer-preparation",
+  "release": "0.59-contextual-answer-walkthrough",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 198,
+  "file_count": 199,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 34146,
-      "sha256": "4f0969a2a38f30b4d8db06fd9d560b559b3e46b3bee12cb34782c812e39380d8"
+      "bytes": 34575,
+      "sha256": "7c24245df9014f78009c82addfee888b351ec1657199b6ff998de2b55677c61d"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 55991,
-      "sha256": "e86c6c9d8fd909c7852d31927238b493b4dfa4a47e23ba63aa3ae19798de66a1"
+      "bytes": 59463,
+      "sha256": "c341a820b4960bdad145018f3a455615263aa69ce1019e16f800784c133b2d3e"
     },
     {
       "path": "answer_context.py",
@@ -140,8 +140,8 @@
     },
     {
       "path": "docs/ANSWER_CONTEXT.md",
-      "bytes": 8773,
-      "sha256": "b482c8f44da7557f9b2b4dc64fbab885a832599194d6d3af1daf97ec383fb13e"
+      "bytes": 10687,
+      "sha256": "3ff8d49a47547c354388c55a652ddff86079fdb0b56a25c3082c9dce32c75455"
     },
     {
       "path": "docs/ANSWER_DRAFT.md",
@@ -150,8 +150,8 @@
     },
     {
       "path": "docs/ANSWER_PROPOSALS.md",
-      "bytes": 12498,
-      "sha256": "5823d89013975850b709c8d8cc2f16fad002ec2e727c4a9a9db2ce42facca116"
+      "bytes": 12827,
+      "sha256": "fb15e17aa30f8c5de74ae1fca4eca04eccf10dac580527780e685cbc0169e22b"
     },
     {
       "path": "docs/APPLICABILITY_REVIEW.md",
@@ -310,8 +310,8 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 13885,
-      "sha256": "55c8b1efa2440fd0393b37ebc09993d4fab5c1dea1d2bd17d76fcc49d27286e8"
+      "bytes": 14842,
+      "sha256": "c97e7d6fa04f1abadd69ddc8da3a8e9586fb8b0a4a75d96d96b8477f755600f8"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -620,8 +620,8 @@
     },
     {
       "path": "synthetic_walkthrough.py",
-      "bytes": 38113,
-      "sha256": "121c917aa866d9d95b041e1722efebb95bfd8606aa2aa3801b07193cd7cd3a96"
+      "bytes": 42028,
+      "sha256": "16bdf2cd22368f651fdbcf393eaa6c694dafe9a23f0e66c5cbffa5166aa3ec68"
     },
     {
       "path": "test_answer_context.py",
@@ -717,6 +717,11 @@
       "path": "test_contextual_answer_proposals.py",
       "bytes": 15620,
       "sha256": "3730f83c2a488f87c77e15f6915105093a581e79f9507fcc79cdb0c69a293cba"
+    },
+    {
+      "path": "test_contextual_walkthrough.py",
+      "bytes": 18636,
+      "sha256": "7fb9ddf2b8726ca5843bc438563d5abd71ec7bcdfa0f08a41beff21d66406332"
     },
     {
       "path": "test_corpus_files.py",

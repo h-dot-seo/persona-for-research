@@ -235,3 +235,18 @@ workflow. No external candidate/review arguments, provider calls or browser acti
 are accepted. Failed new stages leave diagnostics, never COMPLETE. Earlier 39/46-
 stage modes retain their existing behavior. Static HTML output does not establish
 visual, keyboard or print QA, which remains blocked and unverified.
+
+## Prepare research context before synthetic answers
+
+Add `--contextual-answers` together with `--research-journey --import-answers` to
+exercise the v3 contextual preparation route. The same invented pattern, target
+context and publication relationship forms are prepared before the answer handoff
+and reused later. Counts stay 32 with minimal mock extraction, 34 with minimal
+offline-import extraction, or 53 with every existing extension. Citation scope
+remains the explicitly selected references, even when other records appear in
+context. Candidate adoption is fixed fixture data; final answer review is deferred.
+
+See [contextual answer preparation](ANSWER_CONTEXT.md#try-the-contextual-synthetic-walkthrough)
+for complete commands and how to inspect recorded versus current context. This
+mode adds no model call, real researcher reconstruction, general auto-review or
+browser execution. Omit the flag to retain the earlier v1 answer route unchanged.

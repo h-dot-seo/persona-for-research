@@ -2,6 +2,58 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.59 (opt-in contextual synthetic walkthrough).
+
+- `python -m unittest discover -q`: 839 synthetic tests passed locally in 317.869 seconds.
+- `python -m compileall -q .`: passed; 129 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 200 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 199 exact allowlisted entries and file hashes.
+- A separate actual CLI invocation ran the full 53-stage contextual route with
+  imported source, pattern, method-application, answer and argument histories,
+  fresh invented-source checks and passive HTML. Its saved JSON snapshot matched
+  the fresh report exactly. Recorded/current context artifacts matched, source
+  quotes matched, and all three final answer judgments remained deferred.
+- Minimal contextual routes passed at 32 stages with mock extraction and 34 with
+  offline-import extraction. Preparation moved before answer import without
+  duplicating stages. No provider or browser was invoked.
+
+Most recent separately verified remote baseline: v0.58, commit
+[`d88c22fba76cde93c4d04a64faaac5c314f33fa7`](https://github.com/h-dot-seo/persona-for-research/commit/d88c22fba76cde93c4d04a64faaac5c314f33fa7),
+with 822 tests. This is a prior-commit record, not a claim of remote CI for v0.59.
+
+- [GitHub Actions run 41809403848](https://github.com/h-dot-seo/persona-for-research/actions/runs/41809403848):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Seventeen new tests cover explicit dependencies before writes, preparation order,
+exact shared raw forms, full explanation/import histories, context-only citation
+rejection, uncited conclusions, passive HTML snapshots, injected stage failures,
+and fixture mutations before canned adoption or completion. Pattern candidate
+payloads and deferred review rows, applicability targets/default state, empty
+relationship forms and the exact final three deferred claim IDs are checked.
+Empty/missing/extra final decisions cannot pass vacuously. No external response,
+context, review, provider or browser arguments are accepted by the demo.
+
+The existing walkthrough suites passed 46 tests, retaining the 39/46-stage golden
+inventories. Before editing, a fresh v0.58 full 53-stage output was captured and
+matched its prior v0.55 inventory; the no-new-flag route retains that same hash.
+These comparisons normalize execution paths and JSON formatting. HTML comparison
+covers the saved JSON and structural inventory, not bytes or browser layout.
+
+An independent read-only implementation audit ran all 17 new tests in 118.173
+seconds and found no remaining blocking issue. Its one stale documentation sentence
+was corrected to say the default walkthrough remains v1. A preliminary new test
+used an incorrect expected schema name; the assertion was corrected without a
+production contract change. No real research data or external model execution was
+used. Fixed invented adoption decisions are not a reusable automatic-review policy.
+
+Matching recorded/current artifacts does not prove model use, applicability,
+researcher agreement or scientific approval. Current source matches remain
+mechanical checks of invented bytes and quotes. Human scientific review is still
+required. Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**;
+no browser retry or restriction bypass was attempted.
+
+## Prior v0.58 contextual answer preparation checks
+
 Current local source release: v0.58 (explicit research context for answer preparation).
 
 - `python -m unittest discover -q`: 822 synthetic tests passed locally in 245.875 seconds.

@@ -117,6 +117,38 @@ separate concern of pinned input cards. Other artifacts, such as method-applicat
 reviews, retain their existing binding requirements and need explicit review when
 their own inputs change.
 
+## Try the contextual synthetic walkthrough
+
+```sh
+python synthetic_walkthrough.py ../persona-contextual-demo --candidate-source offline-import --research-journey --import-answers --contextual-answers
+```
+
+This opt-in 34-stage route prepares the invented pattern, applicability and
+publication forms **before** the v3 answer handoff, then reuses those exact forms
+in the later journey. Preparation is reordered, not duplicated. With mock extraction
+it has 32 stages. Add the existing source/method/HTML/argument options for the full
+53-stage route:
+
+```sh
+python synthetic_walkthrough.py ../persona-contextual-full --candidate-source offline-import --research-journey --recheck-sources --review-method-use --import-method-use --html-review --import-answers --import-arguments --contextual-answers
+```
+
+Read `answer-handoff.json` for the supplied preparation context and
+`answer-proposals.txt` for the complete original/reviewed/rejected answer history.
+The example includes explicit citation-explanation slots and an invented rewrite;
+missing explanations stay visible. `research-journey.txt` compares the recorded and
+current context artifacts. Matching artifacts establish neither model use nor
+method applicability. The later parent-observation record visible in pattern
+context remains outside the explicit answer citation scope.
+
+`--contextual-answers` requires both `--import-answers` and `--research-journey`;
+it does not silently enable them. No external candidate, context, review or provider
+inputs are accepted by this demonstration. Its fixed fixture adoption is not a
+reusable automatic-review policy. Every final answer decision remains deferred.
+Failures preserve diagnostics without a completion marker or automatic retry.
+Without the new flag, earlier command order, outputs and stage counts are unchanged.
+Static HTML generation does not verify browser layout, keyboard use or printing.
+
 ## Compatibility, bounds and verification
 
 V1/v2 scope/handoff/bundle/review/envelope outputs remain unchanged. Frozen synthetic
@@ -128,9 +160,9 @@ adds active citation uses or transfers premise evidence to an uncited conclusion
 Combined inputs are bounded to 8 MiB, the handoff to 2 MiB logical UTF-8 JSON, and
 JSON/text reports to 16 MiB. Repeated full histories can reach these limits even
 when individual files are small. Failure is explicit; histories, exclusions and
-counterevidence are never silently truncated. The standard synthetic walkthrough
-continues using its original v1 path and counts; this mode has separate real-CLI
-coverage, not a new automatic-adoption flag.
+counterevidence are never silently truncated. The default synthetic walkthrough
+continues using its original v1 path and counts. The explicitly contextual mode
+uses only the fixed invented fixtures described above.
 
 All examples and tests are invented. No real scholar-fidelity or semantic validation,
 provider execution, external transmission or automatic scientific approval is

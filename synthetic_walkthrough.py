@@ -15,7 +15,11 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False, import_answers=False, import_arguments=False):
+def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False, import_answers=False, import_arguments=False, contextual_answers=False):
+    if type(contextual_answers) is not bool:
+        raise ValueError('contextual_answers must be a boolean')
+    if contextual_answers and (import_answers is not True or research_journey is not True):
+        raise ValueError('contextual_answers requires explicit import_answers and research_journey')
     if type(import_arguments) is not bool:
         raise ValueError('import_arguments must be a boolean')
     if import_arguments and not research_journey:
@@ -81,6 +85,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
         ('Method-use mode also writes method-applications.txt; considered use is not scientific approval.\n' if review_method_use else '') +
         ('Imported method-use mode retains original/reviewed/rejected synthetic proposals; no model is called.\n' if import_method_use else '') +
         ('Imported answer mode retains canned original/reviewed/rejected claims; adoption does not retain the final answer.\n' if import_answers else '') +
+        ('Contextual answer mode records the same raw context artifacts used later; equality is not approval or model use.\n' if contextual_answers else '') +
         ('Imported argument mode retains canned original/reviewed/rejected bridges; adoption is not logical approval.\n' if import_arguments else '') +
         ('HTML review mode starts with passive local research-journey.html; open it yourself after completion.\n' if html_review else '') +
         'commands.json records actual CLI argument arrays (not shell commands).\n'
@@ -143,6 +148,8 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             falsification_check=None, alternative_explanation=None, uncertainty='No actual predictions have been evaluated.',
             link_uses=[dict(link_id='criterion-link', role='constraint', applicability_note='An operator-proposed criterion, not proof of transferability.')])]
         write('proposal.json', proposal)
+        if contextual_answers:
+            _prepare_research_context_fixture(command, write, path, package_path, links)
         draft = command('answer_draft.py', [package_path, '--template', '--question', QUESTION, '--operator-id', 'synthetic-answer-operator'], 'empty-draft.json')
         draft['claims'] = [dict(claim_id='criterion', claim_type='source_quote',
             text='A shared prediction does not discriminate the models.', uncertainty=None,
@@ -153,7 +160,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             dict(claim_id='conclusion', claim_type='operator_synthesis', text='Choose an observation only after checking discriminating predictions.',
                 uncertainty='Synthetic proposal, not empirical evidence.', citations=[])]
         if import_answers:
-            _import_answer_fixture(command, write, path, package_path, links, draft)
+            _import_answer_fixture(command, write, path, package_path, links, draft, contextual_answers=contextual_answers)
         else:
             write('draft.json', draft)
         command('answer_draft.py', [package_path, path('draft.json'), '--review-template', '--reviewer-id', 'synthetic-review-pending'], 'answer-review.json')
@@ -175,7 +182,9 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             '--format', 'text'], 'argument-map.txt', False)
         write('revision-inputs.json', dict(original_corpus=corpus, candidate_bundle=bundle, operator_review=review))
         lineage = command('audit_design_lineage.py', [package_path, path('links.json'), path('proposal.json'), path('revision-inputs.json')], 'lineage.json')
-        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources, review_method_use=review_method_use, import_method_use=import_method_use, html_review=html_review) if research_journey else None)
+        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources, review_method_use=review_method_use, import_method_use=import_method_use, html_review=html_review, contextual_answers=contextual_answers) if research_journey else None)
+        if contextual_answers and journey['recorded_answer_context_comparison']['status'] != 'SAME_RECORDED_ARTIFACTS':
+            raise ValueError('synthetic contextual answer artifacts must match the recorded artifacts')
         write('commands.json', commands)
         receipt = dict(status='SYNTHETIC_WALKTHROUGH_COMPLETE_NOT_VALIDATED', llm_used=False, external_transmission=False,
             human_review_authenticated=False, answer_review_status='ALL_DEFERRED',
@@ -191,6 +200,10 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             receipt.update(answer_candidate_source='offline-import', answer_import_is_synthetic_fixture=True,
                 answer_adoption_scope='CANNED_FIXTURE_DECISIONS_NOT_SCIENTIFIC_APPROVAL',
                 read_first=['answer-proposals.txt', *receipt['read_first']])
+        if contextual_answers:
+            receipt.update(contextual_answers=True,
+                recorded_answer_context_status=journey['recorded_answer_context_comparison']['status'],
+                contextual_answer_scope='RECORDED_ARTIFACT_EQUALITY_NOT_APPROVAL_OR_MODEL_USE')
         if import_arguments:
             receipt.update(argument_candidate_source='offline-import', argument_import_is_synthetic_fixture=True,
                 argument_adoption_scope='CANNED_FIXTURE_DECISIONS_NOT_LOGICAL_APPROVAL',
@@ -274,11 +287,17 @@ def _import_argument_fixture(command, write, path, package_path):
         path('synthetic-argument-adoption.json')], 'argument.json')
 
 
-def _import_answer_fixture(command, write, path, package_path, links, draft):
+def _import_answer_fixture(command, write, path, package_path, links, draft, *, contextual_answers=False):
     """Only fixed invented inputs; never accept caller-supplied candidates or decisions."""
+    if type(contextual_answers) is not bool:
+        raise ValueError('contextual_answers must be a boolean')
+    context_args = (['--include-citation-explanations', '--patterns', path('reviewed-patterns.json'),
+        '--context', path('synthetic-context.json'), '--publication-relations',
+        path('synthetic-publication-relations.json'), '--pattern-id', 'synthetic-comparison']
+        if contextual_answers else [])
     scope = command('answer_proposals.py', ['template', package_path, '--question', QUESTION,
         '--topic', 'model design', '--reference-year', '2020', '--operator-id',
-        'synthetic-answer-fixture-operator'], 'empty-answer-scope.json')
+        'synthetic-answer-fixture-operator', *context_args], 'empty-answer-scope.json')
     earlier = copy.deepcopy(links['links'][0]['to_ref'])
     later = copy.deepcopy(links['links'][0]['from_ref'])
     unused_parent = dict(earlier, dimension=None)
@@ -287,12 +306,24 @@ def _import_answer_fixture(command, write, path, package_path, links, draft):
     command('answer_proposals.py', ['prepare', package_path, path('synthetic-answer-scope.json')], 'answer-handoff.json')
     response = command('answer_proposals.py', ['response-template', package_path,
         path('synthetic-answer-scope.json'), path('answer-handoff.json')], 'empty-answer-response.json')
+    if contextual_answers:
+        draft = copy.deepcopy(draft)
+        for claim in draft['claims']:
+            for citation in claim['citations']:
+                citation['explanation'] = None
+        draft['claims'][1]['citations'][0]['explanation'] = dict(
+            rationale='Revised canned interpretation of this synthetic comparison citation only.',
+            context_boundary='Invented demonstration only; applicability remains untested.')
     response['candidates'] = [{key:copy.deepcopy(value) for key,value in claim.items() if key != 'claim_id'}
         for claim in draft['claims']]
     response['candidates'][1]['text'] = 'Original canned answer comparison before explicit reviewer rewrite.'
     response['candidates'].append(dict(text='Rejected synthetic answer overgeneralization, kept only as history.',
         claim_type='operator_synthesis', uncertainty='Unsupported invented alternative.',
         citations=[dict(reference=unused_parent, role='support')]))
+    if contextual_answers:
+        response['candidates'][1]['citations'][0]['explanation']['rationale'] = (
+            'Original canned interpretation of this synthetic comparison citation only.')
+        response['candidates'][3]['citations'][0]['explanation'] = None
     write('synthetic-answer-response.json', response)
     write('synthetic-answer-provenance.json', dict(provider_id='synthetic-no-provider', model_id='synthetic-no-model',
         run_id='synthetic-answer-fixture', operator_id='synthetic-fixture-operator', execution_location='unknown'))
@@ -318,7 +349,7 @@ def _import_answer_fixture(command, write, path, package_path, links, draft):
         path('synthetic-answer-adoption.json')], 'draft.json')
 
 
-def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False):
+def _prepare_research_context_fixture(command, write, path, package_path, links):
     """Fixed invented decisions only, never accept external candidate material."""
     command('pattern_proposals.py', ['prepare', package_path, '--topic', 'model design',
         '--include-evidence-reasons'], 'pattern-handoff.json')
@@ -345,7 +376,11 @@ def _extend_research_journey(command, write, path, package_path, links, *, reche
         path('synthetic-pattern-response.json'), path('synthetic-pattern-provenance.json')], 'pattern-candidates.json')
     review = command('pattern_proposals.py', ['review-template', package_path, path('pattern-candidates.json'),
         '--reviewer-id', 'synthetic-pattern-reviewer'], 'deferred-pattern-review.json')
-    if len(bundle['candidates']) != 2 or any(row['decision'] != 'defer' for row in review['decisions']):
+    ids = ['pattern-candidate-1', 'pattern-candidate-2']
+    expected_decisions = [dict(candidate_id=cid, decision='defer', review_note='Not reviewed.') for cid in ids]
+    if ([row['candidate_id'] for row in bundle['candidates']] != ids or
+            [row['proposed_pattern'] for row in bundle['candidates']] != [candidate, rejected] or
+            review['decisions'] != expected_decisions):
         raise ValueError('synthetic pattern template contract changed; inspect before continuing')
     reviewed = dict(pattern_id='synthetic-comparison', operator_hypothesis='Explicit synthetic reviewer comparison hypothesis.',
         **{key:copy.deepcopy(value) for key,value in candidate.items() if key != 'proposed_hypothesis'})
@@ -361,6 +396,10 @@ def _extend_research_journey(command, write, path, package_path, links, *, reche
     context = command('applicability_review.py', [package_path, '--template', '--question', QUESTION,
         '--target-context', 'Synthetic target without measured discriminating predictions.', '--topic', 'model design',
         '--reference-year', '2020', '--operator-id', 'synthetic-context-operator'], 'deferred-context.json')
+    expected_assessments = [dict(reference=dict(ref, dimension=None), decision='defer',
+        context_comparison=None, remaining_uncertainty=None, counterevidence_refs=[]) for ref in (earlier, later)]
+    if context['assessments'] != expected_assessments:
+        raise ValueError('synthetic applicability template fixture changed; inspect before continuing')
     context['assessments'][0].update(decision='exclude',
         context_comparison='The synthetic target has no tested discriminating observation.',
         remaining_uncertainty='The comparison may still be useful as a criticism, not an applicable method.',
@@ -368,11 +407,21 @@ def _extend_research_journey(command, write, path, package_path, links, *, reche
     write('synthetic-context.json', context)
     relations = command('publication_context.py', [package_path, '--template', '--operator-id',
         'synthetic-relation-operator'], 'empty-publication-relations.json')
+    if relations['relations'] != []:
+        raise ValueError('synthetic publication relation template fixture changed; inspect before continuing')
     relations['relations'] = [dict(relation_id='synthetic-review-context', from_paper_id='synthetic-1',
         to_paper_id='synthetic-0', relation_type='review_summary_of',
         rationale='A synthetic operator-declared comparison, not an established citation or influence.',
         basis_refs=[later], uncertainty=None)]
     write('synthetic-publication-relations.json', relations)
+
+
+def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False, contextual_answers=False):
+    if not contextual_answers:
+        _prepare_research_context_fixture(command, write, path, package_path, links)
+    earlier = copy.deepcopy(links['links'][0]['to_ref'])
+    later = copy.deepcopy(links['links'][0]['from_ref'])
+    later_observation = dict(later, dimension=None)
     args = [package_path, path('reviewed-patterns.json'), path('synthetic-context.json'), path('links.json'),
         path('proposal.json'), path('draft.json'), path('argument.json'), path('synthetic-publication-relations.json'),
         '--pattern-id', 'synthetic-comparison', '--review', path('answer-review.json')]
@@ -439,6 +488,8 @@ def _extend_research_journey(command, write, path, package_path, links, *, reche
     if html_review:
         command('research_journey.py', [*args, '--format', 'html'], 'research-journey.html', False)
     decisions = result['pattern_transfer_review']['answer_design_review']['answer']['review']['decisions']
+    if contextual_answers and [row['claim_id'] for row in decisions] != ['criterion', 'comparison', 'conclusion']:
+        raise ValueError('synthetic contextual answer review must contain exactly the three fixed claims')
     if any(row['decision'] != 'defer' for row in decisions):
         raise ValueError('synthetic answer review must remain deferred')
     return result
@@ -455,8 +506,9 @@ def main():
     parser.add_argument('--html-review', action='store_true')
     parser.add_argument('--import-answers', action='store_true')
     parser.add_argument('--import-arguments', action='store_true')
+    parser.add_argument('--contextual-answers', action='store_true')
     args = parser.parse_args()
-    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use, html_review=args.html_review, import_answers=args.import_answers, import_arguments=args.import_arguments)
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use, html_review=args.html_review, import_answers=args.import_answers, import_arguments=args.import_arguments, contextual_answers=args.contextual_answers)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

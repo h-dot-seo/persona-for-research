@@ -192,7 +192,7 @@ versioned v2 contract. Each original and adopted citation must include a nullabl
 explanation slot. Default v1 remains unchanged and rejects those additional fields.
 See [citation explanations](CITATION_EXPLANATIONS.md) for rationale/context limits,
 original-versus-adopted labels, missing prompts, full rejected history and replay
-compatibility. The existing synthetic walkthrough intentionally stays v1.
+compatibility. The default synthetic walkthrough intentionally stays v1.
 
 ## Optional v3 method and publication context
 
@@ -202,3 +202,8 @@ ID. The v3 handoff preserves inspected context and history but keeps the v2 resp
 contract and exact citation permission boundary. All four context options require
 explanation mode; omitted context leaves old v1/v2 records unchanged. Current journey
 review inputs are compared separately with the recorded preparation context.
+
+For a complete invented example, add `--contextual-answers` to the synthetic
+`--research-journey --import-answers` route. Preparation precedes answer import,
+then the journey reuses the same forms. All final judgments remain deferred.
+See [the contextual walkthrough](ANSWER_CONTEXT.md#try-the-contextual-synthetic-walkthrough).

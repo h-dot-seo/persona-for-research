@@ -127,6 +127,12 @@ seven more real CLI stages. With imported answers and all earlier extensions, th
 complete source-to-argument demonstration has 53 stages. All final answer decisions
 remain deferred; fixed fixture adoption is not automatic research approval.
 
+To prepare method, applicability and publication context before canned answer
+proposals, also add `--contextual-answers` with `--research-journey --import-answers`.
+The [contextual walkthrough](docs/ANSWER_CONTEXT.md#try-the-contextual-synthetic-walkthrough)
+reuses those same forms in the later review without widening citation permission.
+The full route still has 53 stages; no model use or researcher endorsement is claimed.
+
 ## Compact review
 
 ```sh
