@@ -2,21 +2,27 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.37 (mixed-origin lineage and imported walkthrough).
+Current local source release: v0.38 (file-backed model handoff and candidate review).
 
-- `python -m unittest discover -q`: 364 synthetic tests passed locally.
+- `python -m unittest discover -q`: 377 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 135 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 136 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
 - Standalone `synthetic_walkthrough.py --candidate-source offline-import`: all 17
   CLI stages completed, imported lineage replay matched, answer review stayed deferred.
 
-Most recent separately verified remote baseline: v0.36, commit
-[`4409c1a115e5d2abd62d9259b274bcde1da26630`](https://github.com/h-dot-seo/persona-for-research/commit/4409c1a115e5d2abd62d9259b274bcde1da26630),
-with 360 tests. This is a prior-commit record, not a claim of remote CI for v0.37.
+Most recent separately verified remote baseline: v0.37, commit
+[`33b8321c98fcb723d29094bd72ca0b83e6a903fc`](https://github.com/h-dot-seo/persona-for-research/commit/33b8321c98fcb723d29094bd72ca0b83e6a903fc),
+with 364 tests. This is a prior-commit record, not a claim of remote CI for v0.38.
 
-- [GitHub Actions run 41764331631](https://github.com/h-dot-seo/persona-for-research/actions/runs/41764331631):
+- [GitHub Actions run 41765030024](https://github.com/h-dot-seo/persona-for-research/actions/runs/41765030024):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Thirteen file-backed regressions cover all handoff/review CLI modes, stale bytes
+and metadata, preamble-only changes, bounded source reads, authorization/path
+preflight, poisoned embedded text, alias/receipt detachment and input preservation.
+No source hash is silently refreshed. Generic candidate packages retain their
+existing segment/quote semantics rather than manufacturing local-file receipts.
 
 These checks include offline model-request preparation/import, complete input and
 response bindings, declared provenance, default-deferred review, explicit target

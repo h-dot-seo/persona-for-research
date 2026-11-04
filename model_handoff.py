@@ -4,7 +4,8 @@ import json
 import sys
 from pathlib import Path
 
-from extraction_adapter import prepare_model_handoff, import_model_response
+from extraction_adapter import prepare_model_handoff, import_model_response, MAX_HANDOFF_BYTES
+from corpus_files import load_segment_corpus
 from persona import payload_sha256
 from strict_json import loads
 
@@ -30,9 +31,13 @@ def main():
     ingest = commands.add_parser('import', help='Check a bound response and separate declared provenance')
     for name in ('corpus', 'handoff', 'response', 'provenance'):
         ingest.add_argument(name, type=Path)
+    for command in (prepare, response_template, ingest):
+        command.add_argument('--source-root', type=Path, help='Read and recheck files from a local manifest instead of supplied segments')
     args = parser.parse_args()
     try:
         corpus = load(args.corpus)
+        if args.source_root is not None:
+            corpus = load_segment_corpus(corpus, args.source_root, max_total_bytes=MAX_HANDOFF_BYTES)
         if args.command == 'prepare':
             result = prepare_model_handoff(corpus)
         elif args.command == 'response-template':

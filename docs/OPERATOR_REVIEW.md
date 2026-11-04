@@ -55,6 +55,16 @@ inventory as an approved review. A review bound to the old hash cannot apply to 
 new bundle. Inventory mode accepts no review file, reviewer ID or version/build
 arguments, and cannot be combined with template mode.
 
+## Reconstruct input from local files
+
+Add `--source-root permitted-source-folder` to any CLI mode when `corpus.json` is a
+local-file manifest. The command verifies all selected bytes and rebuilds segments
+before its normal complete-corpus/bundle/review binding checks. This is the same
+reconstruction used by `model_handoff.py --source-root`; neither mode overwrites
+inputs or invents targets. Source changes and non-derived metadata changes require
+new artifacts and explicit review. See [the local handoff workflow](MODEL_HANDOFF.md).
+The no-flag path still expects an inline segment-containing corpus.
+
 ## Review fields
 
 The top-level review has exactly `candidate_bundle_sha256`, `input_corpus_sha256`,

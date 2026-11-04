@@ -1,6 +1,5 @@
 """Load explicitly authorized local UTF-8 Markdown evidence with byte hashes."""
 import argparse
-import copy
 import hashlib
 import json
 import os
@@ -60,8 +59,10 @@ def source_paths(manifest, root):
     return paths
 
 
-def read_source_bytes(path):
+def read_source_bytes(path, *, max_bytes=None):
     """Pin a regular descriptor and reject detected replacements before reading."""
+    if max_bytes is not None and (type(max_bytes) is not int or max_bytes < 0):
+        raise ValueError('source byte limit must be a nonnegative integer')
     path=Path(path)
     if path.resolve(strict=True)!=path:
         raise ValueError('selected source path changed after preflight')
@@ -75,7 +76,10 @@ def read_source_bytes(path):
             raise ValueError('selected source identity changed after preflight')
         with os.fdopen(descriptor,'rb') as stream:
             descriptor=None
-            raw=stream.read();after=os.fstat(stream.fileno())
+            raw=stream.read() if max_bytes is None else stream.read(max_bytes + 1)
+            if max_bytes is not None and len(raw) > max_bytes:
+                raise ValueError('selected source bytes exceed the configured input limit')
+            after=os.fstat(stream.fileno())
             if (opened.st_size,opened.st_mtime_ns,opened.st_ctime_ns)!=(after.st_size,after.st_mtime_ns,after.st_ctime_ns):
                 raise ValueError('selected source changed while reading')
             return raw
@@ -83,17 +87,32 @@ def read_source_bytes(path):
         if descriptor is not None:os.close(descriptor)
 
 
-def load_sources(manifest, root):
+def load_segment_corpus(manifest, root, *, max_total_bytes=None):
+    """Read pinned local bytes into segments; no persisted verification receipt.
+
+    Returned text is source data, not a publication-ready or anonymized artifact.
+    Downstream intake must verify observations/quotes before building a package.
+    """
+    if max_total_bytes is not None and (type(max_total_bytes) is not int or max_total_bytes < 0):
+        raise ValueError('total source byte limit must be a nonnegative integer')
+    build(manifest)  # Full structural/authorization preflight before resolving files.
     paths=source_paths(manifest, root)
-    corpus=copy.deepcopy(manifest)
+    corpus=json.loads(json.dumps(manifest,ensure_ascii=False,allow_nan=False))
+    remaining=max_total_bytes
     for paper,path in zip(corpus['papers'],paths):
-        raw=read_source_bytes(path)
+        raw=read_source_bytes(path) if remaining is None else read_source_bytes(path, max_bytes=remaining)
+        if remaining is not None:remaining-=len(raw)
         if hashlib.sha256(raw).hexdigest()!=paper.get('source_sha256'):
             raise ValueError('source byte hash mismatch: '+paper['paper_id'])
         segment_map=sections(raw.decode('utf-8'))
         paper['segments']=segment_map
         paper['segments_sha256']=hashlib.sha256(json.dumps(segment_map,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode()).hexdigest()
         paper['source_verification']='LOCAL_BYTES_SHA256_MATCH'
+    return corpus
+
+
+def load_sources(manifest, root):
+    corpus=load_segment_corpus(manifest, root)
     return verified_corpus(corpus, _local_source_ids=[p['paper_id'] for p in corpus['papers']])
 
 

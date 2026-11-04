@@ -70,6 +70,9 @@ See [offline model handoff and limits](docs/MODEL_HANDOFF.md). The complete synt
 journey also accepts `--candidate-source offline-import` to exercise 17 real CLI
 stages without running a model. Mixed mock/imported revision audits preserve each
 origin and declared provenance while keeping unaudited initial history explicit.
+For existing local-file manifests, add `--source-root` to the handoff and operator
+review commands. They recheck the selected source bytes and reconstruct segments
+at every stage, avoiding manual text copying and refusing stale evidence.
 
 ### Record operator decisions without automatic promotion
 

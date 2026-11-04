@@ -4,7 +4,8 @@ import copy
 import json
 from pathlib import Path
 
-from extraction_adapter import MAX_CANDIDATE_CHARS, validate_candidate_bundle
+from extraction_adapter import MAX_CANDIDATE_CHARS, MAX_HANDOFF_BYTES, validate_candidate_bundle
+from corpus_files import load_segment_corpus
 from observation_input import verified_corpus
 from persona import payload_sha256
 from research_workflow import build
@@ -169,21 +170,27 @@ def main():
     modes.add_argument('--template', action='store_true')
     modes.add_argument('--targets', action='store_true')
     parser.add_argument('--reviewer-id')
+    parser.add_argument('--source-root', type=Path, help='Recheck a local file manifest and reconstruct its source segments')
     args = parser.parse_args()
+    def input_corpus():
+        corpus = load(args.corpus)
+        if args.source_root is not None:
+            corpus = load_segment_corpus(corpus, args.source_root, max_total_bytes=MAX_HANDOFF_BYTES)
+        return corpus
     try:
         if args.targets:
             if any(value is not None for value in
                    (args.review, args.new_version, args.new_build_id, args.reviewer_id)):
                 raise ValueError('target inventory mode cannot apply review decisions or record a reviewer')
-            result = target_inventory(load(args.corpus), load(args.candidates))
+            result = target_inventory(input_corpus(), load(args.candidates))
         elif args.template:
             if args.review is not None or args.new_version is not None or args.new_build_id is not None:
                 raise ValueError('template mode cannot apply review decisions')
-            result = review_template(load(args.corpus), load(args.candidates), args.reviewer_id)
+            result = review_template(input_corpus(), load(args.candidates), args.reviewer_id)
         else:
             if args.review is None or args.new_version is None or args.new_build_id is None or args.reviewer_id is not None:
                 raise ValueError('application requires a review file and new version/build; reviewer identity comes from that review')
-            result = prepare_revision(load(args.corpus), load(args.candidates), load(args.review),
+            result = prepare_revision(input_corpus(), load(args.candidates), load(args.review),
                                       args.new_version, args.new_build_id)
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')

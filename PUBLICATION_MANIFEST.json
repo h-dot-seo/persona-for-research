@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.37-mixed-origin-lineage",
+  "release": "0.38-local-model-handoff",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 134,
+  "file_count": 135,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 25431,
-      "sha256": "0f0555f3db5d01d8e6e9ccf5fde4d93d0fb27391cf18019bf8f6315a1c6229f4"
+      "bytes": 25669,
+      "sha256": "9dc50f83ec72ff1d560559945330661cabffd349337609a6065cab4bfb049c8b"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 15347,
-      "sha256": "65f1173177e5e5a371d3590ca2d96edb872cc68f3d1dd8c597f972814bda4b98"
+      "bytes": 15750,
+      "sha256": "31178b058ff6e3a4d5a2a9ff44ae3a13f33b8672ea44a08bbe193cdc69d37c97"
     },
     {
       "path": "answer_draft.py",
@@ -90,8 +90,8 @@
     },
     {
       "path": "corpus_files.py",
-      "bytes": 5435,
-      "sha256": "cac91f5430051460140fe6fa67e4f212a2b1c9ece1a39eb6d2192fb92c7cf797"
+      "bytes": 6669,
+      "sha256": "49c4eec96e099b3ced242074c6c495c226578e9c518927a51bf0e5975fef2441"
     },
     {
       "path": "corpus_projection.py",
@@ -175,13 +175,13 @@
     },
     {
       "path": "docs/MODEL_HANDOFF.md",
-      "bytes": 6103,
-      "sha256": "320c154c5db55d8f36dd63a1afd713532c2b48930df3554cb4d032c879f587c6"
+      "bytes": 9472,
+      "sha256": "d934946ba4161923163c200b254ddb51ba12fd97e46d947bc616c4963bdf22f5"
     },
     {
       "path": "docs/OPERATOR_REVIEW.md",
-      "bytes": 6572,
-      "sha256": "dcea54b9f52ee0bafc3f2bf740fc1fccd68263604a1adb68f3058ed00cd148d7"
+      "bytes": 7179,
+      "sha256": "7eaf907ce0a684b74fd6803acc932a2399213b98d43782e5c8714a9aee1caea9"
     },
     {
       "path": "docs/PATTERN_HYPOTHESES.md",
@@ -240,8 +240,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 21147,
-      "sha256": "eb70cc566d656f9dc217f9ad56a9a616f71c31185ff4cb84db6a0cfa46cbef35"
+      "bytes": 21915,
+      "sha256": "f11e836526882ce93d720233046837c6943b6034b4c2d3dbe9a1141f69c85514"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -340,8 +340,8 @@
     },
     {
       "path": "model_handoff.py",
-      "bytes": 2220,
-      "sha256": "a3089bd21fb7c3758ceb5c6307e190e45990f87a985e28e2b113dcf352953fe4"
+      "bytes": 2623,
+      "sha256": "15c95c6f08f4e60181975afba827006559beea02bf3c0fbd6b69e2916d88d5ef"
     },
     {
       "path": "observation_input.py",
@@ -350,8 +350,8 @@
     },
     {
       "path": "operator_review.py",
-      "bytes": 11573,
-      "sha256": "6ab0726cb816f9e513e93ebee518bdd36ddb763a96cd79b71c24f52cca8ed81a"
+      "bytes": 11978,
+      "sha256": "78311688efa1b590d9cdf42f4c7d5670b9f4f9eb6f418e82a9dad2ca16cae2ff"
     },
     {
       "path": "pattern_hypotheses.py",
@@ -517,6 +517,11 @@
       "path": "test_intake_errors.py",
       "bytes": 2372,
       "sha256": "b1632cab953e674c5925b06752f48da9d9d5d8520fe1448045c4e84fb4c126b0"
+    },
+    {
+      "path": "test_local_model_handoff.py",
+      "bytes": 14721,
+      "sha256": "40cab61648d49e3bb2d71dcc54cb373f9d052e4c0777f17376ff73685e02a0d9"
     },
     {
       "path": "test_methodology_trajectory.py",

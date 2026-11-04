@@ -343,3 +343,15 @@ history stays unaudited even if a later stage replaces its component. The option
 17-stage imported-response walkthrough preserves the review challenge, temporal
 warning, missing falsifier and deferred answer decisions. Its response and provider
 labels are fixed synthetic fixtures; no actual model or real scholar source is used.
+
+### Local-file handoff continuity
+
+The offline contract initially required a segment-containing JSON corpus, while
+local preparation produced a file manifest without bodies. Optional `--source-root`
+now bridges those existing formats through the same byte-pinned local reader. All
+prepare/import/review modes recheck sources and complete reconstructed bindings.
+Synthetic tests include preamble-only changes, updated hashes with stale requests,
+unknown metadata edits, poisoned embedded segments, aliases, byte budgets and CLI
+failure without partial output. No automatic source hash refresh, target choice,
+model call or external transmission occurs. Initial observation curation remains
+explicit; this change removes file-copying work rather than scholarly review.
