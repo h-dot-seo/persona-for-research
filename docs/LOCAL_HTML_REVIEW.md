@@ -134,6 +134,11 @@ unchanged; this is a local input convenience, not approval or source authority.
 
 The optional synthetic `--import-answers` mode also displays the complete answer
 proposal/adoption history, alongside pattern and method-application history. With
-all extensions the runner executes 46 CLI stages. This changes no browser QA
+the preceding extensions plus answer imports the runner executes 46 CLI stages. This changes no browser QA
 claim: parsing, escaping and exact JSON snapshots are not visual/keyboard/print
 verification. No browser retry or restriction bypass is performed.
+
+Adding synthetic `--import-arguments` preserves original, adopted and rejected graph
+bridges in the same passive report. With answer imports and all earlier extensions,
+the complete runner has 53 stages. Declared step order and topological review order
+remain separately labeled. Existing static checks do not become browser/layout QA.

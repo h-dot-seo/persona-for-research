@@ -100,7 +100,11 @@ final answer judgments remain deferred. See [the quickstart](docs/QUICKSTART.md)
 explicitly selected existing answer claims. Review tentative bridges, assumptions
 and defeaters before adopting a full-history map. Declaration order stays separate
 from topological review order; rejected suggestions never become argument routes.
-No new claims, researcher reasoning trace, citation transfer or approval is inferred.
+No new claim records, researcher reasoning trace, citation transfer or approval is
+inferred. Add `--import-arguments` to the synthetic `--research-journey` command for
+seven more real CLI stages. With imported answers and all earlier extensions, the
+complete source-to-argument demonstration has 53 stages. All final answer decisions
+remain deferred; fixed fixture adoption is not automatic research approval.
 
 ## Compact review
 

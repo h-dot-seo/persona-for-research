@@ -167,7 +167,7 @@ Use `research_journey.py ... --format html` with the same original inputs for a
 single read-only local view. It inspects once, preserves every field in a reversible
 snapshot, links only exact references, and has no scripts, external resources or
 approval controls. Add `--html-review` to the synthetic extended demo for one extra
-CLI stage (39 with the preceding options, or 46 when also importing answer fixtures). Existing JSON/text modes are unchanged.
+CLI stage (39 with the preceding options, 46 with answer imports, or 53 with both answer and argument imports). Existing JSON/text modes are unchanged.
 The static/security/CLI checks are automated; actual-browser visual, keyboard and
 print QA is currently blocked by the cloud environment's socket restriction.
 See [local HTML review](LOCAL_HTML_REVIEW.md) for the reading order, privacy limits
@@ -210,10 +210,28 @@ The original, rewritten and rejected text survives answer/design, argument,
 evidence-scope, research-journey and optional passive HTML reports. No final answer
 is retained automatically: the independent answer review remains all-deferred.
 
-The minimal offline-import extraction route has 34 stages. All options together
-have 46 stages; use the complete command in [answer proposals](ANSWER_PROPOSALS.md).
+The minimal offline-import extraction route has 34 stages. The preceding extensions
+plus answer imports have 46 stages; use the command in [answer proposals](ANSWER_PROPOSALS.md).
+Adding the argument-import extension below increases the full route to 53.
 The mode accepts no external response/review files, creates no provider request,
 and leaves unsupported conclusions, method conditions and argument defeaters visible.
 Source-checking, method-use and HTML flags remain independent explicit options.
 Earlier modes and failure/no-overwrite rules are unchanged. Actual browser QA is
 still blocked and unverified, even when a static HTML report is written.
+
+## Imported argument intent, without private reasoning reconstruction
+
+Add `--import-arguments` to a `--research-journey` demo. Seven real CLI stages use
+explicitly selected existing answer claim IDs, canned bridge suggestions and fixed
+invented adoption decisions. Two steps are adopted and a cyclic alternative rejected.
+Original/reviewed/rejected bridge histories stay visible; accepted declaration order
+is separate from topological review order. Final answer review stays all-deferred,
+and no logical validity or researcher thought process is certified.
+
+The minimal offline-import extraction route has 34 stages; every extension together
+has 53. The flag also works without imported answers or method/source/HTML flags.
+See [argument proposals](ARGUMENT_PROPOSALS.md) for the complete command and manual
+workflow. No external candidate/review arguments, provider calls or browser actions
+are accepted. Failed new stages leave diagnostics, never COMPLETE. Earlier 39/46-
+stage modes retain their existing behavior. Static HTML output does not establish
+visual, keyboard or print QA, which remains blocked and unverified.

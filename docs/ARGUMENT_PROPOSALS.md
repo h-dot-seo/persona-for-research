@@ -7,6 +7,39 @@ answer claim records, selecting evidence, speaking as a researcher or reconstruc
 reasoning. No provider is called. A structurally valid graph is not a logically
 valid argument or an approved research plan.
 
+## Try the opt-in synthetic route
+
+```sh
+python synthetic_walkthrough.py ../persona-argument-demo --candidate-source offline-import --research-journey --import-arguments
+```
+
+This runs 34 real CLI stages. The new flag requires `--research-journey`, adds seven
+stages and accepts no external candidate/review file. Fixed invented candidates
+link the existing `criterion`, `comparison` and `conclusion` answer claims. Two
+explicit fixture steps are adopted and one cyclic alternative rejected. These are
+canned demonstrations, never a reusable automatic-review policy. The declaration
+places the late step before the early one, while graph review presents early then
+late; each retains the correct original proposal and reviewer note.
+
+For the complete source → pattern → method → answer → argument path, run:
+
+```sh
+python synthetic_walkthrough.py ../persona-complete-argument-demo --candidate-source offline-import --research-journey --recheck-sources --review-method-use --import-method-use --html-review --import-answers --import-arguments
+```
+
+That executes 53 stages with pattern, method-application, answer and argument
+proposal histories, fresh invented source-file checks and a passive HTML report. Read the scope first, then `argument-proposals.txt`
+and `argument-map.txt`. Final answer decisions remain all-deferred; missing checks
+and defeaters stay visible. No assumption or bridge is logically verified.
+
+`--import-arguments` does not require `--import-answers`, method-use or source-check
+flags. With mock extraction and only the required journey it runs 32 stages. Earlier
+39-stage and imported-answer 46-stage modes remain unchanged without the new flag.
+The runner writes only to a new external directory, retains failed-stage diagnostics
+and never writes COMPLETE after a failed command. It invokes no provider or browser.
+For independently authored material, use the explicit manual workflow below instead
+of modifying fixture code into an automatic approval tool.
+
 ## Select claims, not an inferred train of thought
 
 Start with the original validated package, an answer draft or reviewed answer

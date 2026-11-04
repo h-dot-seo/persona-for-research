@@ -237,3 +237,10 @@ Original, revised and rejected bridge history is preserved alongside any importe
 answer/pattern/application history. Only adopted steps produce direct argument
 routes; premise citations still do not transfer to conclusions. Full envelope
 validation happens before any optional current source-file audit.
+
+Add `--import-arguments` to exercise that graph-adoption route with invented fixtures.
+It adds seven stages, requires only `--research-journey`, and composes with imported
+answers. All extensions together run 53 CLI stages. The runner accepts no external
+candidate/review inputs, keeps final answer review deferred and does not equate
+acyclic ordering with sound inference. Read [argument proposals](ARGUMENT_PROPOSALS.md)
+for the preserved original/reviewed/rejected bridge history and declaration order.

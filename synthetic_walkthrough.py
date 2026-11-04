@@ -15,7 +15,11 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False, import_answers=False):
+def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False, import_answers=False, import_arguments=False):
+    if type(import_arguments) is not bool:
+        raise ValueError('import_arguments must be a boolean')
+    if import_arguments and not research_journey:
+        raise ValueError('import_arguments requires research_journey')
     if type(import_answers) is not bool:
         raise ValueError('import_answers must be a boolean')
     if import_answers and not research_journey:
@@ -77,6 +81,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
         ('Method-use mode also writes method-applications.txt; considered use is not scientific approval.\n' if review_method_use else '') +
         ('Imported method-use mode retains original/reviewed/rejected synthetic proposals; no model is called.\n' if import_method_use else '') +
         ('Imported answer mode retains canned original/reviewed/rejected claims; adoption does not retain the final answer.\n' if import_answers else '') +
+        ('Imported argument mode retains canned original/reviewed/rejected bridges; adoption is not logical approval.\n' if import_arguments else '') +
         ('HTML review mode starts with passive local research-journey.html; open it yourself after completion.\n' if html_review else '') +
         'commands.json records actual CLI argument arrays (not shell commands).\n'
         'If any stage fails, keep this folder for diagnosis and rerun into a NEW directory.\n')
@@ -157,7 +162,10 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
         argument['steps'] = [dict(step_id='combine', premise_claim_ids=['criterion', 'comparison'], conclusion_claim_id='conclusion',
             bridge_rationale='The operator proposes applying the criterion to the comparison.',
             assumptions=['The synthetic models have distinguishable predictions.'], defeater=None)]
-        write('argument.json', argument)
+        if import_arguments:
+            _import_argument_fixture(command, write, path, package_path)
+        else:
+            write('argument.json', argument)
         command('publication_timeline.py', [package_path, '--topic', 'model design', '--format', 'text'], 'timeline.txt', False)
         common = [package_path, path('links.json'), path('proposal.json'), path('draft.json'),
                   '--reference-year', '2020', '--review', path('answer-review.json'), '--format', 'text']
@@ -183,6 +191,10 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             receipt.update(answer_candidate_source='offline-import', answer_import_is_synthetic_fixture=True,
                 answer_adoption_scope='CANNED_FIXTURE_DECISIONS_NOT_SCIENTIFIC_APPROVAL',
                 read_first=['answer-proposals.txt', *receipt['read_first']])
+        if import_arguments:
+            receipt.update(argument_candidate_source='offline-import', argument_import_is_synthetic_fixture=True,
+                argument_adoption_scope='CANNED_FIXTURE_DECISIONS_NOT_LOGICAL_APPROVAL',
+                read_first=['argument-proposals.txt', *receipt['read_first']])
         if review_method_use:
             receipt.update(method_application_status=journey['method_application_review']['status'],
                 read_first=['method-applications.txt', *receipt['read_first']])
@@ -209,6 +221,57 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
                 pass
         raise
 
+
+
+def _import_argument_fixture(command, write, path, package_path):
+    """Adopt only these canned invented decisions, never external argument material."""
+    common = [package_path, path('draft.json'), '--answer-review', path('answer-review.json')]
+    scope = command('argument_proposals.py', ['template', *common, '--operator-id',
+        'synthetic-argument-fixture-operator'], 'empty-argument-scope.json')
+    scope['selected_claim_ids'] = ['criterion', 'comparison', 'conclusion']
+    write('synthetic-argument-scope.json', scope)
+    command('argument_proposals.py', ['prepare', *common, path('synthetic-argument-scope.json')], 'argument-handoff.json')
+    response = command('argument_proposals.py', ['response-template', *common,
+        path('synthetic-argument-scope.json'), path('argument-handoff.json')], 'empty-argument-response.json')
+    # Declaration order deliberately differs from the accepted graph's topological order.
+    reviewed_steps = [dict(step_id='late', premise_claim_ids=['comparison'], conclusion_claim_id='conclusion',
+        bridge_rationale='The canned reviewer proposes choosing an observation only after the synthetic comparison.',
+        assumptions=['The proposed comparison can identify a discriminating observation.'], defeater=None),
+        dict(step_id='early', premise_claim_ids=['criterion'], conclusion_claim_id='comparison',
+            bridge_rationale='The canned reviewer proposes checking differences under the stated synthetic criterion.',
+            assumptions=['The criterion is relevant to these invented models.'],
+            defeater='The predictions may remain indistinguishable for every available observation.')]
+    candidates = [{key:copy.deepcopy(value) for key,value in step.items() if key != 'step_id'} for step in reviewed_steps]
+    candidates[0]['bridge_rationale'] = 'Original canned late bridge before explicit reviewer rewrite.'
+    candidates[1]['bridge_rationale'] = 'Original canned early bridge before explicit reviewer rewrite.'
+    candidates.append(dict(premise_claim_ids=['conclusion'], conclusion_claim_id='comparison',
+        bridge_rationale='Rejected canned reverse bridge would cycle with the accepted late bridge.',
+        assumptions=['This invented reverse alternative is not established.'], defeater=None))
+    response['candidates'] = copy.deepcopy(candidates)
+    write('synthetic-argument-response.json', response)
+    write('synthetic-argument-provenance.json', dict(provider_id='synthetic-no-provider', model_id='synthetic-no-model',
+        run_id='synthetic-argument-fixture', operator_id='synthetic-fixture-operator', execution_location='unknown'))
+    bundle = command('argument_proposals.py', ['import', *common, path('synthetic-argument-scope.json'),
+        path('argument-handoff.json'), path('synthetic-argument-response.json'), path('synthetic-argument-provenance.json')],
+        'argument-candidates.json')
+    review = command('argument_proposals.py', ['review-template', *common, path('argument-candidates.json'),
+        '--reviewer-id', 'synthetic-argument-adoption-reviewer'], 'deferred-argument-adoption.json')
+    ids = ['argument-candidate-'+str(index) for index in range(1,4)]
+    if ([row['candidate_id'] for row in bundle['candidates']] != ids or
+            [row['proposed_step'] for row in bundle['candidates']] != candidates or
+            [row['candidate_id'] for row in review['decisions']] != ids or
+            any(row['decision'] != 'defer' or 'reviewed_step' in row for row in review['decisions'])):
+        raise ValueError('synthetic argument candidate/template fixture changed; inspect before continuing')
+    for index, step in enumerate(reviewed_steps):
+        review['decisions'][index].update(decision='accept', reviewed_step=copy.deepcopy(step),
+            review_note='Fixed invented canned fixture decision only, not general automatic approval or logical validation.')
+    review['decisions'][2].update(decision='reject',
+        review_note='Rejected invented cyclic alternative stays historical, not an adopted argument.')
+    write('synthetic-argument-adoption.json', review)
+    command('argument_proposals.py', ['review', *common, path('argument-candidates.json'),
+        path('synthetic-argument-adoption.json'), '--format', 'text'], 'argument-proposals.txt', False)
+    command('argument_proposals.py', ['export', *common, path('argument-candidates.json'),
+        path('synthetic-argument-adoption.json')], 'argument.json')
 
 
 def _import_answer_fixture(command, write, path, package_path, links, draft):
@@ -391,8 +454,9 @@ def main():
     parser.add_argument('--import-method-use', action='store_true')
     parser.add_argument('--html-review', action='store_true')
     parser.add_argument('--import-answers', action='store_true')
+    parser.add_argument('--import-arguments', action='store_true')
     args = parser.parse_args()
-    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use, html_review=args.html_review, import_answers=args.import_answers)
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use, html_review=args.html_review, import_answers=args.import_answers, import_arguments=args.import_arguments)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

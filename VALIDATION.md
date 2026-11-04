@@ -2,7 +2,56 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.54 (offline argument proposals with explicit adoption history).
+Current local source release: v0.55 (opt-in synthetic imported-argument walkthrough).
+
+- `python -m unittest discover -q`: 721 synthetic tests passed locally.
+- `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 185 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- A standalone full 53-stage CLI route passed with recorded imported source-component
+  origins, full pattern/method-application/answer/argument proposal histories, fresh
+  invented source checks and JSON/text/passive HTML. Its complete HTML JSON snapshot matched the
+  freshly produced report. All final answer decisions remained deferred.
+- Minimal argument-import routes passed at 32 stages with mock extraction and 34
+  with offline-import extraction, without requiring imported answers or other flags.
+- Existing 39/46-stage routes retained their normalized golden inventories. HTML
+  compatibility compares saved JSON and structural inventory, not byte identity
+  or browser/layout behavior.
+
+Most recent separately verified remote baseline: v0.54, commit
+[`5614908d71d558a4764d8a164f6929bfcc7653af`](https://github.com/h-dot-seo/persona-for-research/commit/5614908d71d558a4764d8a164f6929bfcc7653af),
+with 711 tests. This is a prior-commit record, not a claim of remote CI for v0.55.
+
+- [GitHub Actions run 41796841090](https://github.com/h-dot-seo/persona-for-research/actions/runs/41796841090):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Ten new tests cover complete/minimal real CLI routes, seven injected new-stage
+failures, 17 altered candidate/template fixtures, boolean/dependency checks before
+writes, rejection of external response/review arguments, and normalized prior-mode
+compatibility. Every candidate field and deferred review row is checked before
+fixed fixture adoption. Failed stages preserve diagnostics and never produce the
+final argument or COMPLETE marker. Declaration order late/early stays separate from
+review topology early/late, with each step's original candidate matched by ID.
+The rejected reverse bridge remains in history; adopting it instead is proven to
+fail the accepted-cycle check. No new answer records or inherited citations appear.
+Separate final answer review stays entirely deferred, with no logical/scientific
+approval or execution.
+
+An independent read-only source audit found no blocker in fixture gating, history,
+preflight, failure handling, final defer or the documented routes. That audit did
+not rerun tests; the full 721-test result above is the separate execution record.
+The new 10-test suite and existing 10-test answer walkthrough suite also passed
+as focused checks before the aggregate run.
+
+No actual researcher data, provider call, external source transmission or browser
+execution was used. Fixture adoption is not a general automatic-review policy.
+Claims, assumptions and bridge text still need semantic and attribution review.
+Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**; no browser
+retry or restriction bypass was attempted.
+
+## Prior v0.54 argument proposal checks
+
+Local source release at this snapshot: v0.54 (offline argument proposals with explicit adoption history).
 
 - `python -m unittest discover -q`: 711 synthetic tests passed locally.
 - `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
