@@ -199,7 +199,10 @@ def main():
     for name in ('package','patterns','context','links','proposal'):parser.add_argument(name,type=Path)
     parser.add_argument('form',type=Path,nargs='?');parser.add_argument('--pattern-id',required=True)
     parser.add_argument('--template',action='store_true');parser.add_argument('--operator-id')
-    parser.add_argument('--format',choices=('json','text'),default='json');args=parser.parse_args()
+    parser.add_argument('--format',choices=('json','text'),default='json')
+    # Python 3.10 parse_args cannot resume an optional positional after flags.
+    # This CLI intentionally accepts the form before or after its named options.
+    args=parser.parse_intermixed_args()
     try:
         values=[_load(getattr(args,name)) for name in ('package','patterns','context','links','proposal')]+[args.pattern_id]
         if args.template:

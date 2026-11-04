@@ -4,7 +4,7 @@
 
 Current local source release: v0.46 (declared pattern-to-step method application).
 
-- `python -m unittest discover -q`: 537 synthetic tests passed locally.
+- `python -m unittest discover -q`: 538 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
 - `python audit_publication.py`: passed, 160 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
@@ -21,7 +21,7 @@ with 513 tests. This is a prior-commit record, not a claim of remote CI for v0.4
 - [GitHub Actions run 41776362821](https://github.com/h-dot-seo/persona-for-research/actions/runs/41776362821):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
 
-Twenty-four new synthetic cases cover explicit method-pattern application: every-step
+Twenty-five new synthetic cases cover explicit method-pattern application: every-step
 default defer, consider/exclude prerequisites, missing checks/failure criteria, exact
 selected references, parent/component distinction, target-step-only link membership,
 full stale-input bindings, imported original/reviewed/rejected history, separate
@@ -32,6 +32,14 @@ legacy no-option snapshots remain exact. Real CLI template/inspection/compositio
 32-stage demonstration and late failure/no-completion behavior pass. Independent
 read-only review found no blockers. Proposed checks were not executed, filled text
 was not scored, and no researcher recommendation or method validation was inferred.
+
+The first v0.46 remote run exposed an optional-positional CLI parsing difference
+on Python 3.10 (both operating systems); Python 3.12 jobs passed. The method-application
+CLI now uses explicit intermixed argument parsing, with regression cases for flags
+before, between and after positional inputs. This fixes the observed command-order
+compatibility failure without changing review semantics. The failed attempt remains
+visible in [run 41778017967](https://github.com/h-dot-seo/persona-for-research/actions/runs/41778017967);
+verification of the corrected commit is a separate remote check.
 
 Twenty-nine new source-recheck and walkthrough cases cover exact all-paper selection,
 full preflight before reads, stale/invalid source forms and package/rule disagreement,

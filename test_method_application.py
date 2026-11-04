@@ -235,6 +235,20 @@ class MethodApplicationTests(unittest.TestCase):
         self.assertEqual(payload_sha256(journey.inspect(*self.case.args())),'a4405809c8fde162293d6e73dd2ca8083329570d44ac9e2428f0607fa7d23350')
         self.assertEqual(payload_sha256(journey.render(*self.case.args())),'b21be5e06cde18dfd52a0c6d065d6161b857ba6c42f8921594f03bcfe8605d95')
 
+    def test_cli_form_supports_interspersed_options_across_supported_python_versions(self):
+        self.resolve()
+        with tempfile.TemporaryDirectory() as directory:
+            paths=[]
+            for index,value in enumerate([*self.args()[:5],self.form]):
+                path=Path(directory)/(str(index)+'.json');path.write_text(json.dumps(value));paths.append(str(path))
+            options=['--pattern-id','comparison','--format','json']
+            for argv in ([*paths,*options],[*paths[:5],*options,paths[5]],
+                         [*options,*paths],[paths[0],*options,*paths[1:]]):
+                result=subprocess.run([sys.executable,str(ROOT/'method_application.py'),*argv],
+                    cwd=directory,capture_output=True,timeout=20)
+                self.assertEqual(result.returncode,0,result.stderr)
+                self.assertEqual(json.loads(result.stdout)['decision_counts']['consider'],1)
+
     def test_cli_template_json_text_and_integrated_application(self):
         with tempfile.TemporaryDirectory() as directory:
             paths=[]

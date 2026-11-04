@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 21550,
-      "sha256": "407b206e3d59923b461e009fe2fef5a642fa4c90c42ad8967bd91b88a7227819"
+      "bytes": 22142,
+      "sha256": "93fdd58705a0c1f1a8c8ade817bb6f77a26cdcae62e0afcf5f6a05c37da1ce54"
     },
     {
       "path": "answer_draft.py",
@@ -375,8 +375,8 @@
     },
     {
       "path": "method_application.py",
-      "bytes": 16670,
-      "sha256": "dc22bad620684e4098c3aba5d069d1316ac546528f03952efc449793a119b892"
+      "bytes": 16845,
+      "sha256": "1a6a70784c6895aa68367860176cdd037bf5e72df8d9d7addc9d85093c42d258"
     },
     {
       "path": "methodology_trajectory.py",
@@ -605,8 +605,8 @@
     },
     {
       "path": "test_method_application.py",
-      "bytes": 19764,
-      "sha256": "f3b63b53f61d41dce35817cf778e8b163d26cc21ab93e25ba8f1308a669fbdcc"
+      "bytes": 20689,
+      "sha256": "5bb589c773d8d5acfdcddcc2bcad32b0d83e4041df0c87018347bf48d1e171ee"
     },
     {
       "path": "test_methodology_trajectory.py",
