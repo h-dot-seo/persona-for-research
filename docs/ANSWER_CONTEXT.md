@@ -41,6 +41,35 @@ rebuilds the context inspection. Full context and imported history bind the scop
 handoff, bundle and eventual full answer-envelope hash. Editing even a rejected
 pattern's review note makes the old handoff stale. No automatic refresh occurs.
 
+## Inspect context before preparing a handoff
+
+```sh
+python answer_proposals.py context package.json answer-scope.json --format text
+python answer_proposals.py context package.json answer-scope.json > context-preview.json
+```
+
+The new `context` command accepts only an explicit v3 scope. It freshly inspects
+its complete package and raw forms, resolves every exact selected citation with
+stored passages and publication-year warnings, then shows the full context report.
+A selected reference outside the chosen pattern is still displayed. References
+visible only in context remain outside citation scope.
+
+This preview also accepts the template's empty citation selection. It does not fill
+that selection: `prepare` still requires 1–64 exact references. The preview creates
+no handoff, response contract, candidate, review decision or transmission permission.
+Use it to review what is selected and what is context-only before deciding whether
+to prepare or share anything. Successful inspection does not guarantee that a
+later handoff fits its separate 2 MiB limit.
+
+The API is `answer_proposals.inspect_context(package, scope)`. Its preview wrapper
+binds the full canonical package and complete scope, including the declared operator,
+while preserving the existing inner context report unchanged. JSON and readable
+text are bounded to 16 MiB; histories are never truncated. Only the supplied input
+files are read by the CLI. Stored source passages are displayed without rereading
+source files or authenticating them. V1/v2 scopes are rejected rather than upgraded.
+Citation selection is not a judgment about rights, scientific support, applicability,
+researcher agreement or permission to send material to another recipient.
+
 ## Prepare, import and review with the existing commands
 
 ```sh

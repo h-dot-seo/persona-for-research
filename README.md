@@ -102,6 +102,8 @@ use the [optional contextual answer handoff](docs/ANSWER_CONTEXT.md). It preserv
 operator hypotheses, exclusions, uncertainty, chronology and relationship history
 without expanding the explicitly citable source set. Later journeys distinguish
 recorded preparation context from current review inputs.
+Use its `context` command to read exact selected passages and full context before
+preparing a handoff; an empty selection stays empty and authorizes no sharing.
 
 ## Adopt offline answer proposals explicitly
 

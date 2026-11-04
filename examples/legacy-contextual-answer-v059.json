@@ -1,0 +1,326 @@
+{
+  "captured_from_commit": "b859ab3116bf7e5fb0860610e2e85a547d4a2890",
+  "synthetic_only": true,
+  "package": {
+    "persona": {
+      "author_id": "synthetic-scholar",
+      "version": "1",
+      "build_id": "synthetic-build",
+      "identity": {
+        "simulation_only": true,
+        "private_beliefs_inferred": false
+      },
+      "knowledge_papers_sha256": "41dc5ac506346b05ea3a0e19bc70854aaa09ef87a0e58c380049f05d3e1b0a66",
+      "rules": [
+        {
+          "rule_id": "rule-1",
+          "method": "compare competing models before choosing an experiment",
+          "condition": "models predict distinct outcomes",
+          "limitation": "simulation only; no real author attribution",
+          "locator": "synthetic section 1",
+          "topic": "model design",
+          "stance": "support",
+          "source_kind": "research",
+          "year": 2020,
+          "claim_type": "explicit_statement",
+          "evidence_quote": "Compare competing models",
+          "evidence_verification": "EXACT_QUOTE_MATCH_ONLY",
+          "paper_id": "synthetic-0",
+          "evidence_type": "operator_curated_paper_observation",
+          "attribution": "coauthored work; individual ownership not established"
+        },
+        {
+          "rule_id": "rule-2",
+          "method": "Contrast alternative explanations before deciding.",
+          "condition": "models predict distinct outcomes",
+          "limitation": "simulation only; no real author attribution",
+          "locator": "synthetic section 1",
+          "topic": "model design",
+          "stance": "challenge",
+          "source_kind": "review",
+          "year": 2021,
+          "claim_type": "operator_interpretation",
+          "evidence_quote": "Compare competing models",
+          "evidence_verification": "EXACT_QUOTE_MATCH_ONLY",
+          "paper_id": "synthetic-1",
+          "evidence_type": "operator_curated_paper_observation",
+          "attribution": "coauthored work; individual ownership not established",
+          "reasoning": {
+            "alternative_explanation": {
+              "text": "Other explanations may yield similar comparisons.",
+              "locator": "synthetic section 1",
+              "evidence_quote": "Compare competing models",
+              "claim_type": "operator_interpretation",
+              "evidence_verification": "EXACT_QUOTE_MATCH_ONLY"
+            }
+          }
+        }
+      ],
+      "trajectory": [
+        {
+          "paper_id": "synthetic-0",
+          "year": 2020,
+          "kind": "research",
+          "topic": "model design"
+        },
+        {
+          "paper_id": "synthetic-1",
+          "year": 2021,
+          "kind": "review",
+          "topic": "model design"
+        }
+      ],
+      "semantic_validation": "NOT_PERFORMED"
+    },
+    "knowledge": {
+      "author_id": "synthetic-scholar",
+      "version": "1",
+      "build_id": "synthetic-build",
+      "persona_payload_sha256": "8dc17d6cbdc30df7ca2f4673f2102b7d1fc69a8218cdfda695005aa379d5dd51",
+      "papers": [
+        {
+          "paper_id": "synthetic-0",
+          "author_id": "synthetic-scholar",
+          "split": "training",
+          "runtime_knowledge_eligible": true,
+          "authorized": true,
+          "source_sha256": "d8d28f83ca37718cf65c8be96260d89593fcf17b3b665a9508741ed77bb5e826",
+          "locator": "synthetic fixture",
+          "kind": "research",
+          "year": 2020,
+          "topic": "model design",
+          "source_file": "synthetic-0.md",
+          "source_verification": "LOCAL_BYTES_SHA256_MATCH",
+          "segments_sha256": "91b9b406e58ce529f2a93de73df8dae67e5b03d6b2f1d9c3ef27ea8b0c76ba3d",
+          "observations": [
+            {
+              "method": "compare competing models before choosing an experiment",
+              "condition": "models predict distinct outcomes",
+              "limitation": "simulation only; no real author attribution",
+              "locator": "synthetic section 1",
+              "topic": "model design",
+              "claim_type": "explicit_statement",
+              "evidence_quote": "Compare competing models",
+              "evidence_verification": "EXACT_QUOTE_MATCH_ONLY"
+            }
+          ]
+        },
+        {
+          "paper_id": "synthetic-1",
+          "author_id": "synthetic-scholar",
+          "split": "training",
+          "runtime_knowledge_eligible": true,
+          "authorized": true,
+          "source_sha256": "0c279b364cce4ef0c6e50b83127b7ff448d85a26ad019df28e3ac20cd2a2414d",
+          "locator": "synthetic fixture",
+          "kind": "review",
+          "year": 2021,
+          "topic": "model design",
+          "source_file": "synthetic-1.md",
+          "source_verification": "LOCAL_BYTES_SHA256_MATCH",
+          "segments_sha256": "91b9b406e58ce529f2a93de73df8dae67e5b03d6b2f1d9c3ef27ea8b0c76ba3d",
+          "observations": [
+            {
+              "method": "Contrast alternative explanations before deciding.",
+              "condition": "models predict distinct outcomes",
+              "limitation": "simulation only; no real author attribution",
+              "locator": "synthetic section 1",
+              "topic": "model design",
+              "stance": "challenge",
+              "claim_type": "operator_interpretation",
+              "evidence_quote": "Compare competing models",
+              "evidence_verification": "EXACT_QUOTE_MATCH_ONLY",
+              "reasoning": {
+                "alternative_explanation": {
+                  "text": "Other explanations may yield similar comparisons.",
+                  "locator": "synthetic section 1",
+                  "evidence_quote": "Compare competing models",
+                  "claim_type": "operator_interpretation",
+                  "evidence_verification": "EXACT_QUOTE_MATCH_ONLY"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "scope": {
+    "schema": "persona.answer-proposal-scope.v3",
+    "package_sha256": "764d4e1f4dacf401b13a1c51178d495fddbd99d15d01c88a848531a0a1bf9e83",
+    "question": "New synthetic question",
+    "topic": "model design",
+    "reference_year": 2020,
+    "operator_id": "synthetic-operator",
+    "evidence_refs": [
+      {
+        "paper_id": "synthetic-0",
+        "observation_index": 0,
+        "dimension": null
+      }
+    ],
+    "research_context": {
+      "patterns": {
+        "persona_sha256": "8dc17d6cbdc30df7ca2f4673f2102b7d1fc69a8218cdfda695005aa379d5dd51",
+        "knowledge_papers_sha256": "41dc5ac506346b05ea3a0e19bc70854aaa09ef87a0e58c380049f05d3e1b0a66",
+        "operator_id": "synthetic-operator",
+        "hypotheses": [
+          {
+            "pattern_id": "comparison",
+            "operator_hypothesis": "A possible comparison-first pattern across differently worded records.",
+            "scope_note": "Only these two synthetic records; no real author claim.",
+            "support_refs": [
+              {
+                "paper_id": "synthetic-0",
+                "observation_index": 0,
+                "dimension": null
+              },
+              {
+                "paper_id": "synthetic-1",
+                "observation_index": 0,
+                "dimension": "alternative_explanation"
+              }
+            ],
+            "challenge_refs": [
+              {
+                "paper_id": "synthetic-1",
+                "observation_index": 0,
+                "dimension": null
+              }
+            ],
+            "alternative_explanation": "A generic discipline convention, not a distinctive researcher method.",
+            "falsification_check": null,
+            "uncertainty": "Quotes alone do not establish the proposed pattern."
+          }
+        ]
+      },
+      "context": {
+        "context_sha256": "4f6daaace04b347151c149b7b8c597591829f67389b5bbd665bfaedd5be59810",
+        "persona_sha256": "8dc17d6cbdc30df7ca2f4673f2102b7d1fc69a8218cdfda695005aa379d5dd51",
+        "knowledge_papers_sha256": "41dc5ac506346b05ea3a0e19bc70854aaa09ef87a0e58c380049f05d3e1b0a66",
+        "question": "New synthetic question",
+        "target_context": "Shared predictions, no discriminating observation.",
+        "topic": "model design",
+        "reference_year": 2020,
+        "operator_id": "context-op",
+        "assessments": [
+          {
+            "reference": {
+              "paper_id": "synthetic-0",
+              "observation_index": 0,
+              "dimension": null
+            },
+            "decision": "exclude",
+            "context_comparison": "Source requires distinct outcomes, which target lacks.",
+            "remaining_uncertainty": "No measurement available.",
+            "counterevidence_refs": [
+              {
+                "paper_id": "synthetic-1",
+                "observation_index": 0,
+                "dimension": null
+              }
+            ]
+          },
+          {
+            "reference": {
+              "paper_id": "synthetic-1",
+              "observation_index": 0,
+              "dimension": null
+            },
+            "decision": "defer",
+            "context_comparison": null,
+            "remaining_uncertainty": null,
+            "counterevidence_refs": []
+          }
+        ]
+      },
+      "publication_relations": {
+        "persona_sha256": "8dc17d6cbdc30df7ca2f4673f2102b7d1fc69a8218cdfda695005aa379d5dd51",
+        "knowledge_papers_sha256": "41dc5ac506346b05ea3a0e19bc70854aaa09ef87a0e58c380049f05d3e1b0a66",
+        "operator_id": "synthetic-relations",
+        "relations": [
+          {
+            "relation_id": "review-context",
+            "from_paper_id": "synthetic-1",
+            "to_paper_id": "synthetic-0",
+            "relation_type": "review_summary_of",
+            "rationale": "Unverified synthetic review comparison.",
+            "basis_refs": [
+              {
+                "paper_id": "synthetic-1",
+                "observation_index": 0,
+                "dimension": null
+              }
+            ],
+            "uncertainty": null
+          }
+        ]
+      },
+      "pattern_id": "comparison"
+    }
+  },
+  "response": {
+    "handoff_sha256": "7b8afd8032c8bc4141d6ae3a80147ba0b0d1c6b28d58ca0d8a2abcffe6cdcfee",
+    "candidates": [
+      {
+        "text": "Tentative operator answer.",
+        "claim_type": "operator_synthesis",
+        "uncertainty": null,
+        "citations": [
+          {
+            "reference": {
+              "paper_id": "synthetic-0",
+              "observation_index": 0,
+              "dimension": null
+            },
+            "role": "support",
+            "explanation": null
+          }
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "provider_id": "synthetic-no-provider",
+    "model_id": "synthetic-no-model",
+    "run_id": "synthetic-run",
+    "operator_id": "synthetic-importer",
+    "execution_location": "unknown"
+  },
+  "adoption": {
+    "proposal_bundle_sha256": "df2e368ed0201cacd051537eac632a844d8034cde38ad20fa4a8cf3faf7723bc",
+    "reviewer_id": "synthetic-reviewer",
+    "decisions": [
+      {
+        "candidate_id": "answer-candidate-1",
+        "decision": "accept",
+        "review_note": "Synthetic explicit adoption only.",
+        "reviewed_claim": {
+          "text": "Tentative operator answer.",
+          "claim_type": "operator_synthesis",
+          "uncertainty": null,
+          "citations": [
+            {
+              "reference": {
+                "paper_id": "synthetic-0",
+                "observation_index": 0,
+                "dimension": null
+              },
+              "role": "support",
+              "explanation": null
+            }
+          ],
+          "claim_id": "answer-claim"
+        }
+      }
+    ]
+  },
+  "expected_sha256": {
+    "handoff": "7b8afd8032c8bc4141d6ae3a80147ba0b0d1c6b28d58ca0d8a2abcffe6cdcfee",
+    "bundle": "df2e368ed0201cacd051537eac632a844d8034cde38ad20fa4a8cf3faf7723bc",
+    "packet": "d12161cc98cb181a61d61d3cd0bf328b4cb0b74ac4eb65c98d4add056bddd9b7",
+    "envelope": "592084f00809eb227e230a781c32d860c2db9923d76d2cdb16911e41d1f87e7d",
+    "inspection": "cdcf9ea83b0b2f373f5173fb76c61db4388f1ee3ffc70e3e3f9ce3d498d02a2f"
+  },
+  "text_sha256": "27f260abcc9d92b59916c5b165699d7c57a6e38bbfe22b72eae2cc140adf30e7"
+}

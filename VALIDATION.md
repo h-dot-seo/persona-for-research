@@ -2,6 +2,59 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.60 (readable pre-answer context preview).
+
+- Final `python -m unittest discover -q`: 861 synthetic tests passed locally in
+  384.161 seconds, with the existing timeout limits unchanged.
+- `python -m compileall -q .`: passed; 130 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 202 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 201 exact allowlisted entries and file hashes.
+- A standalone six-command CLI check produced four JSON/text previews for empty
+  and selected v3 scopes, each matching its API result. Two negative commands
+  rejected empty handoff preparation and a legacy scope preview without partial
+  stdout. All supplied input-file hashes remained unchanged. No provider or
+  browser was invoked, and the preview did not reread source files.
+
+Most recent separately verified remote baseline: v0.59, commit
+[`b859ab3116bf7e5fb0860610e2e85a547d4a2890`](https://github.com/h-dot-seo/persona-for-research/commit/b859ab3116bf7e5fb0860610e2e85a547d4a2890),
+with 839 tests. This is a prior-commit record, not a claim of remote CI for v0.60.
+
+- [GitHub Actions run 41810919950](https://github.com/h-dot-seo/persona-for-research/actions/runs/41810919950):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-two new tests cover zero-reference inspection without relaxing preparation,
+exact selected passages inside/outside the chosen pattern, exclusions and full
+unselected/rejected context, canonical package/scope hashes, strict versions and
+JSON types, stale forms, immutable/detached outputs, current-only execution flags,
+control escaping, output/input bounds and CLI parity/failures. A frozen synthetic
+v3 fixture was captured before these edits; its handoff, import, review, envelope,
+inspection and text hashes remain unchanged. Frozen v1/v2 tests also pass. The
+preview has its own 16 MiB report limit and does not invoke handoff preparation or
+inherit its separate 2 MiB limit. Existing walkthrough stages are unchanged.
+
+Focused checks passed 25 tests including frozen v1/v2/v3 replay and 42 existing
+context tests. An independent read-only audit ran all 22 new tests and found no
+remaining blocker. Initial new tests attempted to edit a detached fixture copy;
+the mutation target was corrected so the intended changed-context cases execute.
+
+The first aggregate run completed 844 tests with one setup error: the existing
+contextual walkthrough's research-journey text subprocess exceeded its 30-second
+limit, preventing that class's 17 tests from running. The affected 17-test suite
+then passed separately in 105.740 seconds, followed by the complete passing run
+above. No timeout or production validation was weakened. A separate source review
+confirmed that preview functions are not called by the old journey path and add no
+shared mutable state or repeated validation there. The timeout cause remains
+unestablished; it is not attributed to load or treated as a successful run.
+
+The preview does not generate a handoff, claim, decision or permission to transmit.
+Empty citation scope stays empty. Stored passages and recorded checks are not new
+source verification, rights clearance, semantic support, researcher agreement or
+scientific approval. Every fixture remains synthetic and human scientific review
+is required. Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**;
+no browser retry or restriction bypass was attempted.
+
+## Prior v0.59 contextual walkthrough checks
+
 Current local source release: v0.59 (opt-in contextual synthetic walkthrough).
 
 - `python -m unittest discover -q`: 839 synthetic tests passed locally in 317.869 seconds.

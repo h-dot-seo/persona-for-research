@@ -207,3 +207,13 @@ For a complete invented example, add `--contextual-answers` to the synthetic
 `--research-journey --import-answers` route. Preparation precedes answer import,
 then the journey reuses the same forms. All final judgments remain deferred.
 See [the contextual walkthrough](ANSWER_CONTEXT.md#try-the-contextual-synthetic-walkthrough).
+
+Before preparing a v3 handoff, inspect selected stored passages and complete context:
+
+```sh
+python answer_proposals.py context package.json answer-scope.json --format text
+```
+
+Empty citation selections may be inspected but still cannot prepare a
+handoff. The preview does not approve sharing or scientific use; see
+[preparation preview](ANSWER_CONTEXT.md#inspect-context-before-preparing-a-handoff).

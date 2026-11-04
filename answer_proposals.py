@@ -118,7 +118,7 @@ def template(package, question, topic, reference_year, operator_id, *, include_c
     return result
 
 
-def _scope(package, scope):
+def _scope(package, scope, *, allow_empty=False):
     if not isinstance(scope, dict): raise ValueError('answer scope has missing or unsupported fields')
     fields = {'schema', 'package_sha256', 'question', 'topic', 'reference_year', 'operator_id', 'evidence_refs'}
     if _schemas(scope) == SCHEMAS[3]: fields.add('research_context')
@@ -129,8 +129,9 @@ def _scope(package, scope):
     if any(scope[k] != expected[k] for k in expected if k != 'evidence_refs'):
         raise ValueError('answer scope changed or is bound to a different package')
     refs = scope['evidence_refs']
-    if not isinstance(refs, list) or not 1 <= len(refs) <= MAX_REFS:
-        raise ValueError('answer scope requires 1 to 64 explicit references')
+    if not isinstance(refs, list) or not (0 if allow_empty else 1) <= len(refs) <= MAX_REFS:
+        raise ValueError('answer scope requires 0 to 64 explicit references' if allow_empty else
+            'answer scope requires 1 to 64 explicit references')
     _, papers = _sources(package); seen = set(); evidence = []
     for ref in refs:
         node = _endpoint(ref, papers); key = payload_sha256(ref)
@@ -144,6 +145,69 @@ def _scope(package, scope):
         evidence.append(dict(evidence=node, publication_scope=temporal,
             topic_scope='DECLARED_TOPIC_NOT_RELEVANCE_VALIDATION'))
     return evidence
+
+
+PREVIEW_SCHEMA = 'persona.answer-context-preview.v1'
+PREVIEW_BOUNDARY = ('Successful inspection is not permission, quotation rights, source verification, '
+    'semantic approval, researcher belief or authorization to transmit. Exact selection records scope only, '
+    'not semantic support. Exclude does not ban an explicitly selected citation for criticism. '
+    'Context-only references remain uncitable unless explicitly selected. No new decision or handoff is created. '
+    'Preparing a handoff separately requires 1 to 64 explicit references. ')
+
+
+def inspect_context(package, scope):
+    """Inspect a strict v3 scope locally, including an empty exact citation selection."""
+    _strict_context_inputs([package, scope])
+    package, scope = _inputs([package, scope])
+    if _schemas(scope) != SCHEMAS[3]:
+        raise ValueError('answer context preview requires an exact v3 scope; no automatic upgrade')
+    package, _ = _sources(package)
+    evidence = _scope(package, scope, allow_empty=True)
+    result = dict(schema=PREVIEW_SCHEMA, status='INSPECTED_NOT_APPROVED_ANSWER_CONTEXT',
+        bindings=dict(package_sha256=payload_sha256(package), scope_sha256=payload_sha256(scope)),
+        scope_schema=scope['schema'], operator_id=scope['operator_id'],
+        operator_identity='DECLARED_NOT_AUTHENTICATED', question=scope['question'], topic=scope['topic'],
+        reference_year=scope['reference_year'], evidence_refs=copy.deepcopy(scope['evidence_refs']),
+        exact_selected_evidence=evidence,
+        citation_selection_status='EXACT_CITATIONS_SELECTED' if evidence else 'NO_EXACT_CITATIONS_SELECTED',
+        reasoning_context=_research_context(package, scope),
+        llm_used=False, execution_scope='CURRENT_INSPECTION_ONLY',
+        processing=dict(scope='CURRENT_INSPECTION_ONLY', provider_invoked=False, external_transmission=False,
+            source_reread=False, browser_invoked=False, scientific_execution=False,
+            canonical_update_performed=False, automatic_approval=False, handoff_created=False),
+        boundary=PREVIEW_BOUNDARY + _boundary(scope))
+    # Match the full indented JSON CLI representation, not only compact logical JSON.
+    if len((json.dumps(result, ensure_ascii=True, indent=2, allow_nan=False)+'\n').encode('utf-8')) > MAX_OUTPUT_BYTES:
+        raise ValueError('answer context preview exceeds 16 MiB')
+    return copy.deepcopy(result)
+
+
+def render_context(report):
+    """Render an inspected preview; rendering alone does not validate it."""
+    from answer_context import render
+    from answer_draft import _render_endpoint
+    lines = ['Answer context preview | NOT APPROVAL OR TRANSMISSION PERMISSION',
+        'Status: '+display(report['status']),
+        'Citation selection: '+display(report['citation_selection_status']),
+        'No exact citations selected; prepare requires 1 to 64 explicit references.' if not report['exact_selected_evidence']
+            else 'Only the exact selected references below are in the declared citation scope.',
+        'Declared operator (not authenticated): '+display(report['operator_id']),
+        'Scope schema: '+display(report['scope_schema']),
+        'Package sha256: '+display(report['bindings']['package_sha256']),
+        'Scope sha256: '+display(report['bindings']['scope_sha256']),
+        'Question: '+display(report['question']), 'Declared topic: '+display(report['topic']),
+        'Reference year (not historical authority): '+str(report['reference_year']),
+        'ALL exact selected evidence (including references outside the selected pattern):']
+    for row in report['exact_selected_evidence']:
+        lines.append('Publication scope: '+display(row['publication_scope'])+'; '+display(row['topic_scope']))
+        _render_endpoint(lines, row['evidence'])
+        lines.append('    Attribution: '+display(row['evidence']['attribution']))
+    lines.extend(['Unchanged research context inspection:', render(report['reasoning_context']).rstrip('\n'),
+        display(report['boundary'])])
+    result = '\n'.join(lines)+'\n'
+    if len(result.encode('utf-8')) > MAX_OUTPUT_BYTES:
+        raise ValueError('answer context preview text exceeds 16 MiB')
+    return result
 
 
 def prepare_handoff(package, scope):
@@ -405,11 +469,11 @@ def _load(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__); commands = parser.add_subparsers(dest='command', required=True)
-    for name in ('template', 'prepare', 'response-template', 'import', 'review-template', 'review', 'export', 'inspect'):
+    for name in ('template', 'prepare', 'response-template', 'import', 'review-template', 'review', 'export', 'inspect', 'context'):
         command = commands.add_parser(name); command.add_argument('package', type=Path)
         for argument in {'template': [], 'prepare': ['scope'], 'response-template': ['scope', 'handoff'],
             'import': ['scope', 'handoff', 'response', 'provenance'], 'review-template': ['bundle'],
-            'review': ['bundle', 'review'], 'export': ['bundle', 'review'], 'inspect': ['envelope']}[name]:
+            'review': ['bundle', 'review'], 'export': ['bundle', 'review'], 'inspect': ['envelope'], 'context': ['scope']}[name]:
             command.add_argument(argument, type=Path)
         if name == 'template':
             for argument in ('question', 'topic', 'operator-id'): command.add_argument('--'+argument, required=True)
@@ -419,7 +483,7 @@ def main():
                 command.add_argument('--'+argument, type=Path)
             command.add_argument('--pattern-id')
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
-        if name == 'review': command.add_argument('--format', choices=('json', 'text'), default='json')
+        if name in ('review', 'context'): command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
     try:
         package = _load(args.package)
@@ -431,6 +495,7 @@ def main():
                 context=_load(args.context), publication_relations=_load(args.publication_relations), pattern_id=args.pattern_id)
             result = template(package, args.question, args.topic, args.reference_year, args.operator_id,
                 include_citation_explanations=args.include_citation_explanations, research_context=raw)
+        elif args.command == 'context': result = inspect_context(package, _load(args.scope))
         elif args.command == 'prepare': result = prepare_handoff(package, _load(args.scope))
         elif args.command == 'response-template': result = response_template(package, _load(args.scope), _load(args.handoff))
         elif args.command == 'import': result = import_response(package, *[_load(getattr(args, k)) for k in ('scope', 'handoff', 'response', 'provenance')])
@@ -438,7 +503,7 @@ def main():
         elif args.command == 'review': result = review_proposals(package, _load(args.bundle), _load(args.review))
         elif args.command == 'export': result = export_reviewed(package, _load(args.bundle), _load(args.review))
         else: result = inspect_reviewed(package, _load(args.envelope))
-        output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
+        output = (render_context(result) if args.command == 'context' else render_review(result)) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
         if len(output.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('answer proposal output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc)+'\n')
     sys.stdout.buffer.write(output.encode('utf-8'))
