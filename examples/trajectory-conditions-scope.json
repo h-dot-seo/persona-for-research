@@ -1,0 +1,404 @@
+{
+  "schema": "persona.answer-proposal-scope.v3",
+  "package_sha256": "5796f7edeb512c4f480a290afe8f8c3113128729c8400fb70a330175fdcd8b19",
+  "question": "What differs across these publication records, and what remains conditional or unresolved?",
+  "topic": "synthetic method conditions",
+  "reference_year": 2024,
+  "operator_id": "synthetic-operator",
+  "evidence_refs": [
+    {
+      "paper_id": "synthetic-2020-a",
+      "observation_index": 0,
+      "dimension": null
+    },
+    {
+      "paper_id": "synthetic-2022-b",
+      "observation_index": 0,
+      "dimension": null
+    },
+    {
+      "paper_id": "synthetic-2023-review",
+      "observation_index": 0,
+      "dimension": null
+    },
+    {
+      "paper_id": "synthetic-2024-a-challenge",
+      "observation_index": 0,
+      "dimension": null
+    },
+    {
+      "paper_id": "synthetic-2024-a-support",
+      "observation_index": 0,
+      "dimension": null
+    }
+  ],
+  "research_context": {
+    "patterns": {
+      "schema": "persona.reviewed-pattern-proposals.v1",
+      "bundle": {
+        "schema": "persona.pattern-proposals.v2",
+        "topic": "synthetic method conditions",
+        "input_package_sha256": "5796f7edeb512c4f480a290afe8f8c3113128729c8400fb70a330175fdcd8b19",
+        "import_record": {
+          "handoff_sha256": "82f2d1f18fb6fb6ef1a7e2c151bdb1904425b92b2a26f32df9243e755ea85c8e",
+          "response_sha256": "f4098c98cfdbfd12c5316dadd6db9d29216031be9fa893bf704e88cf2a1e4009",
+          "provenance": {
+            "provider_id": "synthetic-no-provider",
+            "model_id": "synthetic-no-model",
+            "run_id": "synthetic-fixed-trajectory-conditions",
+            "operator_id": "synthetic-fixture-author",
+            "execution_location": "unknown"
+          }
+        },
+        "candidates": [
+          {
+            "candidate_id": "pattern-candidate-1",
+            "proposed_pattern": {
+              "proposed_hypothesis": "Publication-record variation for M is condition-specific; the records do not establish an individual change of mind.",
+              "scope_note": "Fixed synthetic record comparison, not a general scientific decision policy.",
+              "support_refs": [
+                {
+                  "paper_id": "synthetic-2020-a",
+                  "observation_index": 0,
+                  "dimension": null
+                },
+                {
+                  "paper_id": "synthetic-2023-review",
+                  "observation_index": 0,
+                  "dimension": null
+                }
+              ],
+              "challenge_refs": [
+                {
+                  "paper_id": "synthetic-2022-b",
+                  "observation_index": 0,
+                  "dimension": null
+                },
+                {
+                  "paper_id": "synthetic-2024-a-challenge",
+                  "observation_index": 0,
+                  "dimension": null
+                },
+                {
+                  "paper_id": "synthetic-2024-a-support",
+                  "observation_index": 0,
+                  "dimension": null
+                }
+              ],
+              "alternative_explanation": "Differences may reflect conditions, unrecorded design details, or sampling rather than a changed personal belief.",
+              "falsification_check": "Assess original designs and comparability before any scientific reversal claim; no such checks are performed here.",
+              "uncertainty": "Exact strings are grouping keys only. Independence and individual views remain unestablished.",
+              "evidence_uses": [
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2020-a",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "support",
+                  "rationale": "The early A record supplies a condition-specific supporting observation.",
+                  "context_boundary": "Only the invented 2020 A setting; not evidence for B or personal beliefs."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2022-b",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "challenge",
+                  "rationale": "The B challenge limits transfer across conditions, not evidence of reversal under A.",
+                  "context_boundary": "B differs from A; this does not establish an A-to-A reversal."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2023-review",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "support",
+                  "rationale": "The review preserves a summary of early A evidence, not a new independent test.",
+                  "context_boundary": "Dependent summary, not independent corroboration of the 2020 result."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2024-a-challenge",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "challenge",
+                  "rationale": "The later A challenge supplies cross-year variation; identical A text does not establish comparable experiments.",
+                  "context_boundary": "Same recorded A is not sufficient scientific equivalence; no within-year order is supplied."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2024-a-support",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "challenge",
+                  "rationale": "The 2024 A support challenges a simple replacement story and preserves same-year disagreement.",
+                  "context_boundary": "Same-year contrary evidence remains visible; no latest-wins rule or scientific equivalence is established."
+                }
+              ]
+            },
+            "review_prompts": [],
+            "status": "IMPORTED_PATTERN_PROPOSAL_REQUIRES_REVIEW"
+          }
+        ],
+        "status": "PATTERN_PROPOSALS_REQUIRE_REVIEW",
+        "provider": {
+          "id": "offline-pattern-response-import",
+          "model_id": "synthetic-no-model",
+          "llm_used": null,
+          "provenance_status": "OPERATOR_DECLARED_NOT_AUTHENTICATED"
+        },
+        "processing": {
+          "scope": "CURRENT_IMPORT_ONLY",
+          "provider_invoked": false,
+          "external_transmission": false,
+          "source_reread": false
+        },
+        "canonical_update_performed": false,
+        "boundary": "These are imported method-pattern proposals and recorded operator interpretations, not researcher speech, private thoughts, author recommendations or discovered personal traits. Source references, publication years and quote-check labels are stored evidence, not fresh verification or semantic support. Reviews are not independent replication; chronology is not intellectual influence or a change of mind. Provider/model/run and reviewer identities are unauthenticated declarations. Acceptance permits a review worksheet, not automatic approval of a method, scientific execution, canonical persona update or answer/design generation. No provider call, external transmission or original source reread is performed here."
+      },
+      "review": {
+        "proposal_bundle_sha256": "5f46da8fe7167846780ef87850f895ed1de3a26ef48fc822c30f7bf9eec53ca7",
+        "reviewer_id": "synthetic-fixed-pattern-reviewer",
+        "decisions": [
+          {
+            "candidate_id": "pattern-candidate-1",
+            "decision": "accept",
+            "review_note": "Fixed operator reading hypothesis only; not semantic validation.",
+            "reviewed_pattern": {
+              "pattern_id": "trajectory-conditions",
+              "operator_hypothesis": "Publication-record variation for M is condition-specific; the records do not establish an individual change of mind.",
+              "scope_note": "Fixed synthetic record comparison, not a general scientific decision policy.",
+              "support_refs": [
+                {
+                  "paper_id": "synthetic-2020-a",
+                  "observation_index": 0,
+                  "dimension": null
+                },
+                {
+                  "paper_id": "synthetic-2023-review",
+                  "observation_index": 0,
+                  "dimension": null
+                }
+              ],
+              "challenge_refs": [
+                {
+                  "paper_id": "synthetic-2022-b",
+                  "observation_index": 0,
+                  "dimension": null
+                },
+                {
+                  "paper_id": "synthetic-2024-a-challenge",
+                  "observation_index": 0,
+                  "dimension": null
+                },
+                {
+                  "paper_id": "synthetic-2024-a-support",
+                  "observation_index": 0,
+                  "dimension": null
+                }
+              ],
+              "alternative_explanation": "Differences may reflect conditions, unrecorded design details, or sampling rather than a changed personal belief.",
+              "falsification_check": "Assess original designs and comparability before any scientific reversal claim; no such checks are performed here.",
+              "uncertainty": "Exact strings are grouping keys only. Independence and individual views remain unestablished.",
+              "evidence_uses": [
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2020-a",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "support",
+                  "rationale": "The early A record supplies a condition-specific supporting observation.",
+                  "context_boundary": "Only the invented 2020 A setting; not evidence for B or personal beliefs."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2022-b",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "challenge",
+                  "rationale": "The B challenge limits transfer across conditions, not evidence of reversal under A.",
+                  "context_boundary": "B differs from A; this does not establish an A-to-A reversal."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2023-review",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "support",
+                  "rationale": "The review preserves a summary of early A evidence, not a new independent test.",
+                  "context_boundary": "Dependent summary, not independent corroboration of the 2020 result."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2024-a-challenge",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "challenge",
+                  "rationale": "The later A challenge supplies cross-year variation; identical A text does not establish comparable experiments.",
+                  "context_boundary": "Same recorded A is not sufficient scientific equivalence; no within-year order is supplied."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-2024-a-support",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "challenge",
+                  "rationale": "The 2024 A support challenges a simple replacement story and preserves same-year disagreement.",
+                  "context_boundary": "Same-year contrary evidence remains visible; no latest-wins rule or scientific equivalence is established."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "context": {
+      "context_sha256": "61451c9dc1b49d67d8aff5887d03393fe0fe1684ee7d3c6a012c66e45632e677",
+      "persona_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+      "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+      "question": "What differs across these publication records, and what remains conditional or unresolved?",
+      "target_context": "Compare publication records by recorded condition without assuming scientific equivalence.",
+      "topic": "synthetic method conditions",
+      "reference_year": 2024,
+      "operator_id": "synthetic-operator",
+      "assessments": [
+        {
+          "reference": {
+            "paper_id": "synthetic-2020-a",
+            "observation_index": 0,
+            "dimension": null
+          },
+          "decision": "consider",
+          "context_comparison": "The early A record supplies a condition-specific supporting observation.",
+          "remaining_uncertainty": "Only the invented 2020 A setting; not evidence for B or personal beliefs.",
+          "counterevidence_refs": []
+        },
+        {
+          "reference": {
+            "paper_id": "synthetic-2022-b",
+            "observation_index": 0,
+            "dimension": null
+          },
+          "decision": "consider",
+          "context_comparison": "The B challenge limits transfer across conditions, not evidence of reversal under A.",
+          "remaining_uncertainty": "B differs from A; this does not establish an A-to-A reversal.",
+          "counterevidence_refs": []
+        },
+        {
+          "reference": {
+            "paper_id": "synthetic-2023-review",
+            "observation_index": 0,
+            "dimension": null
+          },
+          "decision": "consider",
+          "context_comparison": "The review preserves a summary of early A evidence, not a new independent test.",
+          "remaining_uncertainty": "Dependent summary, not independent corroboration of the 2020 result.",
+          "counterevidence_refs": []
+        },
+        {
+          "reference": {
+            "paper_id": "synthetic-2023-review",
+            "observation_index": 1,
+            "dimension": null
+          },
+          "decision": "exclude",
+          "context_comparison": "Context-only relationship basis; not selected for exact answer citation.",
+          "remaining_uncertainty": "Context-only review summary of B; no independent test and no exact answer citation permission.",
+          "counterevidence_refs": []
+        },
+        {
+          "reference": {
+            "paper_id": "synthetic-2024-a-challenge",
+            "observation_index": 0,
+            "dimension": null
+          },
+          "decision": "consider",
+          "context_comparison": "The later A challenge supplies cross-year variation; identical A text does not establish comparable experiments.",
+          "remaining_uncertainty": "Same recorded A is not sufficient scientific equivalence; no within-year order is supplied.",
+          "counterevidence_refs": [
+            {
+              "paper_id": "synthetic-2024-a-support",
+              "observation_index": 0,
+              "dimension": null
+            }
+          ]
+        },
+        {
+          "reference": {
+            "paper_id": "synthetic-2024-a-support",
+            "observation_index": 0,
+            "dimension": null
+          },
+          "decision": "consider",
+          "context_comparison": "The 2024 A support challenges a simple replacement story and preserves same-year disagreement.",
+          "remaining_uncertainty": "Same-year contrary evidence remains visible; no latest-wins rule or scientific equivalence is established.",
+          "counterevidence_refs": [
+            {
+              "paper_id": "synthetic-2024-a-challenge",
+              "observation_index": 0,
+              "dimension": null
+            }
+          ]
+        }
+      ]
+    },
+    "publication_relations": {
+      "persona_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+      "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+      "operator_id": "synthetic-operator",
+      "relations": [
+        {
+          "relation_id": "summary-2020",
+          "from_paper_id": "synthetic-2023-review",
+          "to_paper_id": "synthetic-2020-a",
+          "relation_type": "review_summary_of",
+          "rationale": "Synthetic operator declaration: the exact review passage summarizes this earlier condition-specific record.",
+          "basis_refs": [
+            {
+              "paper_id": "synthetic-2023-review",
+              "observation_index": 0,
+              "dimension": null
+            },
+            {
+              "paper_id": "synthetic-2020-a",
+              "observation_index": 0,
+              "dimension": null
+            }
+          ],
+          "uncertainty": "Declared from invented passages only; source bytes and relationship semantics are not verified."
+        },
+        {
+          "relation_id": "summary-2022",
+          "from_paper_id": "synthetic-2023-review",
+          "to_paper_id": "synthetic-2022-b",
+          "relation_type": "review_summary_of",
+          "rationale": "Synthetic operator declaration: the exact review passage summarizes this earlier condition-specific record.",
+          "basis_refs": [
+            {
+              "paper_id": "synthetic-2023-review",
+              "observation_index": 1,
+              "dimension": null
+            },
+            {
+              "paper_id": "synthetic-2022-b",
+              "observation_index": 0,
+              "dimension": null
+            }
+          ],
+          "uncertainty": "Declared from invented passages only; source bytes and relationship semantics are not verified."
+        }
+      ]
+    },
+    "pattern_id": "trajectory-conditions"
+  }
+}

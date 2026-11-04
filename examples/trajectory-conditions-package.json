@@ -1,0 +1,298 @@
+{
+  "persona": {
+    "author_id": "synthetic-scholar",
+    "version": "1",
+    "build_id": "synthetic-trajectory-conditions",
+    "identity": {
+      "simulation_only": true,
+      "private_beliefs_inferred": false
+    },
+    "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+    "rules": [
+      {
+        "rule_id": "rule-1",
+        "method": "Method M",
+        "condition": "Condition A: separated synthetic signals",
+        "limitation": "Only the invented 2020 A setting; not evidence for B or personal beliefs.",
+        "locator": "invented passage 1",
+        "topic": "synthetic method conditions",
+        "stance": "support",
+        "source_kind": "research",
+        "year": 2020,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "M distinguishes the separated synthetic signals under A.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-2020-a",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      },
+      {
+        "rule_id": "rule-2",
+        "method": "Method M",
+        "condition": "Condition B: overlapping synthetic signals",
+        "limitation": "B differs from A; this does not establish an A-to-A reversal.",
+        "locator": "invented passage 1",
+        "topic": "synthetic method conditions",
+        "stance": "challenge",
+        "source_kind": "research",
+        "year": 2022,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "M fails to distinguish the overlapping synthetic signals under B.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-2022-b",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      },
+      {
+        "rule_id": "rule-3",
+        "method": "Method M",
+        "condition": "Condition A: separated synthetic signals",
+        "limitation": "Dependent summary, not independent corroboration of the 2020 result.",
+        "locator": "invented passage 1",
+        "topic": "synthetic method conditions",
+        "stance": "support",
+        "source_kind": "review",
+        "year": 2023,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "This review summarizes the 2020 support for M under A.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-2023-review",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      },
+      {
+        "rule_id": "rule-4",
+        "method": "Method M",
+        "condition": "Condition B: overlapping synthetic signals",
+        "limitation": "Context-only review summary of B; no independent test and no exact answer citation permission.",
+        "locator": "invented passage 2",
+        "topic": "synthetic method conditions",
+        "stance": "challenge",
+        "source_kind": "review",
+        "year": 2023,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "This review summarizes the 2022 challenge to M under B.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-2023-review",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      },
+      {
+        "rule_id": "rule-5",
+        "method": "Method M",
+        "condition": "Condition A: separated synthetic signals",
+        "limitation": "Same recorded A is not sufficient scientific equivalence; no within-year order is supplied.",
+        "locator": "invented passage 1",
+        "topic": "synthetic method conditions",
+        "stance": "challenge",
+        "source_kind": "research",
+        "year": 2024,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "M fails in this synthetic test recorded under A.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-2024-a-challenge",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      },
+      {
+        "rule_id": "rule-6",
+        "method": "Method M",
+        "condition": "Condition A: separated synthetic signals",
+        "limitation": "Same-year contrary evidence remains visible; no latest-wins rule or scientific equivalence is established.",
+        "locator": "invented passage 1",
+        "topic": "synthetic method conditions",
+        "stance": "support",
+        "source_kind": "research",
+        "year": 2024,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "M succeeds in another synthetic test recorded under A.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-2024-a-support",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      }
+    ],
+    "trajectory": [
+      {
+        "paper_id": "synthetic-2020-a",
+        "year": 2020,
+        "kind": "research",
+        "topic": "synthetic method conditions"
+      },
+      {
+        "paper_id": "synthetic-2022-b",
+        "year": 2022,
+        "kind": "research",
+        "topic": "synthetic method conditions"
+      },
+      {
+        "paper_id": "synthetic-2023-review",
+        "year": 2023,
+        "kind": "review",
+        "topic": "synthetic method conditions"
+      },
+      {
+        "paper_id": "synthetic-2024-a-challenge",
+        "year": 2024,
+        "kind": "research",
+        "topic": "synthetic method conditions"
+      },
+      {
+        "paper_id": "synthetic-2024-a-support",
+        "year": 2024,
+        "kind": "research",
+        "topic": "synthetic method conditions"
+      }
+    ],
+    "semantic_validation": "NOT_PERFORMED"
+  },
+  "knowledge": {
+    "author_id": "synthetic-scholar",
+    "version": "1",
+    "build_id": "synthetic-trajectory-conditions",
+    "persona_payload_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+    "papers": [
+      {
+        "paper_id": "synthetic-2020-a",
+        "author_id": "synthetic-scholar",
+        "split": "training",
+        "runtime_knowledge_eligible": true,
+        "authorized": true,
+        "source_sha256": "72be33991210896ecce7cfc125bcf61340696ad35ed818dc458d54592cae02f3",
+        "locator": "Invented in-memory record; no source file or URL",
+        "kind": "research",
+        "year": 2020,
+        "topic": "synthetic method conditions",
+        "observations": [
+          {
+            "method": "Method M",
+            "condition": "Condition A: separated synthetic signals",
+            "limitation": "Only the invented 2020 A setting; not evidence for B or personal beliefs.",
+            "locator": "invented passage 1",
+            "topic": "synthetic method conditions",
+            "stance": "support",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "M distinguishes the separated synthetic signals under A.",
+            "evidence_verification": "NOT_PERFORMED"
+          }
+        ],
+        "source_verification": "NOT_PERFORMED"
+      },
+      {
+        "paper_id": "synthetic-2022-b",
+        "author_id": "synthetic-scholar",
+        "split": "training",
+        "runtime_knowledge_eligible": true,
+        "authorized": true,
+        "source_sha256": "3c70ec921f4d6b17c8091f10ca1079bb3dc284bfe230fd9dfc38bc7908c51257",
+        "locator": "Invented in-memory record; no source file or URL",
+        "kind": "research",
+        "year": 2022,
+        "topic": "synthetic method conditions",
+        "observations": [
+          {
+            "method": "Method M",
+            "condition": "Condition B: overlapping synthetic signals",
+            "limitation": "B differs from A; this does not establish an A-to-A reversal.",
+            "locator": "invented passage 1",
+            "topic": "synthetic method conditions",
+            "stance": "challenge",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "M fails to distinguish the overlapping synthetic signals under B.",
+            "evidence_verification": "NOT_PERFORMED"
+          }
+        ],
+        "source_verification": "NOT_PERFORMED"
+      },
+      {
+        "paper_id": "synthetic-2023-review",
+        "author_id": "synthetic-scholar",
+        "split": "training",
+        "runtime_knowledge_eligible": true,
+        "authorized": true,
+        "source_sha256": "d7bc82bc888776391fd761fe0383a0c10492d93119b945ee48e337fc9d02fb16",
+        "locator": "Invented in-memory record; no source file or URL",
+        "kind": "review",
+        "year": 2023,
+        "topic": "synthetic method conditions",
+        "observations": [
+          {
+            "method": "Method M",
+            "condition": "Condition A: separated synthetic signals",
+            "limitation": "Dependent summary, not independent corroboration of the 2020 result.",
+            "locator": "invented passage 1",
+            "topic": "synthetic method conditions",
+            "stance": "support",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "This review summarizes the 2020 support for M under A.",
+            "evidence_verification": "NOT_PERFORMED"
+          },
+          {
+            "method": "Method M",
+            "condition": "Condition B: overlapping synthetic signals",
+            "limitation": "Context-only review summary of B; no independent test and no exact answer citation permission.",
+            "locator": "invented passage 2",
+            "topic": "synthetic method conditions",
+            "stance": "challenge",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "This review summarizes the 2022 challenge to M under B.",
+            "evidence_verification": "NOT_PERFORMED"
+          }
+        ],
+        "source_verification": "NOT_PERFORMED"
+      },
+      {
+        "paper_id": "synthetic-2024-a-challenge",
+        "author_id": "synthetic-scholar",
+        "split": "training",
+        "runtime_knowledge_eligible": true,
+        "authorized": true,
+        "source_sha256": "829e954f4ffa4611880ff70a1d0f998badbdb51035fa1d70a7e108b45818a486",
+        "locator": "Invented in-memory record; no source file or URL",
+        "kind": "research",
+        "year": 2024,
+        "topic": "synthetic method conditions",
+        "observations": [
+          {
+            "method": "Method M",
+            "condition": "Condition A: separated synthetic signals",
+            "limitation": "Same recorded A is not sufficient scientific equivalence; no within-year order is supplied.",
+            "locator": "invented passage 1",
+            "topic": "synthetic method conditions",
+            "stance": "challenge",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "M fails in this synthetic test recorded under A.",
+            "evidence_verification": "NOT_PERFORMED"
+          }
+        ],
+        "source_verification": "NOT_PERFORMED"
+      },
+      {
+        "paper_id": "synthetic-2024-a-support",
+        "author_id": "synthetic-scholar",
+        "split": "training",
+        "runtime_knowledge_eligible": true,
+        "authorized": true,
+        "source_sha256": "9fca88992948bfdb206c9ec3aaa4ebe17a7308af4ca2531393b760609d2264c4",
+        "locator": "Invented in-memory record; no source file or URL",
+        "kind": "research",
+        "year": 2024,
+        "topic": "synthetic method conditions",
+        "observations": [
+          {
+            "method": "Method M",
+            "condition": "Condition A: separated synthetic signals",
+            "limitation": "Same-year contrary evidence remains visible; no latest-wins rule or scientific equivalence is established.",
+            "locator": "invented passage 1",
+            "topic": "synthetic method conditions",
+            "stance": "support",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "M succeeds in another synthetic test recorded under A.",
+            "evidence_verification": "NOT_PERFORMED"
+          }
+        ],
+        "source_verification": "NOT_PERFORMED"
+      }
+    ]
+  }
+}

@@ -2,6 +2,74 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.66 (worked publication-trajectory and conditions example).
+
+- `python -m unittest discover -q`: 942 synthetic tests passed locally in 1064.988 seconds.
+- `python -m compileall -q .`: passed; 137 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 221 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 220 exact allowlisted entries and file hashes.
+
+Most recent separately verified remote baseline: v0.65, commit
+[`417be1d101288c1b5383002ad61b91360e7e69bf`](https://github.com/h-dot-seo/persona-for-research/commit/417be1d101288c1b5383002ad61b91360e7e69bf),
+with 935 tests. This is a prior-commit record, not a claim of remote CI for v0.66.
+
+- [GitHub Actions run 41835063532](https://github.com/h-dot-seo/persona-for-research/actions/runs/41835063532):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+All 56 existing non-test Python modules match the v0.65 publication hashes.
+This increment adds five fixed synthetic JSON inputs, one worked guide, one seven-test
+integration class and a README link. No runtime, schema, provider, generator mode,
+individual command timeout or workflow job budget changed.
+
+The five invented publication records contain six observations: early research
+supports M under A, later research challenges M under B, a review summarizes each
+with separate exact passages, and two same-year research records disagree under A.
+The existing trajectory groups case-folded topic and exact method/condition strings.
+A has cross-year stance variation and same-year disagreement; B remains challenge-only.
+Cross-year variation is an existential support/challenge flag, not a directed reversal.
+Identical recorded conditions do not prove scientific comparability; deterministic
+same-year display order does not establish chronology or a latest-wins rule.
+
+Two declared review-summary relationships preserve exact basis references from
+both endpoints and dependency-review warnings. The A and B groups contain four
+and two distinct paper IDs, respectively; the corpus has five papers because the
+review appears in both groups. These are record counts, not independent-evidence
+counts. Missing relationships do not establish independence.
+
+Exactly five observation references are selected for answer citation. The review's
+second observation remains visible as relationship basis and excluded contextual
+evidence but cannot be cited without explicit selection, even though its paper is
+already selected. Source stance, pattern role and answer citation role stay distinct:
+the later supporting source challenges a replacement narrative while supporting
+the bounded description of disagreement. All per-reference explanations and limits
+remain supplied operator judgments, not automatically validated entailment.
+
+Fixed synthetic adoption accepts one bounded publication-record synthesis and
+rejects personal-change-of-mind and independent-review-confirmation alternatives.
+Rejected wording remains explicit proposal history; shared sources and contrary
+evidence remain visible in the accepted claim. Separate final answer review stays
+all-deferred, and semantic validation remains NOT_PERFORMED.
+
+The focused seven-test run passed in 16.437 seconds, running 17 real CLI stages
+once with unchanged 30-second per-command limits. The written external-directory
+POSIX shell recipe was also executed separately. Tests cover grouping and temporal
+boundaries, declared dependencies, exact citation permission, preserved rationales,
+rejected versus active claims, deferred final review, immutable input bytes, package
+reconstruction and in-memory operations guarded against file, socket and mock-provider
+access. The complete final aggregate is recorded above; wall time is environment-
+dependent, and no performance claim is made. No separate independent code audit
+is recorded for this increment.
+
+All source hashes are explicitly documented deterministic synthetic placeholders,
+not checked original-source digests. Source and quote checks remain NOT_PERFORMED.
+No real researcher data, source download, provider execution, external transmission
+or scientific execution was used. This checks preservation of authored distinctions,
+not attribution detection, source authentication or researcher fidelity.
+Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**; no retry or
+restriction bypass was attempted. Earlier failures remain recorded below.
+
+## Prior v0.65 guarded call-local argument rendering
+
 Current local source release: v0.65 (guarded call-local argument text rendering).
 
 - `python -m unittest discover -q`: 935 synthetic tests passed locally in 824.115 seconds.

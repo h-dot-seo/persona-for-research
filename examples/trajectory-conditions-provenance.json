@@ -1,0 +1,7 @@
+{
+  "provider_id": "synthetic-no-provider",
+  "model_id": "synthetic-no-model",
+  "run_id": "synthetic-fixed-trajectory-conditions",
+  "operator_id": "synthetic-fixture-author",
+  "execution_location": "unknown"
+}

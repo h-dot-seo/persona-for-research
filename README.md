@@ -113,6 +113,12 @@ It preserves separate passages and declared reasoning without treating either as
 proof of the individual scholar's practice. The example tests preservation and
 explicit review choices, not automatic attribution or researcher fidelity.
 
+The [synthetic trajectory-and-conditions example](docs/TRAJECTORY_CONDITIONS_EXAMPLE.md)
+compares publication records across years while keeping different conditions,
+same-year disagreement and a review summary separate. Exact condition labels do
+not establish scientific comparability, and publication differences do not establish
+a researcher changing their mind. Contrary evidence and deferred final review remain visible.
+
 ## Adopt offline answer proposals explicitly
 
 [Answer proposals](docs/ANSWER_PROPOSALS.md) prepare an evidence-scoped local

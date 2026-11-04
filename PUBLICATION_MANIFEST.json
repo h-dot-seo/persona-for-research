@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.65-guarded-argument-rendering",
+  "release": "0.66-trajectory-condition-example",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 213,
+  "file_count": 220,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 35922,
-      "sha256": "bd7263a24aab835f5ec90613bec9ceb8722137439fa71ab8f0cbb350b466a503"
+      "bytes": 36349,
+      "sha256": "dcc4dead94100ab329f8979b45c3175abc4060d5d104b774ed82de4cf72d7e0a"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 85104,
-      "sha256": "cd88a31d7b4a45058da3c47f1607e8d4f038daaacd337aa620d0456b83b55dbe"
+      "bytes": 89663,
+      "sha256": "8235666bf9ec3ec4f67d5d23be443733b2d268bb8342dc0a97f5437db50cca35"
     },
     {
       "path": "answer_context.py",
@@ -359,6 +359,11 @@
       "sha256": "4a0cd5e652db0df0b8f3448bcf1b4397d987c11b600a22551672319467da12f4"
     },
     {
+      "path": "docs/TRAJECTORY_CONDITIONS_EXAMPLE.md",
+      "bytes": 10508,
+      "sha256": "af57207387d12d50d08b79e728149d02cd6fb20bd7a32e1c9498840c0d1daff9"
+    },
+    {
       "path": "docs/WORKFLOW_REVIEW.md",
       "bytes": 32062,
       "sha256": "ca18eee43b294c187e3ac3411c8166228bc0b9b81d74ded8575df4f9a0f88e9c"
@@ -492,6 +497,31 @@
       "path": "examples/synthetic-sources/synthetic-1.md",
       "bytes": 108,
       "sha256": "0c279b364cce4ef0c6e50b83127b7ff448d85a26ad019df28e3ac20cd2a2414d"
+    },
+    {
+      "path": "examples/trajectory-conditions-adoption.json",
+      "bytes": 4590,
+      "sha256": "fbbf6130b6867c029fcfb5ee1c93c33b13fe806c1d1e7b78021c6f06a6a330fd"
+    },
+    {
+      "path": "examples/trajectory-conditions-package.json",
+      "bytes": 12324,
+      "sha256": "991812e1a080062658c99f95576a5aa8bdc7720de252252a2a22198d77e174e0"
+    },
+    {
+      "path": "examples/trajectory-conditions-provenance.json",
+      "bytes": 214,
+      "sha256": "7922dbeadbab1bd7b9cd40dd727d0613c91ddea5b103260ff31d34add61aacbf"
+    },
+    {
+      "path": "examples/trajectory-conditions-response.json",
+      "bytes": 5151,
+      "sha256": "160536b39a63ddf78b7d26333a1d3fc1e7b1d42ec8de11cfb6c22e7eaa51058d"
+    },
+    {
+      "path": "examples/trajectory-conditions-scope.json",
+      "bytes": 18221,
+      "sha256": "22e962dea2ad28356a7177b79603d67b9fc06ae90887072706d15a3dfa107752"
     },
     {
       "path": "extraction_adapter.py",
@@ -1042,6 +1072,11 @@
       "path": "test_topic_inventory.py",
       "bytes": 8937,
       "sha256": "b7235408b30d9939374a3d2f0795ea9d4180f9136834e7863ec39fab70e93254"
+    },
+    {
+      "path": "test_trajectory_conditions_example.py",
+      "bytes": 15218,
+      "sha256": "35877c1f36fdc3bcce9f1087e9704175d82312a694728285c15675c8c58718f2"
     },
     {
       "path": "test_verification_receipt.py",
