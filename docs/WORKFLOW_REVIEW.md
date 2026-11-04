@@ -391,3 +391,18 @@ transfer reports. Source-specific missing-boundary prompts do not replace existi
 target-context judgments. Version-one canonical payload and rendered-text snapshots
 remain unchanged. These checks validate coverage and provenance, not entailment,
 scientific applicability or a researcher's actual private reasoning.
+
+### Reviewed first observations can enter a separate candidate without origin loss
+
+The explicit local append route bridges review-only observation proposals to a
+new candidate package. Empty operation templates, exact manifest/bundle/review
+bindings, all-accepted coverage, source-paper/end-index constraints and new identity
+requirements prevent silent target choice or replacement. Missing runtime fields
+must be explicitly reviewed, never filled automatically. Pinned local files and
+all resulting quotes are rechecked. Original and rejected proposals remain in the
+review packet; base-observation provenance survives projections, rules, trajectories,
+endpoints, answers, patterns and reader scope. Reasoning audits now label inherited
+observation history unreplayed, including broad summary status. The append audit
+reconstructs one complete candidate and does not certify earlier history, human
+approval, actual model generation or scientific validity. Synthetic CLI and
+adversarial tests cover these routes without real data or external models.

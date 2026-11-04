@@ -9,6 +9,7 @@ from compare_releases import checked_package
 from research_workflow import apply
 from reasoning_cards import DIMENSIONS, REVIEW_FIELDS
 from strict_json import load
+from observation_provenance import lines as origin_lines, KEY as OBSERVATION_ORIGIN
 
 
 def display(value):
@@ -41,6 +42,7 @@ def _details(package, topic):
             quote = observation.get('evidence_quote')
             lines.append('    evidence_quote: ' + (display(quote) if quote is not None else '[NOT_SUPPLIED]'))
             lines.append('    recorded quote check: ' + display(observation.get('evidence_verification', 'NOT_PERFORMED')))
+            if OBSERVATION_ORIGIN in observation: lines.extend(origin_lines(observation[OBSERVATION_ORIGIN], display))
             components = observation.get('reasoning', {})
             missing = [d for d in DIMENSIONS if d not in components]
             lines.append('    Missing for this observation: ' + (', '.join(missing) if missing else 'none (coverage only)'))
@@ -89,6 +91,7 @@ def render(value, question, topic, *, evidence_details=False):
                          f"{display(rule['source_kind'])} {display(rule['year'])} | {display(rule['locator'])} | "
                          f"claim_type={display(rule['claim_type'])}")
             lines.append('    Limitation: ' + display(rule['limitation']))
+            if OBSERVATION_ORIGIN in rule: lines.extend(origin_lines(rule[OBSERVATION_ORIGIN], display))
     cards = application['reasoning_cards']
     if cards:
         lines.append('Supplied reasoning records:')

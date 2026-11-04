@@ -81,6 +81,11 @@ For selected papers with no observations yet, the handoff commands accept
 support/challenge proposals alongside explicit review judgments, leaving unsupported
 conditions/limitations/topics null. It never converts model output to a manual card
 or runtime package. See [first-observation proposals](docs/OBSERVATION_PROPOSALS.md).
+After complete explicit review, [observation append candidates](docs/OBSERVATION_REVISION.md)
+connect those proposals to runtime evidence without losing imported origin. The
+separate append card starts empty, pins source files and every accepted target, and
+requires a new version/build. Original/reviewed/rejected evidence stays auditable;
+existing observations and canonical packages are never overwritten.
 
 ### Record operator decisions without automatic promotion
 

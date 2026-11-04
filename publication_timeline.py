@@ -11,6 +11,7 @@ from reasoning_cards import DIMENSIONS
 from research_workflow import validated_source_rules
 from review_package import display
 from strict_json import load
+from observation_provenance import attach, lines as origin_lines, KEY as OBSERVATION_ORIGIN
 
 BOUNDARY = ('Publication years order supplied records, not research decisions or career stages. '
     'Within-year ordering is by identifier, not event time. '
@@ -54,6 +55,7 @@ def timeline(value, topic):
                 evidence_quote=obs.get('evidence_quote'),
                 recorded_quote_check=obs.get('evidence_verification', 'NOT_PERFORMED'),
                 reasoning=components, missing_dimensions=[d for d in DIMENSIONS if d not in components]))
+            attach(observations[-1], obs)
         if observations:
             row = dict(paper_id=paper['paper_id'], source_kind=paper['kind'],
                 source_sha256=paper['source_sha256'], source_locator=paper['locator'],
@@ -96,6 +98,7 @@ def render(value, topic):
                     lines.append(f'      {key}: ' + display(obs[key]))
                 lines.append('      supplied quote: ' + display(obs['evidence_quote']))
                 lines.append('      recorded quote check: ' + obs['recorded_quote_check'])
+                if OBSERVATION_ORIGIN in obs: lines.extend(origin_lines(obs[OBSERVATION_ORIGIN], display, '      '))
                 for dimension, component in obs['reasoning'].items():
                     lines.append(f"      {display(dimension)} [{display(component['claim_type'])}]: "
                                  f"{display(component['text'])} | {display(component['locator'])}")

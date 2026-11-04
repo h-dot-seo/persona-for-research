@@ -124,6 +124,12 @@ mixed-stage regression coverage. No actual model/source data or network is used.
 Candidate-origin coverage here applies to recorded reasoning components, not an
 authenticated history of base observations. An observation-level reference with no
 component origin does not establish manual authorship or absence of earlier model
-assistance. [First-observation proposal packets](OBSERVATION_PROPOSALS.md) deliberately
-remain noncanonical and cannot enter these audits. Canonical support would require
-observation-level provenance and a separate validated append/revision replay path.
+assistance. [First-observation proposal packets](OBSERVATION_PROPOSALS.md) remain
+review-only. The separate [explicit observation append](OBSERVATION_REVISION.md)
+workflow can create a new runtime candidate with durable observation origin.
+These reasoning audits preserve that origin but do not replay its append history.
+They list initial/final unreplayed observation inventories, mark overall history
+incomplete, and scope candidate-origin coverage to reasoning components only.
+The former reasoning-only initial-history label is retained separately. Use the
+observation append audit with original inputs for that specific append; neither
+audit authenticates human/model identity or a complete research history.

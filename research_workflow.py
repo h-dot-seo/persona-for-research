@@ -10,6 +10,7 @@ from verification_receipt import VerifiedCorpus
 from evidence_coverage import coverage
 from corpus_projection import runtime_papers
 from strict_json import load
+from observation_provenance import attach, inventory as observation_origins, KEY as OBSERVATION_ORIGIN, ORIGIN
 
 
 def build(corpus):
@@ -51,6 +52,9 @@ def build(corpus):
                               attribution='coauthored work; individual ownership not established'))
             if rules[-1]['stance'] not in ('support', 'challenge'):
                 raise ValueError('observation stance must be support or challenge')
+            if OBSERVATION_ORIGIN in observation:
+                attach(rules[-1], observation)
+                rules[-1]['evidence_type'] = ORIGIN
             if 'reasoning' in observation:
                 validate_components(observation['reasoning'])
                 rules[-1]['reasoning'] = copy.deepcopy(observation['reasoning'])
@@ -128,6 +132,8 @@ def apply(package, question, topic):
                               evidence_verification=rule.get('evidence_verification', 'NOT_PERFORMED'),
                               applicability_to_check=rule['condition'], limitation=rule['limitation'],
                               status='SYSTEM_INFERENCE_REQUIRES_REVIEW'))
+            attach(steps[-1], rule)
+            attach(pattern['supporting' if rule.get('stance', 'support') == 'support' else 'challenging'][-1], rule)
     for pattern in patterns.values():
         pattern['distinct_source_hash_count'] = len({r['source_sha256']
             for r in pattern['supporting'] + pattern['challenging']})
@@ -143,7 +149,7 @@ def apply(package, question, topic):
             pattern['classification'] = 'REPEATED_OBSERVATION'
         pattern['inference_boundary'] = ('Exact method/condition grouping; no claim of author-specific or causal validity. '
             'Identical hashes flag shared source content; different hashes do not establish independent publications or replication.')
-    return dict(question=question, status='PLANNING_SCAFFOLD' if steps else 'OUTSIDE_PERSONA_COVERAGE',
+    result = dict(question=question, status='PLANNING_SCAFFOLD' if steps else 'OUTSIDE_PERSONA_COVERAGE',
                 simulation_only=True, steps=steps, patterns=list(patterns.values()), trajectory=trajectory,
                 methodology_trajectory=summarize([rule for rule in persona['rules']
                     if rule['topic'].casefold() == topic.casefold()]),
@@ -155,6 +161,10 @@ def apply(package, question, topic):
                 processing=dict(mode='DETERMINISTIC_OPERATOR_CURATED', llm_used=False,
                                 automatic_extraction=False),
                 semantic_validation='NOT_PERFORMED')
+    if observation_origins(package):
+        result['recorded_imported_observations']=observation_origins(package)
+        result['processing'].update(execution_scope='CURRENT_APPLICATION_ONLY',historical_model_use='DECLARED_NOT_AUTHENTICATED')
+    return result
 
 
 def main():

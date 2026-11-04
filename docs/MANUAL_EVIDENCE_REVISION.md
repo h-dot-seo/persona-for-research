@@ -91,3 +91,9 @@ python -m unittest test_revise_local -v
 Before migrating existing answer/design work, use the read-only
 [revision impact report](REVISION_IMPACT.md) to trace old citation and link uses to
 changed or missing same-position evidence. It does not automatically rebind them.
+
+Imported base observations are intentionally rejected by the manual revision gate.
+Do not remove their origin to make a manual card. The separate
+[reviewed observation append](OBSERVATION_REVISION.md) route creates a new candidate
+and retains imported provenance; imported-observation replacement/source migration
+is not supported by this release.

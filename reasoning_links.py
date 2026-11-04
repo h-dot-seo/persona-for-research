@@ -11,6 +11,7 @@ from reasoning_cards import DIMENSIONS
 from research_workflow import validated_source_rules
 from review_package import display
 from strict_json import load
+from observation_provenance import attach, lines as origin_lines, KEY as OBSERVATION_ORIGIN
 
 RELATIONS = ('supports', 'challenges', 'qualifies', 'contrasts')
 LINK_KEYS = {'link_id', 'relation', 'from_ref', 'to_ref', 'rationale', 'claim_type'}
@@ -59,10 +60,10 @@ def _endpoint(ref, papers):
     return dict(reference=copy.deepcopy(ref), publication_year=paper['year'], source_kind=paper['kind'],
         source_sha256=paper['source_sha256'], source_locator=paper['locator'],
         recorded_source_check=paper.get('source_verification', 'NOT_PERFORMED'),
-        observation={key: copy.deepcopy(obs.get(key, default)) for key, default in (
+        observation=attach({key: copy.deepcopy(obs.get(key, default)) for key, default in (
             ('method', None), ('condition', None), ('limitation', None), ('locator', None), ('topic', None),
             ('stance', 'support'), ('claim_type', 'operator_interpretation'), ('evidence_quote', None),
-            ('evidence_verification', 'NOT_PERFORMED'))},
+            ('evidence_verification', 'NOT_PERFORMED'))}, obs),
         component=copy.deepcopy(obs['reasoning'][dimension]) if dimension is not None else None,
         attribution='coauthored work; individual ownership not established')
 
@@ -137,6 +138,7 @@ def render(value, supplied):
             lines.append('    Topic: ' + display(obs['topic']))
             lines.append('    Condition: ' + display(obs['condition']) + '; limitation: ' + display(obs['limitation']))
             lines.append('    Supplied quote: ' + display(obs['evidence_quote']) + '; recorded check=' + obs['evidence_verification'])
+            if OBSERVATION_ORIGIN in obs: lines.extend(origin_lines(obs[OBSERVATION_ORIGIN], display))
             component = node['component']
             if component is not None:
                 lines.append(f"    Component [{component['claim_type']}]: {display(component['text'])} | {display(component['locator'])}")

@@ -1,12 +1,13 @@
 """Project only documented runtime fields; not an anonymizer or access control."""
 import copy
 from reasoning_cards import validate_components, REVIEW_FIELDS
+from observation_provenance import validate_origin, KEY as OBSERVATION_ORIGIN
 
 PAPER_FIELDS = ('paper_id', 'author_id', 'split', 'runtime_knowledge_eligible',
     'authorized', 'source_sha256', 'locator', 'kind', 'year', 'topic',
     'source_file', 'source_verification', 'segments_sha256')
 OBSERVATION_FIELDS = ('method', 'condition', 'limitation', 'locator', 'topic',
-    'stance', 'claim_type', 'evidence_quote', 'evidence_verification')
+    'stance', 'claim_type', 'evidence_quote', 'evidence_verification', OBSERVATION_ORIGIN)
 COMPONENT_FIELDS = ('text', 'locator', 'evidence_quote', 'claim_type', 'evidence_verification') + REVIEW_FIELDS
 
 
@@ -46,6 +47,7 @@ def runtime_papers(corpus):
                 raise ValueError('observation claim_type must distinguish statement from interpretation')
             if obs.get('evidence_quote') is not None and not isinstance(obs['evidence_quote'], str):
                 raise ValueError('observation evidence_quote must be a string or null')
+            validate_origin(obs, paper)
             row = {k: copy.deepcopy(obs[k]) for k in OBSERVATION_FIELDS if k in obs}
             if 'reasoning' in obs:
                 validate_components(obs['reasoning'])

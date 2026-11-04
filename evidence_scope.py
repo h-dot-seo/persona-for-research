@@ -9,6 +9,7 @@ from reasoning_links import _sources
 from review_journey import assemble
 from review_package import display
 from strict_json import load
+from observation_provenance import inventory as observation_origins, lines as origin_lines, KEY as OBSERVATION_ORIGIN
 
 BOUNDARY = ('Counts describe supplied authorized records, not independent studies, literature '
     'coverage, answer correctness or researcher fidelity. Equal supplied hashes are grouped to '
@@ -39,7 +40,7 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
             source_kind=paper['kind'], source_locator=paper['locator'], observation_count=len(paper['observations']),
             recorded_source_check=paper.get('source_verification', 'NOT_PERFORMED')))
     active_papers, active_observations, active_hashes = set(), set(), set()
-    mock_refs, imported_refs, other_refs = [], [], []
+    mock_refs, imported_refs, other_refs, imported_observation_refs, imported_context_refs = [], [], [], [], []
     for route in packet['evidence_routes']:
         node = route['evidence']; ref = node['reference']; component = node['component']
         record = component if component is not None else node['observation']
@@ -56,13 +57,18 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
         if component is not None and 'origin' in component:
             row['recorded_origin'] = {key: component[key] for key in ('origin', 'candidate_id',
                 'candidate_bundle_sha256', 'operator_review_sha256', 'proposed_claim_type')}
+        if OBSERVATION_ORIGIN in node['observation']:
+            row['enclosing_observation_origin'] = copy.deepcopy(node['observation'][OBSERVATION_ORIGIN])
+            if component is None: row['origin_status'] = 'RECORDED_IMPORTED_OBSERVATION_ORIGIN'
         group = groups[node['source_sha256']]
         if route['answer_uses'] or route['design_uses']:
             group['active_references'].append(row)
             active_papers.add(ref['paper_id']); active_observations.add((ref['paper_id'], ref['observation_index']))
             active_hashes.add(node['source_sha256'])
             (mock_refs if row['origin_status'] == 'RECORDED_MOCK_CANDIDATE_ORIGIN' else
-             imported_refs if row['origin_status'] == 'RECORDED_IMPORTED_CANDIDATE_ORIGIN' else other_refs).append(copy.deepcopy(ref))
+             imported_refs if row['origin_status'] == 'RECORDED_IMPORTED_CANDIDATE_ORIGIN' else
+             imported_observation_refs if row['origin_status'] == 'RECORDED_IMPORTED_OBSERVATION_ORIGIN' else other_refs).append(copy.deepcopy(ref))
+            if 'enclosing_observation_origin' in row: imported_context_refs.append(copy.deepcopy(ref))
         else:
             group['unused_link_references'].append(row)
     for group in groups.values():
@@ -76,7 +82,7 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
         evidence_status=c['evidence_status'], quote_check=c['quote_check'], challenge_citation_supplied=c['challenge_citation_supplied']) for c in answer['claims']]
     steps = [dict(step_id=s['step_id'], proposed_action=s['proposed_action'], uncertainty=s['uncertainty'],
         missing_fields=copy.deepcopy(s['missing_fields']), claim_type='operator_proposal') for s in design['steps']]
-    return dict(status='EVIDENCE_SCOPE_DISCLOSURE_NOT_VALIDATION', question=packet['question'],
+    result = dict(status='EVIDENCE_SCOPE_DISCLOSURE_NOT_VALIDATION', question=packet['question'],
         identity={key: checked['persona'][key] for key in ('author_id', 'version', 'build_id')},
         simulation_only=True,
         declared_operators=dict(answer=answer['operator_id'], design=design['operator_id'], links=design['evidence_links']['operator_id']),
@@ -86,15 +92,22 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
         coverage=dict(supplied_paper_ids=len(papers), supplied_observations=sum(len(p['observations']) for p in papers.values()),
             supplied_source_hash_groups=len(groups), actively_referenced_paper_ids=len(active_papers),
             actively_referenced_observations=len(active_observations), active_source_hash_groups=len(active_hashes),
-            active_exact_references=len(mock_refs)+len(imported_refs)+len(other_refs)),
+            active_exact_references=len(mock_refs)+len(imported_refs)+len(imported_observation_refs)+len(other_refs)),
         unused_paper_ids=[paper_id for paper_id in papers if paper_id not in active_papers],
         source_groups=list(groups.values()),
         recorded_mock_origin_references=mock_refs, recorded_imported_origin_references=imported_refs,
-        recorded_candidate_origin_references=mock_refs + imported_refs, other_curated_references=other_refs,
+        recorded_candidate_origin_references=mock_refs + imported_refs + imported_observation_refs, other_curated_references=other_refs,
         review_prompts=copy.deepcopy(packet['review_prompts']),
         llm_used=False, provider_invoked=False, source_checks_repeated=False,
         scientific_validation='NOT_PERFORMED', researcher_fidelity_evaluation='NOT_PERFORMED',
         canonical_update_performed=False, boundary=BOUNDARY)
+    observations = observation_origins(checked)
+    if observations:
+        result.update(recorded_imported_observation_references=imported_observation_refs,
+            active_references_with_imported_observation_context=imported_context_refs,
+            recorded_imported_observations=observations,
+            observation_origin_scope='BASE_OBSERVATION_CONTEXT_IS_SEPARATE_FROM_SELECTED_COMPONENT_ORIGIN')
+    return result
 
 
 def render(package, links, proposal, draft, reference_year, declared_review=None):
@@ -148,6 +161,14 @@ def render(package, links, proposal, draft, reference_year, declared_review=None
                     origin = row['recorded_origin']
                     lines.append('      Recorded ' + ('mock' if origin['origin'] == 'operator_reviewed_mock_candidate' else 'imported candidate') + ' origin; proposed label=' + origin['proposed_claim_type'] +
                         '; candidate bundle sha256=' + origin['candidate_bundle_sha256'] + '; review sha256=' + origin['operator_review_sha256'])
+                if 'enclosing_observation_origin' in row:
+                    lines.append('      Enclosing observation history (not selected-component generation history):')
+                    lines.extend(origin_lines(row['enclosing_observation_origin'], display, '      '))
+    if 'recorded_imported_observations' in result:
+        lines.append('All recorded imported observation origins, including unused records; adoption is not replayed here:')
+        for row in result['recorded_imported_observations']:
+            lines.append('  '+display(row['paper_id'])+' / observation '+str(row['observation_index']))
+            lines.extend(origin_lines(row['observation_origin'], display))
     lines.append('Mechanical review prompts (not exhaustive):')
     for p in result['review_prompts']:
         lines.append('  ' + p['target'] + ' ' + display(p['target_id']) + ': ' + p['code'] + (' / ' + p['field'] if 'field' in p else ''))

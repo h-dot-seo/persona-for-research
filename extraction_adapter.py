@@ -10,6 +10,7 @@ from persona import payload_sha256
 from reasoning_cards import DIMENSIONS
 from research_workflow import build
 from strict_json import load
+from declared_provenance import PROVENANCE_FIELDS, validate_declared_provenance
 
 MAX_QUOTE_CHARS = 500
 MAX_CANDIDATE_CHARS = 2000
@@ -134,7 +135,6 @@ def validate_candidate_bundle(corpus, bundle):
 MAX_IMPORTED_CANDIDATES = 128
 MAX_HANDOFF_BYTES = 2 * 1024 * 1024
 
-PROVENANCE_FIELDS = {'provider_id', 'model_id', 'run_id', 'operator_id', 'execution_location'}
 IMPORT_BOUNDARY = (
     'An offline response was imported, not executed by this tool. Provider/model/run identity, '
     'model use and execution location are operator declarations, not authenticated provenance. '
@@ -170,20 +170,6 @@ def prepare_model_handoff(corpus):
     if len(json.dumps(handoff, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')) > MAX_HANDOFF_BYTES:
         raise ValueError('model handoff exceeds the 2 MiB logical JSON limit; select a smaller authorized corpus')
     return handoff
-
-
-def validate_declared_provenance(provenance):
-    """Validate a bounded operator declaration, never authenticate its producer."""
-    if not isinstance(provenance, dict) or set(provenance) != PROVENANCE_FIELDS:
-        raise ValueError('declared provenance has missing or unsupported fields')
-    for key in PROVENANCE_FIELDS:
-        value = provenance[key]
-        if not isinstance(value, str) or not value.strip() or len(value) > 128:
-            raise ValueError('declared provenance fields must be nonempty strings of at most 128 characters')
-        if any(ord(character) < 32 or ord(character) == 127 for character in value):
-            raise ValueError('declared provenance fields cannot contain control characters')
-    if provenance['execution_location'] not in ('local', 'remote', 'unknown'):
-        raise ValueError('declared execution_location must be local, remote or unknown')
 
 
 def import_model_response(corpus, handoff, response, provenance):

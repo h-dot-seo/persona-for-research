@@ -1,5 +1,6 @@
 """Validate operator-curated reasoning components without inventing missing content."""
 import copy
+from observation_provenance import attach
 
 DIMENSIONS = ('question_framing', 'alternative_explanation', 'evidence_standard',
               'falsification_check', 'uncertainty')
@@ -38,7 +39,7 @@ def card(rule):
     validate_components(components)
     if not components:
         return None
-    return dict(rule_id=rule['rule_id'], paper_id=rule['paper_id'],
+    return attach(dict(rule_id=rule['rule_id'], paper_id=rule['paper_id'],
                 source_kind=rule['source_kind'], year=rule['year'],
                 evidence_stance=rule['stance'], condition=rule['condition'],
                 limitation=rule['limitation'], components=copy.deepcopy(components),
@@ -46,4 +47,4 @@ def card(rule):
                 attribution=rule['attribution'], status='CURATED_REASONING_REQUIRES_REVIEW',
                 inference_boundary='These are paper-linked curated records, not private thoughts '
                 'or proof of an individual author reasoning process. Quote matching does not '
-                'establish semantic support. No missing component is inferred.')
+                'establish semantic support. No missing component is inferred.'), rule)

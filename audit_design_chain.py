@@ -11,6 +11,7 @@ from extraction_adapter import validate_candidate_bundle
 from operator_review import prepare_revision
 from persona import payload_sha256
 from strict_json import load
+from observation_provenance import inventory as observation_origins
 
 STAGE_KEYS = {'original_corpus', 'candidate_bundle', 'operator_review', 'target_version', 'target_build_id'}
 
@@ -20,6 +21,7 @@ def audit(value, links, proposal, chain):
     if not isinstance(chain, dict) or set(chain) != {'stages'} or not isinstance(chain['stages'], list) or not chain['stages']:
         raise ValueError('chain must contain a nonempty ordered stages array')
     previous, initial, summaries, proofs, identities = None, [], [], {}, set()
+    initial_observations = []
     for number, stage in enumerate(chain['stages'], 1):
         if not isinstance(stage, dict) or set(stage) != STAGE_KEYS:
             raise ValueError('stage has missing or unknown fields')
@@ -28,6 +30,7 @@ def audit(value, links, proposal, chain):
         if previous is not None and payload_sha256(base) != payload_sha256(previous):
             raise ValueError('stage ' + str(number) + ' preflight package does not continue the previous replay')
         if previous is None:
+            initial_observations = observation_origins(base)
             identity = base['persona']
             identities.add((identity['author_id'], identity['version'], identity['build_id']))
             initial = [(key, component) for key, component in candidate_records(base)]
@@ -90,7 +93,7 @@ def audit(value, links, proposal, chain):
     mock_uncovered = any(row['audit_status'] == 'OUTSIDE_DECLARED_CHAIN' for row in mock_records)
     has_imports = (any(row['origin'] == IMPORTED_ORIGIN for row in initial_records)
                    or any(stage['candidate_provenance']['origin'] == IMPORTED_ORIGIN for stage in summaries))
-    return dict(status='DECLARED_CHAIN_MATCH_WITH_UNREPLAYED_HISTORY' if initial or uncovered else 'DECLARED_CHAIN_REPLAY_MATCH',
+    result = dict(status='DECLARED_CHAIN_MATCH_WITH_UNREPLAYED_HISTORY' if initial or uncovered else 'DECLARED_CHAIN_REPLAY_MATCH',
         audit_scope='DECLARED_CONSECUTIVE_CANDIDATE_REVIEW_REVISIONS' if has_imports else 'DECLARED_CONSECUTIVE_MOCK_REVIEW_REVISIONS', chain_sha256=payload_sha256(chain),
         final_package_sha256=payload_sha256(package), proposal_sha256=one['proposal_sha256'],
         link_artifact_sha256=one['link_artifact_sha256'], question=one['question'], stages=summaries,
@@ -116,6 +119,15 @@ def audit(value, links, proposal, chain):
                  'separate result, not proof of full history, author ownership, scientific validity or '
                  'authenticated human review. Imported provider/model/run identities remain unauthenticated operator '
                  'declarations; execution flags describe this audit only, not historical model use. No automatic rebasing, semantic inference or provider call occurs.')
+    if initial_observations or observation_origins(package):
+        result.update(status='DECLARED_CHAIN_MATCH_WITH_UNREPLAYED_HISTORY',
+            initial_reasoning_history_status=result['initial_history_status'],
+            initial_history_status='UNREPLAYED_REASONING_AND_OBSERVATION_ORIGINS_PRESENT' if initial else 'UNREPLAYED_OBSERVATION_ORIGINS_PRESENT',
+            initial_unreplayed_observation_origins=initial_observations,
+            final_unreplayed_observation_origins=observation_origins(package),
+            observation_adoption_history_status='NOT_REPLAYED_BY_REASONING_REVISION_AUDIT',
+            candidate_origin_coverage_scope='REASONING_COMPONENTS_ONLY')
+    return result
 
 
 def main():

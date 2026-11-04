@@ -98,10 +98,13 @@ proposals are retained in every outcome. Field completeness is not a quality sco
 
 No output is compatible with the manual-card append or reasoning-candidate review
 gate, and no runtime package is created. Do not strip provenance to pass it through
-manual intake. Full observation-level provenance preservation and append/revision
-replay are prerequisites for any future canonical integration. Current design
-lineage audits cover recorded **reasoning-component** candidate origins, not these
-new base-observation proposals; missing origin markers do not prove manual authorship.
+manual intake. To create a separate runtime candidate, use the explicit
+[reviewed observation append](OBSERVATION_REVISION.md) workflow. It requires pinned
+local files, complete review, a new identity and an explicit append card, preserves
+observation-level provenance and provides exact append replay. It never promotes a
+canonical persona. Current design lineage audits cover **reasoning-component**
+revisions and separately disclose unreplayed observation history. Missing origin
+markers do not prove manual authorship.
 
 ## Bounds and reproducibility
 

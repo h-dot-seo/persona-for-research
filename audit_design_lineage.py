@@ -10,6 +10,7 @@ from extraction_adapter import validate_candidate_bundle
 from operator_review import prepare_revision
 from persona import payload_sha256
 from strict_json import load
+from observation_provenance import inventory as observation_origins, KEY as OBSERVATION_ORIGIN
 
 
 MOCK_ORIGIN = 'operator_reviewed_mock_candidate'
@@ -112,6 +113,9 @@ def audit(value, links, proposal, revision_inputs):
                     candidate_origin_audit=origins[key]['audit_status'] if key in origins else 'NO_CANDIDATE_ORIGIN_ON_SELECTED_RECORD',
                     mock_origin_audit=(origins[key]['audit_status'] if key in origins and origins[key]['origin'] == MOCK_ORIGIN
                                        else 'NO_MOCK_ORIGIN_ON_SELECTED_RECORD')))
+                if OBSERVATION_ORIGIN in node['observation']:
+                    endpoints[-1].update(observation_origin_sha256=payload_sha256(node['observation'][OBSERVATION_ORIGIN]),
+                        observation_origin_audit='OBSERVATION_ADOPTION_NOT_REPLAYED')
             uses.append(dict(link_id=use['link_id'], proposed_use_role=use['role'],
                 applicability_note_sha256=payload_sha256(use['applicability_note']),
                 source_relation=link['relation'], relation_claim_type=link['claim_type'], endpoints=endpoints))
@@ -121,7 +125,7 @@ def audit(value, links, proposal, revision_inputs):
                                    for field in OPTIONAL_FIELDS},
             evidence_status=step['evidence_status'], uses=uses))
     inherited = sum(row['audit_status'] == 'INHERITED_ORIGIN_NOT_REPLAYED' for row in origin_records)
-    return dict(status='CURRENT_REVISION_MATCH_WITH_INHERITED_ORIGINS' if inherited else 'CURRENT_REVISION_REPLAY_MATCH',
+    result = dict(status='CURRENT_REVISION_MATCH_WITH_INHERITED_ORIGINS' if inherited else 'CURRENT_REVISION_REPLAY_MATCH',
         audit_scope='ONE_DECLARED_CANDIDATE_REVIEW_REVISION' if has_imports else 'ONE_DECLARED_MOCK_REVIEW_REVISION',
         candidate_provenance=candidate_provenance(candidates), replayed_package_sha256=payload_sha256(replay['package']),
         original_corpus_sha256=payload_sha256(corpus), candidate_bundle_sha256=payload_sha256(candidates),
@@ -148,6 +152,15 @@ def audit(value, links, proposal, revision_inputs):
                  'included in this audit; retain the separately bound original artifacts. Imported provider/model/run '
                  'identities are operator declarations, not authenticated. Execution flags describe this audit '
                  'only and do not establish or deny actual historical model use.')
+    if observation_origins(base) or observation_origins(package):
+        result.update(status='CURRENT_REVISION_MATCH_WITH_UNREPLAYED_OBSERVATION_HISTORY',
+            initial_reasoning_history_status=result['initial_history_status'],
+            initial_history_status='UNREPLAYED_REASONING_AND_OBSERVATION_ORIGINS_PRESENT' if initial_records else 'UNREPLAYED_OBSERVATION_ORIGINS_PRESENT',
+            initial_unreplayed_observation_origins=observation_origins(base),
+            final_unreplayed_observation_origins=observation_origins(package),
+            observation_adoption_history_status='NOT_REPLAYED_BY_REASONING_REVISION_AUDIT',
+            candidate_origin_coverage_scope='REASONING_COMPONENTS_ONLY')
+    return result
 
 
 def main():

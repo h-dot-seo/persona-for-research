@@ -2,21 +2,30 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.41 (source-specific evidence-use explanations).
+Current local source release: v0.42 (explicit reviewed observation append candidates).
 
-- `python -m unittest discover -q`: 419 synthetic tests passed locally.
+- `python -m unittest discover -q`: 440 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 143 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 148 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
 - Standalone `synthetic_walkthrough.py --candidate-source offline-import`: all 17
   CLI stages completed, imported lineage replay matched, answer review stayed deferred.
 
-Most recent separately verified remote baseline: v0.40, commit
-[`eca37da82808aea80d204423cceb0b7df66a3c55`](https://github.com/h-dot-seo/persona-for-research/commit/eca37da82808aea80d204423cceb0b7df66a3c55),
-with 407 tests. This is a prior-commit record, not a claim of remote CI for v0.41.
+Most recent separately verified remote baseline: v0.41, commit
+[`ef2f5872734d182b22f31a4e18a93c5b4c34059e`](https://github.com/h-dot-seo/persona-for-research/commit/ef2f5872734d182b22f31a4e18a93c5b4c34059e),
+with 419 tests. This is a prior-commit record, not a claim of remote CI for v0.42.
 
-- [GitHub Actions run 41768955142](https://github.com/h-dot-seo/persona-for-research/actions/runs/41768955142):
+- [GitHub Actions run 41769673804](https://github.com/h-dot-seo/persona-for-research/actions/runs/41769673804):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-one observation-append regressions cover explicit selection/new identity,
+complete review, null gaps, rejected counterevidence, local-source changes, exact
+replay, all base-field bindings, origin tampering/transplants, retained history,
+projection/rule/endpoint/reader continuity, reasoning-only audit scope, manual-edit
+rejection, JSON aliases, bounded output and real CLI execution. Independent review
+found a broad reasoning-chain status that understated inherited observation history;
+both chain and single-revision summaries now explicitly disclose that history.
+All checks use invented sources and canned responses, not actual inference.
 
 Twelve additional evidence-use regressions cover exact reference/role coverage,
 source-specific null boundaries, explicit reviewed explanations, removed/dual-role

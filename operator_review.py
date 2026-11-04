@@ -10,6 +10,7 @@ from observation_input import verified_corpus
 from persona import payload_sha256
 from research_workflow import build
 from strict_json import load
+from observation_provenance import attach
 
 REVIEW_KEYS = {'candidate_bundle_sha256', 'input_corpus_sha256', 'reviewer_id', 'decisions'}
 BASIC_DECISION_KEYS = {'candidate_id', 'decision', 'review_note'}
@@ -52,6 +53,7 @@ def target_inventory(corpus, bundle):
                 occupancy='EMPTY' if raw is None else 'OCCUPIED',
                 expected_component_sha256=None if raw is None else payload_sha256(raw),
                 existing_component=copy.deepcopy(rule.get('reasoning', {}).get(dimension))))
+            attach(targets[-1]['observation'], rule)
         rows.append(dict(candidate_id=candidate['candidate_id'], paper_id=candidate['paper_id'],
             dimension=candidate['dimension'], candidate_text=candidate['candidate_text'],
             proposed_claim_type=candidate['proposed_claim_type'], locator=candidate['locator'],

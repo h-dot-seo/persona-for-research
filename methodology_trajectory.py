@@ -1,4 +1,5 @@
 """Describe curated publication chronology, never a researcher's private beliefs."""
+from observation_provenance import attach
 
 
 def summarize(rules):
@@ -16,6 +17,7 @@ def summarize(rules):
             'rule_id', 'paper_id', 'locator', 'year', 'source_kind', 'stance',
             'claim_type', 'evidence_quote', 'evidence_verification', 'limitation',
             'attribution')})
+        attach(group['evidence'][-1], rule)
     result = []
     for key in sorted(groups):
         group = groups[key]

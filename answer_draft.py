@@ -10,6 +10,7 @@ from reasoning_links import _sources, _endpoint
 from design_scenario import _text
 from review_package import display
 from strict_json import load
+from observation_provenance import lines as origin_lines, KEY as OBSERVATION_ORIGIN
 
 BINDINGS = ('persona_sha256', 'knowledge_papers_sha256')
 ROLES = ('support', 'challenge', 'context')
@@ -148,6 +149,7 @@ def _render_endpoint(lines, node):
     lines.append('    Observation [' + obs['stance'] + '; ' + obs['claim_type'] + ']: ' + display(obs['method']))
     lines.append('    Condition: ' + display(obs['condition']) + '; limitation: ' + display(obs['limitation']))
     lines.append('    Observation locator: ' + display(obs['locator']))
+    if OBSERVATION_ORIGIN in obs: lines.extend(origin_lines(obs[OBSERVATION_ORIGIN], display))
     record = component if component is not None else obs
     if component is not None: lines.append('    Component [' + component['claim_type'] + ']: ' + display(component['text']))
     if component is not None and 'origin' in component:

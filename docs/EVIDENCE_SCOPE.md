@@ -64,3 +64,15 @@ python -m unittest test_evidence_scope -v
 Use the full review packet for detailed quotations and review notes. Real sources,
 rights, identities, semantic support and scholarly fidelity require authorized
 local material and independent review; none was evaluated by these synthetic tests.
+
+## Imported base observations versus reasoning components
+
+An explicitly reviewed [observation append](OBSERVATION_REVISION.md) preserves
+`observation_origin` independently of component candidate origin. A direct
+observation citation is classified as a recorded imported observation. A manual
+reasoning component within that observation is still a manual component, with
+separately disclosed imported observation context. The report inventories all
+recorded imported observations, including unused ones, and distinguishes direct
+references from contextual history. These declarations do not authenticate
+actual model use, human approval or earlier append history. Current execution
+flags describe this reader command only.
