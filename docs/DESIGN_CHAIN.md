@@ -127,3 +127,12 @@ provenance cannot turn consistency hashes into signatures or scientific validati
 Run `python -m unittest test_imported_provenance -v` for imported-only, mixed-stage,
 repeated-ID, inherited/replaced-history and tamper regressions. All use synthetic
 local fixtures, without actual model/source data or network calls.
+
+## Base-observation proposal boundary
+
+Candidate-origin coverage here applies to recorded reasoning components, not an
+authenticated history of base observations. An observation-level reference with no
+component origin does not establish manual authorship or absence of earlier model
+assistance. [First-observation proposal packets](OBSERVATION_PROPOSALS.md) deliberately
+remain noncanonical and cannot enter these audits. Canonical support would require
+observation-level provenance and a separate validated append/revision replay path.

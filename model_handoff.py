@@ -32,21 +32,26 @@ def main():
     for name in ('corpus', 'handoff', 'response', 'provenance'):
         ingest.add_argument(name, type=Path)
     for command in (prepare, response_template, ingest):
+        command.add_argument('--task', choices=('reasoning', 'observations'), default='reasoning')
         command.add_argument('--source-root', type=Path, help='Read and recheck files from a local manifest instead of supplied segments')
     args = parser.parse_args()
     try:
         corpus = load(args.corpus)
         if args.source_root is not None:
             corpus = load_segment_corpus(corpus, args.source_root, max_total_bytes=MAX_HANDOFF_BYTES)
+        prepare_handoff, import_response = prepare_model_handoff, import_model_response
+        if args.task == 'observations':
+            from observation_proposals import prepare_observation_handoff, import_observation_response
+            prepare_handoff, import_response = prepare_observation_handoff, import_observation_response
         if args.command == 'prepare':
-            result = prepare_model_handoff(corpus)
+            result = prepare_handoff(corpus)
         elif args.command == 'response-template':
             handoff = load(args.handoff)
-            if payload_sha256(handoff) != payload_sha256(prepare_model_handoff(corpus)):
+            if payload_sha256(handoff) != payload_sha256(prepare_handoff(corpus)):
                 raise ValueError('model handoff changed or is stale for the complete input corpus')
             result = dict(handoff_sha256=payload_sha256(handoff), candidates=[])
         else:
-            result = import_model_response(corpus, load(args.handoff), load(args.response), load(args.provenance))
+            result = import_response(corpus, load(args.handoff), load(args.response), load(args.provenance))
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
     sys.stdout.buffer.write((json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))

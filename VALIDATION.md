@@ -2,21 +2,27 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.38 (file-backed model handoff and candidate review).
+Current local source release: v0.39 (first-observation proposal review).
 
-- `python -m unittest discover -q`: 377 synthetic tests passed locally.
+- `python -m unittest discover -q`: 389 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 136 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 139 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
 - Standalone `synthetic_walkthrough.py --candidate-source offline-import`: all 17
   CLI stages completed, imported lineage replay matched, answer review stayed deferred.
 
-Most recent separately verified remote baseline: v0.37, commit
-[`33b8321c98fcb723d29094bd72ca0b83e6a903fc`](https://github.com/h-dot-seo/persona-for-research/commit/33b8321c98fcb723d29094bd72ca0b83e6a903fc),
-with 364 tests. This is a prior-commit record, not a claim of remote CI for v0.38.
+Most recent separately verified remote baseline: v0.38, commit
+[`568117ac11b678792c9e06c1c21c8a4a17a6038c`](https://github.com/h-dot-seo/persona-for-research/commit/568117ac11b678792c9e06c1c21c8a4a17a6038c),
+with 377 tests. This is a prior-commit record, not a claim of remote CI for v0.39.
 
-- [GitHub Actions run 41765030024](https://github.com/h-dot-seo/persona-for-research/actions/runs/41765030024):
+- [GitHub Actions run 41766335230](https://github.com/h-dot-seo/persona-for-research/actions/runs/41766335230):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twelve first-observation regressions cover empty source observations, preserved null
+gaps, default defer, original/reviewed label separation, rejected challenges, fixed
+evidence, stale/tampered artifacts, task isolation, escaped provenance text and local
+CLI execution. These outputs cannot enter manual-card or reasoning-candidate gates;
+acceptance never creates a runtime package.
 
 Thirteen file-backed regressions cover all handoff/review CLI modes, stale bytes
 and metadata, preamble-only changes, bounded source reads, authorization/path

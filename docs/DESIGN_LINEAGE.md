@@ -118,3 +118,12 @@ No provider/model/run identity, execution location or human reviewer is authenti
 A successful replay proves consistency of supplied artifacts, not their truth.
 Run `python -m unittest test_imported_provenance -v` for synthetic imported and
 mixed-stage regression coverage. No actual model/source data or network is used.
+
+## Base-observation proposal boundary
+
+Candidate-origin coverage here applies to recorded reasoning components, not an
+authenticated history of base observations. An observation-level reference with no
+component origin does not establish manual authorship or absence of earlier model
+assistance. [First-observation proposal packets](OBSERVATION_PROPOSALS.md) deliberately
+remain noncanonical and cannot enter these audits. Canonical support would require
+observation-level provenance and a separate validated append/revision replay path.

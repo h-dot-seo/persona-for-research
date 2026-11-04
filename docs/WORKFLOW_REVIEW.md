@@ -355,3 +355,14 @@ unknown metadata edits, poisoned embedded segments, aliases, byte budgets and CL
 failure without partial output. No automatic source hash refresh, target choice,
 model call or external transmission occurs. Initial observation curation remains
 explicit; this change removes file-copying work rather than scholarly review.
+
+### First-observation proposals stop before canonical integration
+
+An empty-observation corpus can now produce a separate source-bound proposal
+contract for methods, conditions and limitations. Imported proposals keep explicit
+stance/claim labels, null gaps and unauthenticated model/run provenance. Default
+review is deferred; accepted, rejected and pending proposals all remain visible,
+with original and reviewed text side by side. Synthetic CLI tests cover the local
+file route and demonstrate that neither manual-card append nor reasoning review
+accepts these artifacts. This avoids silently dropping observation-level provenance
+in the existing canonical machinery. No actual model or real source was used.

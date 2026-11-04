@@ -155,3 +155,11 @@ Current audit execution does not invoke a model or establish historical model us
 
 Tests use canned synthetic responses through the import path. No actual provider,
 researcher corpus, extraction-quality evaluation or scientific validation has run.
+
+## First-observation mode
+
+The default task remains `reasoning`. Use `--task observations` consistently for
+prepare, response-template and import to propose initial method observations from
+empty-observation corpora. These outputs use a deliberately separate review-only
+packet and cannot enter the reasoning or manual-card gates. Missing conditions,
+limitations and topics remain null. See [the complete workflow and stopping point](OBSERVATION_PROPOSALS.md).

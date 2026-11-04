@@ -74,6 +74,14 @@ For existing local-file manifests, add `--source-root` to the handoff and operat
 review commands. They recheck the selected source bytes and reconstruct segments
 at every stage, avoiding manual text copying and refusing stale evidence.
 
+### Draft the first method observations
+
+For selected papers with no observations yet, the handoff commands accept
+`--task observations` to prepare a separate review-only contract. `observation_proposals.py` retains original
+support/challenge proposals alongside explicit review judgments, leaving unsupported
+conditions/limitations/topics null. It never converts model output to a manual card
+or runtime package. See [first-observation proposals](docs/OBSERVATION_PROPOSALS.md).
+
 ### Record operator decisions without automatic promotion
 
 `operator_review.py` creates a deferred review template and applies explicitly

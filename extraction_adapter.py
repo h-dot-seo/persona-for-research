@@ -172,15 +172,8 @@ def prepare_model_handoff(corpus):
     return handoff
 
 
-def import_model_response(corpus, handoff, response, provenance):
-    """Check a saved response without trusting claimed model identity or calling it."""
-    expected_handoff = prepare_model_handoff(corpus)
-    if payload_sha256(handoff) != payload_sha256(expected_handoff):
-        raise ValueError('model handoff changed or is stale for the complete input corpus')
-    if not isinstance(response, dict) or set(response) != {'handoff_sha256', 'candidates'}:
-        raise ValueError('imported response requires exactly handoff_sha256 and candidates')
-    if response['handoff_sha256'] != payload_sha256(handoff):
-        raise ValueError('imported response is bound to a different handoff')
+def validate_declared_provenance(provenance):
+    """Validate a bounded operator declaration, never authenticate its producer."""
     if not isinstance(provenance, dict) or set(provenance) != PROVENANCE_FIELDS:
         raise ValueError('declared provenance has missing or unsupported fields')
     for key in PROVENANCE_FIELDS:
@@ -191,6 +184,18 @@ def import_model_response(corpus, handoff, response, provenance):
             raise ValueError('declared provenance fields cannot contain control characters')
     if provenance['execution_location'] not in ('local', 'remote', 'unknown'):
         raise ValueError('declared execution_location must be local, remote or unknown')
+
+
+def import_model_response(corpus, handoff, response, provenance):
+    """Check a saved response without trusting claimed model identity or calling it."""
+    expected_handoff = prepare_model_handoff(corpus)
+    if payload_sha256(handoff) != payload_sha256(expected_handoff):
+        raise ValueError('model handoff changed or is stale for the complete input corpus')
+    if not isinstance(response, dict) or set(response) != {'handoff_sha256', 'candidates'}:
+        raise ValueError('imported response requires exactly handoff_sha256 and candidates')
+    if response['handoff_sha256'] != payload_sha256(handoff):
+        raise ValueError('imported response is bound to a different handoff')
+    validate_declared_provenance(provenance)
     if not isinstance(response['candidates'], list) or len(response['candidates']) > MAX_IMPORTED_CANDIDATES:
         raise ValueError('imported candidates must be an array of at most 128 records')
     package, request, corpus_hash = prepare_request(corpus)
