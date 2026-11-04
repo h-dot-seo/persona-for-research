@@ -87,3 +87,13 @@ LLM, external API or scientific execution are used in the synthetic workflow.
 ```sh
 python -m unittest test_pattern_transfer_review -v
 ```
+
+## Imported pattern proposals
+
+The same inspector also accepts the versioned reviewed envelope from
+[model-assisted pattern proposals](PATTERN_PROPOSALS.md). It replays the bound
+original bundle and every explicit decision, rather than trusting cached acceptance.
+Imported origin, original/revised text, rejected proposals and unauthenticated
+model/run/reviewer provenance remain visible in JSON and text. Current inspection
+performs no model call; historical model use is not authenticated. Manual forms are
+unchanged, and neither form approves applicability or creates an answer/design.

@@ -438,6 +438,16 @@ claims, counterevidence, publication order, rival explanations and missing falsi
 remain visible. No semantic pattern, distinctive scholar trait or recommendation
 is inferred from the evidence inventory.
 
+## Propose method patterns with an offline model
+
+[Model-assisted pattern proposals](docs/PATTERN_PROPOSALS.md) compare the selected
+publication/review catalog while preserving conditions, limitations, chronology and
+contrary evidence. Imported hypotheses are separate from operator-reviewed
+interpretations. All decisions start deferred. An explicit reviewed envelope keeps
+original/revised text, rejected proposals and declared model provenance through
+existing pattern and context review. Acceptance does not approve a method or create
+a design; no model call or external transmission is performed by these tools.
+
 ## Trace a pattern into a new proposal
 
 [Pattern-to-context review](docs/PATTERN_TRANSFER_REVIEW.md) joins existing manual

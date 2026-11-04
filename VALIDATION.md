@@ -2,21 +2,30 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.39 (first-observation proposal review).
+Current local source release: v0.40 (model-assisted method-pattern proposals).
 
-- `python -m unittest discover -q`: 389 synthetic tests passed locally.
+- `python -m unittest discover -q`: 407 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 139 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 142 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
 - Standalone `synthetic_walkthrough.py --candidate-source offline-import`: all 17
   CLI stages completed, imported lineage replay matched, answer review stayed deferred.
 
-Most recent separately verified remote baseline: v0.38, commit
-[`568117ac11b678792c9e06c1c21c8a4a17a6038c`](https://github.com/h-dot-seo/persona-for-research/commit/568117ac11b678792c9e06c1c21c8a4a17a6038c),
-with 377 tests. This is a prior-commit record, not a claim of remote CI for v0.39.
+Most recent separately verified remote baseline: v0.39, commit
+[`5d233bf2aa9f844d9f09ccf6794296bda049ce8e`](https://github.com/h-dot-seo/persona-for-research/commit/5d233bf2aa9f844d9f09ccf6794296bda049ce8e),
+with 389 tests. This is a prior-commit record, not a claim of remote CI for v0.40.
 
-- [GitHub Actions run 41766335230](https://github.com/h-dot-seo/persona-for-research/actions/runs/41766335230):
+- [GitHub Actions run 41767468248](https://github.com/h-dot-seo/persona-for-research/actions/runs/41767468248):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Eighteen model-pattern regressions cover the complete real CLI route from topic
+handoff to import, default-deferred review, explicit envelope export, pattern
+inspection and context transfer. Original imported versus reviewed interpretation
+labels remain distinct. Rejected counterevidence, reference edits, missing quotes,
+null gaps, stale/tampered history, unselected-source authorization, source identity,
+bounded inputs and deep-copy isolation are checked. Independent read-only review
+also exercised adversarial artifacts, out-of-topic package changes and forbidden
+source/provider operations. No actual model or researcher source was used.
 
 Twelve first-observation regressions cover empty source observations, preserved null
 gaps, default defer, original/reviewed label separation, rejected challenges, fixed

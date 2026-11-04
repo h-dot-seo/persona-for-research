@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.39-observation-proposal-review",
+  "release": "0.40-model-pattern-proposals",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 138,
+  "file_count": 141,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 26150,
-      "sha256": "6cd5f7587dffabad4893671df92e1cc2f061c49cefdc018f34eeabe75decdd60"
+      "bytes": 26768,
+      "sha256": "d3c953cea3c4033370f47d31ad6431fdb262805eabc33c5274e165f7e2ac5507"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 16121,
-      "sha256": "78b2f92d7fbae87c8ab36911d20a763669fa3518bf631a4642c65a13c3b1f6b6"
+      "bytes": 16773,
+      "sha256": "6cb4a12ef339deca2820ae3bd39eecc4c91e28bd232f9ba98f3a2453842fc912"
     },
     {
       "path": "answer_draft.py",
@@ -190,13 +190,18 @@
     },
     {
       "path": "docs/PATTERN_HYPOTHESES.md",
-      "bytes": 5692,
-      "sha256": "24765884f1223b6a7e47bda2f28d460551badbb7f1456b551de3764c2ea79d50"
+      "bytes": 6282,
+      "sha256": "a204ea401a8f1c26042d444d1cf54952bc13ae58ea2b6ec7fae438b8e2535cc8"
+    },
+    {
+      "path": "docs/PATTERN_PROPOSALS.md",
+      "bytes": 9231,
+      "sha256": "c545deda02fb901570809b618beb29ae04608f5fa1167afe9435ff54938635b0"
     },
     {
       "path": "docs/PATTERN_TRANSFER_REVIEW.md",
-      "bytes": 5294,
-      "sha256": "ac37de126a6bee53803a52389d938c566c5544d154741f34d08d84c1776182bc"
+      "bytes": 5884,
+      "sha256": "27da33ab8f18bddf32dcaf99c04fe1785cbfc2e9f88b3a85bff05ea6526449f5"
     },
     {
       "path": "docs/PUBLICATION_SCOPE.md",
@@ -245,8 +250,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 22629,
-      "sha256": "6e765b6c87c70d5365193257690815223113aee302ae2984ac7a6b9d611529e3"
+      "bytes": 23493,
+      "sha256": "a3a89c146574fcf6ec0e108d00617488d19e28d049aa46a3ff5db9f6385c6152"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -365,13 +370,18 @@
     },
     {
       "path": "pattern_hypotheses.py",
-      "bytes": 8846,
-      "sha256": "d16874ce4ca1d754f9cc4f18e257e6a582d2d8483193f2e03ec30cdcba1e5543"
+      "bytes": 10312,
+      "sha256": "70bcdeb1368f4a59e1d2cd23cf1f44a01478adaa4c889e6facba7cbcc3369159"
+    },
+    {
+      "path": "pattern_proposals.py",
+      "bytes": 21474,
+      "sha256": "d5d81c0869c5cee9cec2c111dac9d1b62c88bc70afc2bdca6209322b3de16f0e"
     },
     {
       "path": "pattern_transfer_review.py",
-      "bytes": 8706,
-      "sha256": "b010c852093fd29c43b98e6a33f6a89fab394fa8e9551ba171f12139f0145169"
+      "bytes": 9519,
+      "sha256": "9a2bcce6f01c5bd4fc158e6eb527db77975510796466b442699cd61623277a16"
     },
     {
       "path": "persona.py",
@@ -562,6 +572,11 @@
       "path": "test_pattern_hypotheses.py",
       "bytes": 6926,
       "sha256": "55b4a4d65e3af43a7605f388a5fdcd1050ef79276c67837adde41b47a3c123d4"
+    },
+    {
+      "path": "test_pattern_proposals.py",
+      "bytes": 20756,
+      "sha256": "49be80fff7995e217a56452ef10c4371df6e1986f002e1f9f9e3b15708be12c9"
     },
     {
       "path": "test_pattern_source_identity.py",

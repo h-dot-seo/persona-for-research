@@ -27,6 +27,9 @@ def template(package,operator_id):
 
 
 def inspect(package,form):
+    if isinstance(form,dict) and form.get('schema')=='persona.reviewed-pattern-proposals.v1':
+        from pattern_proposals import inspect_reviewed
+        return inspect_reviewed(package,form)
     if not isinstance(form,dict) or set(form)!={'persona_sha256','knowledge_papers_sha256','operator_id','hypotheses'}:
         raise ValueError('pattern form has missing or unsupported fields')
     checked,papers=_sources(package);expected=template(checked,form['operator_id'])
@@ -80,11 +83,20 @@ def inspect(package,form):
         semantic_validation='NOT_PERFORMED',llm_used=False,source_reread=False,automatic_pattern_discovery=False,boundary=BOUNDARY)
 
 
-def render(result):
-    lines=['Operator method-pattern hypotheses', 'Status: '+result['status'],
-        'Declared operator (not authenticated): '+display(result['operator_id'])]
+def render(result, *, imported_proposal=False):
+    lines=['Imported proposal evidence comparison' if imported_proposal else 'Operator method-pattern hypotheses',
+        'Status: '+result['status'],
+        ('Reviewing operator (not original proposal author; not authenticated): ' if imported_proposal else
+         'Declared operator (not authenticated): ')+display(result['operator_id'])]
+    if 'proposal_review' in result:
+        lines.insert(1,'Origin: operator-reviewed imported proposals. No model call during this inspection; historical model use is declared, not authenticated.')
     for pattern in result['hypotheses']:
-        lines.append('Pattern '+display(pattern['pattern_id'])+' [operator_interpretation]: '+display(pattern['operator_hypothesis']))
+        lines.append('Pattern '+display(pattern['pattern_id'])+(' [imported_proposal]: ' if imported_proposal else
+            ' [operator_interpretation]: ')+display(pattern['operator_hypothesis']))
+        if 'proposal_origin' in pattern:
+            origin=pattern['proposal_origin']
+            lines.append('  Origin: operator-reviewed imported proposal '+display(origin['candidate_id'])+
+                '; bundle='+origin['proposal_bundle_sha256']+'; review='+origin['review_sha256'])
         lines.append('  Declared scope: '+display(pattern['scope_note']))
         for key in OPTIONAL:lines.append('  '+key+': '+('NOT_SUPPLIED' if pattern[key] is None else display(pattern[key])))
         lines.append('  Review prompts: '+(', '.join(pattern['review_prompts']) or 'none detected; not validation'))
@@ -96,7 +108,13 @@ def render(result):
             lines.append('    Observation stored quote: '+display(obs['evidence_quote'])+'; recorded check: '+display(obs['evidence_verification']))
     lines.append('Unreferenced observations (not proof of irrelevance):')
     for ref in result['unreferenced_observations']:lines.append('  '+display(ref['paper_id'])+' / '+str(ref['observation_index']))
-    lines.append(BOUNDARY)
+    lines.append(('This original imported proposal is not an operator-authored or accepted hypothesis. '
+        'References and checks are historical records, not semantic validation. No model call occurs in this inspection.'
+        if imported_proposal else BOUNDARY))
+    if 'proposal_review' in result:
+        from pattern_proposals import render_review
+        lines.append('Full imported proposal/review history, including rejected candidates:')
+        lines.append(render_review(result['proposal_review']).rstrip('\n'))
     return '\n'.join(lines)+'\n'
 
 

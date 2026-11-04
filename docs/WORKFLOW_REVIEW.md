@@ -366,3 +366,16 @@ with original and reviewed text side by side. Synthetic CLI tests cover the loca
 file route and demonstrate that neither manual-card append nor reasoning review
 accepts these artifacts. This avoids silently dropping observation-level provenance
 in the existing canonical machinery. No actual model or real source was used.
+
+### Cross-publication pattern proposals retain origin through transfer
+
+A topic-bound offline catalog now supports tentative method comparisons across
+research papers and reviews. Proposed references cannot invent sources or quotes;
+conditions, limitations, publication dates, stored checks and missing dimensions
+remain explicit. Imported proposals and operator-reviewed interpretations have
+separate labels and content. Default defer, complete explicit decisions and an
+accepted-only worksheet gate prevent automatic approval. The versioned envelope
+keeps every original/rejected proposal and review note, and downstream pattern and
+context inspectors replay it instead of stripping model provenance into a manual
+form. Synthetic CLI tests exercise the complete route without actual inference,
+source rereads, external transmission or real researcher material.

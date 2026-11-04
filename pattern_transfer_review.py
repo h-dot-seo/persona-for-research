@@ -55,12 +55,17 @@ def inspect(package,patterns,context,links,proposal,draft,pattern_id):
         rows.append(row)
         prompts.extend(dict(reference=ref,code=code) for code in codes)
     bindings=dict(pattern_form_sha256=patterns_result['form_sha256'],context_form_sha256=context_result['form_sha256'],packet_input_sha256=packet['packet_input_sha256'],pattern_id=pattern_id)
-    return dict(status='PATTERN_TRANSFER_REQUIRES_MANUAL_REVIEW',**bindings,report_input_sha256=payload_sha256(bindings),
+    result=dict(status='PATTERN_TRANSFER_REQUIRES_MANUAL_REVIEW',**bindings,report_input_sha256=payload_sha256(bindings),
         question=packet['question'],target_context=context_result['target_context'],selected_pattern=selected,
         declared_pattern_operator_id=patterns_result['operator_id'],
         selected_pattern_review_prompts=selected['review_prompts'],context_review=context_result,answer_design_review=packet,
         evidence_routes=rows,trace_review_prompts=prompts,source_reread=False,llm_used=False,
         semantic_validation='NOT_PERFORMED',boundary=BOUNDARY)
+    if 'proposal_review' in patterns_result:
+        result.update(pattern_proposal_review=patterns_result['proposal_review'],
+            pattern_origin=patterns_result['origin'],execution_scope='CURRENT_INSPECTION_ONLY',
+            historical_model_use='DECLARED_NOT_AUTHENTICATED')
+    return result
 
 
 def render(package,patterns,context,links,proposal,draft,pattern_id):
@@ -72,6 +77,8 @@ def render(package,patterns,context,links,proposal,draft,pattern_id):
         'Scope: '+display(pattern['scope_note']),'Question: '+display(result['question']),
         'Target context: '+display(result['target_context']),
         'Pattern review prompts: '+(', '.join(result['selected_pattern_review_prompts']) or 'none detected; not validation')]
+    if 'pattern_proposal_review' in result:
+        lines.insert(1,'Pattern origin: operator-reviewed imported proposal. No model call during this inspection; historical model use is declared, not authenticated.')
     for field in ('alternative_explanation','falsification_check','uncertainty'):
         lines.append('Pattern '+field+': '+('NOT_SUPPLIED' if pattern[field] is None else display(pattern[field])))
     for route in result['evidence_routes']:
@@ -93,6 +100,10 @@ def render(package,patterns,context,links,proposal,draft,pattern_id):
     lines.append(render_context(result['context_review']).rstrip('\n'))
     lines.append('Full supplied answer/design review (includes evidence outside the selected pattern):')
     lines.append(render_packet(package,links,proposal,draft,context['reference_year']).rstrip('\n'))
+    if 'pattern_proposal_review' in result:
+        from pattern_proposals import render_review
+        lines.append('Imported pattern provenance and complete recorded decisions, including rejected proposals:')
+        lines.append(render_review(result['pattern_proposal_review']).rstrip('\n'))
     return '\n'.join(lines)+'\n'
 
 
