@@ -2,6 +2,58 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.58 (explicit research context for answer preparation).
+
+- `python -m unittest discover -q`: 822 synthetic tests passed locally in 245.875 seconds.
+- `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 199 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 198 exact allowlisted entries and file hashes.
+- A standalone 24-command CLI route prepared a v3 answer handoff with selected
+  pattern, applicability and declared publication context; imported canned answers;
+  recorded explicit synthetic adoption/rejection; and kept final answer review
+  deferred. It composed an imported argument map, fresh invented-source checks,
+  JSON/text/passive HTML, pinned reopening and a two-card comparison. A deliberately
+  changed current publication annotation remained separate from the recorded
+  answer-preparation context. The complete HTML JSON snapshot matched the report.
+  No provider or browser was invoked.
+
+Most recent separately verified remote baseline: v0.57, commit
+[`2773d9186874f654facd78441aac49aae8391fe1`](https://github.com/h-dot-seo/persona-for-research/commit/2773d9186874f654facd78441aac49aae8391fe1),
+with 772 tests. This is a prior-commit record, not a claim of remote CI for v0.58.
+
+- [GitHub Actions run 41804884773](https://github.com/h-dot-seo/persona-for-research/actions/runs/41804884773):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Fifty new tests cover explicit v3 selection, exact question/topic/year bindings,
+selected-pattern and applicability routes, year-scoped publication relationships,
+full original/revised/rejected histories, immutable inputs, strict finite JSON,
+collective input/output bounds and fail-closed CLI arguments. Context-only quotes,
+sibling observations and rejected/unselected references never become citable unless
+explicitly selected. Changed recorded context invalidates dependent review/map
+bindings. Different current context is disclosed with both versions preserved,
+not treated as automatic conflict, supersession, approval or model-use evidence.
+
+Frozen v1 and v2 answer/argument artifacts retain their existing canonical hashes.
+The v2 fixture was captured before this implementation, not regenerated to match it.
+An independent read-only implementation audit ran 110 focused tests and identified
+one low-severity direct-Python input-coercion inconsistency: template normalization
+could turn tuples into JSON arrays before the strict context validator. The v3
+entry points now check original inputs before normalization; a regression covers
+that case and non-string keys. Thirty-eight focused tests and the full aggregate
+passed after this fix. There was no independent post-fix re-audit. Two initial new
+fixtures changed a target context without updating its existing binding; the
+fixtures were corrected without weakening the production stale-context guard.
+
+Supplied context is inspected operator input, not verified researcher reasoning,
+source authorship, independence, influence, applicability or approval. Recorded
+preparation context does not establish what any model actually received or used.
+No source permissions expand, no decisions are automatically adopted, and human
+scientific review remains required. All fixtures are synthetic. Actual-browser
+visual/keyboard/print QA remains **BLOCKED/unverified**; no browser retry or
+restriction bypass was attempted.
+
+## Prior v0.57 citation reasoning audit checks
+
 Current local source release: v0.57 (standalone citation reasoning audit).
 
 - `python -m unittest discover -q`: 772 synthetic tests passed locally.

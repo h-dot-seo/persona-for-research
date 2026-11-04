@@ -97,6 +97,12 @@ slots never requested, explicit blanks and declared interpretations, while prese
 rejected/deferred claims and keeping imported candidate history out of current-use
 counts. It produces no quality score or automatic upgrade.
 
+To supply method and publication context **before** an offline answer is proposed,
+use the [optional contextual answer handoff](docs/ANSWER_CONTEXT.md). It preserves
+operator hypotheses, exclusions, uncertainty, chronology and relationship history
+without expanding the explicitly citable source set. Later journeys distinguish
+recorded preparation context from current review inputs.
+
 ## Adopt offline answer proposals explicitly
 
 [Answer proposals](docs/ANSWER_PROPOSALS.md) prepare an evidence-scoped local

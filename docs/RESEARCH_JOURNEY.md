@@ -254,3 +254,14 @@ same explanation only for the claim that actually cites the source, with no tran
 to conclusions. Reader disclosure and passive HTML retain declared and historical
 interpretations; source-byte matching does not validate their meaning. Legacy
 inputs and imported envelopes keep their original outputs.
+
+## Recorded answer-preparation context versus current review
+
+For [v3 contextual answers](ANSWER_CONTEXT.md), the journey preserves the recorded
+preparation/import context inside answer history and compares its four logical
+artifact hashes with current patterns, context, publication relationships and
+selected pattern ID. SAME_RECORDED_ARTIFACTS or DIFFERENT_SUPPLIED_ARTIFACTS describes
+input equality only. Differences remain visible in the review agenda and passive
+HTML, without blocking reevaluation, overwriting either context, rebinding artifacts
+or expanding active citation uses. Equality is not proof of model use or approval.
+Legacy answer modes receive no additional comparison field or prompt.

@@ -76,6 +76,22 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
     history = timeline(package, topic, publication_relations)
     scope = disclose(package, links, proposal, draft, year, declared_review)
     packet = transfer['answer_design_review']; answer = packet['answer']
+    recorded_context_comparison = None
+    if answer.get('proposal_review', {}).get('schema') == 'persona.answer-proposal-review.v3':
+        recorded = answer['proposal_review']['scope']['research_context']
+        current = dict(patterns=patterns, context=context, publication_relations=publication_relations, pattern_id=pattern_id)
+        fields = ('patterns', 'context', 'publication_relations', 'pattern_id')
+        hashes = [dict(field=field, recorded_sha256=payload_sha256(recorded[field]),
+            current_sha256=payload_sha256(current[field])) for field in fields]
+        changed = [row['field'] for row in hashes if row['recorded_sha256'] != row['current_sha256']]
+        recorded_context_comparison = dict(
+            status='DIFFERENT_SUPPLIED_ARTIFACTS' if changed else 'SAME_RECORDED_ARTIFACTS',
+            changed_fields=changed, artifacts=hashes,
+            scope='LOGICAL_JSON_INPUTS_NOT_SOURCE_BYTES_OR_SEMANTIC_JUDGMENTS',
+            both_contexts_preserved=True, automatic_rebinding=False, model_use_verified=False,
+            boundary='Recorded answer-preparation/import context and current journey review inputs remain separate. '
+                'Different hashes do not establish conflicting judgments, supersession or invalidity. '
+                'Equal hashes do not prove model use, applicability or approval. No citation scope changes.')
     relations = transfer['publication_context_review']
     _, papers = _sources(package)
     application_review = None
@@ -140,6 +156,9 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
     def prompt(domain, code, **target):
         agenda.append(dict(domain=domain, code=code, **copy.deepcopy(target)))
 
+    if recorded_context_comparison is not None and recorded_context_comparison['changed_fields']:
+        prompt('answer_preparation_context', 'DIFFERENT_SUPPLIED_CONTEXT_ARTIFACTS',
+            changed_fields=recorded_context_comparison['changed_fields'])
     if not history['years']: prompt('timeline', 'NO_TOPIC_MATCHING_RECORDS')
     for dimension in history['missing_dimensions']: prompt('timeline', 'REASONING_DIMENSION_NOT_SUPPLIED', dimension=dimension)
     for code in transfer['selected_pattern_review_prompts']: prompt('pattern', code, pattern_id=pattern_id)
@@ -179,6 +198,8 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
         provenance_history_replay='NOT_PERFORMED', human_review_authenticated=False,
         scientific_validation='NOT_PERFORMED', researcher_fidelity_evaluation='NOT_PERFORMED',
         automatic_approval=False, scientific_execution=False, canonical_update_performed=False, boundary=BOUNDARY)
+    if recorded_context_comparison is not None:
+        result['recorded_answer_context_comparison'] = recorded_context_comparison
     if application_review is not None:
         by_reference = {row['reference_sha256']: row for row in result['evidence_routes']}
         for row in result['evidence_routes']: row['method_application_uses'] = []
@@ -218,6 +239,10 @@ def render(package, patterns, context, links, proposal, draft, argument, publica
         'Reference year: ' + str(result['reference_year']), 'Journey input sha256: ' + result['journey_input_sha256'],
         'Declared answer review: ' + result['answer_review_status'] + ' (not authenticated approval)', result['boundary'],
         'Review agenda (domain-specific prompts, not severity ranks or a readiness score):']
+    if 'recorded_answer_context_comparison' in result:
+        comparison = result['recorded_answer_context_comparison']
+        lines.insert(6, 'Recorded answer-preparation context versus current review: '+comparison['status']+
+            '; changed logical inputs='+(', '.join(comparison['changed_fields']) or 'none')+'. '+comparison['boundary'])
     if 'method_application_review' in result:
         lines.insert(6, 'Declared method application: ' + result['method_application_review']['status'] + ' (proposed checks are not executed)')
     if 'source_recheck' in result:

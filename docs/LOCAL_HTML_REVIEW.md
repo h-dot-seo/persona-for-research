@@ -142,3 +142,12 @@ Adding synthetic `--import-arguments` preserves original, adopted and rejected g
 bridges in the same passive report. With answer imports and all earlier extensions,
 the complete runner has 53 stages. Declared step order and topological review order
 remain separately labeled. Existing static checks do not become browser/layout QA.
+
+## Contextual answer histories
+
+When an answer uses the [v3 context handoff](ANSWER_CONTEXT.md), the passive view
+displays a recorded-preparation versus current-review comparison. It shows logical
+input hashes and changed field names, not conflicting-judgment or correctness
+verdicts. Full recorded and current contexts remain in separate detailed histories
+and the exact JSON snapshot. No decision controls or new external resources are
+added. Browser layout, keyboard and print checks remain blocked/unverified.

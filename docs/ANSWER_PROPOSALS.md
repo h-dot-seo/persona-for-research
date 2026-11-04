@@ -193,3 +193,12 @@ explanation slot. Default v1 remains unchanged and rejects those additional fiel
 See [citation explanations](CITATION_EXPLANATIONS.md) for rationale/context limits,
 original-versus-adopted labels, missing prompts, full rejected history and replay
 compatibility. The existing synthetic walkthrough intentionally stays v1.
+
+## Optional v3 method and publication context
+
+Use [contextual answer preparation](ANSWER_CONTEXT.md) to supply explicit raw
+pattern, applicability and publication-relationship forms with one selected pattern
+ID. The v3 handoff preserves inspected context and history but keeps the v2 response
+contract and exact citation permission boundary. All four context options require
+explanation mode; omitted context leaves old v1/v2 records unchanged. Current journey
+review inputs are compared separately with the recorded preparation context.

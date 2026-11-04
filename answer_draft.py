@@ -64,7 +64,7 @@ def template(package, question, operator_id):
 
 
 def inspect(package, draft):
-    if isinstance(draft, dict) and draft.get('schema') in ('persona.reviewed-answer-proposals.v1', 'persona.reviewed-answer-proposals.v2'):
+    if isinstance(draft, dict) and draft.get('schema') in ('persona.reviewed-answer-proposals.v1', 'persona.reviewed-answer-proposals.v2', 'persona.reviewed-answer-proposals.v3'):
         from answer_proposals import inspect_reviewed
         return inspect_reviewed(package, draft)
     checked, papers = _sources(package)

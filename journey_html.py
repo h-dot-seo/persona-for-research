@@ -117,6 +117,9 @@ def _format(result):
     if 'method_application_review' in result:
         out.add('<p>Method application: '+_escape(result['method_application_review']['status'])+'</p>')
     out.add('<p>Scientific validation: NOT_PERFORMED. Human review identity: not authenticated. No model/provider call, automatic approval, scientific execution or canonical update occurs in this view.</p></div></div></section>')
+    if 'recorded_answer_context_comparison' in result:
+        out.add('<div class="panel"><h3>Recorded answer-preparation context versus current review</h3>')
+        out.data(result['recorded_answer_context_comparison'], known_refs); out.add('</div>')
     if 'local_input_file_check' in result:
         out.add('<p class="panel">Explicit input-file consistency: '+_escape(result['local_input_file_check']['status'])+
             '. This binds supplied JSON files, not approval or source authenticity. Full per-file checks appear below.</p>')

@@ -16,11 +16,15 @@ SCOPE_SCHEMA = 'persona.answer-proposal-scope.v1'
 ENVELOPE_SCHEMA = 'persona.reviewed-answer-proposals.v1'
 SCHEMAS = {version: {name: 'persona.'+kind+'.v'+str(version) for name, kind in
     [('scope', 'answer-proposal-scope'), ('handoff', 'answer-handoff'), ('bundle', 'answer-proposals'),
-     ('packet', 'answer-proposal-review'), ('envelope', 'reviewed-answer-proposals')]} for version in (1, 2)}
+     ('packet', 'answer-proposal-review'), ('envelope', 'reviewed-answer-proposals')]} for version in (1, 2, 3)}
 EXPLANATION_BOUNDARY = (' Citation explanations are declared interpretations attached only to an exact claim/reference/role use. '
     'They do not authenticate source authorship or establish support, relevance, quotation permission or approval. '
     'Explicit null remains a missing-explanation prompt even after a declared retain decision.')
 PROPOSAL_FIELDS = {'text', 'claim_type', 'uncertainty', 'citations'}
+CONTEXT_BOUNDARY = (' Inspected operator-supplied research context is a review aid, not approved reasoning. '
+    'Context-only references, unselected patterns and rejected histories grant no citation permission or relevance. '
+    'Publication ordering and relationships do not prove career stages, influence, independence or private beliefs. '
+    'Supplying context does not establish that a model used it, that a method applies or that the researcher endorses the answer.')
 MAX_PROPOSALS = 32
 MAX_REFS = 64
 MAX_CITATIONS = 32
@@ -39,7 +43,17 @@ BOUNDARY = ('Imported answer proposals are untrusted suggestions, not researcher
     'Scope and local handoff preparation do not authorize source access or transmission to a provider.')
 
 
+def _strict_context_inputs(value):
+    # New direct v3 APIs reject non-JSON Python data before legacy normalization.
+    from answer_context import _encoded
+    if len(_encoded(value)) > MAX_INPUT_BYTES:
+        raise ValueError('combined answer proposal inputs exceed 8 MiB')
+
+
 def _inputs(value):
+    if isinstance(value, list) and any(isinstance(item, dict) and
+            item.get('schema') in tuple(SCHEMAS[3].values()) for item in value):
+        _strict_context_inputs(value)
     try: raw = json.dumps(value, ensure_ascii=True, allow_nan=False).encode('utf-8')
     except (ValueError, TypeError, RecursionError) as exc:
         raise ValueError('answer proposal inputs must be finite JSON data') from exc
@@ -60,8 +74,19 @@ def _schemas(scope):
     raise ValueError('unsupported answer scope schema')
 
 
+def _uses_explanations(scope):
+    return _schemas(scope) in (SCHEMAS[2], SCHEMAS[3])
+
+
+def _research_context(package, scope):
+    from answer_context import inspect
+    return inspect(package, scope['research_context'], scope['question'], scope['topic'],
+        scope['reference_year'], scope['evidence_refs'])
+
+
 def _boundary(scope):
-    return BOUNDARY + (EXPLANATION_BOUNDARY if _schemas(scope) == SCHEMAS[2] else '')
+    return BOUNDARY + (EXPLANATION_BOUNDARY if _uses_explanations(scope) else '') + (
+        CONTEXT_BOUNDARY if _schemas(scope) == SCHEMAS[3] else '')
 
 
 def _explanation_origin(claim, origin):
@@ -69,23 +94,38 @@ def _explanation_origin(claim, origin):
         if 'explanation' in citation: citation['explanation_origin'] = origin
 
 
-def template(package, question, topic, reference_year, operator_id, *, include_citation_explanations=False):
+def template(package, question, topic, reference_year, operator_id, *, include_citation_explanations=False, research_context=None):
     if type(include_citation_explanations) is not bool:
         raise ValueError('include_citation_explanations must be boolean')
-    package, question, topic, reference_year, operator_id = _inputs([package, question, topic, reference_year, operator_id])
+    if research_context is None:
+        package, question, topic, reference_year, operator_id = _inputs([package, question, topic, reference_year, operator_id])
+    else:
+        if not include_citation_explanations:
+            raise ValueError('research context requires explicit citation explanation mode')
+        _strict_context_inputs([package, question, topic, reference_year, operator_id, research_context])
+        package, question, topic, reference_year, operator_id, research_context = _inputs(
+            [package, question, topic, reference_year, operator_id, research_context])
     package, _ = _sources(package)
     _text(question, 'question'); _text(topic, 'topic'); _text(operator_id, 'operator_id', 128)
     if type(reference_year) is not int or not 1 <= reference_year <= 9999:
         raise ValueError('reference_year must be an integer from 1 to 9999')
-    return dict(schema=SCHEMAS[2 if include_citation_explanations else 1]['scope'], package_sha256=payload_sha256(package), question=question,
+    version = 3 if research_context is not None else 2 if include_citation_explanations else 1
+    result = dict(schema=SCHEMAS[version]['scope'], package_sha256=payload_sha256(package), question=question,
         topic=topic, reference_year=reference_year, operator_id=operator_id, evidence_refs=[])
+    if research_context is not None:
+        result['research_context'] = research_context
+        _research_context(package, result)
+    return result
 
 
 def _scope(package, scope):
-    if not isinstance(scope, dict) or set(scope) != {'schema', 'package_sha256', 'question', 'topic', 'reference_year', 'operator_id', 'evidence_refs'}:
-        raise ValueError('answer scope has missing or unsupported fields')
+    if not isinstance(scope, dict): raise ValueError('answer scope has missing or unsupported fields')
+    fields = {'schema', 'package_sha256', 'question', 'topic', 'reference_year', 'operator_id', 'evidence_refs'}
+    if _schemas(scope) == SCHEMAS[3]: fields.add('research_context')
+    if set(scope) != fields: raise ValueError('answer scope has missing or unsupported fields')
     expected = template(package, scope['question'], scope['topic'], scope['reference_year'], scope['operator_id'],
-        include_citation_explanations=_schemas(scope) == SCHEMAS[2])
+        include_citation_explanations=_uses_explanations(scope),
+        research_context=scope['research_context'] if _schemas(scope) == SCHEMAS[3] else None)
     if any(scope[k] != expected[k] for k in expected if k != 'evidence_refs'):
         raise ValueError('answer scope changed or is bound to a different package')
     refs = scope['evidence_refs']
@@ -127,11 +167,19 @@ def prepare_handoff(package, scope):
             'Topic and year are declared review aids, not evidence of relevance or historical authority. No execution is authorized.'
         ], processing=dict(scope='CURRENT_PREPARATION_ONLY', provider_invoked=False, external_transmission=False, source_reread=False),
         boundary=_boundary(scope))
-    if _schemas(scope) == SCHEMAS[2]:
+    if _uses_explanations(scope):
         result['response_contract'].update(citation_fields=['reference', 'role', 'explanation'],
             explanation_fields=['rationale', 'context_boundary'], explanation_scope='EXACT_CLAIM_REFERENCE_ROLE_DECLARATION',
             explanation_allows_null=True, context_boundary_allows_null=True, max_explanation_chars=2000)
         result['instructions'].append('Every citation must explicitly include explanation: null when not supplied, or rationale and context_boundary. Rationale must be nonblank; context_boundary may be null. Do not invent explanations to fill gaps. Explanations are tentative interpretations, not source-author claims or verified semantic support.')
+    if _schemas(scope) == SCHEMAS[3]:
+        result['reasoning_context'] = _research_context(package, scope)
+        result['instructions'].extend([
+            'Inspected operator-supplied pattern, target context and publication records are tentative review aids, not approved methods or researcher speech.',
+            'Keep deferred/excluded assessments, missing comparisons, counterevidence and later-publication limits visible. Enclosing-observation decisions never approve every component.',
+            'Only exact references in the explicit evidence list are citable. Context-only passages, relationship bases, unselected patterns and rejected histories grant no additional citation permission or relevance.',
+            'A supplied context does not prove model use, applicability, author ownership, historical influence, career changes, private beliefs or endorsement. Never infer these from dates or declared relationships.'
+        ])
     if len(json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')) > MAX_HANDOFF_BYTES:
         raise ValueError('answer handoff exceeds the 2 MiB logical JSON limit')
     return result
@@ -156,7 +204,7 @@ def _inspect_claim(package, scope, claim, operator_id):
     if not isinstance(claim['citations'], list) or len(claim['citations']) > MAX_CITATIONS:
         raise ValueError('answer claim allows at most 32 citations')
     allowed = {payload_sha256(ref) for ref in scope['evidence_refs']}
-    citation_fields = {'reference', 'role', 'explanation'} if _schemas(scope) == SCHEMAS[2] else {'reference', 'role'}
+    citation_fields = {'reference', 'role', 'explanation'} if _uses_explanations(scope) else {'reference', 'role'}
     for citation in claim['citations']:
         if not isinstance(citation, dict) or set(citation) != citation_fields:
             raise ValueError('citation fields do not match the explicit answer scope version')
@@ -264,13 +312,17 @@ def review_proposals(package, bundle, review):
             original_inspection=_original(package, bundle['scope'], candidate['proposed_claim'], bundle['import_record']['provenance']['operator_id']),
             reviewed_claim=copy.deepcopy(decision.get('reviewed_claim')), reviewed_inspection=reviewed.get(cid)))
     pending = sum(row['decision'] == 'defer' for row in rows)
-    return _output(dict(schema=_schemas(bundle['scope'])['packet'],
+    result = dict(schema=_schemas(bundle['scope'])['packet'],
         status='ANSWER_PROPOSAL_REVIEW_INCOMPLETE' if pending else 'ANSWER_PROPOSALS_REVIEWED_NOT_APPROVED' if accepted_ids else 'NO_ACCEPTED_ANSWER_PROPOSALS',
         scope=bundle['scope'], bindings=bundle['bindings'], proposal_bundle_sha256=payload_sha256(bundle), review_sha256=payload_sha256(review),
         reviewer_id=review['reviewer_id'], reviewer_identity='RECORDED_NOT_AUTHENTICATED', import_record=bundle['import_record'],
         provider=bundle['provider'], candidates=rows, accepted_count=len(accepted_ids), deferred_count=pending,
         semantic_validation='NOT_PERFORMED', automatic_approval=False, scientific_execution=False, canonical_update_performed=False,
-        processing=dict(scope='CURRENT_REVIEW_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=_boundary(bundle['scope'])))
+        processing=dict(scope='CURRENT_REVIEW_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=_boundary(bundle['scope']))
+    if _schemas(bundle['scope']) == SCHEMAS[3]:
+        result['research_context_role'] = 'RECORDED_IMPORT_CONTEXT_NOT_AUTOMATIC_CURRENT_REVIEW_CONTEXT'
+        result['research_context_review'] = _research_context(package, bundle['scope'])
+    return _output(result)
 
 
 def _require_export(packet):
@@ -323,6 +375,10 @@ def render_review(packet):
     lines.append('Declared generation (not authenticated): '+'; '.join(key+'='+display(provenance[key])
         for key in ('provider_id', 'model_id', 'run_id', 'operator_id', 'execution_location')))
     lines.append('Handoff sha256: '+packet['import_record']['handoff_sha256']+'; response sha256: '+packet['import_record']['response_sha256'])
+    if packet['schema'] == SCHEMAS[3]['packet']:
+        from answer_context import render
+        lines.append('Recorded import context (not automatic current review context); not proof of model use or applicability:')
+        lines.append(render(packet['research_context_review']).rstrip('\n'))
     for row in packet['candidates']:
         lines.extend([display(row['candidate']['candidate_id'])+' | candidate decision='+row['decision'], 'Review note: '+display(row['review_note'])])
         for label, claim in [('Original imported proposal', row['original_inspection']), ('Explicit reviewed claim', row['reviewed_inspection'])]:
@@ -359,13 +415,22 @@ def main():
             for argument in ('question', 'topic', 'operator-id'): command.add_argument('--'+argument, required=True)
             command.add_argument('--reference-year', required=True, type=int)
             command.add_argument('--include-citation-explanations', action='store_true')
+            for argument in ('patterns', 'context', 'publication-relations'):
+                command.add_argument('--'+argument, type=Path)
+            command.add_argument('--pattern-id')
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
         if name == 'review': command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
     try:
         package = _load(args.package)
-        if args.command == 'template': result = template(package, args.question, args.topic, args.reference_year, args.operator_id,
-            include_citation_explanations=args.include_citation_explanations)
+        if args.command == 'template':
+            supplied = [args.patterns, args.context, args.publication_relations, args.pattern_id]
+            if any(value is not None for value in supplied) and not all(value is not None for value in supplied):
+                raise ValueError('research context requires patterns, context, publication-relations and pattern-id together')
+            raw = None if all(value is None for value in supplied) else dict(patterns=_load(args.patterns),
+                context=_load(args.context), publication_relations=_load(args.publication_relations), pattern_id=args.pattern_id)
+            result = template(package, args.question, args.topic, args.reference_year, args.operator_id,
+                include_citation_explanations=args.include_citation_explanations, research_context=raw)
         elif args.command == 'prepare': result = prepare_handoff(package, _load(args.scope))
         elif args.command == 'response-template': result = response_template(package, _load(args.scope), _load(args.handoff))
         elif args.command == 'import': result = import_response(package, *[_load(getattr(args, k)) for k in ('scope', 'handoff', 'response', 'provenance')])
