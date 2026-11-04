@@ -74,6 +74,55 @@ it does not authorize provider transmission, source access or redistribution.
 Review source rights and data-sharing permission separately. Never put credentials
 in artifacts or declared provenance labels.
 
+## Opt-in recorded answer context
+
+When the draft is a reviewed **v3 contextual answer**, you may explicitly include
+its recorded preparation/import context while proposing argument links:
+
+```sh
+python argument_proposals.py template package.json draft.json --operator-id synthetic-operator --answer-review answer-review.json --include-recorded-answer-context > contextual-argument-scope.json
+```
+
+Select existing claim IDs yourself, then use the same prepare/import/review/export
+commands above and below with that new scope. The template still selects no claims.
+The Python option is `include_recorded_answer_context=True`. It creates distinctly
+versioned v2 argument artifacts; mixing or downgrading schemas fails. Omission or
+false keeps v1 unchanged, even when the answer already contains v3 context. Explicit
+inclusion is rejected for drafts without recorded v3 context; none is invented.
+
+The added material is rebuilt from the validated answer envelope. It preserves the
+original method-pattern reasoning, applicability assessments, counterevidence,
+publication chronology/relationships and excluded/unselected/rejected context,
+with their original bindings and historical exact-reference scope. Read it as
+**recorded answer-preparation/import context**, not newly supplied or current
+argument context. It does not prove that those records influenced an answer or
+that a method should govern the proposed argument.
+
+That nested answer scope may contain sources outside the selected argument claims.
+It grants no new argument endpoint, citation or source-selection permission. The
+candidate contract is unchanged: only explicit existing claim IDs may be premises
+or conclusions; no new claims or automatic citation transfer are added. Free-text
+bridges and assumptions still require semantic and attribution review.
+
+The local review text preserves the recorded context and complete bridge adoption
+history. A later research journey still compares the answer's recorded context
+with separately supplied current forms. Different current context is allowed and
+disclosed by that existing comparison; it neither replaces the recorded context
+nor silently rebinds this argument. To change recorded inputs, create and explicitly
+review new bound artifacts. No separate current-argument-context workflow is added.
+
+Additional histories may contain private quotations or annotations. Opting in
+requests local inclusion only, not permission to transmit or redistribute them.
+No provider, source reread, new source-check receipt, automatic adoption or scientific
+execution is attached. All original identity and review declarations remain
+unauthenticated. Candidate adoption does not approve the argument or final answer.
+
+The existing 8 MiB combined input, 2 MiB handoff and 16 MiB report/text limits remain.
+V2 report checks include the full indented JSON representation, not only compact
+data. Including more history can exceed the limits. Failure is explicit; no context
+is truncated and no automatic fallback to v1 occurs. Existing synthetic walkthrough
+options and stage counts are unchanged.
+
 ## Candidate structure and explicit adoption
 
 A response contains exactly `handoff_sha256` and `candidates`; an empty response is

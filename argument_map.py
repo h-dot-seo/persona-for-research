@@ -28,16 +28,25 @@ def _answer(package, draft, declared_review):
 
 
 def template(package, draft, operator_id, declared_review=None):
-    answer = _answer(package, draft, declared_review); _text(operator_id, 'operator_id', 128)
+    return _template_from_answer(_answer(package, draft, declared_review), operator_id)
+
+
+def _template_from_answer(answer, operator_id):
+    """Build a form from a fresh, local validation result; never a public input."""
+    _text(operator_id, 'operator_id', 128)
     return dict(draft_sha256=answer['draft_sha256'], review_sha256=answer.get('review_sha256'),
                 operator_id=operator_id, steps=[])
 
 
 def inspect(package, draft, supplied, declared_review=None):
-    if isinstance(supplied, dict) and supplied.get('schema') == 'persona.reviewed-argument-proposals.v1':
+    if isinstance(supplied, dict) and supplied.get('schema') in ('persona.reviewed-argument-proposals.v1', 'persona.reviewed-argument-proposals.v2'):
         from argument_proposals import inspect_reviewed
         return inspect_reviewed(package, draft, supplied, declared_review)
-    answer = _answer(package, draft, declared_review)
+    return _inspect_from_answer(_answer(package, draft, declared_review), supplied)
+
+
+def _inspect_from_answer(answer, supplied):
+    """Inspect a plain map against a fresh, local validation result."""
     if not isinstance(supplied, dict) or set(supplied) != {'draft_sha256', 'review_sha256', 'operator_id', 'steps'}:
         raise ValueError('argument map has missing or unknown fields')
     _text(supplied['operator_id'], 'operator_id', 128)
@@ -156,7 +165,7 @@ def main():
             if args.map is None or args.operator_id is not None: raise ValueError('supply a map without operator override')
             supplied = load(args.map)
             output = render(package, draft, supplied, declared) if args.format == 'text' else json.dumps(inspect(package, draft, supplied, declared), indent=2) + '\n'
-            if isinstance(supplied, dict) and supplied.get('schema') == 'persona.reviewed-argument-proposals.v1':
+            if isinstance(supplied, dict) and supplied.get('schema') in ('persona.reviewed-argument-proposals.v1', 'persona.reviewed-argument-proposals.v2'):
                 from argument_proposals import MAX_OUTPUT_BYTES
                 if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES: raise ValueError('imported argument output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc) + '\n')

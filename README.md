@@ -143,6 +143,11 @@ The [contextual walkthrough](docs/ANSWER_CONTEXT.md#try-the-contextual-synthetic
 reuses those same forms in the later review without widening citation permission.
 The full route still has 53 stages; no model use or researcher endorsement is claimed.
 
+Argument preparation can also explicitly include the v3 answer's
+[recorded method/publication context](docs/ARGUMENT_PROPOSALS.md#opt-in-recorded-answer-context).
+It remains historical preparation context, not current argument approval or added
+citation permission; default argument artifacts remain unchanged.
+
 ## Compact review
 
 ```sh

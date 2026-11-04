@@ -215,6 +215,15 @@ Failures preserve diagnostics without a completion marker or automatic retry.
 Without the new flag, earlier command order, outputs and stage counts are unchanged.
 Static HTML generation does not verify browser layout, keyboard use or printing.
 
+## Use recorded context in later argument preparation
+
+The [argument proposal opt-in](ARGUMENT_PROPOSALS.md#opt-in-recorded-answer-context)
+can include this already recorded v3 answer context before bridge suggestions are
+imported. The choice is explicit in a separate v2 argument scope. It does not make
+the recorded context current, select new endpoints or transfer source citations.
+Default argument preparation and the journey's current-context comparison remain
+unchanged. No source-check preview is attached automatically.
+
 ## Compatibility, bounds and verification
 
 V1/v2 scope/handoff/bundle/review/envelope outputs remain unchanged. Frozen synthetic

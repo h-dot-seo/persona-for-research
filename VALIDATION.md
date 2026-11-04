@@ -2,6 +2,120 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.63 (explicit recorded-answer-context argument preparation).
+
+- `python -m unittest discover -q`: final complete run passed all 916 synthetic tests in 613.787 seconds.
+- `python -m compileall -q .`: passed; 135 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 213 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 212 exact allowlisted entries and file hashes.
+
+Most recent separately verified remote baseline: v0.62, commit
+[`d78283cf99c841c6b9cb0d5d9a5f16e937a44cf8`](https://github.com/h-dot-seo/persona-for-research/commit/d78283cf99c841c6b9cb0d5d9a5f16e937a44cf8),
+with 887 tests. This is a prior-commit record, not a claim of remote CI for v0.63.
+
+- [GitHub Actions run 41816254697](https://github.com/h-dot-seo/persona-for-research/actions/runs/41816254697):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Explicit inclusion creates v2 argument artifacts only for a validated reviewed v3
+contextual answer. The complete original recorded pattern/context history is rebuilt
+from that envelope, with its original answer bindings and exact-reference scope.
+Excluded, unselected and rejected histories remain visible. They are historical
+answer-preparation/import context, not current argument context, authenticated model
+use, proof of influence or permission to adopt a method. Different current journey
+forms stay separately compared and do not rebind the recorded argument.
+
+Existing selected claim IDs still bind every premise and conclusion. Wider nested
+answer references grant no new endpoint, citation, source-access or transmission
+permission. Source quotations cannot be conclusions. Candidate templates stay
+deferred; export requires explicit complete adoption. Original/revised/rejected
+bridge history and separate final-answer review remain preserved. No automatic
+scientific or logical approval, researcher speech, provider execution or source
+reread is introduced.
+
+The full workflow job budget is 15 minutes for the expanded suite, raised from
+10 minutes after the local aggregate exceeded ten minutes. Individual assertions
+and CLI timeout checks are unchanged. This is a bounded job budget change, not
+a performance improvement or a claim that the new CI has passed.
+
+The first aggregate attempt ran 891 tests in 640.419 seconds but failed during
+`test_contextual_walkthrough.setUpClass`: its existing full-context text-rendering
+subprocess exceeded 30 seconds, so that class's 17 tests did not run. This matches
+the previously recorded v0.60 timeout location; the cause is not established. No
+individual timeout was changed.
+The affected class passed all 17 tests separately in 118.636 seconds without any
+source or timeout edits. Static inspection confirms that this walkthrough omits
+the new option; context reconstruction, strict JSON replay and full pretty-output
+serialization are v2-guarded. These observations do not establish the timeout's
+cause. A second aggregate attempt also timed out at that same step, running
+891 tests in 657.180 seconds with the same 17 tests blocked. Both failures are
+retained. Repeated retries were stopped to investigate redundant answer replay.
+
+A narrow local reuse change removes only the second identical full answer replay
+inside each private argument-step inspection. Public entry points still validate
+original inputs on every call; no persistent cache or supplied inspected-answer
+input is accepted. Instrumented full synthetic inspections with three candidates
+and two accepted steps decreased from 24 to 16 replays for v1 and 25 to 17 for v2,
+with identical complete inspection hashes. This structural reduction does not
+establish the earlier timeout's cause.
+
+Eight added replay-reuse tests cover fresh validation on separate calls, changed
+histories/reviews, error order, detached results and no-I/O behavior. All 32
+pre-change full JSON/text snapshots for plain/contextual answers with and without
+separate review match. The 23-test replay/contextual-argument run and 22-test plain
+map/proposal run passed. An initial test assumed every legitimate changed history
+must be rejected even by a direct private step check; the corrected test requires
+fresh hashes for that legal change and rejection of stale public envelopes.
+
+A separate read-only audit of the reuse diff found no concrete defect; it did not
+rerun tests or timings. Four measurement passes preserved all eight complete
+import/review/inspection/text hashes. Wall timings varied, including a slower v1
+inspection sample, so no general speed guarantee is claimed. A separately paired
+full default journey text command took 16.267 seconds before and 13.835 seconds
+after, with identical text bytes. The deterministic replay-count reduction, not
+a timing threshold, is the regression gate. The original timeout cause remains
+unestablished; the complete final rerun is recorded above.
+
+Twenty-one recorded-context tests cover default compatibility, explicit flags and
+version mixing, strict JSON direct APIs, full history bindings, stale/cached context rejection,
+source-quote restrictions, no citation transfer, input immutability and no-I/O
+operations. Near-boundary tests cover complete indented v2 JSON and text limits;
+legacy compact-only API limits remain unchanged. Frozen v1 artifacts over a v3
+answer match hashes captured before this increment; earlier frozen answer and
+argument fixtures remain checked.
+
+The six integration tests exercise argument maps, current-versus-recorded journey
+context, visible passive HTML outside the saved JSON snapshot, and pinned comparison
+of v1/v2 and rejected-history changes. Initial focused assertions incorrectly assumed
+an escaping spelling and provenance equality after changing an answer bundle; those
+test assumptions were corrected without changing runtime behavior. Before replay
+reuse, a 31-test focused run and an additional 32-test existing argument map/
+integration/walkthrough run passed. The corrected integration test also passed.
+The final aggregate rechecks these after reuse. The implementation and integration
+tests were developed separately. A separate
+read-only source/test audit found no concrete correctness, permission, privacy,
+bounds or compatibility defect. That audit did not run tests or establish the cause
+of the aggregate timeout.
+
+The standalone external-directory run was repeated after replay reuse. Both runs
+completed 13 real CLI stages plus two expected failures for empty scope and mixed envelope versions, with no partial stdout on
+failure. It covered scope, handoff, response/import, deferred adoption template,
+review JSON/text, export, argument inspection/map text and full journey JSON/text/HTML.
+Recorded context matched across the handoff, review packet and map. Six complete
+JSON outputs and three text outputs matched exactly before/after the reuse change.
+Two explicitly adopted synthetic bridges and one rejected alternative stayed distinct, original
+inputs/source bytes stayed unchanged, and final answer decisions remained deferred.
+The complete passive HTML JSON snapshot matched the fresh journey JSON. Existing
+optional journey source checks remained separate from the recorded context.
+
+These checks establish bounded reconstruction and preserved declarations, not
+semantic entailment, attribution accuracy, authenticity or researcher fidelity.
+Human scientific and source-rights review remains required. Actual-browser
+visual/keyboard/print QA remains **BLOCKED/unverified**; no browser retry or
+restriction bypass was attempted.
+
+## Prior v0.62 bounded review-attribution example
+
+
 Current local source release: v0.62 (bounded synthetic review-attribution example).
 
 - `python -m unittest discover -q`: 887 synthetic tests passed locally in 343.946 seconds.

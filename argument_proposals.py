@@ -14,6 +14,15 @@ from strict_json import loads
 
 SCOPE_SCHEMA = 'persona.argument-proposal-scope.v1'
 ENVELOPE_SCHEMA = 'persona.reviewed-argument-proposals.v1'
+SCHEMAS = {version: {name: 'persona.'+kind+'.v'+str(version) for name, kind in
+    [('scope', 'argument-proposal-scope'), ('handoff', 'argument-handoff'), ('bundle', 'argument-proposals'),
+     ('packet', 'argument-proposal-review'), ('envelope', 'reviewed-argument-proposals')]} for version in (1, 2)}
+RECORDED_CONTEXT_BOUNDARY = (' Recorded answer-preparation/import context is historical review context, '
+    'not newly supplied or current argument context, proof of model use or a method that automatically governs this argument. '
+    'Its nested answer citation scope is historical and may include references outside selected argument claims; '
+    'it grants no new argument endpoint, citation, source-access or transmission permission. '
+    'Full excluded, unselected and rejected pattern/context histories remain context-only. '
+    'Current journey context comparison is independent and does not rebind this recorded context.')
 PROPOSAL_FIELDS = {'premise_claim_ids', 'conclusion_claim_id', 'bridge_rationale', 'assumptions', 'defeater'}
 MAX_PROPOSALS = 32
 MAX_REFS = 64
@@ -34,7 +43,40 @@ BOUNDARY = ('Imported argument proposals are untrusted suggestions, not research
     'historical model use is declared, not authenticated. Scope and local handoff preparation do not authorize transmission.')
 
 
+def _strict_inputs(value):
+    from answer_context import _encoded
+    _encoded(value)  # Validate Python types before legacy JSON normalization.
+
+
+def _schemas(scope):
+    if isinstance(scope, dict):
+        for schemas in SCHEMAS.values():
+            if scope.get('schema') == schemas['scope']: return schemas
+    raise ValueError('unsupported argument scope schema')
+
+
+def _boundary(scope):
+    return BOUNDARY + (RECORDED_CONTEXT_BOUNDARY if _schemas(scope) == SCHEMAS[2] else '')
+
+
+def _recorded_context(answer, draft):
+    if not isinstance(draft, dict) or draft.get('schema') != 'persona.reviewed-answer-proposals.v3':
+        raise ValueError('recorded answer context requires a supported reviewed v3 contextual answer')
+    # The caller supplies only the original envelope. _base has replayed and validated it.
+    packet = answer.get('proposal_review', {})
+    if packet.get('schema') != 'persona.answer-proposal-review.v3' or 'research_context_review' not in packet:
+        raise ValueError('recorded answer context requires a validated v3 contextual answer')
+    return dict(role='RECORDED_ANSWER_PREPARATION_IMPORT_CONTEXT_NOT_CURRENT_ARGUMENT_CONTEXT',
+        answer_scope_sha256=payload_sha256(packet['scope']),
+        answer_proposal_bundle_sha256=packet['proposal_bundle_sha256'],
+        answer_adoption_review_sha256=packet['review_sha256'],
+        reasoning_context=copy.deepcopy(packet['research_context_review']))
+
+
 def _inputs(value):
+    if isinstance(value, list) and any(isinstance(item, dict) and
+            item.get('schema') in tuple(SCHEMAS[2].values()) for item in value):
+        _strict_inputs(value)
     try: raw = json.dumps(value, ensure_ascii=True, allow_nan=False).encode('utf-8')
     except (ValueError, TypeError, RecursionError) as exc:
         raise ValueError('argument proposal inputs must be finite JSON data') from exc
@@ -45,6 +87,13 @@ def _inputs(value):
 def _output(value):
     if len(json.dumps(value, ensure_ascii=True, allow_nan=False).encode('utf-8')) > MAX_OUTPUT_BYTES:
         raise ValueError('argument proposal report exceeds 16 MiB')
+    # v2 also reserves the complete CLI JSON representation, including indentation.
+    # Keep the legacy compact-only API boundary unchanged for all v1 artifacts.
+    contextual = isinstance(value, dict) and (value.get('schema') in tuple(SCHEMAS[2].values()) or
+        isinstance(value.get('proposal_review'), dict) and
+        value['proposal_review'].get('schema') == SCHEMAS[2]['packet'])
+    if contextual and len((json.dumps(value, ensure_ascii=True, allow_nan=False, indent=2)+'\n').encode('utf-8')) > MAX_OUTPUT_BYTES:
+        raise ValueError('argument proposal full JSON report exceeds 16 MiB')
     return value
 
 
@@ -54,18 +103,32 @@ def _base(package, draft, declared_review):
     return package, argument_map._answer(package, draft, declared_review)
 
 
-def template(package, draft, operator_id, declared_review=None):
+def template(package, draft, operator_id, declared_review=None, *, include_recorded_answer_context=False):
+    if type(include_recorded_answer_context) is not bool:
+        raise ValueError('include_recorded_answer_context must be boolean')
+    if include_recorded_answer_context: _strict_inputs([package, draft, operator_id, declared_review])
     package, draft, operator_id, declared_review = _inputs([package, draft, operator_id, declared_review])
     package, answer = _base(package, draft, declared_review)
     _text(operator_id, 'operator_id', 128)
-    return dict(schema=SCOPE_SCHEMA, package_sha256=payload_sha256(package), draft_sha256=answer['draft_sha256'],
+    result = dict(schema=SCOPE_SCHEMA, package_sha256=payload_sha256(package), draft_sha256=answer['draft_sha256'],
         review_sha256=answer.get('review_sha256'), operator_id=operator_id, selected_claim_ids=[])
+    if include_recorded_answer_context:
+        _recorded_context(answer, draft)
+        result.update(schema=SCHEMAS[2]['scope'], include_recorded_answer_context=True)
+    return result
 
 
 def _scope(package, draft, scope, declared_review):
-    if not isinstance(scope, dict) or set(scope) != {'schema', 'package_sha256', 'draft_sha256', 'review_sha256', 'operator_id', 'selected_claim_ids'}:
+    schemas = _schemas(scope)
+    fields = {'schema', 'package_sha256', 'draft_sha256', 'review_sha256', 'operator_id', 'selected_claim_ids'}
+    if schemas == SCHEMAS[2]:
+        fields.add('include_recorded_answer_context')
+        if scope.get('include_recorded_answer_context') is not True:
+            raise ValueError('v2 argument scope requires explicit true include_recorded_answer_context')
+    if set(scope) != fields:
         raise ValueError('argument scope has missing or unsupported fields')
-    expected = template(package, draft, scope['operator_id'], declared_review)
+    expected = template(package, draft, scope['operator_id'], declared_review,
+        include_recorded_answer_context=schemas == SCHEMAS[2])
     if any(scope[k] != expected[k] for k in expected if k != 'selected_claim_ids'):
         raise ValueError('argument scope changed or is bound to different full inputs or declared answer review')
     selected = scope['selected_claim_ids']
@@ -97,7 +160,7 @@ def prepare_handoff(package, draft, scope, declared_review=None):
                 ('candidate_id', 'proposal_bundle_sha256', 'review_sha256', 'reviewer_id', 'reviewer_identity')}
             row['imported_answer_origin']['historical_model_use'] = 'DECLARED_NOT_AUTHENTICATED'
         selected.append(row)
-    result = dict(schema='persona.argument-handoff.v1', task='propose_argument_candidates_among_selected_existing_claims',
+    result = dict(schema=_schemas(scope)['handoff'], task='propose_argument_candidates_among_selected_existing_claims',
         bindings={k: scope[k] for k in ('package_sha256', 'draft_sha256', 'review_sha256')},
         scope_sha256=payload_sha256(scope), question=answer['question'], operator_id=scope['operator_id'], selected_claims=selected,
         context_scope='SELECTED_ACTIVE_CLAIMS_AND_DIRECT_CITATIONS_NOT_COMPLETE_ORIGINAL_REJECTED_ANSWER_OR_SOURCE_HISTORY',
@@ -112,10 +175,17 @@ def prepare_handoff(package, draft, scope, declared_review=None):
             'Provide tentative bridges, assumptions and defeaters, never researcher speech, private reasoning traces or endorsements.',
             'Preserve uncertainty and conflicting alternatives. No logical validation, scientific approval, citation transfer or execution is authorized.',
             'Selected context is not complete original or rejected answer/source history. Full original inputs remain hash-bound locally.'
-        ], processing=dict(scope='CURRENT_PREPARATION_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=BOUNDARY)
+        ], processing=dict(scope='CURRENT_PREPARATION_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=_boundary(scope))
+    if _schemas(scope) == SCHEMAS[2]:
+        result['recorded_answer_context'] = _recorded_context(answer, draft)
+        result['context_scope'] = 'SELECTED_ACTIVE_CLAIMS_AND_DIRECT_CITATIONS_PLUS_RECORDED_ANSWER_PREPARATION_IMPORT_CONTEXT'
+        result['original_input_history'] = 'FULL_INPUTS_HASH_BOUND_RECORDED_PATTERN_CONTEXT_HISTORY_INCLUDED_OTHER_ANSWER_SOURCE_HISTORY_NOT_FULLY_EMBEDDED'
+        result['instructions'][-1] = ('Recorded answer-preparation/import context includes full inspected pattern/context histories and historical answer citation scope. '
+            'Other original or rejected answer/source history is not fully embedded; full original inputs remain hash-bound locally.')
+        result['instructions'].append(RECORDED_CONTEXT_BOUNDARY.strip())
     if len(json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')) > MAX_HANDOFF_BYTES:
         raise ValueError('argument handoff exceeds the 2 MiB logical JSON limit')
-    return result
+    return _output(result) if _schemas(scope) == SCHEMAS[2] else result
 
 
 def _handoff(package, draft, scope, supplied, declared_review):
@@ -142,9 +212,10 @@ def _inspect_step(package, draft, scope, step, operator_id, declared_review):
     for key in [*step['premise_claim_ids'], step['conclusion_claim_id']]:
         _text(key, 'endpoint_claim_id', 128)
         if key not in allowed: raise ValueError('every endpoint must be an explicit selected claim ID')
-    form = argument_map.template(package, draft, operator_id, declared_review)
+    answer = argument_map._answer(package, draft, declared_review)
+    form = argument_map._template_from_answer(answer, operator_id)
     form['steps'] = [copy.deepcopy(step)]
-    result = argument_map.inspect(package, draft, form, declared_review)['steps'][0]
+    result = argument_map._inspect_from_answer(answer, form)['steps'][0]
     result['origin'] = 'OPERATOR_ADOPTED_IMPORTED_ARGUMENT'
     return result
 
@@ -171,18 +242,18 @@ def import_response(package, draft, scope, handoff, response, provenance, declar
         checked = _original(package, draft, scope, candidate, provenance['operator_id'], declared_review)
         rows.append(dict(candidate_id='argument-candidate-'+str(index+1), proposed_step=candidate,
             missing_fields=checked['missing_fields'], status='IMPORTED_ARGUMENT_PROPOSAL_REQUIRES_REVIEW'))
-    return _output(dict(schema='persona.argument-proposals.v1', scope=scope, bindings=handoff['bindings'],
+    return _output(dict(schema=_schemas(scope)['bundle'], scope=scope, bindings=handoff['bindings'],
         import_record=dict(handoff_sha256=payload_sha256(handoff), response_sha256=payload_sha256(response), provenance=provenance),
         candidates=rows, status='ARGUMENT_PROPOSALS_REQUIRE_REVIEW' if rows else 'NO_ARGUMENT_PROPOSALS',
         provider=dict(id='offline-argument-response-import', model_id=provenance['model_id'], llm_used=None,
             provenance_status='OPERATOR_DECLARED_NOT_AUTHENTICATED'),
         processing=dict(scope='CURRENT_IMPORT_ONLY', provider_invoked=False, external_transmission=False, source_reread=False),
-        canonical_update_performed=False, boundary=BOUNDARY))
+        canonical_update_performed=False, boundary=_boundary(scope)))
 
 
 def validate_bundle(package, draft, bundle, declared_review=None):
     package, draft, bundle, declared_review = _inputs([package, draft, bundle, declared_review])
-    if not isinstance(bundle, dict) or bundle.get('schema') != 'persona.argument-proposals.v1':
+    if not isinstance(bundle, dict) or bundle.get('schema') not in tuple(item['bundle'] for item in SCHEMAS.values()):
         raise ValueError('expected an argument proposal bundle')
     rows = bundle.get('candidates'); record = bundle.get('import_record'); scope = bundle.get('scope')
     if not isinstance(rows, list) or len(rows) > MAX_PROPOSALS: raise ValueError('argument bundle allows at most 32 candidates')
@@ -244,13 +315,16 @@ def review_proposals(package, draft, bundle, review, declared_review=None):
             original_inspection=_original(package, draft, bundle['scope'], candidate['proposed_step'], bundle['import_record']['provenance']['operator_id'], declared_review),
             reviewed_step=copy.deepcopy(decision.get('reviewed_step')), reviewed_inspection=reviewed.get(cid)))
     pending = sum(row['decision'] == 'defer' for row in rows)
-    packet = dict(schema='persona.argument-proposal-review.v1',
+    packet = dict(schema=_schemas(bundle['scope'])['packet'],
         status='ARGUMENT_PROPOSAL_REVIEW_INCOMPLETE' if pending else 'ARGUMENT_PROPOSALS_REVIEWED_NOT_APPROVED' if accepted_ids else 'NO_ACCEPTED_ARGUMENT_PROPOSALS',
         scope=bundle['scope'], bindings=bundle['bindings'], proposal_bundle_sha256=payload_sha256(bundle), review_sha256=payload_sha256(review),
         reviewer_id=review['reviewer_id'], reviewer_identity='RECORDED_NOT_AUTHENTICATED', import_record=bundle['import_record'],
         provider=bundle['provider'], candidates=rows, accepted_count=len(accepted_ids), deferred_count=pending,
         logical_validation='NOT_PERFORMED', human_review_required=True, automatic_approval=False, scientific_execution=False, canonical_update_performed=False,
-        processing=dict(scope='CURRENT_REVIEW_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=BOUNDARY)
+        processing=dict(scope='CURRENT_REVIEW_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=_boundary(bundle['scope']))
+    if _schemas(bundle['scope']) == SCHEMAS[2]:
+        _, answer = _base(package, draft, declared_review)
+        packet['recorded_answer_context'] = _recorded_context(answer, draft)
     # Only the accepted projection must be jointly acyclic; rejected/deferred alternatives stay individually checked.
     argument_map.inspect(package, draft, _projection(package, draft, packet, declared_review), declared_review)
     return _output(packet)
@@ -264,22 +338,24 @@ def _require_export(packet):
 def export_reviewed(package, draft, bundle, review, declared_review=None):
     package, draft, bundle, review, declared_review = _inputs([package, draft, bundle, review, declared_review])
     packet = review_proposals(package, draft, bundle, review, declared_review); _require_export(packet)
-    return _output(dict(schema=ENVELOPE_SCHEMA, bundle=bundle, review=review))
+    return _output(dict(schema=_schemas(packet['scope'])['envelope'], bundle=bundle, review=review))
 
 
 def inspect_reviewed(package, draft, envelope, declared_review=None):
     import argument_map
     package, draft, envelope, declared_review = _inputs([package, draft, envelope, declared_review])
-    if not isinstance(envelope, dict) or set(envelope) != {'schema', 'bundle', 'review'} or envelope['schema'] != ENVELOPE_SCHEMA:
+    if not isinstance(envelope, dict) or set(envelope) != {'schema', 'bundle', 'review'} or envelope['schema'] not in tuple(item['envelope'] for item in SCHEMAS.values()):
         raise ValueError('invalid reviewed argument envelope')
     packet = review_proposals(package, draft, envelope['bundle'], envelope['review'], declared_review); _require_export(packet)
+    if envelope['schema'] != _schemas(packet['scope'])['envelope']:
+        raise ValueError('argument envelope schema does not match its scope version')
     form = _projection(package, draft, packet, declared_review)
     result = argument_map.inspect(package, draft, form, declared_review)
     result.update(argument_map_sha256=payload_sha256(envelope), argument_content_sha256=payload_sha256(form), proposal_review=packet,
         declared_step_ids=[s['step_id'] for s in form['steps']], origin='OPERATOR_REVIEWED_IMPORTED_ARGUMENT_PROPOSALS',
         historical_model_use='DECLARED_NOT_AUTHENTICATED', llm_used=False, execution_scope='CURRENT_INSPECTION_ONLY',
         human_review_required=True, provider=copy.deepcopy(packet['provider']),
-        processing=dict(scope='CURRENT_INSPECTION_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=BOUNDARY)
+        processing=dict(scope='CURRENT_INSPECTION_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=_boundary(packet['scope']))
     accepted = {row['reviewed_step']['step_id']: row for row in packet['candidates'] if row['decision'] == 'accept'}
     for step in result['steps']:
         original = accepted[step['step_id']]
@@ -294,6 +370,9 @@ def inspect_reviewed(package, draft, envelope, declared_review=None):
 
 def render_review(packet):
     """Render an inspected report; rendering alone does not validate it."""
+    if isinstance(packet, dict) and (packet.get('schema') == SCHEMAS[2]['packet'] or
+            isinstance(packet.get('scope'), dict) and packet['scope'].get('schema') == SCHEMAS[2]['scope']):
+        _strict_inputs(packet)
     lines = ['Imported argument proposals | NOT RESEARCHER REASONING', 'Status: '+packet['status'],
         'Declared reviewer (not authenticated): '+display(packet['reviewer_id']),
         'Proposal bundle sha256: '+packet['proposal_bundle_sha256'], 'Review sha256: '+packet['review_sha256'],
@@ -302,6 +381,15 @@ def render_review(packet):
     lines.append('Declared generation (not authenticated): '+'; '.join(key+'='+display(provenance[key])
         for key in ('provider_id', 'model_id', 'run_id', 'operator_id', 'execution_location')))
     lines.append('Handoff sha256: '+packet['import_record']['handoff_sha256']+'; response sha256: '+packet['import_record']['response_sha256'])
+    if _schemas(packet['scope']) == SCHEMAS[2]:
+        from answer_context import render
+        recorded = packet['recorded_answer_context']
+        lines.append('Recorded answer-preparation/import context (not newly supplied or current argument context):')
+        lines.append('Historical answer scope sha256: '+recorded['answer_scope_sha256'])
+        lines.append('Historical answer bundle sha256: '+recorded['answer_proposal_bundle_sha256']+
+            '; adoption review sha256: '+recorded['answer_adoption_review_sha256'])
+        lines.append(RECORDED_CONTEXT_BOUNDARY.strip())
+        lines.append(render(recorded['reasoning_context']).rstrip('\n'))
     for row in packet['candidates']:
         lines.extend([display(row['candidate']['candidate_id'])+' | candidate decision='+row['decision'], 'Review note: '+display(row['review_note'])])
         for label, step in [('Original imported proposal', row['original_inspection']), ('Explicit reviewed step', row['reviewed_inspection'])]:
@@ -314,7 +402,7 @@ def render_review(packet):
                 '  Defeater: '+('NOT_SUPPLIED' if step['defeater'] is None else display(step['defeater']))])
             for node in [*step['premises'], step['conclusion']]:
                 lines.append('  Endpoint '+display(node['claim_id'])+': declared answer review='+node['declared_review_decision'])
-    lines.append(BOUNDARY); result = '\n'.join(lines)+'\n'
+    lines.append(_boundary(packet['scope'])); result = '\n'.join(lines)+'\n'
     if len(result.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('argument proposal text report exceeds 16 MiB')
     return result
 
@@ -334,14 +422,16 @@ def main():
             'import': ['scope', 'handoff', 'response', 'provenance'], 'review-template': ['bundle'],
             'review': ['bundle', 'review'], 'export': ['bundle', 'review'], 'inspect': ['envelope']}[name]:
             command.add_argument(argument, type=Path)
-        if name == 'template': command.add_argument('--operator-id', required=True)
+        if name == 'template':
+            command.add_argument('--operator-id', required=True)
+            command.add_argument('--include-recorded-answer-context', action='store_true')
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
         if name == 'review': command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
     try:
         package, draft = _load(args.package), _load(args.draft)
         declared = _load(args.answer_review) if args.answer_review else None
-        if args.command == 'template': result = template(package, draft, args.operator_id, declared)
+        if args.command == 'template': result = template(package, draft, args.operator_id, declared, include_recorded_answer_context=args.include_recorded_answer_context)
         elif args.command == 'prepare': result = prepare_handoff(package, draft, _load(args.scope), declared)
         elif args.command == 'response-template': result = response_template(package, draft, _load(args.scope), _load(args.handoff), declared)
         elif args.command == 'import': result = import_response(package, draft, *[_load(getattr(args, k)) for k in ('scope', 'handoff', 'response', 'provenance')], declared_review=declared)
