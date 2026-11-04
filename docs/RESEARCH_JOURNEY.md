@@ -265,3 +265,10 @@ input equality only. Differences remain visible in the review agenda and passive
 HTML, without blocking reevaluation, overwriting either context, rebinding artifacts
 or expanding active citation uses. Equality is not proof of model use or approval.
 Legacy answer modes receive no additional comparison field or prompt.
+
+## Read one bridge back to its basis
+
+Follow [Review the basis of one bridge](ARGUMENT_PROPOSALS.md#review-the-basis-of-one-bridge)
+for the contextual walkthrough's `late` step. It follows exact claim/reference/role
+uses, distinguishes the design step `compare`, and records a fresh note-only,
+all-deferred assessment without treating fixture adoption as reader approval.

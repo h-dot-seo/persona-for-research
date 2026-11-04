@@ -148,6 +148,11 @@ Argument preparation can also explicitly include the v3 answer's
 It remains historical preparation context, not current argument approval or added
 citation permission; default argument artifacts remain unchanged.
 
+The [bridge-first reading guide](docs/ARGUMENT_PROPOSALS.md#review-the-basis-of-one-bridge)
+follows one synthetic bridge through its exact premise citations, source limits,
+missing explanation and distinct method-use records, then records an assessment
+in a fresh all-deferred review. It creates no new evidence relationship or approval.
+
 ## Compact review
 
 ```sh

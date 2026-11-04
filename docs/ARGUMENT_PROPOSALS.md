@@ -40,6 +40,84 @@ and never writes COMPLETE after a failed command. It invokes no provider or brow
 For independently authored material, use the explicit manual workflow below instead
 of modifying fixture code into an automatic approval tool.
 
+## Review the basis of one bridge
+
+For a worked bridge-first reading path, run the complete command above with
+`--contextual-answers` added, in a new output directory. This is the existing
+53-stage synthetic contextual walkthrough, not a new generator mode. It uses v3
+answer context with default v1 argument artifacts; the [opt-in v2 argument
+handoff](#opt-in-recorded-answer-context) is a separate capability. Read
+`START_HERE.txt`, then use `research-journey.json` alongside the text reports.
+The fixture's accepted bridges demonstrate recorded decisions, not your approval.
+
+1. **Start at `late`.** Find `argument_review.steps[]` by `step_id`, not array
+   position. Its reviewed bridge connects `comparison` to `conclusion`: “The canned
+   reviewer proposes choosing an observation only after the synthetic comparison.”
+   Its assumption is “The proposed comparison can identify a discriminating
+   observation.” The `defeater` is null and remains a missing field. Compare
+   `proposal_origin.original_proposal` and `proposal_origin.review_note` with the
+   reviewed fields; do not mistake the original canned rationale for the revision.
+2. **Read the endpoint claims and their direct citations.** In
+   `argument_review.answer.claims[]`, both endpoints are `operator_synthesis`;
+   upstream `criterion` is `source_quote`. `comparison` cites
+   `synthetic-0` / observation `0` / `alternative_explanation` as `support`, with
+   the revised supplied explanation “Revised canned interpretation of this
+   synthetic comparison citation only.” Its boundary says applicability remains
+   untested. Its `challenge` citation is `synthetic-1` / observation `0` /
+   `falsification_check`, with a null explanation. For each citation, inspect
+   `evidence.observation.condition`, `evidence.observation.limitation`, source
+   kind/year/locator/attribution and `evidence.component.claim_type`. The support
+   component is `operator_interpretation`, the challenge component
+   `explicit_statement`; neither label establishes applicability.
+3. **Follow exact uses, keeping the roles separate.** Match the full citation
+   `citations[].evidence.reference` against `evidence_routes[].evidence.reference`,
+   then select
+   `direct_argument_uses` by all four fields: `step_id=late`,
+   `claim_id=comparison`, `argument_role=premise`, and the citation's own
+   `citation_role` (`support` or `challenge`). The challenge reference is also
+   `criterion`'s context citation. Although that claim is upstream and not a
+   `late` endpoint, the same reference **is** a direct late-premise challenge
+   through `comparison`. Do not flatten these uses or substitute a parent
+   observation for a component. `conclusion` has no citations; no premise citation
+   transfers to it and repeated references do not establish independent support.
+4. **Consult method context without making a new link.** The routes' pattern,
+   context and method-application uses are navigation into the supplied reviews.
+   `method_application_review.applications[]` concerns design `step_id=compare`,
+   not argument `late`. Read its conditions and proposed checks with the selected
+   pattern and applicability review. Shared references do not endorse the bridge
+   or create a method-to-argument relationship. Recorded answer-preparation context
+   remains historical, even when its hashes match current inputs. Quote/file
+   matches do not settle applicability, the missing defeater or the all-deferred
+   final answer review.
+
+**Record a bounded assessment without adopting anything.** From the repository,
+set `RUN` to that output directory and use a new, unused filename:
+
+```sh
+python argument_proposals.py review-template "$RUN/revision.json" "$RUN/draft.json" "$RUN/argument-candidates.json" --reviewer-id reader --answer-review "$RUN/answer-review.json" > "$RUN/reader-argument-review.json"
+```
+
+In the fresh template, locate the candidate identified by `late`'s
+`proposal_origin.candidate_id` (`argument-candidate-1` in this fixture). Change
+only its `review_note`, for example: “Bounded review of the fixture's late bridge:
+comparison has separate support and challenge citations; the challenge explanation
+and bridge defeater are missing. Applicability remains untested. Keep deferred.”
+Leave every decision `defer`; do not add `reviewed_step`. Inspect without export:
+
+```sh
+python argument_proposals.py review "$RUN/revision.json" "$RUN/draft.json" "$RUN/argument-candidates.json" "$RUN/reader-argument-review.json" --answer-review "$RUN/answer-review.json" --format text
+```
+
+The note changes no decision and creates no new source/citation scope or basis
+relationship.
+All-deferred review is inspectable and cannot export. Keep the original fixture
+adoption, envelope and reports separate. Do not edit an exported envelope and
+assume its hashes or pinned inputs remain valid. If you later accept a revision,
+supply every `reviewed_step` field explicitly (`step_id`, `premise_claim_ids`,
+`conclusion_claim_id`, `bridge_rationale`, `assumptions` and `defeater`), resolve
+every candidate, and follow normal review/export and downstream rebinding.
+No proposed text is filled in for you.
+
 ## Select claims, not an inferred train of thought
 
 Start with the original validated package, an answer draft or reviewed answer

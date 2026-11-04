@@ -9,6 +9,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 import answer_proposals
+import argument_proposals
 import synthetic_walkthrough as demo
 from persona import payload_sha256
 from test_answer_walkthrough import inventory
@@ -111,6 +112,89 @@ class ContextualWalkthroughTests(unittest.TestCase):
         self.assertFalse(route['actively_used_in_answer_or_design'])
         self.assertEqual(route['direct_argument_uses'], [])
         self.assertFalse(report['automatic_approval']); self.assertFalse(report['scientific_execution'])
+
+    def test_late_bridge_basis_keeps_claim_types_and_citation_roles(self):
+        report = self.read('research-journey.json')
+        argument = report['argument_review']
+        late = next(row for row in argument['steps'] if row['step_id'] == 'late')
+        self.assertEqual(late['premise_claim_ids'], ['comparison'])
+        self.assertEqual(late['conclusion_claim_id'], 'conclusion')
+        self.assertEqual(late['bridge_rationale'],
+            'The canned reviewer proposes choosing an observation only after the synthetic comparison.')
+        self.assertEqual(late['assumptions'],
+            ['The proposed comparison can identify a discriminating observation.'])
+        self.assertIsNone(late['defeater'])
+        self.assertEqual(late['missing_fields'], ['defeater'])
+        self.assertNotEqual(late['bridge_rationale'], late['proposal_origin']['original_proposal']['bridge_rationale'])
+        self.assertEqual(late['citation_transfer'], 'NOT_PERFORMED')
+        self.assertEqual(late['logical_validation'], 'NOT_PERFORMED')
+        claims = {row['claim_id']: row for row in argument['answer']['claims']}
+        self.assertEqual({key: row['claim_type'] for key, row in claims.items()},
+            dict(criterion='source_quote', comparison='operator_synthesis', conclusion='operator_synthesis'))
+        citations = {row['role']: row for row in claims['comparison']['citations']}
+        self.assertEqual(set(citations), {'support', 'challenge'})
+        for role, paper, dimension, kind, component_type in (
+                ('support', 'synthetic-0', 'alternative_explanation', 'research', 'operator_interpretation'),
+                ('challenge', 'synthetic-1', 'falsification_check', 'review', 'explicit_statement')):
+            evidence = citations[role]['evidence']
+            self.assertEqual(evidence['reference'], dict(paper_id=paper, observation_index=0, dimension=dimension))
+            self.assertEqual(evidence['source_kind'], kind)
+            self.assertEqual(evidence['observation']['condition'], 'models predict distinct outcomes')
+            self.assertEqual(evidence['observation']['limitation'], 'simulation only; no real author attribution')
+            self.assertEqual(evidence['component']['claim_type'], component_type)
+        self.assertEqual(citations['support']['explanation'], dict(
+            rationale='Revised canned interpretation of this synthetic comparison citation only.',
+            context_boundary='Invented demonstration only; applicability remains untested.'))
+        self.assertIsNone(citations['challenge']['explanation'])
+        self.assertEqual(claims['criterion']['citations'][0]['evidence']['reference'],
+            citations['challenge']['evidence']['reference'])
+        self.assertEqual(claims['conclusion']['citations'], [])
+        self.assertTrue(all(row['decision'] == 'defer' for row in self.read('answer-review.json')['decisions']))
+
+    def test_late_routes_match_exact_reference_claim_and_roles(self):
+        report = self.read('research-journey.json')
+        claims = {row['claim_id']: row for row in report['argument_review']['answer']['claims']}
+        all_late_uses = []
+        for citation in claims['comparison']['citations']:
+            reference = citation['evidence']['reference']
+            route = next(row for row in report['evidence_routes'] if row['evidence']['reference'] == reference)
+            uses = [row for row in route['direct_argument_uses'] if row['step_id'] == 'late']
+            self.assertEqual([(row['step_id'], row['claim_id'], row['argument_role'], row['citation_role'])
+                for row in uses], [('late', 'comparison', 'premise', citation['role'])])
+            self.assertEqual(uses[0]['explanation'], citation['explanation'])
+            self.assertEqual(uses[0]['declared_review_decision'], 'defer')
+            self.assertEqual([row['step_id'] for row in route['method_application_uses']], ['compare'])
+            all_late_uses.extend(uses)
+        self.assertEqual(len(all_late_uses), 2)
+        self.assertEqual([row for route in report['evidence_routes'] for row in route['direct_argument_uses']
+            if row['claim_id'] == 'conclusion'], [])
+        self.assertEqual({row['step_id'] for row in report['method_application_review']['applications']}, {'compare'})
+        parent = dict(claims['comparison']['citations'][0]['evidence']['reference'], dimension=None)
+        route = next(row for row in report['evidence_routes'] if row['evidence']['reference'] == parent)
+        self.assertEqual(route['direct_argument_uses'], [])
+
+    def test_fresh_note_only_bridge_review_stays_deferred_and_preserves_files(self):
+        before = {path.name: path.read_bytes() for path in self.root.iterdir() if path.is_file()}
+        package, draft = self.read('revision.json'), self.read('draft.json')
+        bundle, answer_review = self.read('argument-candidates.json'), self.read('answer-review.json')
+        original_inputs = copy.deepcopy([package, draft, bundle, answer_review])
+        review = argument_proposals.review_template(package, draft, bundle, 'reader', answer_review)
+        late = next(row for row in self.read('research-journey.json')['argument_review']['steps'] if row['step_id'] == 'late')
+        decision = next(row for row in review['decisions'] if row['candidate_id'] == late['proposal_origin']['candidate_id'])
+        decision['review_note'] = ('Bounded review of the fixture late bridge: separate support and challenge citations; '
+            'challenge explanation and bridge defeater missing. Applicability untested. Keep deferred.')
+        packet = argument_proposals.review_proposals(package, draft, bundle, review, answer_review)
+        self.assertEqual(packet['status'], 'ARGUMENT_PROPOSAL_REVIEW_INCOMPLETE')
+        self.assertEqual(packet['accepted_count'], 0)
+        self.assertEqual(packet['deferred_count'], len(bundle['candidates']))
+        self.assertTrue(all(row['decision'] == 'defer' and row['reviewed_step'] is None for row in packet['candidates']))
+        self.assertIn(decision['review_note'], argument_proposals.render_review(packet))
+        self.assertFalse(packet['automatic_approval'])
+        self.assertEqual(packet['logical_validation'], 'NOT_PERFORMED')
+        with self.assertRaisesRegex(ValueError, 'resolve every candidate'):
+            argument_proposals.export_reviewed(package, draft, bundle, review, answer_review)
+        self.assertEqual([package, draft, bundle, answer_review], original_inputs)
+        self.assertEqual({path.name: path.read_bytes() for path in self.root.iterdir() if path.is_file()}, before)
 
     def test_html_is_passive_snapshot(self):
         document = Document((self.root/'research-journey.html').read_text(encoding='utf-8'))

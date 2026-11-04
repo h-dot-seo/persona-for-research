@@ -77,3 +77,10 @@ separate from manual authorship and imported answer origin. Declaration order is
 kept apart from topological review order; cycles are rejected only for the accepted
 map, not treated as proof of logical validity. Rejected suggestions never become
 direct argument uses. Manual maps retain their original behavior and output shape.
+
+## Read one bridge back to its basis
+
+Follow [Review the basis of one bridge](ARGUMENT_PROPOSALS.md#review-the-basis-of-one-bridge)
+for the contextual walkthrough's `late` step. It follows exact claim/reference/role
+uses, distinguishes the design step `compare`, and records a fresh note-only,
+all-deferred assessment without treating fixture adoption as reader approval.

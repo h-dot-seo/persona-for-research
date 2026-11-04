@@ -1,6 +1,6 @@
 {
   "project": "persona-for-research",
-  "release": "0.63-recorded-answer-argument-context",
+  "release": "0.64-bridge-basis-reading",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 35583,
-      "sha256": "76cbc9f36a03e86f438d8c5abcce6f154ebfdad1a6e97b003201c5e26f0a5c11"
+      "bytes": 35922,
+      "sha256": "bd7263a24aab835f5ec90613bec9ceb8722137439fa71ab8f0cbb350b466a503"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 77726,
-      "sha256": "a5eb8dc14e00586e88bedbc58f4ee4ae92514ab229c2835e843f42f5592f54c4"
+      "bytes": 81097,
+      "sha256": "6e2de561b0f2d0abfed3fb5ed2450599785a03677954d97279999c1ad26344e3"
     },
     {
       "path": "answer_context.py",
@@ -170,13 +170,13 @@
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
-      "bytes": 4374,
-      "sha256": "4adca3fd73a5a3305021addcbce91dcda87b834fc97efb7885f39cf8f0d92556"
+      "bytes": 4747,
+      "sha256": "fe6af907e0e00442912251dfe29345bd03dc278414490ae1a94b7c798962ca76"
     },
     {
       "path": "docs/ARGUMENT_PROPOSALS.md",
-      "bytes": 14609,
-      "sha256": "b42e744312b57dafcde5b1828d1b242c5f2f6e58367a5a1ecb5f2c6303de4ad8"
+      "bytes": 19780,
+      "sha256": "bf7c3ccf4b6ac5ea50fd94219e1517883c01d8fbe550417c92abb580a30b7f3e"
     },
     {
       "path": "docs/CITATION_EXPLANATIONS.md",
@@ -320,8 +320,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 16988,
-      "sha256": "83b32b95e5c1872c0551baa4f6b40a4ef8e43fe397ac51e366530430a7d5c60d"
+      "bytes": 17361,
+      "sha256": "c86f00495b9943c9d219a187ddaef9944671e9353500c79b3e4de32252c6e9b0"
     },
     {
       "path": "docs/REVIEW_ATTRIBUTION_EXAMPLE.md",
@@ -780,8 +780,8 @@
     },
     {
       "path": "test_contextual_walkthrough.py",
-      "bytes": 18636,
-      "sha256": "7fb9ddf2b8726ca5843bc438563d5abd71ec7bcdfa0f08a41beff21d66406332"
+      "bytes": 25286,
+      "sha256": "e364e13cdc3e7cd70cdf39973036c603944700d8224f67b804d1a7ca0ab54b2f"
     },
     {
       "path": "test_corpus_files.py",

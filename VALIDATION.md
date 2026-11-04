@@ -2,6 +2,58 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.64 (worked bridge-basis reading path).
+
+- `python -m unittest discover -q`: 919 synthetic tests passed locally in 618.163 seconds.
+- `python -m compileall -q .`: passed; 135 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 213 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 212 exact allowlisted entries and file hashes.
+
+Most recent separately verified remote baseline: v0.63, commit
+[`34d1db98047a0e2808bbc1840f1822841c598917`](https://github.com/h-dot-seo/persona-for-research/commit/34d1db98047a0e2808bbc1840f1822841c598917),
+with 916 tests. This is a prior-commit record, not a claim of remote CI for v0.64.
+
+- [GitHub Actions run 41823750537](https://github.com/h-dot-seo/persona-for-research/actions/runs/41823750537):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+All 56 existing non-test Python modules match the v0.63 publication hashes.
+This increment changes documentation and three regression tests, not runtime,
+schemas, defaults, generator modes, stage counts or approval behavior.
+
+The worked guide follows the existing synthetic `late` bridge from `comparison`
+to the uncited `conclusion`. It identifies the reviewed rationale, assumption and
+missing defeater; exact support/challenge reference identities; source conditions,
+limitations and claim labels; and the supplied versus absent citation explanations.
+The review reference used upstream by `criterion` as context is also a direct
+`late` premise challenge through `comparison`. Exact source, claim, argument and
+citation roles remain distinct. Design method use on `compare` is not a method
+endorsement of argument `late`, and recorded answer context remains historical.
+The guide distinguishes the existing v3-answer/v1-argument fixture from the separate
+opt-in v2 argument handoff. No new machine-addressable basis relationship is added.
+
+Three tests reuse the existing 53-stage contextual fixture setup. The focused class
+passed all 20 tests in 89.529 seconds. Assertions cover the bridge and exact routes,
+role separation, unchanged uncited conclusion/final deferred review, and a fresh
+note-only all-deferred review that preserves original inputs/files and cannot export.
+A separate read-only source/documentation audit found no substantive discrepancy;
+it did not execute tests or a browser.
+
+A standalone external-directory check executed the guide's fresh review template,
+JSON and text inspection commands successfully, and confirmed export rejects the
+unresolved review with no partial stdout. All three candidates remained deferred;
+original input bytes were unchanged. A note does not approve a bridge, transfer
+citations, authenticate a source or create a method-to-argument relationship.
+Revisions still require explicit complete reviewed steps and ordinary rebinding.
+
+Only invented data and existing offline commands were used. Source/file matches
+remain mechanical checks, not semantic support or researcher fidelity. No provider,
+source reread, external transmission or scientific execution was added. Actual-browser
+visual/keyboard/print QA remains **BLOCKED/unverified**; no retry or restriction
+bypass was attempted. Earlier timeout attempts remain recorded in the v0.63 history.
+
+## Prior v0.63 recorded answer context in arguments
+
+
 Current local source release: v0.63 (explicit recorded-answer-context argument preparation).
 
 - `python -m unittest discover -q`: final complete run passed all 916 synthetic tests in 613.787 seconds.
