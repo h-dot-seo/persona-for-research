@@ -64,11 +64,48 @@ later handoff fits its separate 2 MiB limit.
 The API is `answer_proposals.inspect_context(package, scope)`. Its preview wrapper
 binds the full canonical package and complete scope, including the declared operator,
 while preserving the existing inner context report unchanged. JSON and readable
-text are bounded to 16 MiB; histories are never truncated. Only the supplied input
+text are bounded to 16 MiB; histories are never truncated. By default, only the supplied input
 files are read by the CLI. Stored source passages are displayed without rereading
-source files or authenticating them. V1/v2 scopes are rejected rather than upgraded.
+source files or authenticating them. The optional current check below is separate. V1/v2 scopes are rejected rather than upgraded.
 Citation selection is not a judgment about rights, scientific support, applicability,
 researcher agreement or permission to send material to another recipient.
+
+## Optionally check current local sources in the preview
+
+When you explicitly want a current byte/quote check before any answer exists,
+prepare the existing source selection and fill each relative filename yourself:
+
+```sh
+python source_recheck.py package.json --template --operator-id source-reviewer > source-selection.json
+python answer_proposals.py context package.json answer-scope.json --source-selection source-selection.json --source-root ./authorized-source-files --format text
+```
+
+Both source options are required together. The selection must name every supplied
+paper exactly once, including unused papers, under the explicit local root. The root
+is invocation-only and is not saved in the preview. Existing source authorization,
+relative Markdown/text path, containment and file-read checks still apply. This is
+an optional connection to [the existing source recheck](SOURCE_RECHECK.md), not
+source acquisition or a new authorization mechanism.
+
+The combined package, scope, full raw context and selection are validated before
+source bytes are read. The appended current report checks bound byte hashes and
+stored quotations at their declared sections. Every selected citation also shows
+its exact current record check. The complete audit includes unused sources and
+quote/locator gaps; no history or counterevidence is removed. An empty citation
+scope still audits all supplied papers when requested and remains empty afterward.
+
+Current results are separate from the unchanged context inspection and its recorded
+historical source/quote labels. A successful mechanical match does not establish
+authenticity, authorship, rights, semantic support or approval. It does not change
+source hashes, review decisions, citation selections or handoff bindings. Files may
+change after the read, and saved reports are not authenticated receipts.
+
+Quote/locator gaps remain visible in a complete report. Invalid selections/paths,
+changed byte hashes, invalid source text or resource overflows fail closed without
+partial stdout or fallback to an unchecked preview. The audit retains its 8 MiB
+aggregate source-read limit; the full preview retains its 16 MiB JSON/text limits.
+Rendering a completed report never rereads sources. Without these two options,
+preview output and the no-source-read behavior are unchanged.
 
 ## Prepare, import and review with the existing commands
 

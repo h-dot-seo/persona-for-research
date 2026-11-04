@@ -217,3 +217,9 @@ python answer_proposals.py context package.json answer-scope.json --format text
 Empty citation selections may be inspected but still cannot prepare a
 handoff. The preview does not approve sharing or scientific use; see
 [preparation preview](ANSWER_CONTEXT.md#inspect-context-before-preparing-a-handoff).
+
+For an explicitly requested current source check in that preview, supply both
+`--source-selection source-selection.json --source-root ./authorized-source-files`.
+The existing all-paper audit is appended separately from historical labels. Failed
+source checks never silently fall back to the unchecked preview; matches do not
+approve citations or sharing. See [current source checks](ANSWER_CONTEXT.md#optionally-check-current-local-sources-in-the-preview).

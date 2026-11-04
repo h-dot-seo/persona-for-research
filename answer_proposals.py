@@ -155,10 +155,17 @@ PREVIEW_BOUNDARY = ('Successful inspection is not permission, quotation rights, 
     'Preparing a handoff separately requires 1 to 64 explicit references. ')
 
 
-def inspect_context(package, scope):
+def inspect_context(package, scope, *, source_selection=None, source_root=None):
     """Inspect a strict v3 scope locally, including an empty exact citation selection."""
-    _strict_context_inputs([package, scope])
-    package, scope = _inputs([package, scope])
+    if (source_selection is None) != (source_root is None):
+        raise ValueError('source selection and source root must be supplied together')
+    if source_selection is not None:
+        # Reject non-JSON values before any normalizing copy, including selection data.
+        _strict_context_inputs([package, scope, source_selection])
+        package, scope, source_selection = _inputs([package, scope, source_selection])
+    else:
+        _strict_context_inputs([package, scope])
+        package, scope = _inputs([package, scope])
     if _schemas(scope) != SCHEMAS[3]:
         raise ValueError('answer context preview requires an exact v3 scope; no automatic upgrade')
     package, _ = _sources(package)
@@ -179,6 +186,34 @@ def inspect_context(package, scope):
     # Match the full indented JSON CLI representation, not only compact logical JSON.
     if len((json.dumps(result, ensure_ascii=True, indent=2, allow_nan=False)+'\n').encode('utf-8')) > MAX_OUTPUT_BYTES:
         raise ValueError('answer context preview exceeds 16 MiB')
+    if source_selection is not None:
+        # Complete both representations of the unchanged historical preview before
+        # granting the separate mechanical audit any filesystem access.
+        render_context(result)
+        from source_recheck import audit
+        checked = audit(package, source_selection, source_root)
+        result['source_recheck'] = checked
+        result['source_recheck_scope'] = 'ALL_SUPPLIED_PAPERS_INCLUDING_UNUSED_EVIDENCE'
+        result['bindings']['source_selection_sha256'] = payload_sha256(source_selection)
+        records = {payload_sha256(record['reference']): record
+            for paper in checked['papers'] for record in paper['records']}
+        for row in result['exact_selected_evidence']:
+            row['current_source_recheck'] = copy.deepcopy(records[payload_sha256(row['evidence']['reference'])])
+        result['processing']['source_reread'] = True
+        result['boundary'] = (PREVIEW_BOUNDARY.replace('source verification, ', 'source authenticity, ')
+            + _boundary(scope).replace(
+                'Source quotes compare literally with stored records only; no current source verification, ',
+                'Historical source quotes compare literally with stored records; no ')
+            .replace('external transmission, source reread, ', 'external transmission, ')
+            + ' Separate current mechanical source checks reread all supplied papers, including unused evidence, '
+            'and report byte hashes and literal section/quote matches only. The nested reasoning_context and '
+            'its verification labels and no-reread statements are unchanged historical inspection context, '
+            'not descriptions of these separate current checks. No historical verification label is upgraded. '
+            'This invocation requests only the explicitly selected local read; it does not establish source rights '
+            'or authorize provider transmission or approval.')
+        if len((json.dumps(result, ensure_ascii=True, indent=2, allow_nan=False)+'\n').encode('utf-8')) > MAX_OUTPUT_BYTES:
+            raise ValueError('answer context preview exceeds 16 MiB')
+        render_context(result)
     return copy.deepcopy(result)
 
 
@@ -202,7 +237,17 @@ def render_context(report):
         lines.append('Publication scope: '+display(row['publication_scope'])+'; '+display(row['topic_scope']))
         _render_endpoint(lines, row['evidence'])
         lines.append('    Attribution: '+display(row['evidence']['attribution']))
-    lines.extend(['Unchanged research context inspection:', render(report['reasoning_context']).rstrip('\n'),
+        if 'current_source_recheck' in row:
+            current = row['current_source_recheck']
+            lines.append('    Separate current source recheck: '+display(current['quote_status'])+
+                '; locator='+display(current['locator'])+' ('+display(current['locator_status'])+')')
+    if 'source_recheck' in report:
+        from source_recheck import render as render_recheck
+        lines.extend(['Current source recheck scope: '+display(report['source_recheck_scope']),
+            'Source selection sha256: '+display(report['bindings']['source_selection_sha256']),
+            render_recheck(report['source_recheck']).rstrip('\n')])
+    lines.extend(['Unchanged historical research context inspection (recorded labels and no-reread statements describe this nested context only):'
+        if 'source_recheck' in report else 'Unchanged research context inspection:', render(report['reasoning_context']).rstrip('\n'),
         display(report['boundary'])])
     result = '\n'.join(lines)+'\n'
     if len(result.encode('utf-8')) > MAX_OUTPUT_BYTES:
@@ -482,6 +527,9 @@ def main():
             for argument in ('patterns', 'context', 'publication-relations'):
                 command.add_argument('--'+argument, type=Path)
             command.add_argument('--pattern-id')
+        if name == 'context':
+            command.add_argument('--source-selection', type=Path)
+            command.add_argument('--source-root', type=Path)
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
         if name in ('review', 'context'): command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
@@ -495,7 +543,12 @@ def main():
                 context=_load(args.context), publication_relations=_load(args.publication_relations), pattern_id=args.pattern_id)
             result = template(package, args.question, args.topic, args.reference_year, args.operator_id,
                 include_citation_explanations=args.include_citation_explanations, research_context=raw)
-        elif args.command == 'context': result = inspect_context(package, _load(args.scope))
+        elif args.command == 'context':
+            if (args.source_selection is None) != (args.source_root is None):
+                raise ValueError('source selection and source root must be supplied together')
+            result = inspect_context(package, _load(args.scope),
+                source_selection=None if args.source_selection is None else _load(args.source_selection),
+                source_root=args.source_root)
         elif args.command == 'prepare': result = prepare_handoff(package, _load(args.scope))
         elif args.command == 'response-template': result = response_template(package, _load(args.scope), _load(args.handoff))
         elif args.command == 'import': result = import_response(package, *[_load(getattr(args, k)) for k in ('scope', 'handoff', 'response', 'provenance')])

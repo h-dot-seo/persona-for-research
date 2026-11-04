@@ -104,6 +104,8 @@ without expanding the explicitly citable source set. Later journeys distinguish
 recorded preparation context from current review inputs.
 Use its `context` command to read exact selected passages and full context before
 preparing a handoff; an empty selection stays empty and authorizes no sharing.
+An explicit source selection/root can add current local byte and quote checks,
+kept separate from recorded labels and scientific approval.
 
 ## Adopt offline answer proposals explicitly
 

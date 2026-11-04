@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.60-answer-context-preview",
+  "release": "0.61-preview-current-source-checks",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 201,
+  "file_count": 202,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 34736,
-      "sha256": "33f6feb7ca87a4e547f592aebdf7ca25a152cf962c164e018b2ae742dac9db65"
+      "bytes": 34875,
+      "sha256": "32bd9fdd5ded62aecbc2733077839a83c0af2d5d6920cf45984f9b76298802eb"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 63020,
-      "sha256": "c238f1c7b8f48b4c6829b1a4f0a8dda282b4aa7b3ffd7747701b0a919729f3df"
+      "bytes": 66770,
+      "sha256": "6d2ca4ec49b4d985680da7ac5e91f0f14d54a59add447538444876128781e71d"
     },
     {
       "path": "answer_context.py",
@@ -65,8 +65,8 @@
     },
     {
       "path": "answer_proposals.py",
-      "bytes": 36409,
-      "sha256": "b57c1551daa75993530337961daaf64d018fde5d59d3887d36129783d73080e0"
+      "bytes": 40406,
+      "sha256": "479dc9a0db27fc83d2be95b52e4d83c745f5e738ffe1b1396dfc1a67af90d5b2"
     },
     {
       "path": "applicability_review.py",
@@ -140,8 +140,8 @@
     },
     {
       "path": "docs/ANSWER_CONTEXT.md",
-      "bytes": 12416,
-      "sha256": "ae87d65970ad80a09d067366e7c445fa867ad180b569037ff3c3747543753579"
+      "bytes": 14794,
+      "sha256": "7ae982c6a0edfda3c8e261b9995ded742ea28e0bcc79d150fbcd775ff256ff87"
     },
     {
       "path": "docs/ANSWER_DRAFT.md",
@@ -150,8 +150,8 @@
     },
     {
       "path": "docs/ANSWER_PROPOSALS.md",
-      "bytes": 13230,
-      "sha256": "5804efe9b04a187a0e4ea594ea5b1f173567d24e476d51f23d28f344e1fda1c3"
+      "bytes": 13688,
+      "sha256": "39d8df421d2f2d1f2223ca0ec0fb1516d52c7a3d94d07bd773c79fd03f5ff2bb"
     },
     {
       "path": "docs/APPLICABILITY_REVIEW.md",
@@ -637,6 +637,11 @@
       "path": "test_answer_context_preview.py",
       "bytes": 16808,
       "sha256": "f3682c80dd9e32f4fa1eda8065cc9c32ba36e8e47c9e1334535444854a9a65e7"
+    },
+    {
+      "path": "test_answer_context_source_checks.py",
+      "bytes": 15970,
+      "sha256": "98c9c263365cba12b2d2d3acf7863399fb8efa262016145a677806831439ccd7"
     },
     {
       "path": "test_answer_draft.py",

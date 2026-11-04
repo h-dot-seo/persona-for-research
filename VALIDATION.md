@@ -2,6 +2,60 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.61 (optional current-source checks in answer preview).
+
+- `python -m unittest discover -q`: 878 synthetic tests passed locally in 355.893 seconds.
+- `python -m compileall -q .`: passed; 131 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 203 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 202 exact allowlisted entries and file hashes.
+- A standalone ten-command CLI check produced four JSON/text source-checked
+  previews for empty and selected citation scopes. Both supplied papers were checked
+  in each successful invocation; the complete inner context matched the default
+  preview and exact selected records matched the appended audit. Six negative
+  commands rejected missing option partners, changed bytes, an escaping path,
+  a cached audit passed as selection, and a legacy scope, with no partial stdout.
+  Original input/source hashes stayed unchanged. No provider or browser was invoked.
+
+Most recent separately verified remote baseline: v0.60, commit
+[`c2880f2b2c691dff75c1d0769e264ff40618f2e3`](https://github.com/h-dot-seo/persona-for-research/commit/c2880f2b2c691dff75c1d0769e264ff40618f2e3),
+with 861 tests. This is a prior-commit record, not a claim of remote CI for v0.61.
+
+- [GitHub Actions run 41813204845](https://github.com/h-dot-seo/persona-for-research/actions/runs/41813204845):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Seventeen new tests cover strict paired inputs, all-paper checking with zero or
+selected citations, exact-reference associations, complete quote-gap reports,
+unchanged historical labels and context, invocation-only roots, and one bounded
+read per selected source per invocation. Invalid scope/history, selection and path
+cases fail before source bytes are read. Rendering completed reports performs no
+new read. Combined input, source and final full JSON/text limits fail closed.
+Default empty/selected preview hashes were captured before these edits and remain
+exact; v1/v2/v3 handoff/review replay and prior walkthrough contracts are unchanged.
+
+Focused checks passed 133 tests across seven modules plus two explicit frozen v1
+replay tests. An independent read-only audit passed 68 tests and additional checks
+for per-reference text display, rights-neutral wording, audit/record copy isolation
+and text-preflight failure before audit invocation. Two initial test-harness
+references (canonical digest calculation and stored proposal field name) were
+corrected without changing expected baselines or production validation.
+
+The existing source-recheck and file-reader modules were not changed. Full package,
+scope and raw-context validation plus base-report bounds precede the optional audit;
+that audit retains all-paper selection/path preflight, author-matched authorization
+rules, pinned bounded file reads and byte-hash checks. This does not establish a
+broader race-proof filesystem guarantee. Current results are appended separately;
+recorded labels, source hashes, review decisions and handoff bindings are not updated.
+
+Current matches establish only the mechanical byte/section/quote checks described
+in the report, not authenticity, authorship, rights, semantic support or scientific
+approval. A selection requests a local read; it does not establish rights or allow
+provider transmission. Missing quotes/locators remain gaps, while requested checks
+that fail never silently fall back to an unchecked preview. All fixtures remain
+synthetic and human scientific review is required. Actual-browser visual/keyboard/
+print QA remains **BLOCKED/unverified**; no retry or restriction bypass was attempted.
+
+## Prior v0.60 answer context preview checks
+
 Current local source release: v0.60 (readable pre-answer context preview).
 
 - Final `python -m unittest discover -q`: 861 synthetic tests passed locally in
