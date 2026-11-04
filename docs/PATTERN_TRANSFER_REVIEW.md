@@ -107,3 +107,15 @@ The overlay distinguishes selected, one-sided and outside-source relationships,
 without changing original counts, roles or decisions. Missing declarations do not
 establish independence, and chronology does not prove influence. Omitted context
 preserves earlier output; an explicit empty form adds a bound empty context.
+
+## Declared answer review and integrated journey
+
+Pass `--review answer-review.json` to preserve the complete declared answer review
+in the detailed answer/design section. The review must match the current draft;
+reject/defer decisions remain visible and never approve a pattern or design. With
+no review supplied, the original output and bindings remain unchanged.
+
+[Research journey](RESEARCH_JOURNEY.md) joins this transfer review with the same
+answer review, argument map and topic chronology, preserving distinct exact-reference
+roles and all supplied publication context. It does not replay absent extraction
+history or turn context-only references into active evidence.

@@ -421,3 +421,21 @@ is inferred. Independent review caught wording that could imply missing relation
 prove dependence; reports now state that independence is not established. Synthetic
 CLI and compatibility tests cover strict references, temporal scope, imported
 provenance and unchanged no-context outputs.
+
+## Integrated research journey (v0.44)
+
+The [source-to-method-to-argument journey](RESEARCH_JOURNEY.md) provides one read-only
+view of current trajectory, review relationships, selected method pattern, target
+context, proposed design, draft answer and declared argument. The pattern-transfer
+reader accepts the same answer-review form, so deferred/rejected/retained decisions
+remain consistent throughout. Exact component/observation references and each role
+remain distinct; premise citations are not transferred to conclusions. Context-only
+and pattern-only records do not become active answer/design use.
+
+The extended quickstart runs 27 actual synthetic CLI stages, including v2 imported
+pattern evidence reasons and a rejected proposal, with all answer claims still
+deferred. It does not validate actual model output or scholar fidelity. Current
+origin markers and imported pattern-review histories remain visible; earlier
+observation/reasoning extraction histories are not replayed by this composition.
+Independent read-only review found no blocking issue and prompted additional
+outside-scope reference and repeated-role regression cases.

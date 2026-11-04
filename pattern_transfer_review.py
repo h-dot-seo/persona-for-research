@@ -18,12 +18,12 @@ BOUNDARY=('Shared references are mechanical trace routes, not proof that a patte
     'LLM/API call, automatic plan generation, rebinding or canonical update is performed.')
 
 
-def inspect(package,patterns,context,links,proposal,draft,pattern_id,publication_relations=None):
+def inspect(package,patterns,context,links,proposal,draft,pattern_id,publication_relations=None,declared_review=None):
     patterns_result=inspect_patterns(package,patterns)
     selected=[p for p in patterns_result['hypotheses'] if p['pattern_id']==pattern_id]
     if len(selected)!=1:raise ValueError('select exactly one existing operator pattern ID')
     selected=selected[0];context_result=inspect_context(package,context)
-    packet=assemble(package,links,proposal,draft,context_result['reference_year'])
+    packet=assemble(package,links,proposal,draft,context_result['reference_year'],declared_review)
     if context_result['question']!=packet['question']:raise ValueError('context and answer/design question text must match exactly')
     contexts={(r['evidence']['reference']['paper_id'],r['evidence']['reference']['observation_index']):r for r in context_result['assessments']}
     packet_routes={r['reference_sha256']:r for r in packet['evidence_routes']}
@@ -71,6 +71,10 @@ def inspect(package,patterns,context,links,proposal,draft,pattern_id,publication
         selected_pattern_review_prompts=selected['review_prompts'],context_review=context_result,answer_design_review=packet,
         evidence_routes=rows,trace_review_prompts=prompts,source_reread=False,llm_used=False,
         semantic_validation='NOT_PERFORMED',boundary=BOUNDARY)
+    if declared_review is not None:
+        result.update(declared_answer_review_status=packet['answer']['status'],
+            declared_answer_review_sha256=packet['answer']['review_sha256'],
+            answer_review_scope='ALL_SUPPLIED_CLAIMS_INCLUDING_REJECTED_OR_DEFERRED_NOT_AN_APPROVED_SELECTION')
     if 'proposal_review' in patterns_result:
         result.update(pattern_proposal_review=patterns_result['proposal_review'],
             pattern_origin=patterns_result['origin'],execution_scope='CURRENT_INSPECTION_ONLY',
@@ -85,8 +89,8 @@ def inspect(package,patterns,context,links,proposal,draft,pattern_id,publication
     return result
 
 
-def render(package,patterns,context,links,proposal,draft,pattern_id,publication_relations=None):
-    result=inspect(package,patterns,context,links,proposal,draft,pattern_id,publication_relations);pattern=result['selected_pattern']
+def render(package,patterns,context,links,proposal,draft,pattern_id,publication_relations=None,declared_review=None):
+    result=inspect(package,patterns,context,links,proposal,draft,pattern_id,publication_relations,declared_review);pattern=result['selected_pattern']
     lines=['Operator pattern-to-context trace review', 'Status: '+result['status'],
         'Selected operator hypothesis: '+display(pattern['pattern_id'])+' | '+display(pattern['operator_hypothesis']),
         'Declared pattern operator (not authenticated): '+display(result['declared_pattern_operator_id']),
@@ -94,6 +98,9 @@ def render(package,patterns,context,links,proposal,draft,pattern_id,publication_
         'Scope: '+display(pattern['scope_note']),'Question: '+display(result['question']),
         'Target context: '+display(result['target_context']),
         'Pattern review prompts: '+(', '.join(result['selected_pattern_review_prompts']) or 'none detected; not validation')]
+    if declared_review is not None:
+        lines.insert(1,'Declared answer review: '+result['declared_answer_review_status']+
+            '; all claims remain visible, including rejected/deferred (not authenticated approval).')
     if 'pattern_proposal_review' in result:
         lines.insert(1,'Pattern origin: operator-reviewed imported proposal. No model call during this inspection; historical model use is declared, not authenticated.')
     if 'publication_context_review' in result:
@@ -121,7 +128,7 @@ def render(package,patterns,context,links,proposal,draft,pattern_id,publication_
     lines.append('Full supplied context review (includes counterevidence outside the selected pattern):')
     lines.append(render_context(result['context_review']).rstrip('\n'))
     lines.append('Full supplied answer/design review (includes evidence outside the selected pattern):')
-    lines.append(render_packet(package,links,proposal,draft,context['reference_year']).rstrip('\n'))
+    lines.append(render_packet(package,links,proposal,draft,context['reference_year'],declared_review).rstrip('\n'))
     if 'pattern_proposal_review' in result:
         from pattern_proposals import render_review
         lines.append('Imported pattern provenance and complete recorded decisions, including rejected proposals:')
@@ -153,12 +160,12 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('package','patterns','context','links','proposal','draft'):p.add_argument(name,type=Path)
     p.add_argument('--pattern-id',required=True);p.add_argument('--format',choices=('json','text'),default='json')
-    p.add_argument('--publication-relations',type=Path);a=p.parse_args()
+    p.add_argument('--publication-relations',type=Path);p.add_argument('--review',type=Path);a=p.parse_args()
     try:
         inputs=[load(getattr(a,n)) for n in ('package','patterns','context','links','proposal','draft')]+[a.pattern_id]
-        if a.publication_relations:
-            from publication_context import _load as load_relations
-            inputs.append(load_relations(a.publication_relations))
+        from publication_context import _load as load_relations
+        inputs.extend([load_relations(a.publication_relations) if a.publication_relations else None,
+            load(a.review) if a.review else None])
         output=render(*inputs) if a.format=='text' else json.dumps(inspect(*inputs),indent=2)+'\n'
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
     sys.stdout.buffer.write(output.encode('utf-8'))

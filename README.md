@@ -20,6 +20,20 @@ review deferred. Read `reader-scope.txt` first, then the generated `START_HERE.t
 for the full reading order. No LLM or real scholar material is used. See the
 [complete quickstart and recovery guide](docs/QUICKSTART.md).
 
+For the integrated source → method → argument route, including imported pattern
+review and publication/review context, run:
+
+```sh
+python synthetic_walkthrough.py ../persona-research-journey --candidate-source offline-import --research-journey
+```
+
+This executes 27 synthetic CLI stages. Read `research-journey.txt`: it joins source
+chronology, explicit pattern explanations, target-context judgments, design uses,
+answer review and argument roles without inferring citations or approving a plan.
+Rejected proposals and deferred answer claims remain visible. See the
+[integrated research journey](docs/RESEARCH_JOURNEY.md) for standalone artifact inputs,
+limits and the distinction between composed review and complete provenance history.
+
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 

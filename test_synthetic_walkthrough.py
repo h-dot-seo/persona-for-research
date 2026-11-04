@@ -64,6 +64,65 @@ class SyntheticWalkthroughTests(unittest.TestCase):
             self.assertTrue((target/'COMPLETE.json').exists())
             self.assertFalse((target/'FAILED.txt').exists())
 
+    def test_extended_imported_journey_runs_27_cli_stages_and_keeps_review_gaps(self):
+        before={p:p.read_bytes() for p in (demo.ROOT/'examples').rglob('*') if p.is_file()}
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'통합 synthetic journey'
+            run=subprocess.run([sys.executable,str(demo.ROOT/'synthetic_walkthrough.py'),str(target),
+                '--candidate-source','offline-import','--research-journey'],cwd=directory,capture_output=True,
+                env=dict(os.environ,PYTHONIOENCODING='ascii'),timeout=30)
+            self.assertEqual(run.returncode,0,run.stderr);receipt=json.loads(run.stdout)
+            self.assertEqual(receipt['command_count'],27)
+            self.assertEqual(receipt['answer_review_status'],'ALL_DEFERRED')
+            self.assertEqual(receipt['research_journey_status'],'HUMAN_REVIEW_REQUIRED_NOT_RESEARCH_APPROVAL')
+            commands=json.loads((target/'commands.json').read_text());self.assertEqual(len(commands),27)
+            self.assertTrue(all(row['returncode']==0 for row in commands))
+            report=json.loads((target/'research-journey.json').read_text())
+            history=report['pattern_transfer_review']['pattern_proposal_review']
+            self.assertEqual([row['decision'] for row in history['candidates']],['accept','reject'])
+            self.assertTrue(all(row['decision']=='defer' for row in json.loads((target/'deferred-pattern-review.json').read_text())['decisions']))
+            self.assertEqual(report['pattern_transfer_review']['context_review']['decision_counts'],{'consider':0,'exclude':1,'defer':1})
+            codes=[row['code'] for row in report['review_agenda']]
+            for code in ('FALSIFICATION_CHECK_NOT_SUPPLIED','DECLARED_DEFER','NO_DIRECT_CITATIONS_CITATION_TRANSFER_NOT_PERFORMED',
+                         'RELATION_CONTEXT_INCLUDES_AFTER_REFERENCE_YEAR_PUBLICATION'):
+                self.assertIn(code,codes)
+            text=(target/'research-journey.txt').read_text(encoding='utf-8')
+            for phrase in ('Canned imported','Fixed synthetic reviewer','A rejected synthetic overgeneralization',
+                           'Defeater: NOT_SUPPLIED','Declared decision: defer'):
+                self.assertIn(phrase,text)
+            self.assertTrue((target/'COMPLETE.json').is_file());self.assertFalse((target/'FAILED.txt').exists())
+            self.assertEqual(receipt['read_first'][0],'research-journey.txt')
+            self.assertTrue(all((target/name).is_file() for name in receipt['read_first']))
+        self.assertEqual(before,{p:p.read_bytes() for p in before})
+
+    def test_extended_mock_journey_is_also_explicitly_synthetic(self):
+        with tempfile.TemporaryDirectory() as directory:
+            receipt=demo.run(Path(directory)/'extended mock',research_journey=True)
+            self.assertEqual(receipt['command_count'],25);self.assertEqual(receipt['candidate_source'],'mock')
+            self.assertTrue(receipt['research_journey_is_synthetic']);self.assertFalse(receipt['llm_used'])
+
+    def test_late_extended_failure_never_publishes_completion_marker(self):
+        original=demo.subprocess.run
+        def fail(argv,**kwargs):
+            if Path(argv[1]).name=='research_journey.py' and '--format' in argv:
+                return subprocess.CompletedProcess(argv,1,stdout=b'',stderr=b'Synthetic late rendering failure')
+            return original(argv,**kwargs)
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'incomplete extended'
+            with patch.object(demo.subprocess,'run',side_effect=fail):
+                with self.assertRaisesRegex(ValueError,'late rendering failure'):
+                    demo.run(target,candidate_source='offline-import',research_journey=True)
+            self.assertTrue((target/'research-journey.json').is_file())
+            self.assertTrue((target/'FAILED.txt').is_file());self.assertFalse((target/'COMPLETE.json').exists())
+            commands=json.loads((target/'commands.json').read_text());self.assertEqual(len(commands),27)
+            self.assertEqual(commands[-1]['returncode'],1)
+
+    def test_invalid_extended_flag_fails_before_directory_creation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'invalid extended'
+            with self.assertRaisesRegex(ValueError,'boolean'):demo.run(target,research_journey='yes')
+            self.assertFalse(target.exists())
+
     def test_invalid_candidate_mode_fails_before_directory_creation(self):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory)/'invalid'

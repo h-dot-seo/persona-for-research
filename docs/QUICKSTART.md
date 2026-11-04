@@ -115,3 +115,18 @@ the exact imported bundle plus explicit fixture review. Proposed/reviewed labels
 review counterevidence, later-publication warnings and missing design criteria remain
 visible. Answer review stays deferred. All existing no-overwrite/path/failure rules
 apply. The default command still uses the 15-stage mock route.
+
+## Extended source-to-method-to-argument route
+
+```sh
+python synthetic_walkthrough.py ../persona-research-journey --candidate-source offline-import --research-journey
+```
+
+This 27-stage synthetic route adds reviewed imported pattern proposals with exact
+reference-specific explanations, declared review/publication relationships and a
+target-context form, then composes them with the same answer review and argument
+map. Read `research-journey.txt` first. Rejected proposals, deferred claims, missing
+falsifiers and an uncited conclusion remain visible. No research is approved or
+executed. The fixed fixture decisions accept no external material. Completion is
+written only after all added stages succeed. The original 15/17-stage modes are
+unchanged. See [the full research-journey guide](RESEARCH_JOURNEY.md).

@@ -1,5 +1,6 @@
 """Run bundled synthetic fixtures through real CLIs into a new external directory."""
 import argparse
+import copy
 import json
 import os
 import subprocess
@@ -13,7 +14,9 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination, *, candidate_source='mock'):
+def run(destination, *, candidate_source='mock', research_journey=False):
+    if type(research_journey) is not bool:
+        raise ValueError('research_journey must be a boolean')
     if candidate_source not in ('mock', 'offline-import'):
         raise ValueError('candidate_source must be mock or offline-import')
     requested = Path(destination).absolute()
@@ -46,7 +49,8 @@ def run(destination, *, candidate_source='mock'):
         'No real scholar, LLM, external provider or scientific validation is used.\n'
         'Candidate accept decisions are fixed invented fixture decisions, not a general approval workflow.\n'
         'Answer review stays deferred. Missing falsification and defeater remain intentional.\n'
-        'Read after completion: reader-scope.txt, review-packet.txt, argument-map.txt, timeline.txt, lineage.json.\n'
+        'Read after completion: reader-scope.txt, review-packet.txt, argument-map.txt, timeline.txt, lineage.json.\n' +
+        ('Extended mode also writes research-journey.txt with pattern, relationship, context and argument review.\n' if research_journey else '') +
         'commands.json records actual CLI argument arrays (not shell commands).\n'
         'If any stage fails, keep this folder for diagnosis and rerun into a NEW directory.\n')
     try:
@@ -125,12 +129,18 @@ def run(destination, *, candidate_source='mock'):
             '--format', 'text'], 'argument-map.txt', False)
         write('revision-inputs.json', dict(original_corpus=corpus, candidate_bundle=bundle, operator_review=review))
         lineage = command('audit_design_lineage.py', [package_path, path('links.json'), path('proposal.json'), path('revision-inputs.json')], 'lineage.json')
+        journey = (_extend_research_journey(command, write, path, package_path, links) if research_journey else None)
         write('commands.json', commands)
         receipt = dict(status='SYNTHETIC_WALKTHROUGH_COMPLETE_NOT_VALIDATED', llm_used=False, external_transmission=False,
             human_review_authenticated=False, answer_review_status='ALL_DEFERRED',
             candidate_source=candidate_source, imported_response_is_synthetic_fixture=candidate_source == 'offline-import',
             scientific_validation='NOT_PERFORMED', command_count=len(commands), lineage_status=lineage['status'],
             read_first=['reader-scope.txt','review-packet.txt','argument-map.txt','timeline.txt','lineage.json'])
+        if journey is not None:
+            receipt.update(research_journey_status=journey['status'],
+                research_journey_answer_status=journey['answer_review_status'],
+                research_journey_is_synthetic=True,
+                read_first=['research-journey.txt', 'pattern-review.txt', *receipt['read_first']])
         write('COMPLETE.json', receipt)
         return dict(receipt, output_directory=str(destination))
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc:
@@ -144,12 +154,80 @@ def run(destination, *, candidate_source='mock'):
         raise
 
 
+
+def _extend_research_journey(command, write, path, package_path, links):
+    """Fixed invented decisions only, never accept external candidate material."""
+    command('pattern_proposals.py', ['prepare', package_path, '--topic', 'model design',
+        '--include-evidence-reasons'], 'pattern-handoff.json')
+    response = command('pattern_proposals.py', ['response-template', package_path,
+        path('pattern-handoff.json')], 'empty-pattern-response.json')
+    earlier = copy.deepcopy(links['links'][0]['to_ref'])
+    later = copy.deepcopy(links['links'][0]['from_ref'])
+    later_observation = dict(later, dimension=None)
+    candidate = dict(proposed_hypothesis='A tentative synthetic comparison-before-measurement pattern.',
+        scope_note='Two invented records only, not a real researcher method or independent support.',
+        support_refs=[earlier, later], challenge_refs=[later_observation],
+        alternative_explanation='A generic convention could explain the shared wording.',
+        falsification_check=None, uncertainty='No actual study or researcher fidelity has been evaluated.',
+        evidence_uses=[dict(reference=copy.deepcopy(ref), role=role,
+            rationale='Canned imported '+role+' explanation for '+ref['paper_id']+'.', context_boundary=None)
+            for refs, role in [([earlier, later], 'support'), ([later_observation], 'challenge')] for ref in refs])
+    rejected = copy.deepcopy(candidate)
+    rejected['proposed_hypothesis'] = 'A rejected synthetic overgeneralization from the same records.'
+    response['candidates'] = [candidate, rejected]
+    write('synthetic-pattern-response.json', response)
+    write('synthetic-pattern-provenance.json', dict(provider_id='synthetic-no-provider', model_id='synthetic-no-model',
+        run_id='synthetic-pattern-fixture', operator_id='synthetic-fixture-operator', execution_location='unknown'))
+    bundle = command('pattern_proposals.py', ['import', package_path, path('pattern-handoff.json'),
+        path('synthetic-pattern-response.json'), path('synthetic-pattern-provenance.json')], 'pattern-candidates.json')
+    review = command('pattern_proposals.py', ['review-template', package_path, path('pattern-candidates.json'),
+        '--reviewer-id', 'synthetic-pattern-reviewer'], 'deferred-pattern-review.json')
+    if len(bundle['candidates']) != 2 or any(row['decision'] != 'defer' for row in review['decisions']):
+        raise ValueError('synthetic pattern template contract changed; inspect before continuing')
+    reviewed = dict(pattern_id='synthetic-comparison', operator_hypothesis='Explicit synthetic reviewer comparison hypothesis.',
+        **{key:copy.deepcopy(value) for key,value in candidate.items() if key != 'proposed_hypothesis'})
+    for use in reviewed['evidence_uses']:
+        use['rationale'] = 'Fixed synthetic reviewer '+use['role']+' explanation for '+use['reference']['paper_id']+'.'
+    review['decisions'][0].update(decision='accept', review_note='Fixed invented fixture decision, not general automatic approval.', reviewed_pattern=reviewed)
+    review['decisions'][1].update(decision='reject', review_note='Synthetic overgeneralization retained for review visibility.')
+    write('synthetic-pattern-review.json', review)
+    command('pattern_proposals.py', ['review', package_path, path('pattern-candidates.json'),
+        path('synthetic-pattern-review.json'), '--format', 'text'], 'pattern-review.txt', False)
+    command('pattern_proposals.py', ['export', package_path, path('pattern-candidates.json'),
+        path('synthetic-pattern-review.json')], 'reviewed-patterns.json')
+    context = command('applicability_review.py', [package_path, '--template', '--question', QUESTION,
+        '--target-context', 'Synthetic target without measured discriminating predictions.', '--topic', 'model design',
+        '--reference-year', '2020', '--operator-id', 'synthetic-context-operator'], 'deferred-context.json')
+    context['assessments'][0].update(decision='exclude',
+        context_comparison='The synthetic target has no tested discriminating observation.',
+        remaining_uncertainty='The comparison may still be useful as a criticism, not an applicable method.',
+        counterevidence_refs=[later])
+    write('synthetic-context.json', context)
+    relations = command('publication_context.py', [package_path, '--template', '--operator-id',
+        'synthetic-relation-operator'], 'empty-publication-relations.json')
+    relations['relations'] = [dict(relation_id='synthetic-review-context', from_paper_id='synthetic-1',
+        to_paper_id='synthetic-0', relation_type='review_summary_of',
+        rationale='A synthetic operator-declared comparison, not an established citation or influence.',
+        basis_refs=[later], uncertainty=None)]
+    write('synthetic-publication-relations.json', relations)
+    args = [package_path, path('reviewed-patterns.json'), path('synthetic-context.json'), path('links.json'),
+        path('proposal.json'), path('draft.json'), path('argument.json'), path('synthetic-publication-relations.json'),
+        '--pattern-id', 'synthetic-comparison', '--review', path('answer-review.json')]
+    result = command('research_journey.py', args, 'research-journey.json')
+    command('research_journey.py', [*args, '--format', 'text'], 'research-journey.txt', False)
+    decisions = result['pattern_transfer_review']['answer_design_review']['answer']['review']['decisions']
+    if any(row['decision'] != 'defer' for row in decisions):
+        raise ValueError('synthetic answer review must remain deferred')
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('new_output_directory', type=Path)
     parser.add_argument('--candidate-source', choices=('mock', 'offline-import'), default='mock')
+    parser.add_argument('--research-journey', action='store_true')
     args = parser.parse_args()
-    try: result = run(args.new_output_directory, candidate_source=args.candidate_source)
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

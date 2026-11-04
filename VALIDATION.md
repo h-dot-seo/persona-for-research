@@ -2,21 +2,34 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.43 (declared publication and review context).
+Current local source release: v0.44 (integrated source-to-method-to-argument review).
 
-- `python -m unittest discover -q`: 458 synthetic tests passed locally.
+- `python -m unittest discover -q`: 484 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 151 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 154 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
-- Standalone `synthetic_walkthrough.py --candidate-source offline-import`: all 17
-  CLI stages completed, imported lineage replay matched, answer review stayed deferred.
+- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey`:
+  all 27 CLI stages completed, imported reasoning lineage replay matched, and the
+  composed journey retained all-deferred answer review. Existing 15/17-stage modes
+  also passed their regression tests.
 
-Most recent separately verified remote baseline: v0.42, commit
-[`7a046e346e4307289436ecff2c6298cc5519be3a`](https://github.com/h-dot-seo/persona-for-research/commit/7a046e346e4307289436ecff2c6298cc5519be3a),
-with 440 tests. This is a prior-commit record, not a claim of remote CI for v0.43.
+Most recent separately verified remote baseline: v0.43, commit
+[`c71959d22cae1a3222a1270dc7a3df915a690e05`](https://github.com/h-dot-seo/persona-for-research/commit/c71959d22cae1a3222a1270dc7a3df915a690e05),
+with 458 tests. This is a prior-commit record, not a claim of remote CI for v0.44.
 
-- [GitHub Actions run 41771458839](https://github.com/h-dot-seo/persona-for-research/actions/runs/41771458839):
+- [GitHub Actions run 41773136164](https://github.com/h-dot-seo/persona-for-research/actions/runs/41773136164):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-six new synthetic cases cover the integrated research journey and extended
+CLI walkthrough: consistent draft review across domains, rejected/deferred claims,
+exact parent/component separation, outside-topic relationship-only and context-only
+references, multiple uses and dual roles, no premise-to-conclusion citation transfer,
+future review context, full input bindings, imported pattern/observation provenance,
+strict input/output limits, immutability, no source/provider calls, real CLI JSON/text,
+legacy default modes and late-stage failure without a completion marker. Independent
+read-only review found no blocking issue and prompted the outside-scope/multiple-use
+cases. This composes current artifacts, not absent extraction history: prior lineage
+stage bundles are not accepted or replayed by the research-journey report.
 
 Eighteen publication-context regressions cover typed/directional/symmetric source
 relationships, strict basis refs, recorded-check validation, missing quotes and
