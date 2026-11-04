@@ -138,3 +138,12 @@ Cards and reports may reveal private filenames, identifiers, quotes and annotati
 They are not anonymized or authorized for sharing. The tool neither transmits them
 nor saves authentication information. Hash consistency establishes neither meaning,
 rights, authenticated review, researcher fidelity nor permission to execute a study.
+
+## Compare separately preserved input sets
+
+[Journey comparison](JOURNEY_COMPARISON.md) freshly inspects two explicit input cards
+with separate roots. It distinguishes file changes, declared argument/method/review
+changes and resolved source/route changes while retaining both full histories.
+Unchanged text is not stable semantic identity; disappeared prompts are not proof
+of resolution. No automatic rebinding, approval or source-history reconstruction
+occurs. JSON/text output is bounded; browser QA remains unverified.

@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.49-pinned-journey-inputs",
+  "release": "0.50-compare-pinned-journeys",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 169,
+  "file_count": 172,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 30607,
-      "sha256": "12cec9d1fd9e96c20543790405a88e28528caa54168031e5d904c635b2bf4cb4"
+      "bytes": 30945,
+      "sha256": "f7d81c43ca6fe1bfd04352b53480c1d56c15fd76c46655292bef4ac5bfc9c9e1"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 27286,
-      "sha256": "555d603e0231062fcc140e3abbcbe75d64e05106c1ffb487c33ca15db445348a"
+      "bytes": 30045,
+      "sha256": "274cebaf5fe4a7e546677ab43338e0cf49595f918b85d614b9df6a870db6b5d2"
     },
     {
       "path": "answer_draft.py",
@@ -174,9 +174,14 @@
       "sha256": "6456506a98f519e0ea0d8df9e85e171e352da0b95c4fcea5e6be29ac4baedd70"
     },
     {
+      "path": "docs/JOURNEY_COMPARISON.md",
+      "bytes": 7733,
+      "sha256": "e4e74f62d34dc2e518118ff55ad8fbbd914a1a2605a428020546f979286bcd66"
+    },
+    {
       "path": "docs/JOURNEY_INPUTS.md",
-      "bytes": 8546,
-      "sha256": "9b523088acc7a9939f651c2ed62e279383823d625dd22c0bf8569f45df88f4bd"
+      "bytes": 9071,
+      "sha256": "35522f8fc2a05dc0d2ec4e4d3ba3672a6e095f7c32a3b6db27456b8566e595cd"
     },
     {
       "path": "docs/LOCAL_HTML_REVIEW.md",
@@ -255,8 +260,8 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 10461,
-      "sha256": "9697beb590c77df2ad93b7c573abaec01ad52773d308362e80c5d402adc1faaf"
+      "bytes": 10974,
+      "sha256": "5347d0912fe7e4059dcddde1a49745902a8db59eff21a79498342b2a62ddace3"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -265,8 +270,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 12750,
-      "sha256": "801b3efdcb9f116cf1da61ca352403e1afdea9a82a5cc710a995e8a00108b452"
+      "bytes": 13276,
+      "sha256": "5cd9c023df5f4b1e393d3ea14561eb3149eab917f04106e6a37690aa31c2c0bb"
     },
     {
       "path": "docs/REVIEW_JOURNEY.md",
@@ -300,8 +305,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 31541,
-      "sha256": "b5aa28995e21553ebae39064eef0269c5d7c9610e4a32eb9f21ce2526a5315e2"
+      "bytes": 32062,
+      "sha256": "ca18eee43b294c187e3ac3411c8166228bc0b9b81d74ded8575df4f9a0f88e9c"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -397,6 +402,11 @@
       "path": "extraction_adapter.py",
       "bytes": 12243,
       "sha256": "91a5dd4111f4a6b6b0bb26a535053103384dc46dbb16a02f432b43a2fa4427bc"
+    },
+    {
+      "path": "journey_compare.py",
+      "bytes": 14362,
+      "sha256": "4d5b427924dfcbb4b0cc749d7ba9b057712231c6a78932ff87c77aeb597c28f6"
     },
     {
       "path": "journey_html.py",
@@ -637,6 +647,11 @@
       "path": "test_intake_errors.py",
       "bytes": 2372,
       "sha256": "b1632cab953e674c5925b06752f48da9d9d5d8520fe1448045c4e84fb4c126b0"
+    },
+    {
+      "path": "test_journey_compare.py",
+      "bytes": 28620,
+      "sha256": "35339ca32f6f30ad5e2ab5a93ae3a09bcda5834c9532c0a51ab646cde1bfc3f1"
     },
     {
       "path": "test_journey_html.py",

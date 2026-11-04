@@ -62,6 +62,11 @@ card and reopen the complete journey with one command. Raw-byte and JSON hashes
 reject changed files without automatic rebinding; source roots remain explicit
 arguments and every existing review/uncertainty boundary stays in force.
 
+To review a changed analysis, [compare two pinned journeys](docs/JOURNEY_COMPARISON.md).
+Both inputs are freshly validated; raw-file changes, declared arguments/methods,
+resolved source records and exact review prompts stay separate. Both full histories
+remain visible, and a missing prompt never becomes proof of scientific resolution.
+
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 

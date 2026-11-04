@@ -2,7 +2,47 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.49 (explicit pinned local journey inputs).
+Current local source release: v0.50 (fresh comparison of two pinned research journeys).
+
+- `python -m unittest discover -q`: 635 synthetic tests passed locally.
+- `python -m compileall -q .`: passed.
+- `python audit_publication.py`: passed, 173 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- The complete 39-stage synthetic journey, two separately prepared input cards and
+  actual JSON/text comparison commands passed. One explicitly changed synthetic
+  argument defeater was identified separately from unchanged claim declarations.
+  Both full reports, current source checks, imported pattern/application histories
+  and deferred answer decisions survived exact JSON/text round-trip. No browser ran.
+
+Most recent separately verified remote baseline: v0.49, commit
+[`0cc0115f64d7a256945fb377de8a62f88dae847c`](https://github.com/h-dot-seo/persona-for-research/commit/0cc0115f64d7a256945fb377de8a62f88dae847c),
+with 611 tests. This is a prior-commit record, not a claim of remote CI for v0.50.
+
+- [GitHub Actions run 41785421413](https://github.com/h-dot-seo/persona-for-research/actions/runs/41785421413):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-four new synthetic cases cover identical/relocated inputs, path-only and
+raw-byte-only changes, explicit optional presence, question/context/year/pattern
+switches, declared identity mismatch, both-card preflight before source audits,
+separate current source roots, one source audit per selected side, changed source
+bytes, stale artifacts and cached-report rejection. Declared claim/review/design/
+argument/application changes remain distinct from resolved evidence changes;
+reference and declaration additions/removals, reused IDs, observation reordering,
+order-only edits and exact prompt multiplicities are covered. Imported pattern,
+application and observation histories stay visible. Tests also cover no mutation or
+network use, output limits without truncation, escaped text and real CLI failures.
+Independent read-only review passed 23 initial comparison tests and 59 adjacent
+journey/input-card/revision tests, with no blocker. Its suggested addition/removal
+and order-only coverage is included in the final 24-case comparison suite.
+
+No semantic comparison, change-of-mind inference, improvement score, scientific
+validation, source authentication or human review authentication is claimed.
+Disappeared prompts are not resolved issues. Actual-browser visual/keyboard/print
+QA remains **BLOCKED/unverified**, with no retry or restriction bypass.
+
+## Prior v0.49 input-card checks and compatibility repairs
+
+Local source release at this snapshot: v0.49 (explicit pinned local journey inputs).
 
 - `python -m unittest discover -q`: 611 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
@@ -14,7 +54,7 @@ Current local source release: v0.49 (explicit pinned local journey inputs).
   per-file consistency record. Optional live source checks and imported histories
   stayed intact; all answer claims remained deferred. No browser was invoked.
 
-Most recent separately verified remote baseline: v0.48, commit
+Separately verified remote baseline at the v0.49 snapshot: v0.48, commit
 [`c9aea40d7e7866bffa580a2201ba16249c65851c`](https://github.com/h-dot-seo/persona-for-research/commit/c9aea40d7e7866bffa580a2201ba16249c65851c),
 with 585 tests. This is a prior-commit record, not a claim of remote CI for v0.49.
 
@@ -50,7 +90,8 @@ so it never reached the tested artifact. The fixture now targets the canonical f
 without weakening the production reparse rejection or the no-read assertion. That
 attempt remains visible in
 [run 41784964842](https://github.com/h-dot-seo/persona-for-research/actions/runs/41784964842).
-These local corrections are not a claim that corrected remote CI has passed.
+Corrected v0.49 subsequently passed all four jobs in run 41785421413, separately
+verified above before the v0.50 changes.
 
 **Actual-browser visual, keyboard and print QA remains BLOCKED/unverified.** No
 browser retry or restriction workaround was attempted in this increment. The

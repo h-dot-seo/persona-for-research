@@ -182,3 +182,12 @@ migrating decisions. A selected live-source check still requires an explicit sou
 root on every command. Text/JSON/HTML retain the same review semantics, with an added
 per-file consistency record. The browser presentation verification limit remains
 unchanged; this is a local input convenience, not approval or source authority.
+
+## Compare two pinned journeys
+
+[Journey comparison](JOURNEY_COMPARISON.md) freshly inspects two explicit input cards
+with separate roots. It distinguishes file changes, declared argument/method/review
+changes and resolved source/route changes while retaining both full histories.
+Unchanged text is not stable semantic identity; disappeared prompts are not proof
+of resolution. No automatic rebinding, approval or source-history reconstruction
+occurs. JSON/text output is bounded; browser QA remains unverified.
