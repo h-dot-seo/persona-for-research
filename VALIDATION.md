@@ -4,7 +4,7 @@
 
 Current local source release: v0.49 (explicit pinned local journey inputs).
 
-- `python -m unittest discover -q`: 609 synthetic tests passed locally.
+- `python -m unittest discover -q`: 611 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
 - `python audit_publication.py`: passed, 170 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
@@ -21,18 +21,31 @@ with 585 tests. This is a prior-commit record, not a claim of remote CI for v0.4
 - [GitHub Actions run 41782036589](https://github.com/h-dot-seo/persona-for-research/actions/runs/41782036589):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
 
-Twenty-four new synthetic cases cover explicit null/default selection, raw and
+Twenty-six new synthetic cases cover explicit null/default selection, raw and
 logical JSON hashes, changed-file/whitespace rejection, no silent rebind, stale
 cross-artifact validation, complete path preflight, symlink/root/directory/FIFO
 checks, detected replacement during resolution/reading, bounded card loading,
+same-object canonical path spelling and Windows reparse-point rejection,
 aggregate byte limits, explicit source-root pairing, changed sources, preserved
 optional imported history, relocation of identical files, no input mutation or
 network call, strict CLI failures and all three render formats. The final HTML
 snapshot retains all inspected fields plus the separate input-file check.
-Independent read-only review passed 44 focused tests and prompted bounded regular
-card-file loading plus alias-detection hardening. Stable-filesystem and unsigned
+Independent read-only review of the initial implementation passed 44 focused
+tests and prompted bounded regular card-file loading plus alias-detection
+hardening. The subsequent Windows compatibility fix passed 26 focused local tests;
+a second independent review was unavailable. Stable-filesystem and unsigned
 history limits are explicit; no atomic multi-file snapshot or hostile-filesystem
 proof is claimed.
+
+The first v0.49 remote attempt passed both Ubuntu jobs but failed both Windows jobs
+when lexical path comparisons mistook normal canonicalization for replacement.
+The failed attempt remains visible in
+[run 41783936703](https://github.com/h-dot-seo/persona-for-research/actions/runs/41783936703).
+Preflight now checks device/inode/type identity across canonicalization and rejects
+symlinks and Windows reparse points in both spellings, rather than requiring
+identical path spelling. Same-object normalization and different-object substitution
+have separate regressions. This local correction is not a claim that corrected
+remote CI has passed.
 
 **Actual-browser visual, keyboard and print QA remains BLOCKED/unverified.** No
 browser retry or restriction workaround was attempted in this increment. The

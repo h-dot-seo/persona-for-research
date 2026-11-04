@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 25992,
-      "sha256": "8aee70e4a79f985361aab34d6f6bf1da13d824a848989a61c2e1387fa8539113"
+      "bytes": 26855,
+      "sha256": "939efbe13f9560f13816e0001043bc7d00e056caf287ba75a80d4102ec681697"
     },
     {
       "path": "answer_draft.py",
@@ -175,8 +175,8 @@
     },
     {
       "path": "docs/JOURNEY_INPUTS.md",
-      "bytes": 8388,
-      "sha256": "0dbfd12918c63bae77322a86c00664d54d63e0a554c75028429b0e136ce0c8e2"
+      "bytes": 8546,
+      "sha256": "9b523088acc7a9939f651c2ed62e279383823d625dd22c0bf8569f45df88f4bd"
     },
     {
       "path": "docs/LOCAL_HTML_REVIEW.md",
@@ -405,8 +405,8 @@
     },
     {
       "path": "journey_inputs.py",
-      "bytes": 11486,
-      "sha256": "dd41e8d589351d395d916c87a4622cb2ccbec6fcde240546e3548f490613aff9"
+      "bytes": 11498,
+      "sha256": "14f955cd33cc0a7af6c9411cbb52c44fd83e69ed09e980ed18b5c896078d4d96"
     },
     {
       "path": "method_application.py",
@@ -645,8 +645,8 @@
     },
     {
       "path": "test_journey_inputs.py",
-      "bytes": 21754,
-      "sha256": "2006b9ebc78479026b0ae3e60e4c9db186f0cf0025b659140b02c9ecbd33e7d9"
+      "bytes": 23484,
+      "sha256": "ac28d0f80acdfb8f1c01627d2e3c87007f845db2082e85054930cf1ea348eb35"
     },
     {
       "path": "test_local_model_handoff.py",

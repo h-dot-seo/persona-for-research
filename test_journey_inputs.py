@@ -265,7 +265,33 @@ class JourneyInputTests(unittest.TestCase):
                 done=True;target.unlink();target.symlink_to(other)
             return original(path,*args,**kwargs)
         with patch.object(Path,'resolve',replace),patch.object(inputs,'read_source_bytes',side_effect=AssertionError('no read')):
-            with self.assertRaisesRegex(ValueError,'changed or became an alias'):self.prepare()
+            with self.assertRaisesRegex(ValueError,'symlink'):self.prepare()
+
+    def test_canonical_spelling_change_keeps_same_file_identity_but_rejects_another_file(self):
+        # Models benign OS canonicalization without treating different spelling as
+        # replacement. Real Windows temp paths exercise this on both CI versions.
+        source=self.path('declared_review');alias=self.root/'same-file.json'
+        try:os.link(source,alias)
+        except OSError:self.skipTest('hardlink fixture unavailable')
+        original=Path.resolve
+        def same(path,*args,**kwargs):return alias if path==source else original(path,*args,**kwargs)
+        with patch.object(Path,'resolve',same):
+            resolved,info=inputs._checked_path(source)
+            self.assertEqual(resolved,alias);self.assertEqual(info.st_ino,source.stat().st_ino)
+        other=self.root/'different-file.json';other.write_bytes(source.read_bytes())
+        def different(path,*args,**kwargs):return other if path==source else original(path,*args,**kwargs)
+        with patch.object(Path,'resolve',different):
+            with self.assertRaisesRegex(ValueError,'identity changed'):inputs._checked_path(source)
+
+    def test_reparse_point_attribute_is_rejected_even_without_symlink_mode(self):
+        from types import SimpleNamespace
+        path=self.path('declared_review');original=Path.stat
+        def reparse(current,*args,**kwargs):
+            if current==path:
+                return SimpleNamespace(st_mode=original(current,*args,**kwargs).st_mode,st_file_attributes=0x400)
+            return original(current,*args,**kwargs)
+        with patch.object(Path,'stat',reparse),patch.object(inputs,'read_source_bytes',side_effect=AssertionError('no read')):
+            with self.assertRaisesRegex(ValueError,'reparse'):self.prepare()
 
     def test_full_synthetic_journey_can_be_reopened_from_committed_input_selection(self):
         target=self.root/'complete synthetic journey'

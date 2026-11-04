@@ -2,7 +2,6 @@
 import argparse
 import hashlib
 import json
-import os
 import stat
 import sys
 import unicodedata
@@ -83,26 +82,37 @@ def _descriptor(value, *, bound):
     return value
 
 
+def _plain_components(path):
+    """Reject symlinks and Windows reparse points without opening file bytes."""
+    selected=None
+    for component in (path,*path.parents):
+        info=component.stat(follow_symlinks=False)
+        if stat.S_ISLNK(info.st_mode) or getattr(info,'st_file_attributes',0)&getattr(stat,'FILE_ATTRIBUTE_REPARSE_POINT',0x400):
+            raise ValueError('input path must not contain symlinks or reparse points')
+        if selected is None:selected=info
+    return selected
+
+
+def _checked_path(path):
+    # Windows may expand a normal 8.3 name without following a redirect. Compare
+    # filesystem identities, not spelling, while checking both path spellings.
+    requested=Path(path).absolute();before=_plain_components(requested)
+    resolved=requested.resolve(strict=True)
+    after=_plain_components(requested);canonical=_plain_components(resolved)
+    identity=lambda info:(info.st_dev,info.st_ino,stat.S_IFMT(info.st_mode))
+    if identity(before)!=identity(after) or identity(after)!=identity(canonical):
+        raise ValueError('input path identity changed during preflight')
+    return resolved,canonical
+
+
 def _paths(names,root):
     """Preflight all paths and types before any artifact bytes are opened."""
-    root=Path(root).absolute()
-    if any(path.is_symlink() for path in (root,*root.parents)):
-        raise ValueError('input root must not contain symlinks')
-    requested_root=root
-    root=root.resolve(strict=True)
-    if root!=Path(os.path.abspath(requested_root)) or any(path.is_symlink() for path in (requested_root,*requested_root.parents)):
-        raise ValueError('input root changed during preflight')
-    if not root.is_dir():raise ValueError('input root must be an existing directory')
+    root,info=_checked_path(root)
+    if not stat.S_ISDIR(info.st_mode):raise ValueError('input root must be an existing directory')
     result={}
     for name,relative in names.items():
-        candidate=root.joinpath(*PurePosixPath(relative).parts)
-        for path in (candidate,*candidate.parents):
-            if path==root:break
-            if path.is_symlink():raise ValueError('artifact paths must not contain symlinks')
-        resolved=candidate.resolve(strict=True)
-        if resolved!=candidate:
-            raise ValueError('artifact path changed or became an alias during preflight')
-        if not resolved.is_relative_to(root) or not stat.S_ISREG(resolved.stat(follow_symlinks=False).st_mode):
+        resolved,info=_checked_path(root.joinpath(*PurePosixPath(relative).parts))
+        if not resolved.is_relative_to(root) or not stat.S_ISREG(info.st_mode):
             raise ValueError('artifact must be a regular JSON file inside the explicit input root')
         result[name]=resolved
     return result
@@ -178,14 +188,9 @@ def render(card,root,*,source_root=None,format='text'):
 
 
 def _load_card(path):
-    requested=Path(path).absolute()
-    if any(part.is_symlink() for part in (requested,*requested.parents)):
-        raise ValueError('selection/card path must not contain symlinks')
-    # Normalize explicit dot segments only after checking their original components.
-    normalized=Path(os.path.abspath(requested))
-    resolved=requested.resolve(strict=True)
-    if resolved!=normalized or not stat.S_ISREG(resolved.stat(follow_symlinks=False).st_mode):
-        raise ValueError('selection/card must remain a regular file without aliases')
+    resolved,info=_checked_path(path)
+    if not stat.S_ISREG(info.st_mode):
+        raise ValueError('selection/card must remain a regular file')
     raw=read_source_bytes(resolved,max_bytes=MAX_CARD_BYTES)
     return loads(raw)
 

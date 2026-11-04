@@ -114,8 +114,10 @@ Shell redirection can overwrite files, so choose new private output paths yourse
 - The selection/card file itself must be regular, with no symlink path components,
   and is read through the bounded descriptor reader. FIFOs/devices/directories reject.
 - All artifact paths/types are preflighted before reading any artifact bytes. The
-  input root and artifact components reject symlinks, and resolution cannot silently
-  redirect a path. Descriptor checks detect supported replacement/change cases.
+  input root and artifact components reject symlinks and Windows reparse points.
+  Canonicalization must preserve filesystem identity; normal Windows short-name
+  expansion is not mistaken for replacement. Resolution cannot silently select a
+  different object. Descriptor checks detect supported replacement/change cases.
 - Keep the selected filesystem stable. These checks are **not** an OS sandbox,
   atomic multi-file snapshot or complete hostile concurrent-filesystem defense.
   No directory-descriptor traversal or persistent lock is claimed. Bound hashes
