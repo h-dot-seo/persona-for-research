@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 32795,
-      "sha256": "8273e1f5d1c3b3d1618e8a316533461e6d95b269c095e9ab635cbd01714100e3"
+      "bytes": 33365,
+      "sha256": "d06a6121015a7a73c5024800abf0f08ea2998d3b85f6415639f175c47a64dde7"
     },
     {
       "path": "answer_draft.py",
@@ -655,8 +655,8 @@
     },
     {
       "path": "test_integrated_workspace.py",
-      "bytes": 17231,
-      "sha256": "9ea31d4b45608bc6528eef2a770960d9b9d42653827a3fab4a9aa353f641c194"
+      "bytes": 17462,
+      "sha256": "2c9efcc78ea24125e32e5c0cfb4664936dcc4d1967842c9694c667b817b37128"
     },
     {
       "path": "test_journey_compare.py",

@@ -57,9 +57,12 @@ class IntegratedWorkspaceTests(unittest.TestCase):
             return value
         actual={}
         for path in self.dest.iterdir():
-            value=json.dumps(normalize(json.loads(path.read_text())),sort_keys=True,ensure_ascii=True,separators=(',',':')) if path.suffix=='.json' else path.read_text()
+            value=json.dumps(normalize(json.loads(path.read_text(encoding='utf-8'))),sort_keys=True,ensure_ascii=True,separators=(',',':')) if path.suffix=='.json' else path.read_text(encoding='utf-8')
             actual[path.name]=hashlib.sha256(value.encode('utf-8')).hexdigest()
-        self.assertEqual(actual,GOLDEN);self.assertEqual(ready,self.read('READY.json'))
+        self.assertEqual(set(actual),set(GOLDEN))
+        for name,digest in actual.items():self.assertEqual(digest,GOLDEN[name],name)
+        self.assertIn('from→to',(self.dest/'initial-review.txt').read_text(encoding='utf-8'))
+        self.assertEqual(ready,self.read('READY.json'))
         self.assertNotIn('prepared_input_card',ready)
 
     def test_generated_artifacts_equal_existing_factories_without_new_schema_rules(self):

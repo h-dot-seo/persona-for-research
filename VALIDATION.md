@@ -41,6 +41,14 @@ hypothesis, method choice, reviewer decision or source permission is inferred.
 Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**; no retry or
 restriction bypass was attempted.
 
+The initial v0.51 remote run passed both Ubuntu jobs but exposed a Windows-only
+golden-fixture decoding failure. The new test read UTF-8 text using the platform's
+default encoding; the legacy report contains a non-ASCII arrow. Golden reads now
+explicitly use UTF-8 and identify the exact failing filename without changing any
+expected digest or production output. The initial attempt is preserved in
+[run 41788952122](https://github.com/h-dot-seo/persona-for-research/actions/runs/41788952122).
+This local correction is not a claim that corrected remote CI has passed.
+
 ## Prior v0.50 two-card comparison checks
 
 Local source release at this snapshot: v0.50 (fresh comparison of two pinned research journeys).
