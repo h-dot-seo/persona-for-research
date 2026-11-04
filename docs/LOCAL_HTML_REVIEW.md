@@ -121,3 +121,13 @@ not establish responsive geometry, focus behavior or print layout. Responsive an
 print styles are included, but inspect the view and print preview in an authorized
 browser before relying on those presentation behaviors. No browser dependency was
 added to the runtime or CI to hide this limitation.
+
+## Reopen explicitly pinned inputs
+
+[Journey input cards](JOURNEY_INPUTS.md) bind the exact relative JSON file choices,
+raw bytes and logical payloads so a later inspection needs only the card and an
+explicit input root. Any artifact change fails rather than refreshing hashes or
+migrating decisions. A selected live-source check still requires an explicit source
+root on every command. Text/JSON/HTML retain the same review semantics, with an added
+per-file consistency record. The browser presentation verification limit remains
+unchanged; this is a local input convenience, not approval or source authority.

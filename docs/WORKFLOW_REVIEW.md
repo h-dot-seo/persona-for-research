@@ -494,3 +494,13 @@ The static/security/CLI checks are automated; actual-browser visual, keyboard an
 print QA is currently blocked by the cloud environment's socket restriction.
 See [local HTML review](LOCAL_HTML_REVIEW.md) for the reading order, privacy limits
 and precise verification scope.
+
+## Reopen explicitly pinned inputs
+
+[Journey input cards](JOURNEY_INPUTS.md) bind the exact relative JSON file choices,
+raw bytes and logical payloads so a later inspection needs only the card and an
+explicit input root. Any artifact change fails rather than refreshing hashes or
+migrating decisions. A selected live-source check still requires an explicit source
+root on every command. Text/JSON/HTML retain the same review semantics, with an added
+per-file consistency record. The browser presentation verification limit remains
+unchanged; this is a local input convenience, not approval or source authority.

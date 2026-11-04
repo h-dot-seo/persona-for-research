@@ -57,6 +57,11 @@ review prompts first, exact-source links and complete histories next. No scripts
 external resources or approval controls are included. Actual-browser layout/keyboard/
 print QA is currently blocked; see [local HTML review](docs/LOCAL_HTML_REVIEW.md).
 
+For repeat use, [pin explicit local input files](docs/JOURNEY_INPUTS.md) in a small
+card and reopen the complete journey with one command. Raw-byte and JSON hashes
+reject changed files without automatic rebinding; source roots remain explicit
+arguments and every existing review/uncertainty boundary stays in force.
+
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 

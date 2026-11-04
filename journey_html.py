@@ -117,6 +117,9 @@ def _format(result):
     if 'method_application_review' in result:
         out.add('<p>Method application: '+_escape(result['method_application_review']['status'])+'</p>')
     out.add('<p>Scientific validation: NOT_PERFORMED. Human review identity: not authenticated. No model/provider call, automatic approval, scientific execution or canonical update occurs in this view.</p></div></div></section>')
+    if 'local_input_file_check' in result:
+        out.add('<p class="panel">Explicit input-file consistency: '+_escape(result['local_input_file_check']['status'])+
+            '. This binds supplied JSON files, not approval or source authenticity. Full per-file checks appear below.</p>')
     out.add('<section id="agenda"><h2>Review prompts</h2><p>Grouped by domain, not severity. Counts are navigation aids, never confidence, readiness or completeness scores. Missing prompts do not mean sufficient evidence.</p>')
     domains = {}
     for prompt in result['review_agenda']: domains.setdefault(prompt['domain'], []).append(prompt)
@@ -159,7 +162,8 @@ def _format(result):
         ('argument_review','Argument map, assumptions and uncited conclusions'),
         ('evidence_scope','Reader evidence scope and unused sources'),
         ('active_publication_context','Publication context for supplied active uses'),
-        ('source_recheck','Current local source recheck, including unused sources')]
+        ('source_recheck','Current local source recheck, including unused sources'),
+        ('local_input_file_check','Pinned JSON input files and per-file consistency')]
     for key, label in sections:
         if key not in result: continue
         out.add('<details><summary>'+label+'</summary>'); out.data(result[key],known_refs); out.add('</details>')

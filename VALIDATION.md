@@ -2,25 +2,44 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.48 (passive local research-journey HTML view).
+Current local source release: v0.49 (explicit pinned local journey inputs).
 
-- `python -m unittest discover -q`: 585 synthetic tests passed locally.
+- `python -m unittest discover -q`: 609 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 166 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 170 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
-- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey --recheck-sources --review-method-use --import-method-use --html-review`:
-  all 39 CLI stages completed. The passive HTML snapshot exactly matches the
-  separately rendered journey JSON for the unchanged synthetic inputs. Original,
-  reviewed and rejected pattern/application histories remain visible; all answer
-  claims remain deferred and source checks do not establish method applicability.
-  Previous demo modes and legacy JSON/text snapshots retain their behavior.
+- The complete 39-stage synthetic journey plus explicit input-card preparation and
+  HTML reopen passed. All eleven selected JSON artifacts matched the card. The
+  reopened journey remained exactly equal to the direct result except for the added
+  per-file consistency record. Optional live source checks and imported histories
+  stayed intact; all answer claims remained deferred. No browser was invoked.
 
-Most recent separately verified remote baseline: v0.47, commit
-[`ac54ed5afed9e5cfd864baddb8ad5cca0a58758b`](https://github.com/h-dot-seo/persona-for-research/commit/ac54ed5afed9e5cfd864baddb8ad5cca0a58758b),
-with 562 tests. This is a prior-commit record, not a claim of remote CI for v0.48.
+Most recent separately verified remote baseline: v0.48, commit
+[`c9aea40d7e7866bffa580a2201ba16249c65851c`](https://github.com/h-dot-seo/persona-for-research/commit/c9aea40d7e7866bffa580a2201ba16249c65851c),
+with 585 tests. This is a prior-commit record, not a claim of remote CI for v0.49.
 
-- [GitHub Actions run 41780130790](https://github.com/h-dot-seo/persona-for-research/actions/runs/41780130790):
+- [GitHub Actions run 41782036589](https://github.com/h-dot-seo/persona-for-research/actions/runs/41782036589):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-four new synthetic cases cover explicit null/default selection, raw and
+logical JSON hashes, changed-file/whitespace rejection, no silent rebind, stale
+cross-artifact validation, complete path preflight, symlink/root/directory/FIFO
+checks, detected replacement during resolution/reading, bounded card loading,
+aggregate byte limits, explicit source-root pairing, changed sources, preserved
+optional imported history, relocation of identical files, no input mutation or
+network call, strict CLI failures and all three render formats. The final HTML
+snapshot retains all inspected fields plus the separate input-file check.
+Independent read-only review passed 44 focused tests and prompted bounded regular
+card-file loading plus alias-detection hardening. Stable-filesystem and unsigned
+history limits are explicit; no atomic multi-file snapshot or hostile-filesystem
+proof is claimed.
+
+**Actual-browser visual, keyboard and print QA remains BLOCKED/unverified.** No
+browser retry or restriction workaround was attempted in this increment. The
+previous Chromium OS-socket failure and the distinction between static/CLI checks
+and actual presentation behavior remain documented in
+[local HTML review](docs/LOCAL_HTML_REVIEW.md). Input-card checks are not source
+authentication, semantic support, human review authentication or research approval.
 
 Twenty-three new synthetic cases cover inert HTML/strict element and attribute
 allowlists, escaped source/model/operator content, controls and Unicode, unique
