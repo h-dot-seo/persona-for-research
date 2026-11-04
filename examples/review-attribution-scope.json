@@ -1,0 +1,245 @@
+{
+  "schema": "persona.answer-proposal-scope.v3",
+  "package_sha256": "7c4b49ef3509a8fe95860790c0807e13541de6f738900dd43c3b6c64cad65949",
+  "question": "What does this invented review report and recommend, without attributing personal practice?",
+  "topic": "synthetic attribution",
+  "reference_year": 2020,
+  "operator_id": "synthetic-operator",
+  "evidence_refs": [
+    {
+      "paper_id": "synthetic-review",
+      "observation_index": 0,
+      "dimension": null
+    },
+    {
+      "paper_id": "synthetic-review",
+      "observation_index": 1,
+      "dimension": null
+    }
+  ],
+  "research_context": {
+    "patterns": {
+      "schema": "persona.reviewed-pattern-proposals.v1",
+      "bundle": {
+        "schema": "persona.pattern-proposals.v2",
+        "topic": "synthetic attribution",
+        "input_package_sha256": "7c4b49ef3509a8fe95860790c0807e13541de6f738900dd43c3b6c64cad65949",
+        "import_record": {
+          "handoff_sha256": "0de7f3528a08590bb6655ca98fe40f9448321c1e2510b7673ab19be769926579",
+          "response_sha256": "2c23ac39175d208ff9134766ef8b6524327352014cb506a8f407fa6707aea7bb",
+          "provenance": {
+            "provider_id": "synthetic-no-provider",
+            "model_id": "synthetic-no-model",
+            "run_id": "synthetic-fixed-review-attribution",
+            "operator_id": "synthetic-fixture-author",
+            "execution_location": "unknown"
+          }
+        },
+        "candidates": [
+          {
+            "candidate_id": "pattern-candidate-1",
+            "proposed_pattern": {
+              "proposed_hypothesis": "The review reports M and recommends testing N; individual practice is unestablished.",
+              "scope_note": "Fixed synthetic two-passage comparison, not a general review policy.",
+              "support_refs": [
+                {
+                  "paper_id": "synthetic-review",
+                  "observation_index": 0,
+                  "dimension": null
+                },
+                {
+                  "paper_id": "synthetic-review",
+                  "observation_index": 1,
+                  "dimension": null
+                }
+              ],
+              "challenge_refs": [
+                {
+                  "paper_id": "synthetic-context-review",
+                  "observation_index": 0,
+                  "dimension": null
+                }
+              ],
+              "alternative_explanation": "A review can report others' methods and recommend tests without its authors implementing either.",
+              "falsification_check": "An independently assessed original implementation record would be needed; none is supplied.",
+              "uncertainty": "No individual ownership, personal adoption, development, or implementation is established.",
+              "evidence_uses": [
+                {
+                  "reference": {
+                    "paper_id": "synthetic-review",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "support",
+                  "rationale": "Operator judgment: the first passage supports only the review reporting another group's use of M.",
+                  "context_boundary": "Reported other-group method only; the original paper is absent. This does not establish the synthetic scholar's personal practice, development, or implementation."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-review",
+                    "observation_index": 1,
+                    "dimension": null
+                  },
+                  "role": "support",
+                  "rationale": "Operator judgment: the second passage supports only the review recommending a test of N.",
+                  "context_boundary": "Review recommendation only; proposing a test does not establish personal practice, development, or implementation by the synthetic scholar. Individual ownership remains unestablished."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-context-review",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "challenge",
+                  "rationale": "Operator challenge judgment: the context-only caution challenges the leap from review reporting or recommendation to the scholar's implementation of M or N.",
+                  "context_boundary": "Recommendation versus implementation remains unresolved; this challenge is an operator judgment, not a source-author endorsement."
+                }
+              ]
+            },
+            "review_prompts": [
+              "SUPPORT_FROM_FEWER_THAN_TWO_PAPER_IDS"
+            ],
+            "status": "IMPORTED_PATTERN_PROPOSAL_REQUIRES_REVIEW"
+          }
+        ],
+        "status": "PATTERN_PROPOSALS_REQUIRE_REVIEW",
+        "provider": {
+          "id": "offline-pattern-response-import",
+          "model_id": "synthetic-no-model",
+          "llm_used": null,
+          "provenance_status": "OPERATOR_DECLARED_NOT_AUTHENTICATED"
+        },
+        "processing": {
+          "scope": "CURRENT_IMPORT_ONLY",
+          "provider_invoked": false,
+          "external_transmission": false,
+          "source_reread": false
+        },
+        "canonical_update_performed": false,
+        "boundary": "These are imported method-pattern proposals and recorded operator interpretations, not researcher speech, private thoughts, author recommendations or discovered personal traits. Source references, publication years and quote-check labels are stored evidence, not fresh verification or semantic support. Reviews are not independent replication; chronology is not intellectual influence or a change of mind. Provider/model/run and reviewer identities are unauthenticated declarations. Acceptance permits a review worksheet, not automatic approval of a method, scientific execution, canonical persona update or answer/design generation. No provider call, external transmission or original source reread is performed here."
+      },
+      "review": {
+        "proposal_bundle_sha256": "25929d81713399d612f96d986aaaac74eba7004f43602d621b10a413a4faaef4",
+        "reviewer_id": "synthetic-fixed-pattern-reviewer",
+        "decisions": [
+          {
+            "candidate_id": "pattern-candidate-1",
+            "decision": "accept",
+            "review_note": "Fixed operator comparison for this invented example only, not semantic validation.",
+            "reviewed_pattern": {
+              "pattern_id": "review-attribution",
+              "operator_hypothesis": "The review reports M and recommends testing N; individual practice is unestablished.",
+              "scope_note": "Fixed synthetic two-passage comparison, not a general review policy.",
+              "support_refs": [
+                {
+                  "paper_id": "synthetic-review",
+                  "observation_index": 0,
+                  "dimension": null
+                },
+                {
+                  "paper_id": "synthetic-review",
+                  "observation_index": 1,
+                  "dimension": null
+                }
+              ],
+              "challenge_refs": [
+                {
+                  "paper_id": "synthetic-context-review",
+                  "observation_index": 0,
+                  "dimension": null
+                }
+              ],
+              "alternative_explanation": "A review can report others' methods and recommend tests without its authors implementing either.",
+              "falsification_check": "An independently assessed original implementation record would be needed; none is supplied.",
+              "uncertainty": "No individual ownership, personal adoption, development, or implementation is established.",
+              "evidence_uses": [
+                {
+                  "reference": {
+                    "paper_id": "synthetic-review",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "support",
+                  "rationale": "Operator judgment: the first passage supports only the review reporting another group's use of M.",
+                  "context_boundary": "Reported other-group method only; the original paper is absent. This does not establish the synthetic scholar's personal practice, development, or implementation."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-review",
+                    "observation_index": 1,
+                    "dimension": null
+                  },
+                  "role": "support",
+                  "rationale": "Operator judgment: the second passage supports only the review recommending a test of N.",
+                  "context_boundary": "Review recommendation only; proposing a test does not establish personal practice, development, or implementation by the synthetic scholar. Individual ownership remains unestablished."
+                },
+                {
+                  "reference": {
+                    "paper_id": "synthetic-context-review",
+                    "observation_index": 0,
+                    "dimension": null
+                  },
+                  "role": "challenge",
+                  "rationale": "Operator challenge judgment: the context-only caution challenges the leap from review reporting or recommendation to the scholar's implementation of M or N.",
+                  "context_boundary": "Recommendation versus implementation remains unresolved; this challenge is an operator judgment, not a source-author endorsement."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "context": {
+      "context_sha256": "1a79466840cb98da016ee6451500793f89536df20ba3e4a25d5c7355984498d7",
+      "persona_sha256": "03cb5c76e53f3a56118ec839fed377609ad63af095d07ab6097da0e3d122ce04",
+      "knowledge_papers_sha256": "5288bb576af8135692573487d1a2774da2538a856560ec31633d8ae594de9b5e",
+      "question": "What does this invented review report and recommend, without attributing personal practice?",
+      "target_context": "Describe review-level statements only; no implementation inference.",
+      "topic": "synthetic attribution",
+      "reference_year": 2020,
+      "operator_id": "synthetic-operator",
+      "assessments": [
+        {
+          "reference": {
+            "paper_id": "synthetic-context-review",
+            "observation_index": 0,
+            "dimension": null
+          },
+          "decision": "exclude",
+          "context_comparison": "Context-only caution, not an exact answer citation.",
+          "remaining_uncertainty": "No original implementation paper is supplied.",
+          "counterevidence_refs": []
+        },
+        {
+          "reference": {
+            "paper_id": "synthetic-review",
+            "observation_index": 0,
+            "dimension": null
+          },
+          "decision": "consider",
+          "context_comparison": "Operator judgment: the first passage supports only the review reporting another group's use of M.",
+          "remaining_uncertainty": "Reported other-group method only; the original paper is absent. This does not establish the synthetic scholar's personal practice, development, or implementation.",
+          "counterevidence_refs": []
+        },
+        {
+          "reference": {
+            "paper_id": "synthetic-review",
+            "observation_index": 1,
+            "dimension": null
+          },
+          "decision": "consider",
+          "context_comparison": "Operator judgment: the second passage supports only the review recommending a test of N.",
+          "remaining_uncertainty": "Review recommendation only; proposing a test does not establish personal practice, development, or implementation by the synthetic scholar. Individual ownership remains unestablished.",
+          "counterevidence_refs": []
+        }
+      ]
+    },
+    "publication_relations": {
+      "persona_sha256": "03cb5c76e53f3a56118ec839fed377609ad63af095d07ab6097da0e3d122ce04",
+      "knowledge_papers_sha256": "5288bb576af8135692573487d1a2774da2538a856560ec31633d8ae594de9b5e",
+      "operator_id": "synthetic-operator",
+      "relations": []
+    },
+    "pattern_id": "review-attribution"
+  }
+}

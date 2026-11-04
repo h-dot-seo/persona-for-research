@@ -2,6 +2,56 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.62 (bounded synthetic review-attribution example).
+
+- `python -m unittest discover -q`: 887 synthetic tests passed locally in 343.946 seconds.
+- `python -m compileall -q .`: passed; 132 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 210 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 209 exact allowlisted entries and file hashes.
+- All 56 existing non-test Python modules match the v0.61 publication hashes.
+  This increment adds examples, a guide and regression tests, not runtime behavior.
+
+Most recent separately verified remote baseline: v0.61, commit
+[`c45349f0ef1cc3ffe00889ba96f1067f1037da70`](https://github.com/h-dot-seo/persona-for-research/commit/c45349f0ef1cc3ffe00889ba96f1067f1037da70),
+with 878 tests. This is a prior-commit record, not a claim of remote CI for v0.62.
+
+- [GitHub Actions run 41814621592](https://github.com/h-dot-seo/persona-for-research/actions/runs/41814621592):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Five complete invented JSON fixtures run through existing context, handoff, import,
+adoption and final-answer-review commands. Nine focused tests passed, including
+15 successful real CLI stages from an external temporary directory. An independent
+read-only audit reran all nine tests and separately executed the documented shell
+recipe successfully. No runtime module or existing snapshot was modified.
+
+The two focal observations share review/explicit-statement labels but retain
+separate exact quotations, reference identities, limitations and declared reasons:
+one reports another invented group's method; the other states the review's
+recommendation to test an alternative. Neither establishes individual method
+ownership, personal practice, development or implementation. A second invented
+review supplies only context for the existing pattern contract; it is excluded
+from exact answer citations and is not the absent original paper or independent
+corroboration. Publication relationships remain empty.
+
+The bounded active answer says the review reports M and recommends testing N.
+The unsupported personal-use assertion remains explicitly rejected import history.
+Its source reference can still support the bounded active claim; rejecting one
+candidate does not erase shared evidence. Fixed fixture adoption records an
+operator's wording choice, not the scholar adopting a method. Separate final
+answer review remains deferred and incomplete. Empty exact citation scope stays
+empty, and a context-only reference cannot be added as an answer citation.
+
+The tests cover preserved reasons/boundaries, original versus active history,
+input immutability, escaping and guarded in-memory operations without file/network
+access. These are preservation and explicit-review checks, not automatic semantic
+inference, entailment, attribution detection, source authentication or researcher
+fidelity. Recorded source/quote checks remain NOT_PERFORMED; no source reread,
+provider or browser step is requested. Human scientific review remains required.
+Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**; no browser
+retry or restriction bypass was attempted.
+
+## Prior v0.61 current-source preview checks
+
 Current local source release: v0.61 (optional current-source checks in answer preview).
 
 - `python -m unittest discover -q`: 878 synthetic tests passed locally in 355.893 seconds.

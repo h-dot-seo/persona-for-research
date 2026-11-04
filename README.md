@@ -107,6 +107,12 @@ preparing a handoff; an empty selection stays empty and authorizes no sharing.
 An explicit source selection/root can add current local byte and quote checks,
 kept separate from recorded labels and scientific approval.
 
+The [synthetic review-attribution example](docs/REVIEW_ATTRIBUTION_EXAMPLE.md)
+contrasts a review reporting another group's method with its own recommendation.
+It preserves separate passages and declared reasoning without treating either as
+proof of the individual scholar's practice. The example tests preservation and
+explicit review choices, not automatic attribution or researcher fidelity.
+
 ## Adopt offline answer proposals explicitly
 
 [Answer proposals](docs/ANSWER_PROPOSALS.md) prepare an evidence-scoped local

@@ -1,0 +1,148 @@
+{
+  "persona": {
+    "author_id": "synthetic-scholar",
+    "version": "1",
+    "build_id": "synthetic-review-attribution",
+    "identity": {
+      "simulation_only": true,
+      "private_beliefs_inferred": false
+    },
+    "knowledge_papers_sha256": "5288bb576af8135692573487d1a2774da2538a856560ec31633d8ae594de9b5e",
+    "rules": [
+      {
+        "rule_id": "rule-1",
+        "method": "Report another synthetic group's use of M.",
+        "condition": "Only two invented simulated signals.",
+        "limitation": "Reported other-group method only; the original paper is absent. This does not establish the synthetic scholar's personal practice, development, or implementation.",
+        "locator": "invented review passage 1",
+        "topic": "synthetic attribution",
+        "stance": "support",
+        "source_kind": "review",
+        "year": 2020,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "The synthetic Lantern Group used method M to compare two simulated signals.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-review",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      },
+      {
+        "rule_id": "rule-2",
+        "method": "Recommend testing alternative N.",
+        "condition": "Only two invented simulated signals.",
+        "limitation": "Review recommendation only; proposing a test does not establish personal practice, development, or implementation by the synthetic scholar. Individual ownership remains unestablished.",
+        "locator": "invented review passage 2",
+        "topic": "synthetic attribution",
+        "stance": "support",
+        "source_kind": "review",
+        "year": 2020,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "This review recommends testing alternative N before choosing between the simulated signals.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-review",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      },
+      {
+        "rule_id": "rule-3",
+        "method": "Distinguish reporting from implementation.",
+        "condition": "A review describes methods.",
+        "limitation": "Invented context only, not an original implementation paper, independent verification, or evidence of personal adoption.",
+        "locator": "invented context passage",
+        "topic": "synthetic attribution",
+        "stance": "support",
+        "source_kind": "review",
+        "year": 2020,
+        "claim_type": "explicit_statement",
+        "evidence_quote": "Reporting a method does not demonstrate its implementation by the reviewer.",
+        "evidence_verification": "NOT_PERFORMED",
+        "paper_id": "synthetic-context-review",
+        "evidence_type": "operator_curated_paper_observation",
+        "attribution": "coauthored work; individual ownership not established"
+      }
+    ],
+    "trajectory": [
+      {
+        "paper_id": "synthetic-context-review",
+        "year": 2020,
+        "kind": "review",
+        "topic": "synthetic attribution"
+      },
+      {
+        "paper_id": "synthetic-review",
+        "year": 2020,
+        "kind": "review",
+        "topic": "synthetic attribution"
+      }
+    ],
+    "semantic_validation": "NOT_PERFORMED"
+  },
+  "knowledge": {
+    "author_id": "synthetic-scholar",
+    "version": "1",
+    "build_id": "synthetic-review-attribution",
+    "persona_payload_sha256": "03cb5c76e53f3a56118ec839fed377609ad63af095d07ab6097da0e3d122ce04",
+    "papers": [
+      {
+        "paper_id": "synthetic-review",
+        "author_id": "synthetic-scholar",
+        "split": "training",
+        "runtime_knowledge_eligible": true,
+        "authorized": true,
+        "source_sha256": "2f5adb1ef813a9cf3f15a350b4e8e0219d4cd8f6c398bc6b28386776730a7fcd",
+        "locator": "Invented in-memory review, no source file or URL",
+        "kind": "review",
+        "year": 2020,
+        "topic": "synthetic attribution",
+        "observations": [
+          {
+            "method": "Report another synthetic group's use of M.",
+            "condition": "Only two invented simulated signals.",
+            "limitation": "Reported other-group method only; the original paper is absent. This does not establish the synthetic scholar's personal practice, development, or implementation.",
+            "locator": "invented review passage 1",
+            "topic": "synthetic attribution",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "The synthetic Lantern Group used method M to compare two simulated signals.",
+            "evidence_verification": "NOT_PERFORMED"
+          },
+          {
+            "method": "Recommend testing alternative N.",
+            "condition": "Only two invented simulated signals.",
+            "limitation": "Review recommendation only; proposing a test does not establish personal practice, development, or implementation by the synthetic scholar. Individual ownership remains unestablished.",
+            "locator": "invented review passage 2",
+            "topic": "synthetic attribution",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "This review recommends testing alternative N before choosing between the simulated signals.",
+            "evidence_verification": "NOT_PERFORMED"
+          }
+        ],
+        "source_verification": "NOT_PERFORMED"
+      },
+      {
+        "paper_id": "synthetic-context-review",
+        "author_id": "synthetic-scholar",
+        "split": "training",
+        "runtime_knowledge_eligible": true,
+        "authorized": true,
+        "source_sha256": "3090789aa71b957dea60a599635de2f6a809a41089f928a51a83eb76d399b801",
+        "locator": "Separate invented context review, no source file or URL",
+        "kind": "review",
+        "year": 2020,
+        "topic": "synthetic attribution",
+        "observations": [
+          {
+            "method": "Distinguish reporting from implementation.",
+            "condition": "A review describes methods.",
+            "limitation": "Invented context only, not an original implementation paper, independent verification, or evidence of personal adoption.",
+            "locator": "invented context passage",
+            "topic": "synthetic attribution",
+            "claim_type": "explicit_statement",
+            "evidence_quote": "Reporting a method does not demonstrate its implementation by the reviewer.",
+            "evidence_verification": "NOT_PERFORMED"
+          }
+        ],
+        "source_verification": "NOT_PERFORMED"
+      }
+    ]
+  }
+}

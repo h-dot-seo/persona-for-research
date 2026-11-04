@@ -1,0 +1,48 @@
+{
+  "proposal_bundle_sha256": "6f772cc20940eba9fe0d84cb6a1b9fa3efff3608af4d811c8fc403f222407aed",
+  "reviewer_id": "synthetic-fixed-adoption-reviewer",
+  "decisions": [
+    {
+      "candidate_id": "answer-candidate-1",
+      "decision": "accept",
+      "review_note": "Fixed fixture adoption of bounded wording, not evidence the scholar adopted a method and not a general automatic review policy.",
+      "reviewed_claim": {
+        "claim_id": "review-level-description",
+        "text": "The review reports M and recommends testing N.",
+        "claim_type": "operator_synthesis",
+        "uncertainty": "Review-level description only; the scholar's personal practice, method development, and implementation remain unestablished.",
+        "citations": [
+          {
+            "reference": {
+              "paper_id": "synthetic-review",
+              "observation_index": 0,
+              "dimension": null
+            },
+            "role": "support",
+            "explanation": {
+              "rationale": "Operator judgment: the first passage supports only the review reporting another group's use of M.",
+              "context_boundary": "Reported other-group method only; the original paper is absent. This does not establish the synthetic scholar's personal practice, development, or implementation."
+            }
+          },
+          {
+            "reference": {
+              "paper_id": "synthetic-review",
+              "observation_index": 1,
+              "dimension": null
+            },
+            "role": "support",
+            "explanation": {
+              "rationale": "Operator judgment: the second passage supports only the review recommending a test of N.",
+              "context_boundary": "Review recommendation only; proposing a test does not establish personal practice, development, or implementation by the synthetic scholar. Individual ownership remains unestablished."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "candidate_id": "answer-candidate-2",
+      "decision": "reject",
+      "review_note": "Unsupported personal attribution: other-group reporting does not establish the scholar uses M."
+    }
+  ]
+}

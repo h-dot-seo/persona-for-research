@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.61-preview-current-source-checks",
+  "release": "0.62-review-attribution-example",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 202,
+  "file_count": 209,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 34875,
-      "sha256": "32bd9fdd5ded62aecbc2733077839a83c0af2d5d6920cf45984f9b76298802eb"
+      "bytes": 35271,
+      "sha256": "649a04b0d549d1e3bdeefd4a94b04e26d55a16ede2dd0909326d8af31931f206"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 66770,
-      "sha256": "6d2ca4ec49b4d985680da7ac5e91f0f14d54a59add447538444876128781e71d"
+      "bytes": 70074,
+      "sha256": "a138436c9393e8b9008a291d0fab220e47c7cf2285e3a9b957b9b027b87f05b2"
     },
     {
       "path": "answer_context.py",
@@ -324,6 +324,11 @@
       "sha256": "83b32b95e5c1872c0551baa4f6b40a4ef8e43fe397ac51e366530430a7d5c60d"
     },
     {
+      "path": "docs/REVIEW_ATTRIBUTION_EXAMPLE.md",
+      "bytes": 6433,
+      "sha256": "a9540da611ea6a32f7dfe387c3a4ab7abb68867156db31a9a0b2c5ed6ab6a68d"
+    },
+    {
       "path": "docs/REVIEW_JOURNEY.md",
       "bytes": 3397,
       "sha256": "f43247bfbd98b609040cf9b7e5e6ecb70660fd88ae684627f2826e2b62c52213"
@@ -442,6 +447,31 @@
       "path": "examples/research-corpus.json",
       "bytes": 1556,
       "sha256": "96277049be32ea616e8005fed5aa3deda11c9114e9d62478f2b13eb7750daff1"
+    },
+    {
+      "path": "examples/review-attribution-adoption.json",
+      "bytes": 2169,
+      "sha256": "69e32d422edd53d6251a30311089fdc70426c3af4c47782223868fc5b4a0185a"
+    },
+    {
+      "path": "examples/review-attribution-package.json",
+      "bytes": 6724,
+      "sha256": "ff623033db08ae6ec9e7a414ff8743c86cf0f09583f3417de4e229ec29709342"
+    },
+    {
+      "path": "examples/review-attribution-provenance.json",
+      "bytes": 211,
+      "sha256": "797cd906f457d298a3e624785e3362d6a0a6dd7a5852cd0c5e29e60cdf383821"
+    },
+    {
+      "path": "examples/review-attribution-response.json",
+      "bytes": 2295,
+      "sha256": "789d483f9545a9a78494c4886531b61ac181969ab79365de4f357b2d30942558"
+    },
+    {
+      "path": "examples/review-attribution-scope.json",
+      "bytes": 12351,
+      "sha256": "6259e821312b9cb2859fb0beb2f909ae627b7ccaf7050de0a98775ec4df7850a"
     },
     {
       "path": "examples/synthetic-holdout-labels.json",
@@ -922,6 +952,11 @@
       "path": "test_research_workflow.py",
       "bytes": 1802,
       "sha256": "6e46edae3645e9f266e21c764c7a26bbb618a5ea893812943d0ee296cb819c91"
+    },
+    {
+      "path": "test_review_attribution_example.py",
+      "bytes": 11887,
+      "sha256": "08141f6d67153e037305d75eaaca3d1b7dcfa6660ac5066a6352c47a2f0378d5"
     },
     {
       "path": "test_review_details.py",
