@@ -4,6 +4,7 @@ from answer_draft import explanation_fields
 import argparse
 import copy
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -12,7 +13,7 @@ from reasoning_links import _sources, _endpoint
 from publication_timeline import timeline, render as render_timeline
 from publication_context import for_papers
 from pattern_transfer_review import inspect as inspect_transfer, render as render_transfer
-from argument_map import inspect as inspect_argument, render as render_argument
+from argument_map import inspect as inspect_argument, render as render_argument, _render_inspected as _render_argument_inspected
 from evidence_scope import disclose, render as render_scope
 from review_package import display
 from strict_json import loads
@@ -20,6 +21,7 @@ from strict_json import loads
 INPUT_NAMES = ('package', 'patterns', 'context', 'links', 'proposal', 'draft', 'argument', 'publication_relations')
 MAX_INPUT_BYTES = 8 * 1024 * 1024
 MAX_OUTPUT_BYTES = 16 * 1024 * 1024
+_ARGUMENT_RENDER_MAX_NODES = 8192
 BOUNDARY = ('This is a mechanical review journey over supplied artifacts, not a generated answer, '
     'researcher voice, private reasoning trace, career explanation or recommended method. The topic '
     'comes from the explicit context form; matching is exact case-insensitive, not semantic retrieval. '
@@ -230,6 +232,50 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
     return result
 
 
+def _argument_render_reusable(result, package, draft, argument, declared_review):
+    """Conservatively match current raw inputs to this call's fresh inspection.
+
+    JSON normalization can change raw validation behavior. Ineligible inputs use
+    the original renderer, never a new rejection. This is not a concurrency lock.
+    """
+    values = dict(package=package, draft=draft, argument=argument, declared_review=declared_review)
+    seen = set()
+    pending = [(value, 0) for value in values.values()]
+    remaining = _ARGUMENT_RENDER_MAX_NODES - len(pending)
+    try:
+        while pending:
+            value, depth = pending.pop()
+            kind = type(value)
+            if kind is str:
+                if any(0xD800 <= ord(char) <= 0xDFFF for char in value):
+                    return False
+            elif kind is float:
+                if not math.isfinite(value): return False
+            elif kind is type(None) or kind is bool or kind is int:
+                pass
+            elif kind is dict or kind is list:
+                # A deliberately conservative depth/alias bound, not a new input limit.
+                if depth >= 64 or id(value) in seen: return False
+                seen.add(id(value))
+                # Count keys as well as values before allocating any child entries.
+                # This bounds optimization work only; larger inputs use the raw path.
+                children = len(value) * (2 if kind is dict else 1)
+                if children > remaining: return False
+                remaining -= children
+                if kind is dict:
+                    if any(type(key) is not str for key in value): return False
+                    pending.extend((key, depth + 1) for key in value)
+                    pending.extend((child, depth + 1) for child in value.values())
+                else:
+                    pending.extend((child, depth + 1) for child in value)
+            else:
+                return False
+        return all(payload_sha256(value) == result['bindings'][name + '_sha256']
+                   for name, value in values.items())
+    except (ValueError, TypeError, KeyError, RuntimeError, RecursionError, OverflowError):
+        return False
+
+
 def render(package, patterns, context, links, proposal, draft, argument, publication_relations,
            pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None):
     result = inspect(package, patterns, context, links, proposal, draft, argument, publication_relations, pattern_id, declared_review,
@@ -269,7 +315,9 @@ def render(package, patterns, context, links, proposal, draft, argument, publica
         'Full pattern, target context and answer/design review (all supplied decisions retained):',
         render_transfer(package, patterns, context, links, proposal, draft, pattern_id, publication_relations, declared_review).rstrip('\n'),
         'Full operator argument map (no premise-to-conclusion citation transfer):',
-        render_argument(package, draft, argument, declared_review).rstrip('\n'),
+        (_render_argument_inspected(result['argument_review'])
+         if _argument_render_reusable(result, package, draft, argument, declared_review)
+         else render_argument(package, draft, argument, declared_review)).rstrip('\n'),
         'Full reader evidence-scope disclosure:', render_scope(package, links, proposal, draft, result['reference_year'], declared_review).rstrip('\n')])
     if 'method_application_review' in result:
         from method_application import render as render_applications

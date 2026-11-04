@@ -2,6 +2,65 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.65 (guarded call-local argument text rendering).
+
+- `python -m unittest discover -q`: 935 synthetic tests passed locally in 824.115 seconds.
+- `python -m compileall -q .`: passed; 136 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 214 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 213 exact allowlisted entries and file hashes.
+
+Most recent separately verified remote baseline: v0.64, commit
+[`4f14d63e9c89c31530741e80fe2e8443ab5049e5`](https://github.com/h-dot-seo/persona-for-research/commit/4f14d63e9c89c31530741e80fe2e8443ab5049e5),
+with 919 tests. This is a prior-commit record, not a claim of remote CI for v0.65.
+
+- [GitHub Actions run 41828282054](https://github.com/h-dot-seo/persona-for-research/actions/runs/41828282054):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+The integrated text renderer can reuse its own freshly inspected argument map at
+its original formatting position. A private conservative guard requires exact
+built-in JSON types, finite numbers, no surrogate code points, no container aliases,
+limited depth and a bounded amount of guard work. Current full package, draft,
+argument and separate-review hashes must still match the current call's bindings.
+The 8,192-node guard-work budget is checked before adding child entries; it limits
+only this optimization, not which otherwise valid inputs the public API accepts.
+Ineligible, changed or uncertain inputs retain the original raw rendering path.
+
+Every public argument or journey call still validates original inputs. No persistent
+cache, public inspected-report input, new source access or atomicity guarantee is
+introduced. The argument formatter body, nested full history renderers and final
+size checks are preserved; other journey renderers and JSON/HTML behavior are not
+changed. Review declarations are still not authenticated approval.
+
+Sixteen added tests cover ten pre-change complete JSON/text snapshot pairs, one
+outer argument inspection on eligible renders, fresh later calls, legacy tuple
+coercion and contextual tuple rejection, exact types, aliases, nesting, surrogates,
+full wrapper/absent-review bindings, changed inputs during source-path callbacks or
+preceding rendering, rejected histories, input/output limits, no provider or implicit
+I/O, immutability and bounded-work fallback. The initial 15-test focused run and a
+39-test existing map/replay/journey run passed; the added budget test and updated
+snapshot/ordering checks also passed before the complete final run above.
+A separate read-only audit of the final source and tests found no concrete defect;
+it did not run tests, timings or browser QA.
+
+Instrumented full synthetic v1 and v2 journeys each reduced outer inspections of
+the supplied argument from two to one, preserving exact complete text bytes and
+lengths. Two serial before/after timing pairs preserved all output hashes, but
+wall timings varied, including a slower v2 sample. The deterministic inspection
+count and exact output equivalence are the regression gates, not a speed threshold.
+The earlier v0.63 timeout cause remains unestablished. Neither individual 30-second
+CLI limits nor the 15-minute full workflow budget changed in this increment.
+
+Four real CLI commands passed within their existing 30-second limits: full v1/v2
+journey text, standalone v2 argument text and v2 journey JSON. Their outputs match
+pre-change saved outputs exactly (canonical JSON comparison for the JSON report).
+Explicit current checks used only existing synthetic local sources and remained
+separate from recorded context. No new provider invocation, external transmission,
+scientific execution, source interpretation or researcher speech was introduced.
+Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**, with no retry
+or restriction bypass. Earlier failures remain recorded below.
+
+## Prior v0.64 worked bridge-basis reading path
+
 Current local source release: v0.64 (worked bridge-basis reading path).
 
 - `python -m unittest discover -q`: 919 synthetic tests passed locally in 618.163 seconds.

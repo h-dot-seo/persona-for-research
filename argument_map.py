@@ -112,7 +112,11 @@ def _inspect_from_answer(answer, supplied):
 
 
 def render(package, draft, supplied, declared_review=None):
-    result = inspect(package, draft, supplied, declared_review)
+    return _render_inspected(inspect(package, draft, supplied, declared_review))
+
+
+def _render_inspected(result):
+    """Format a fresh internal inspection; public callers still supply raw inputs."""
     lines = ['Operator-declared argument map', 'Status: ' + result['status'],
         'Argument map sha256: ' + result['argument_map_sha256'],
         'Declared map operator: ' + display(result['operator_id']) + ' (not authenticated)',

@@ -127,6 +127,12 @@ are rejected. Output is capped at 16 MiB with no partial stdout on failure. Narr
 artifacts explicitly rather than expecting silent truncation. Text fields are
 escaped; shell-looking instructions remain text, not executed commands.
 
+Text rendering can reuse the argument inspection made during that same call only
+when the original inputs remain eligible JSON values and match all current input
+bindings. Every public call still validates its raw inputs. Unusual Python values,
+changed inputs or a guard-work budget exceeded retain the existing raw validation
+path; this is not a new input limit, a saved-inspection API or an atomicity guarantee.
+
 This report is **not a complete provenance archive**. It preserves origin markers
 and the complete imported pattern review that are actually supplied. It does not
 receive or replay prior observation/reasoning extraction stage bundles. Use the

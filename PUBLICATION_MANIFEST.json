@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.64-bridge-basis-reading",
+  "release": "0.65-guarded-argument-rendering",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 212,
+  "file_count": 213,
   "files": [
     {
       "path": ".gitattributes",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 81097,
-      "sha256": "6e2de561b0f2d0abfed3fb5ed2450599785a03677954d97279999c1ad26344e3"
+      "bytes": 85104,
+      "sha256": "cd88a31d7b4a45058da3c47f1607e8d4f038daaacd337aa620d0456b83b55dbe"
     },
     {
       "path": "answer_context.py",
@@ -80,8 +80,8 @@
     },
     {
       "path": "argument_map.py",
-      "bytes": 12173,
-      "sha256": "20ced2342343d9a44e73aeea14c7ab0ad37c1ebc75497cdd09ff4e984cdaf8c0"
+      "bytes": 12309,
+      "sha256": "cad34540fba7f090c51bc8b84d11bad5580fd333216d09ba9f7143dd2ed0d09d"
     },
     {
       "path": "argument_proposals.py",
@@ -320,8 +320,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 17361,
-      "sha256": "c86f00495b9943c9d219a187ddaef9944671e9353500c79b3e4de32252c6e9b0"
+      "bytes": 17776,
+      "sha256": "59fd8314e9f43da03e67eb5fc6eac5e0cb3c2c1cb0d481238fcfd594d37f30b7"
     },
     {
       "path": "docs/REVIEW_ATTRIBUTION_EXAMPLE.md",
@@ -605,8 +605,8 @@
     },
     {
       "path": "research_journey.py",
-      "bytes": 23024,
-      "sha256": "f8dce8a6420ec4d029ab1994b97e21275cb619c59a2bb301d86bc54033417885"
+      "bytes": 25484,
+      "sha256": "2ee8bd7a692150bd45233a162de3dee4e9d988248741d7dc4f399fdc158cd201"
     },
     {
       "path": "research_workflow.py",
@@ -842,6 +842,11 @@
       "path": "test_integrated_workspace.py",
       "bytes": 17462,
       "sha256": "2c9efcc78ea24125e32e5c0cfb4664936dcc4d1967842c9694c667b817b37128"
+    },
+    {
+      "path": "test_journey_argument_render_reuse.py",
+      "bytes": 19419,
+      "sha256": "234073ea535e85d34d380968f34738765b87791e7f9637bb81c227e22a20baef"
     },
     {
       "path": "test_journey_compare.py",
