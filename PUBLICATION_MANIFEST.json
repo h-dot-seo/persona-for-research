@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.44-integrated-research-journey",
+  "release": "0.45-live-source-recheck",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 153,
+  "file_count": 156,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 28682,
-      "sha256": "922ad315239f4bc6a8d7e56946d5b87ae36d2ce91a9d050c4a29afcbe9d6e391"
+      "bytes": 29090,
+      "sha256": "5e8f72743411f90b2de703bf8d6eca2ac59893122c2e6d27511a5dec710bb3ef"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 19547,
-      "sha256": "6c93fd8e4a07da37e0438076edd21faeb97dc0851a51541c654bb8c95cfae143"
+      "bytes": 20603,
+      "sha256": "57702be93083472be9c0079ab073bfc9b3efeca9989c866ce06ff09c98bd7df7"
     },
     {
       "path": "answer_draft.py",
@@ -230,8 +230,8 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 7292,
-      "sha256": "aa5b38a232366b95b95d0c0a54512dbe38363f8f965eacdeffd5fc9a2dc4f863"
+      "bytes": 7820,
+      "sha256": "17d48e5642b9a569ecba6318295ec31b6bbd777382861a69b7f3529c381eaa0f"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -240,8 +240,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 8899,
-      "sha256": "3db734b38ce3b772713b108d08782cbd47b01db5c5c3cb4b285b2558a8b194b7"
+      "bytes": 9861,
+      "sha256": "4f8284e881f5a14c3ffbbb34aa923d9aa9cd24c02af6678aab8fc6c1be687d67"
     },
     {
       "path": "docs/REVIEW_JOURNEY.md",
@@ -259,6 +259,11 @@
       "sha256": "392e3d15cc9c20286fda1d80c340609bcb0b6cddf7ba984e9e97c28315cbe67d"
     },
     {
+      "path": "docs/SOURCE_RECHECK.md",
+      "bytes": 6984,
+      "sha256": "0f644c1f40d6b9dcb6ded473af7f6880fb467c411075b6e927dc51927bb8a3d2"
+    },
+    {
       "path": "docs/SYNTHETIC_EVALUATION.md",
       "bytes": 5937,
       "sha256": "f426662213014a48aeed6398c5f6c26a5de62c8ddc4503289ec9d1288cc9f949"
@@ -270,8 +275,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 27487,
-      "sha256": "2a237697503630d2c31b8dbcfba8b6d41589ce02a8d506686e52a5d9de54a249"
+      "bytes": 28481,
+      "sha256": "a1590bdcd3a6de11e33a68737f41deb23066c0e037ae471262761a01e01cd02b"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -450,8 +455,8 @@
     },
     {
       "path": "research_journey.py",
-      "bytes": 15606,
-      "sha256": "e9c9eb5bbeb11d552d2bca3ad0e2bd9624979453c6695f7d6086dfdae66688aa"
+      "bytes": 18267,
+      "sha256": "d0acf2604b11c7c5f63822b451f2ff2c273bdf19226319be33f16f912c9eebb3"
     },
     {
       "path": "research_workflow.py",
@@ -489,14 +494,19 @@
       "sha256": "c1a41c723f5938f14176971e8b6f13f8c2be1060e49282a01f41cf6208f09b59"
     },
     {
+      "path": "source_recheck.py",
+      "bytes": 11472,
+      "sha256": "258a3f61808827b76ae3fd954ad01c3e6f7d827ad6b9308acac923f1de3f330e"
+    },
+    {
       "path": "strict_json.py",
       "bytes": 1342,
       "sha256": "f00c58583669b4ed52167821982539602c7f23460790e086ad3be6e0557f4677"
     },
     {
       "path": "synthetic_walkthrough.py",
-      "bytes": 18579,
-      "sha256": "5050810618cc9e83f4ae3a370367fca75c55c7bd5ed18ed3bf46555dc682c95e"
+      "bytes": 20962,
+      "sha256": "f2597234ee34c410d625162ac015314cfc13bac17ae33c5fc53626e92d9994d1"
     },
     {
       "path": "test_answer_draft.py",
@@ -724,6 +734,11 @@
       "sha256": "424d07f6a638425fc6ff851d65881e1831f7496d321892d1b51b27746605c5f2"
     },
     {
+      "path": "test_source_recheck.py",
+      "bytes": 21692,
+      "sha256": "d96f2f317ac3c28978034b5e11cf302be35e5a802c3a4de9a874c599173978fb"
+    },
+    {
       "path": "test_strict_json.py",
       "bytes": 3625,
       "sha256": "7ff257fc3cf3652a2d0007ca9efe50ae287b262b0738eaf7cac3b050c82993ad"
@@ -735,8 +750,8 @@
     },
     {
       "path": "test_synthetic_walkthrough.py",
-      "bytes": 13493,
-      "sha256": "74305082febf711a3b866c67be9e547feef548cd78d8160bdddd3efa12dc84a7"
+      "bytes": 16969,
+      "sha256": "cff2cd65933a23f77eedb6e70b849dd707d3233f1f1405d6e9e27e6eedcda26c"
     },
     {
       "path": "test_topic_inventory.py",

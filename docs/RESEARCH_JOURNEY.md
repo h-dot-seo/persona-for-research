@@ -52,8 +52,8 @@ python research_journey.py package.json patterns.json context.json links.json de
 
 Without `--format text`, output is JSON. The command reads explicit paths and writes
 only stdout. Keep artifacts outside the public repository and review privacy and
-quotation rights before sharing them. It does not follow paths stored in the JSON,
-open source files, contact a provider or execute suggested scientific steps.
+quotation rights before sharing them. Without explicit live-source options it does not follow paths stored in the JSON
+or open source files. It never contacts a provider or executes scientific steps.
 
 - `package`: a current bound package, including supported imported-observation or
   reasoning-component origin markers. A supported package wrapper is also allowed.
@@ -135,3 +135,18 @@ separate observation/reasoning lineage audits for those stages and keep their in
 establish whether an earlier model was used. Identities and review decisions are
 recorded declarations, not authenticated human review. Real-researcher fidelity and
 scientific validity remain unevaluated.
+
+## Optional current original-source check (v0.45)
+
+Use `--source-selection source-selection.json --source-root local-sources` together
+to reread explicitly selected source files during this invocation. The selection
+must bind to the current package and cover every supplied paper. The separate
+current check is shown near the top and on each exact-reference route; gaps remain
+in the agenda. Historical subreports and recorded labels are not rewritten.
+
+Without these options, the original no-source path and bindings remain unchanged.
+A cached audit report is not an input option. Byte mismatches fail closed; valid
+missing/unmatched quote records generate review gaps, not approval. See
+[current local source recheck](SOURCE_RECHECK.md) for templates, limits and the
+30-stage synthetic demonstration. This new check still does not replay prior
+extraction history, establish authenticity or evaluate scientific support.

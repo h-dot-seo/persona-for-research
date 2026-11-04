@@ -34,6 +34,12 @@ Rejected proposals and deferred answer claims remain visible. See the
 [integrated research journey](docs/RESEARCH_JOURNEY.md) for standalone artifact inputs,
 limits and the distinction between composed review and complete provenance history.
 
+To also recheck original local bytes and every stored quote, add `--recheck-sources`
+to the integrated demo command. This runs 30 synthetic CLI stages. Read the compact
+`source-recheck.txt` first: current checks remain separate from historical labels,
+quote gaps remain explicit, and source hash changes fail closed. See
+[local source recheck](docs/SOURCE_RECHECK.md) to select authorized files explicitly.
+
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 

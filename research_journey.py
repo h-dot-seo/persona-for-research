@@ -55,9 +55,13 @@ def encode_result(value):
 
 
 def inspect(package, patterns, context, links, proposal, draft, argument, publication_relations,
-            pattern_id, declared_review=None):
-    values = _inputs(dict(zip(INPUT_NAMES, (package, patterns, context, links, proposal, draft, argument,
-        publication_relations)), pattern_id=pattern_id, declared_review=declared_review))
+            pattern_id, declared_review=None, *, source_selection=None, source_root=None):
+    if (source_selection is None) != (source_root is None):
+        raise ValueError('live source recheck needs both source_selection and source_root')
+    supplied = dict(zip(INPUT_NAMES, (package, patterns, context, links, proposal, draft, argument,
+        publication_relations)), pattern_id=pattern_id, declared_review=declared_review)
+    if source_selection is not None: supplied['source_selection'] = source_selection
+    values = _inputs(supplied)
     package, patterns, context, links, proposal, draft, argument, publication_relations = [values[k] for k in INPUT_NAMES]
     declared_review = values['declared_review']; pattern_id = values['pattern_id']
     if publication_relations is None:
@@ -169,17 +173,34 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
         scientific_validation='NOT_PERFORMED', researcher_fidelity_evaluation='NOT_PERFORMED',
         automatic_approval=False, scientific_execution=False, canonical_update_performed=False, boundary=BOUNDARY)
     encode_result(result)
+    if source_selection is not None:
+        from source_recheck import audit as recheck_sources
+        current = recheck_sources(package, values['source_selection'], source_root)
+        by_ref = {payload_sha256(row['reference']): row for paper in current['papers'] for row in paper['records']}
+        for row in result['evidence_routes']:
+            row['current_source_recheck'] = copy.deepcopy(by_ref[row['reference_sha256']])
+        result['review_agenda'].extend(dict(domain='current_source_recheck', **copy.deepcopy(gap))
+            for gap in current['quote_gaps'] + current['source_review_prompts'])
+        result.update(source_recheck=current, source_reread=True,
+            source_recheck_scope='ALL_SUPPLIED_PAPERS_AND_STORED_QUOTES_NOT_ONLY_ACTIVE_ROUTES',
+            current_checks_replace_recorded_labels=False,
+            boundary=BOUNDARY.replace('No source reread, provenance-history replay, provider',
+                'Selected local files were reread in the separate current source check; historical subreport labels remain unchanged. No provenance-history replay, provider'))
+        encode_result(result)
     return result
 
 
 def render(package, patterns, context, links, proposal, draft, argument, publication_relations,
-           pattern_id, declared_review=None):
-    result = inspect(package, patterns, context, links, proposal, draft, argument, publication_relations, pattern_id, declared_review)
+           pattern_id, declared_review=None, *, source_selection=None, source_root=None):
+    result = inspect(package, patterns, context, links, proposal, draft, argument, publication_relations, pattern_id, declared_review,
+        source_selection=source_selection, source_root=source_root)
     lines = ['Source-to-method-to-argument review journey', 'Status: ' + result['status'],
         'Question: ' + display(result['question']), 'Topic: ' + display(result['topic']),
         'Reference year: ' + str(result['reference_year']), 'Journey input sha256: ' + result['journey_input_sha256'],
-        'Declared answer review: ' + result['answer_review_status'] + ' (not authenticated approval)', BOUNDARY,
+        'Declared answer review: ' + result['answer_review_status'] + ' (not authenticated approval)', result['boundary'],
         'Review agenda (domain-specific prompts, not severity ranks or a readiness score):']
+    if 'source_recheck' in result:
+        lines.insert(6, 'Current local source recheck: ' + result['source_recheck']['status'] + ' (separate from recorded historical labels)')
     for row in result['review_agenda']:
         lines.append('  ' + row['domain'] + ': ' + row['code'] + ' | ' +
             display(json.dumps({key: value for key, value in row.items() if key not in ('domain', 'code')}, ensure_ascii=True)))
@@ -190,6 +211,9 @@ def render(package, patterns, context, links, proposal, draft, argument, publica
         lines.append('  ' + display(ref['paper_id']) + ' / ' + str(ref['observation_index']) + ' / ' + display(ref['dimension']) +
             ' | ' + row['publication_scope'] + '; topic timeline=' + str(row['in_topic_timeline']) +
             '; active answer/design=' + str(row['actively_used_in_answer_or_design']))
+        if 'current_source_recheck' in row:
+            lines.append('    Current local quote check: ' + row['current_source_recheck']['quote_status'] +
+                '; locator=' + row['current_source_recheck']['locator_status'])
         lines.append('    Pattern roles: ' + (', '.join(row['pattern_roles']) or 'none supplied'))
         for field in ('context_uses', 'publication_relationship_basis_uses', 'answer_uses', 'design_uses', 'unused_link_uses', 'direct_argument_uses'):
             for use in row[field]: lines.append('    ' + field + ': ' + display(json.dumps(use, ensure_ascii=True)))
@@ -199,6 +223,9 @@ def render(package, patterns, context, links, proposal, draft, argument, publica
         'Full operator argument map (no premise-to-conclusion citation transfer):',
         render_argument(package, draft, argument, declared_review).rstrip('\n'),
         'Full reader evidence-scope disclosure:', render_scope(package, links, proposal, draft, result['reference_year'], declared_review).rstrip('\n')])
+    if 'source_recheck' in result:
+        from source_recheck import render as render_source_recheck
+        lines.extend(['Full current local source recheck, including unused papers:', render_source_recheck(result['source_recheck']).rstrip('\n')])
     output = '\n'.join(lines) + '\n'
     if len(output.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('journey report exceeds 16 MiB; narrow supplied artifacts explicitly')
     return output
@@ -214,10 +241,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in INPUT_NAMES: parser.add_argument(name, type=Path)
     parser.add_argument('--pattern-id', required=True); parser.add_argument('--review', type=Path)
+    parser.add_argument('--source-selection', type=Path); parser.add_argument('--source-root', type=Path)
     parser.add_argument('--format', choices=('json', 'text'), default='json'); args = parser.parse_args()
     try:
         values = [_load(getattr(args, name)) for name in INPUT_NAMES] + [args.pattern_id, _load(args.review) if args.review else None]
-        output = render(*values).encode('utf-8') if args.format == 'text' else encode_result(inspect(*values))
+        if (args.source_selection is None) != (args.source_root is None):
+            raise ValueError('live source recheck needs both --source-selection and --source-root')
+        options = dict(source_selection=_load(args.source_selection) if args.source_selection else None, source_root=args.source_root)
+        output = render(*values, **options).encode('utf-8') if args.format == 'text' else encode_result(inspect(*values, **options))
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc:
         parser.exit(1, str(exc) + '\n')
     sys.stdout.buffer.write(output)

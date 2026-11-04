@@ -123,6 +123,50 @@ class SyntheticWalkthroughTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'boolean'):demo.run(target,research_journey='yes')
             self.assertFalse(target.exists())
 
+    def test_live_source_demo_executes_30_stages_with_unchanged_historical_labels(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'합성 local source journey'
+            result=subprocess.run([sys.executable,str(demo.ROOT/'synthetic_walkthrough.py'),str(target),
+                '--candidate-source','offline-import','--research-journey','--recheck-sources'],
+                cwd=directory,capture_output=True,timeout=30)
+            self.assertEqual(result.returncode,0,result.stderr);receipt=json.loads(result.stdout)
+            self.assertEqual(receipt['command_count'],30)
+            self.assertEqual(receipt['read_first'][0],'source-recheck.txt')
+            self.assertEqual(receipt['answer_review_status'],'ALL_DEFERRED')
+            report=json.loads((target/'research-journey.json').read_text())
+            current=report['source_recheck'];self.assertEqual(current['checked_record_count'],5)
+            self.assertTrue(current['all_stored_quotes_match']);self.assertTrue(report['source_reread'])
+            self.assertTrue(all(p['recorded_source_check_before']=='NOT_PERFORMED' for p in current['papers']))
+            self.assertTrue(all(p['source_check']=='LOCAL_BYTES_SHA256_MATCH' for p in current['papers']))
+            self.assertFalse(report['evidence_scope']['source_checks_repeated'])
+            self.assertTrue(all(p['recorded_source_check']=='NOT_PERFORMED' for group in report['evidence_scope']['source_groups'] for p in group['papers']))
+            self.assertTrue(all(row['source_file'] is None for row in json.loads((target/'empty-source-selection.json').read_text())['sources']))
+            self.assertEqual(len(list((target/'synthetic-sources').glob('*.md'))),2)
+            self.assertTrue((target/'COMPLETE.json').exists());self.assertFalse((target/'FAILED.txt').exists())
+            self.assertIn('invented local source files', (target/'START_HERE.txt').read_text())
+
+    def test_source_change_between_live_stages_prevents_demo_completion(self):
+        original=demo.subprocess.run
+        def change_before_audit(argv,**kwargs):
+            if Path(argv[1]).name=='source_recheck.py' and '--source-root' in argv:
+                root=Path(argv[argv.index('--source-root')+1]);source=root/'synthetic-source-1.md'
+                source.write_bytes(source.read_bytes()+b'Unexpected synthetic source change.')
+            return original(argv,**kwargs)
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'changed source'
+            with patch.object(demo.subprocess,'run',side_effect=change_before_audit):
+                with self.assertRaisesRegex(ValueError,'bound package hash'):
+                    demo.run(target,research_journey=True,recheck_sources=True)
+            self.assertTrue((target/'FAILED.txt').exists());self.assertFalse((target/'COMPLETE.json').exists())
+            self.assertFalse((target/'research-journey.json').exists())
+
+    def test_live_demo_flags_reject_incomplete_or_nonboolean_requests_before_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'invalid source demo'
+            with self.assertRaisesRegex(ValueError,'requires research_journey'):demo.run(target,recheck_sources=True)
+            with self.assertRaisesRegex(ValueError,'boolean'):demo.run(target,research_journey=True,recheck_sources='yes')
+            self.assertFalse(target.exists())
+
     def test_invalid_candidate_mode_fails_before_directory_creation(self):
         with tempfile.TemporaryDirectory() as directory:
             target = Path(directory)/'invalid'

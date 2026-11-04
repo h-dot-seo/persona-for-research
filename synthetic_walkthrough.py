@@ -1,6 +1,7 @@
 """Run bundled synthetic fixtures through real CLIs into a new external directory."""
 import argparse
 import copy
+import hashlib
 import json
 import os
 import subprocess
@@ -14,7 +15,11 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination, *, candidate_source='mock', research_journey=False):
+def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False):
+    if type(recheck_sources) is not bool:
+        raise ValueError('recheck_sources must be a boolean')
+    if recheck_sources and not research_journey:
+        raise ValueError('recheck_sources requires research_journey')
     if type(research_journey) is not bool:
         raise ValueError('research_journey must be a boolean')
     if candidate_source not in ('mock', 'offline-import'):
@@ -51,6 +56,7 @@ def run(destination, *, candidate_source='mock', research_journey=False):
         'Answer review stays deferred. Missing falsification and defeater remain intentional.\n'
         'Read after completion: reader-scope.txt, review-packet.txt, argument-map.txt, timeline.txt, lineage.json.\n' +
         ('Extended mode also writes research-journey.txt with pattern, relationship, context and argument review.\n' if research_journey else '') +
+        ('Live recheck mode writes invented local source files; read source-recheck.txt first.\n' if recheck_sources else '') +
         'commands.json records actual CLI argument arrays (not shell commands).\n'
         'If any stage fails, keep this folder for diagnosis and rerun into a NEW directory.\n')
     try:
@@ -64,6 +70,14 @@ def run(destination, *, candidate_source='mock', research_journey=False):
             text='Check whether predictions differ.', locator='synthetic criterion',
             evidence_quote='A shared prediction does not discriminate the models.', claim_type='explicit_statement'))
         response = loads((ROOT/'examples/mock-extraction-response.json').read_text(encoding='utf-8'))
+        if recheck_sources:
+            (destination/'synthetic-sources').mkdir()
+            for index, source in enumerate(corpus['papers']):
+                text = 'INVENTED LOCAL SOURCE FOR SYNTHETIC DEMONSTRATION ONLY.\n\n' + ''.join(
+                    '## '+locator+'\n'+content+'\n\n' for locator,content in source['segments'].items())
+                source['source_file'] = 'synthetic-source-'+str(index)+'.md'
+                source['source_sha256'] = hashlib.sha256(text.encode('utf-8')).hexdigest()
+                write('synthetic-sources/'+source['source_file'], text)
         write('corpus.json', corpus); write('mock-response.json', response)
         path = lambda name: destination/name
         command('observation_input.py', [path('corpus.json'), '--question', QUESTION, '--topic', 'model design'], 'baseline.json')
@@ -129,7 +143,7 @@ def run(destination, *, candidate_source='mock', research_journey=False):
             '--format', 'text'], 'argument-map.txt', False)
         write('revision-inputs.json', dict(original_corpus=corpus, candidate_bundle=bundle, operator_review=review))
         lineage = command('audit_design_lineage.py', [package_path, path('links.json'), path('proposal.json'), path('revision-inputs.json')], 'lineage.json')
-        journey = (_extend_research_journey(command, write, path, package_path, links) if research_journey else None)
+        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources) if research_journey else None)
         write('commands.json', commands)
         receipt = dict(status='SYNTHETIC_WALKTHROUGH_COMPLETE_NOT_VALIDATED', llm_used=False, external_transmission=False,
             human_review_authenticated=False, answer_review_status='ALL_DEFERRED',
@@ -141,6 +155,10 @@ def run(destination, *, candidate_source='mock', research_journey=False):
                 research_journey_answer_status=journey['answer_review_status'],
                 research_journey_is_synthetic=True,
                 read_first=['research-journey.txt', 'pattern-review.txt', *receipt['read_first']])
+        if recheck_sources:
+            receipt.update(current_source_recheck_status=journey['source_recheck']['status'],
+                current_source_recheck_is_synthetic=True,
+                read_first=['source-recheck.txt', *receipt['read_first']])
         write('COMPLETE.json', receipt)
         return dict(receipt, output_directory=str(destination))
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc:
@@ -155,7 +173,7 @@ def run(destination, *, candidate_source='mock', research_journey=False):
 
 
 
-def _extend_research_journey(command, write, path, package_path, links):
+def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False):
     """Fixed invented decisions only, never accept external candidate material."""
     command('pattern_proposals.py', ['prepare', package_path, '--topic', 'model design',
         '--include-evidence-reasons'], 'pattern-handoff.json')
@@ -213,6 +231,17 @@ def _extend_research_journey(command, write, path, package_path, links):
     args = [package_path, path('reviewed-patterns.json'), path('synthetic-context.json'), path('links.json'),
         path('proposal.json'), path('draft.json'), path('argument.json'), path('synthetic-publication-relations.json'),
         '--pattern-id', 'synthetic-comparison', '--review', path('answer-review.json')]
+    if recheck_sources:
+        selection = command('source_recheck.py', [package_path, '--template', '--operator-id',
+            'synthetic-source-operator'], 'empty-source-selection.json')
+        if [row['paper_id'] for row in selection['sources']] != ['synthetic-0','synthetic-1']:
+            raise ValueError('synthetic source fixture selection changed; inspect before continuing')
+        for index,row in enumerate(selection['sources']): row['source_file'] = 'synthetic-source-'+str(index)+'.md'
+        write('synthetic-source-selection.json', selection)
+        source_args = [package_path, path('synthetic-source-selection.json'), '--source-root', path('synthetic-sources')]
+        command('source_recheck.py', source_args, 'source-recheck.json')
+        command('source_recheck.py', [*source_args, '--format', 'text'], 'source-recheck.txt', False)
+        args.extend(['--source-selection', path('synthetic-source-selection.json'), '--source-root', path('synthetic-sources')])
     result = command('research_journey.py', args, 'research-journey.json')
     command('research_journey.py', [*args, '--format', 'text'], 'research-journey.txt', False)
     decisions = result['pattern_transfer_review']['answer_design_review']['answer']['review']['decisions']
@@ -226,8 +255,9 @@ def main():
     parser.add_argument('new_output_directory', type=Path)
     parser.add_argument('--candidate-source', choices=('mock', 'offline-import'), default='mock')
     parser.add_argument('--research-journey', action='store_true')
+    parser.add_argument('--recheck-sources', action='store_true')
     args = parser.parse_args()
-    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey)
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

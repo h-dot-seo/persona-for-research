@@ -2,23 +2,36 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.44 (integrated source-to-method-to-argument review).
+Current local source release: v0.45 (live local source and stored-quote recheck).
 
-- `python -m unittest discover -q`: 484 synthetic tests passed locally.
+- `python -m unittest discover -q`: 513 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 154 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 157 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
-- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey`:
-  all 27 CLI stages completed, imported reasoning lineage replay matched, and the
-  composed journey retained all-deferred answer review. Existing 15/17-stage modes
-  also passed their regression tests.
+- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey --recheck-sources`:
+  all 30 CLI stages completed. Two invented local sources and five stored records
+  matched the fixed package hashes/sections. Historical labels remained unchanged,
+  imported reasoning lineage replay matched, and answer review stayed deferred.
+  Existing 15/17-stage and 25/27-stage modes passed their regression tests.
 
-Most recent separately verified remote baseline: v0.43, commit
-[`c71959d22cae1a3222a1270dc7a3df915a690e05`](https://github.com/h-dot-seo/persona-for-research/commit/c71959d22cae1a3222a1270dc7a3df915a690e05),
-with 458 tests. This is a prior-commit record, not a claim of remote CI for v0.44.
+Most recent separately verified remote baseline: v0.44, commit
+[`e733b57af4afaf8e0020dbacfdc2da5bc99cd61c`](https://github.com/h-dot-seo/persona-for-research/commit/e733b57af4afaf8e0020dbacfdc2da5bc99cd61c),
+with 484 tests. This is a prior-commit record, not a claim of remote CI for v0.45.
 
-- [GitHub Actions run 41773136164](https://github.com/h-dot-seo/persona-for-research/actions/runs/41773136164):
+- [GitHub Actions run 41774858526](https://github.com/h-dot-seo/persona-for-research/actions/runs/41774858526):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-nine new source-recheck and walkthrough cases cover exact all-paper selection,
+full preflight before reads, stale/invalid source forms and package/rule disagreement,
+path escapes, nonregular files, detected replacement, hash mismatches without refresh,
+aggregate budgets, malformed UTF-8/sections, missing and unmatched quotes, separate
+component checks, no-record coverage, unused-paper gaps and unchanged recorded labels.
+Live journey rendering reads each selected file once, rejects cached reports as
+selections and preserves exact v0.44 no-source JSON/text snapshots. The 30-stage
+synthetic demo retains default-defer review and fails without completion if source
+bytes change. Independent read-only review found no blockers and prompted added
+unused-quote and simultaneous missing-quote/locator cases. These are current local
+consistency checks, not authenticity, semantic support or extraction-history replay.
 
 Twenty-six new synthetic cases cover the integrated research journey and extended
 CLI walkthrough: consistent draft review across domains, rejected/deferred claims,

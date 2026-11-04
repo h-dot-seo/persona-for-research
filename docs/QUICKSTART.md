@@ -130,3 +130,12 @@ falsifiers and an uncited conclusion remain visible. No research is approved or
 executed. The fixed fixture decisions accept no external material. Completion is
 written only after all added stages succeed. The original 15/17-stage modes are
 unchanged. See [the full research-journey guide](RESEARCH_JOURNEY.md).
+
+## Current local source recheck
+
+Add `--recheck-sources` to the extended command above to run 30 synthetic stages.
+The runner materializes invented local source files and checks every stored quote
+against them. Read `source-recheck.txt` before the full integrated report. Existing
+recorded checks remain unchanged; current file/quote checks are separate. Answer
+review stays deferred. Source changes fail closed with no completion marker. See
+[the source-recheck guide](SOURCE_RECHECK.md) for standalone selection and CLI use.

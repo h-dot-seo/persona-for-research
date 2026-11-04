@@ -439,3 +439,19 @@ origin markers and imported pattern-review histories remain visible; earlier
 observation/reasoning extraction histories are not replayed by this composition.
 Independent read-only review found no blocking issue and prompted additional
 outside-scope reference and repeated-role regression cases.
+
+## Current source checks (v0.45)
+
+The optional [source recheck](SOURCE_RECHECK.md) closes the gap between stored
+verification labels and current local files. Its explicit selection binds to the
+current package, covers every paper and leaves paths unselected in templates.
+Package/rule, authorization, full selection and path preflight precede byte reads.
+Current raw hashes must match; every stored observation/component locator and quote
+is inspected, including unused evidence. Valid missing/unmatched quotes remain
+review gaps, while source mismatch fails closed without refreshing a hash.
+
+The integrated journey keeps this audit separate from historical labels and all
+review decisions. Its no-source JSON/text snapshots remain unchanged. The synthetic
+30-stage walkthrough initializes invented local files, compares current versus
+recorded checks and keeps all answer review deferred. It is not source authenticity,
+scientific validation or a replay of missing model/extraction history.
