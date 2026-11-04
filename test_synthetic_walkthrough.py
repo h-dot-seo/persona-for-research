@@ -11,6 +11,44 @@ import synthetic_walkthrough as demo
 
 
 class SyntheticWalkthroughTests(unittest.TestCase):
+    def test_html_review_adds_one_real_cli_and_preserves_exact_json_snapshot(self):
+        from test_journey_html import Document
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'passive HTML review'
+            run=subprocess.run([sys.executable,str(demo.ROOT/'synthetic_walkthrough.py'),str(target),
+                '--candidate-source','offline-import','--research-journey','--recheck-sources',
+                '--review-method-use','--import-method-use','--html-review'],cwd=directory,capture_output=True,timeout=60)
+            self.assertEqual(run.returncode,0,run.stderr);receipt=json.loads(run.stdout)
+            self.assertEqual(receipt['command_count'],39);self.assertEqual(receipt['read_first'][0],'research-journey.html')
+            start=(target/'START_HERE.txt').read_text()
+            self.assertIn('HTML review mode starts with',start);self.assertNotIn('read source-recheck.txt first',start)
+            self.assertEqual(receipt['answer_review_status'],'ALL_DEFERRED')
+            html=(target/'research-journey.html').read_text(encoding='utf-8');doc=Document(html)
+            self.assertEqual(json.loads(doc.saved['complete-json']),json.loads((target/'research-journey.json').read_text()))
+            self.assertNotIn('script',doc.tags);self.assertTrue(all(link.startswith('#') for link in doc.hrefs))
+            self.assertIn('HUMAN_REVIEW_REQUIRED_NOT_RESEARCH_APPROVAL',html)
+            self.assertTrue((target/'COMPLETE.json').exists());self.assertFalse((target/'FAILED.txt').exists())
+
+    def test_html_stage_failure_leaves_no_completion_marker(self):
+        original=demo.subprocess.run
+        def fail(argv,**kwargs):
+            if Path(argv[1]).name=='research_journey.py' and argv[-2:]==['--format','html']:
+                return subprocess.CompletedProcess(argv,1,stdout=b'',stderr=b'Synthetic HTML failure')
+            return original(argv,**kwargs)
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'failed html'
+            with patch.object(demo.subprocess,'run',side_effect=fail):
+                with self.assertRaisesRegex(ValueError,'Synthetic HTML failure'):demo.run(target,research_journey=True,html_review=True)
+            self.assertFalse((target/'COMPLETE.json').exists());self.assertTrue((target/'FAILED.txt').exists())
+            self.assertFalse((target/'research-journey.html').exists())
+
+    def test_html_flag_needs_explicit_journey_and_boolean_before_writes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target=Path(directory)/'invalid html'
+            with self.assertRaisesRegex(ValueError,'requires research_journey'):demo.run(target,html_review=True)
+            with self.assertRaisesRegex(ValueError,'boolean'):demo.run(target,research_journey=True,html_review='yes')
+            self.assertFalse(target.exists())
+
     def test_imported_method_use_runs_38_cli_stages_with_both_provenance_layers(self):
         with tempfile.TemporaryDirectory() as directory:
             target=Path(directory)/'imported method journey'

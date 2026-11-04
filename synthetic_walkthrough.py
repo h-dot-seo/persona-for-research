@@ -15,7 +15,11 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False):
+def run(destination, *, candidate_source='mock', research_journey=False, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False):
+    if type(html_review) is not bool:
+        raise ValueError('html_review must be a boolean')
+    if html_review and not research_journey:
+        raise ValueError('html_review requires research_journey')
     if type(import_method_use) is not bool:
         raise ValueError('import_method_use must be a boolean')
     if import_method_use and not review_method_use:
@@ -64,9 +68,11 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
         'Answer review stays deferred. Missing falsification and defeater remain intentional.\n'
         'Read after completion: reader-scope.txt, review-packet.txt, argument-map.txt, timeline.txt, lineage.json.\n' +
         ('Extended mode also writes research-journey.txt with pattern, relationship, context and argument review.\n' if research_journey else '') +
-        ('Live recheck mode writes invented local source files; read source-recheck.txt first.\n' if recheck_sources else '') +
+        (('Live recheck mode writes invented local source files; source-recheck.txt contains the detailed check.\n' if html_review else
+          'Live recheck mode writes invented local source files; read source-recheck.txt first.\n') if recheck_sources else '') +
         ('Method-use mode also writes method-applications.txt; considered use is not scientific approval.\n' if review_method_use else '') +
         ('Imported method-use mode retains original/reviewed/rejected synthetic proposals; no model is called.\n' if import_method_use else '') +
+        ('HTML review mode starts with passive local research-journey.html; open it yourself after completion.\n' if html_review else '') +
         'commands.json records actual CLI argument arrays (not shell commands).\n'
         'If any stage fails, keep this folder for diagnosis and rerun into a NEW directory.\n')
     try:
@@ -153,7 +159,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             '--format', 'text'], 'argument-map.txt', False)
         write('revision-inputs.json', dict(original_corpus=corpus, candidate_bundle=bundle, operator_review=review))
         lineage = command('audit_design_lineage.py', [package_path, path('links.json'), path('proposal.json'), path('revision-inputs.json')], 'lineage.json')
-        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources, review_method_use=review_method_use, import_method_use=import_method_use) if research_journey else None)
+        journey = (_extend_research_journey(command, write, path, package_path, links, recheck_sources=recheck_sources, review_method_use=review_method_use, import_method_use=import_method_use, html_review=html_review) if research_journey else None)
         write('commands.json', commands)
         receipt = dict(status='SYNTHETIC_WALKTHROUGH_COMPLETE_NOT_VALIDATED', llm_used=False, external_transmission=False,
             human_review_authenticated=False, answer_review_status='ALL_DEFERRED',
@@ -176,6 +182,9 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
             receipt.update(current_source_recheck_status=journey['source_recheck']['status'],
                 current_source_recheck_is_synthetic=True,
                 read_first=['source-recheck.txt', *receipt['read_first']])
+        if html_review:
+            receipt.update(html_review_scope='READ_ONLY_LOCAL_SNAPSHOT_NOT_APPROVAL',
+                read_first=['research-journey.html', *receipt['read_first']])
         write('COMPLETE.json', receipt)
         return dict(receipt, output_directory=str(destination))
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc:
@@ -190,7 +199,7 @@ def run(destination, *, candidate_source='mock', research_journey=False, recheck
 
 
 
-def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False, review_method_use=False, import_method_use=False):
+def _extend_research_journey(command, write, path, package_path, links, *, recheck_sources=False, review_method_use=False, import_method_use=False, html_review=False):
     """Fixed invented decisions only, never accept external candidate material."""
     command('pattern_proposals.py', ['prepare', package_path, '--topic', 'model design',
         '--include-evidence-reasons'], 'pattern-handoff.json')
@@ -308,6 +317,8 @@ def _extend_research_journey(command, write, path, package_path, links, *, reche
         args.extend(['--source-selection', path('synthetic-source-selection.json'), '--source-root', path('synthetic-sources')])
     result = command('research_journey.py', args, 'research-journey.json')
     command('research_journey.py', [*args, '--format', 'text'], 'research-journey.txt', False)
+    if html_review:
+        command('research_journey.py', [*args, '--format', 'html'], 'research-journey.html', False)
     decisions = result['pattern_transfer_review']['answer_design_review']['answer']['review']['decisions']
     if any(row['decision'] != 'defer' for row in decisions):
         raise ValueError('synthetic answer review must remain deferred')
@@ -322,8 +333,9 @@ def main():
     parser.add_argument('--recheck-sources', action='store_true')
     parser.add_argument('--review-method-use', action='store_true')
     parser.add_argument('--import-method-use', action='store_true')
+    parser.add_argument('--html-review', action='store_true')
     args = parser.parse_args()
-    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use)
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source, research_journey=args.research_journey, recheck_sources=args.recheck_sources, review_method_use=args.review_method_use, import_method_use=args.import_method_use, html_review=args.html_review)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

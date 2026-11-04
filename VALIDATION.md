@@ -2,25 +2,44 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.47 (offline method-application proposal review).
+Current local source release: v0.48 (passive local research-journey HTML view).
 
-- `python -m unittest discover -q`: 562 synthetic tests passed locally.
+- `python -m unittest discover -q`: 585 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 163 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 166 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
-- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey --recheck-sources --review-method-use --import-method-use`:
-  all 38 CLI stages completed. Both imported pattern and application histories,
-  original/reviewed rationales and rejected alternatives remained visible. Source
-  files and five stored records matched; method applicability stayed unverified,
-  the failure criterion stayed missing and all answer claims remained deferred.
-  Earlier demo modes passed their regression tests.
+- Standalone `synthetic_walkthrough.py --candidate-source offline-import --research-journey --recheck-sources --review-method-use --import-method-use --html-review`:
+  all 39 CLI stages completed. The passive HTML snapshot exactly matches the
+  separately rendered journey JSON for the unchanged synthetic inputs. Original,
+  reviewed and rejected pattern/application histories remain visible; all answer
+  claims remain deferred and source checks do not establish method applicability.
+  Previous demo modes and legacy JSON/text snapshots retain their behavior.
 
-Most recent separately verified remote baseline: corrected v0.46, commit
-[`348001719f1ce7415beb7ff9b6ec1db9c8538b62`](https://github.com/h-dot-seo/persona-for-research/commit/348001719f1ce7415beb7ff9b6ec1db9c8538b62),
-with 538 tests. This is a prior-commit record, not a claim of remote CI for v0.47.
+Most recent separately verified remote baseline: v0.47, commit
+[`ac54ed5afed9e5cfd864baddb8ad5cca0a58758b`](https://github.com/h-dot-seo/persona-for-research/commit/ac54ed5afed9e5cfd864baddb8ad5cca0a58758b),
+with 562 tests. This is a prior-commit record, not a claim of remote CI for v0.48.
 
-- [GitHub Actions run 41778499568](https://github.com/h-dot-seo/persona-for-research/actions/runs/41778499568):
-  all four jobs passed for that exact corrected commit, Ubuntu/Windows and Python 3.10/3.12.
+- [GitHub Actions run 41780130790](https://github.com/h-dot-seo/persona-for-research/actions/runs/41780130790):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-three new synthetic cases cover inert HTML/strict element and attribute
+allowlists, escaped source/model/operator content, controls and Unicode, unique
+hashed internal anchors, complete JSON round-trip and distinct snapshot digest,
+full proposal and imported-observation history, current/recorded source separation,
+unused-source and missing-excerpt gaps, one fresh inspection and one read per selected
+file, invalid inputs before reads, final UTF-8 limits, CLI failures without partial
+output, unchanged legacy formats, and the 39-stage demonstration with late failure.
+Independent read-only inspection found no security/schema/history blocker and
+prompted consistent reading-order guidance. These are parser/logic/CLI checks.
+
+**Actual-browser visual, keyboard and print QA: BLOCKED, not passed.** Installed
+Chromium failed before opening the synthetic local file because OS socket creation
+was denied. The normal attempt and an approved expanded execution both failed.
+No screenshot, responsive-geometry result, keyboard result or print-completeness
+claim was produced. CSS and native disclosure controls are included, but static
+checks do not establish their real-browser behavior. No browser dependency or
+external resource was added to hide this limitation. See
+[local HTML review](docs/LOCAL_HTML_REVIEW.md) for the explicit presentation scope.
 
 Twenty-four new synthetic cases cover bounded offline application handoff/import,
 all-deferred review, explicit complete rewrites, multiple alternatives with at most
@@ -55,7 +74,7 @@ CLI now uses explicit intermixed argument parsing, with regression cases for fla
 before, between and after positional inputs. This fixes the observed command-order
 compatibility failure without changing review semantics. The failed attempt remains
 visible in [run 41778017967](https://github.com/h-dot-seo/persona-for-research/actions/runs/41778017967);
-the corrected commit subsequently passed all four jobs in run 41778499568, as recorded above.
+the corrected commit subsequently passed all four jobs in run 41778499568 (the separately verified v0.46 baseline).
 
 Twenty-nine new source-recheck and walkthrough cases cover exact all-paper selection,
 full preflight before reads, stale/invalid source forms and package/rule disagreement,

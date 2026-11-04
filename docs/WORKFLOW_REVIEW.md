@@ -482,3 +482,15 @@ pattern and application histories remain visible. Checks are proposed, not execu
 source matches do not approve methods and all answer claims remain deferred.
 See [application proposals](APPLICATION_PROPOSALS.md) for standalone commands,
 separate candidate/application decisions, export conditions and verification bounds.
+
+## Passive local review view
+
+Use `research_journey.py ... --format html` with the same original inputs for a
+single read-only local view. It inspects once, preserves every field in a reversible
+snapshot, links only exact references, and has no scripts, external resources or
+approval controls. Add `--html-review` to the synthetic extended demo for one extra
+CLI stage (39 with all current options). Existing JSON/text modes are unchanged.
+The static/security/CLI checks are automated; actual-browser visual, keyboard and
+print QA is currently blocked by the cloud environment's socket restriction.
+See [local HTML review](LOCAL_HTML_REVIEW.md) for the reading order, privacy limits
+and precise verification scope.

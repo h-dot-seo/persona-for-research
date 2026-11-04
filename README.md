@@ -51,6 +51,12 @@ explicit review. The complete demo now has 38 stages: original, reviewed and rej
 application rationales survive the integrated report without changing the design or
 active evidence. No provider is called. See [application proposals](docs/APPLICATION_PROPOSALS.md).
 
+For a navigable, read-only local view, add `--html-review`. With all options above,
+the synthetic flow runs 39 stages and produces `research-journey.html`: scope and
+review prompts first, exact-source links and complete histories next. No scripts,
+external resources or approval controls are included. Actual-browser layout/keyboard/
+print QA is currently blocked; see [local HTML review](docs/LOCAL_HTML_REVIEW.md).
+
 For the complete synthetic CLI round-trip, current UX limits and prerequisites
 for real-scholar evaluation, see [workflow review](docs/WORKFLOW_REVIEW.md).
 
