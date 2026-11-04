@@ -1,6 +1,8 @@
 # Candidate extraction adapter contract
 
 This is a provider-neutral data contract plus a **synthetic mock-only runner**.
+A separate [offline handoff/import](MODEL_HANDOFF.md) supports saved model responses
+with declared provenance and the same explicit review gate; it does not call a model.
 It is not a live AI integration. The built-in mock returns a supplied canned
 response; `llm_used`, `inference_performed` and `external_transmission` are false.
 No credentials, network clients, model downloads or paid services are used.

@@ -149,7 +149,8 @@ def prepare_revision(corpus, bundle, review, new_version, new_build_id):
         observation.setdefault('reasoning', {})[dimension] = dict(
             text=decision['reviewed_text'], claim_type=decision['reviewed_claim_type'],
             locator=candidate['locator'], evidence_quote=candidate['evidence_quote'],
-            origin='operator_reviewed_mock_candidate', candidate_id=candidate['candidate_id'],
+            origin=('operator_reviewed_imported_candidate' if bundle['contract_version'] == '2'
+                    else 'operator_reviewed_mock_candidate'), candidate_id=candidate['candidate_id'],
             candidate_bundle_sha256=bundle_hash, operator_review_sha256=review_hash,
             proposed_claim_type=candidate['proposed_claim_type'])
         result['applied_candidate_ids'].append(candidate['candidate_id'])

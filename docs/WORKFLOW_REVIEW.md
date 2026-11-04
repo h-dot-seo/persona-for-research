@@ -320,3 +320,15 @@ content is auto-migrated. This reuses existing forms instead of another authorin
 Use the optional [evidence detail view](EVIDENCE_DETAILS.md) when aggregate coverage
 could conceal gaps in an individual observation. It preserves exact references and
 claim labels without choosing a method or filling missing reasoning.
+
+### Offline model response continuity (synthetic, 2026-11-04)
+
+The extraction mock previously forced any externally produced candidate rows to be
+labeled as canned mock output. A local handoff/import now keeps a separate declared
+provider/model/run record, exact request/response bindings and an imported origin.
+Synthetic CLI tests exercise export, empty response preparation, import, deferred
+review and explicit replacement without actual inference or transmission. Existing
+source/quote checks and proposed-versus-reviewed labels remain intact. The mock-only
+lineage tools reject imported origins, including inherited history, rather than
+silently claiming coverage. This establishes mechanical interoperability only, not
+model quality, authenticated provenance or researcher fidelity.

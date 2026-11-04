@@ -21,7 +21,7 @@ def validate_components(components):
         if any(k in record for k in REVIEW_FIELDS):
             if any(k not in record for k in REVIEW_FIELDS):
                 raise ValueError('review provenance must be complete')
-            if record['origin'] != 'operator_reviewed_mock_candidate':
+            if record['origin'] not in ('operator_reviewed_mock_candidate', 'operator_reviewed_imported_candidate'):
                 raise ValueError('unsupported reviewed candidate origin')
             if not isinstance(record['candidate_id'], str) or not record['candidate_id'].strip():
                 raise ValueError('review provenance needs a candidate ID')

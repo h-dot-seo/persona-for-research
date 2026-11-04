@@ -77,3 +77,20 @@ labels remain auditable. Additional tests cover inherited unused origins, stale
 inputs, exact replay mismatches despite recomputed hashes, deferred/rejected reviews,
 no provider/source reads, JSON-equivalent inputs and exclusion of raw source text.
 No real researcher, actual LLM extraction or authenticated human review is tested.
+
+## Offline imported candidates are outside this audit's scope
+
+This legacy audit supports synthetic-mock candidate revisions only. It fails
+closed for imported candidate bundles and for any
+`operator_reviewed_imported_candidate` component in the final package or any
+declared stage's input package. This includes imported history inherited before
+the declared chain and imported records later replaced by mock candidates. No
+mock-only coverage result is emitted for mixed or imported history.
+
+The normal explicit operator-review workflow and evidence-scope disclosure support
+imported candidates independently of this limitation. Evidence-scope disclosure
+keeps `recorded_mock_origin_references` restricted to mock records, reports
+`recorded_imported_origin_references` separately, and includes both in
+`recorded_candidate_origin_references`. Those are recorded declarations, not proof
+of actual model invocation or authenticated human review. Execution flags such as
+`llm_used=false` describe the current deterministic command only.

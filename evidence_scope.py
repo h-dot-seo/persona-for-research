@@ -17,12 +17,13 @@ BOUNDARY = ('Counts describe supplied authorized records, not independent studie
     'by design steps count as active use; unused supplied links are disclosed separately. '
     'All draft claims count, including rejected or deferred ones; this is not an approved-answer '
     'selection. A selected component does not establish use of every component in its observation. '
-    'Curated records have unauthenticated origin; a mock-origin marker is a recorded declaration, '
+    'Curated records have unauthenticated origin; candidate-origin markers and imported model/provider '
+    'identities are declarations, '
     'not proof of actual AI use or human review. Checks are recorded statuses, not repeated here. '
     'Research/review labels and explicit statements do not establish individual author ownership. '
     'Publication-year comparisons do not establish availability or influence. Missing uncertainty '
     'and counterevidence cannot be inferred away. No LLM, external call, source reread, scientific '
-    'validation or canonical update is performed.')
+    'validation or canonical update is performed by this command. Execution flags describe this command only.')
 
 
 def disclose(package, links, proposal, draft, reference_year, declared_review=None):
@@ -38,7 +39,7 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
             source_kind=paper['kind'], source_locator=paper['locator'], observation_count=len(paper['observations']),
             recorded_source_check=paper.get('source_verification', 'NOT_PERFORMED')))
     active_papers, active_observations, active_hashes = set(), set(), set()
-    mock_refs, other_refs = [], []
+    mock_refs, imported_refs, other_refs = [], [], []
     for route in packet['evidence_routes']:
         node = route['evidence']; ref = node['reference']; component = node['component']
         record = component if component is not None else node['observation']
@@ -46,7 +47,9 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
             publication_scope=route['publication_scope'], selected_claim_type=record['claim_type'],
             observation_stance=node['observation']['stance'], selected_locator=record['locator'],
             recorded_selected_check=record.get('evidence_verification', 'NOT_PERFORMED'),
-            origin_status='RECORDED_MOCK_CANDIDATE_ORIGIN' if component is not None and 'origin' in component else
+            origin_status=({'operator_reviewed_mock_candidate': 'RECORDED_MOCK_CANDIDATE_ORIGIN',
+                'operator_reviewed_imported_candidate': 'RECORDED_IMPORTED_CANDIDATE_ORIGIN'}.get(component.get('origin'),
+                'CURATED_RECORD_ORIGIN_NOT_AUTHENTICATED')) if component is not None else
                           'CURATED_RECORD_ORIGIN_NOT_AUTHENTICATED',
             answer_uses=copy.deepcopy(route['answer_uses']), design_uses=copy.deepcopy(route['design_uses']),
             unreferenced_link_uses=copy.deepcopy(route['unreferenced_link_uses']))
@@ -58,7 +61,8 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
             group['active_references'].append(row)
             active_papers.add(ref['paper_id']); active_observations.add((ref['paper_id'], ref['observation_index']))
             active_hashes.add(node['source_sha256'])
-            (mock_refs if row['origin_status'] == 'RECORDED_MOCK_CANDIDATE_ORIGIN' else other_refs).append(copy.deepcopy(ref))
+            (mock_refs if row['origin_status'] == 'RECORDED_MOCK_CANDIDATE_ORIGIN' else
+             imported_refs if row['origin_status'] == 'RECORDED_IMPORTED_CANDIDATE_ORIGIN' else other_refs).append(copy.deepcopy(ref))
         else:
             group['unused_link_references'].append(row)
     for group in groups.values():
@@ -82,10 +86,11 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
         coverage=dict(supplied_paper_ids=len(papers), supplied_observations=sum(len(p['observations']) for p in papers.values()),
             supplied_source_hash_groups=len(groups), actively_referenced_paper_ids=len(active_papers),
             actively_referenced_observations=len(active_observations), active_source_hash_groups=len(active_hashes),
-            active_exact_references=len(mock_refs)+len(other_refs)),
+            active_exact_references=len(mock_refs)+len(imported_refs)+len(other_refs)),
         unused_paper_ids=[paper_id for paper_id in papers if paper_id not in active_papers],
         source_groups=list(groups.values()),
-        recorded_mock_origin_references=mock_refs, other_curated_references=other_refs,
+        recorded_mock_origin_references=mock_refs, recorded_imported_origin_references=imported_refs,
+        recorded_candidate_origin_references=mock_refs + imported_refs, other_curated_references=other_refs,
         review_prompts=copy.deepcopy(packet['review_prompts']),
         llm_used=False, provider_invoked=False, source_checks_repeated=False,
         scientific_validation='NOT_PERFORMED', researcher_fidelity_evaluation='NOT_PERFORMED',
@@ -141,7 +146,7 @@ def render(package, links, proposal, draft, reference_year, declared_review=None
                     lines.append('      Unreferenced link ' + display(use['link_id']) + ': ' + use['relation'])
                 if 'recorded_origin' in row:
                     origin = row['recorded_origin']
-                    lines.append('      Recorded mock origin; proposed label=' + origin['proposed_claim_type'] +
+                    lines.append('      Recorded ' + ('mock' if origin['origin'] == 'operator_reviewed_mock_candidate' else 'imported candidate') + ' origin; proposed label=' + origin['proposed_claim_type'] +
                         '; candidate bundle sha256=' + origin['candidate_bundle_sha256'] + '; review sha256=' + origin['operator_review_sha256'])
     lines.append('Mechanical review prompts (not exhaustive):')
     for p in result['review_prompts']:

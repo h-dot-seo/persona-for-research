@@ -11,15 +11,29 @@ from persona import payload_sha256
 from strict_json import load
 
 
+def require_mock_only_history(package, candidates=None):
+    """Fail closed: this legacy audit does not cover imported candidate history."""
+    if candidates is not None and (candidates.get('contract_version') != '1'
+            or candidates.get('provider', {}).get('id') != 'synthetic-mock'):
+        raise ValueError('mock-only lineage audit does not support imported candidate bundles')
+    for paper in package['knowledge']['papers']:
+        for observation in paper['observations']:
+            for component in observation.get('reasoning', {}).values():
+                if component.get('origin') == 'operator_reviewed_imported_candidate':
+                    raise ValueError('mock-only lineage audit does not support imported candidate history')
+
+
 def audit(value, links, proposal, revision_inputs):
     if not isinstance(revision_inputs, dict) or set(revision_inputs) != {'original_corpus', 'candidate_bundle', 'operator_review'}:
         raise ValueError('revision inputs require exactly original_corpus, candidate_bundle and operator_review')
     package = checked_package(value)
+    require_mock_only_history(package)
     design = review_design(package, links, proposal)
     corpus = revision_inputs['original_corpus']
     candidates = revision_inputs['candidate_bundle']
     declared_review = revision_inputs['operator_review']
     base = validate_candidate_bundle(corpus, candidates)  # Pure validation; no provider invocation.
+    require_mock_only_history(base, candidates)
     replay = prepare_revision(corpus, candidates, declared_review,
                               package['persona']['version'], package['persona']['build_id'])
     if replay.get('status') != 'REVIEWED_REVISION_CANDIDATE' or 'package' not in replay:

@@ -4,7 +4,7 @@ import copy
 import json
 from pathlib import Path
 
-from audit_design_lineage import audit as audit_one
+from audit_design_lineage import audit as audit_one, require_mock_only_history
 from compare_releases import checked_package
 from extraction_adapter import validate_candidate_bundle
 from operator_review import prepare_revision
@@ -24,6 +24,7 @@ def _mock_records(package):
 
 def audit(value, links, proposal, chain):
     package = checked_package(value)
+    require_mock_only_history(package)
     if not isinstance(chain, dict) or set(chain) != {'stages'} or not isinstance(chain['stages'], list) or not chain['stages']:
         raise ValueError('chain must contain a nonempty ordered stages array')
     previous, initial, summaries, proofs, identities = None, [], [], {}, set()
@@ -32,6 +33,7 @@ def audit(value, links, proposal, chain):
             raise ValueError('stage has missing or unknown fields')
         corpus, candidates, declared = stage['original_corpus'], stage['candidate_bundle'], stage['operator_review']
         base = validate_candidate_bundle(corpus, candidates)
+        require_mock_only_history(base, candidates)
         if previous is not None and payload_sha256(base) != payload_sha256(previous):
             raise ValueError('stage ' + str(number) + ' preflight package does not continue the previous replay')
         if previous is None:

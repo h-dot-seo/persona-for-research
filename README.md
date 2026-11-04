@@ -58,6 +58,16 @@ review; they cannot automatically enter a canonical package. Actual LLM inferenc
 and external transmission are explicitly false. Real provider adapters are disabled.
 See [extraction contract and review requirements](docs/EXTRACTION_CONTRACT.md).
 
+### Bring a separately generated model response
+
+`model_handoff.py` prepares a local source-bounded request and imports a saved
+response from a separately authorized coding assistant or model API. Its version-2
+bundle records declared provider/model/run provenance without pretending the import
+ran a model or authenticated the producer. Exact source/quote checks and deferred
+operator review remain mandatory; imported origins stay distinct from synthetic
+mocks. No provider is invoked and no data is transmitted by these commands.
+See [offline model handoff and limits](docs/MODEL_HANDOFF.md).
+
 ### Record operator decisions without automatic promotion
 
 `operator_review.py` creates a deferred review template and applies explicitly

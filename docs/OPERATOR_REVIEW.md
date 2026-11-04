@@ -1,8 +1,11 @@
-# From mock proposals to a separate revision candidate
+# From reviewed proposals to a separate revision candidate
 
 The review gate records explicit operator decisions. It does not authenticate a
 human identity, evaluate semantic correctness, overwrite a canonical package or
-approve deployment. Only synthetic mock candidate bundles are currently supported.
+approve deployment. It supports version-1 synthetic mock bundles and version-2
+[offline imported responses](MODEL_HANDOFF.md), with distinct reviewed origin labels.
+Imported provider/model/run provenance remains an unauthenticated declaration bound
+by the complete candidate-bundle hash; it is not proof that a model actually ran.
 
 ## Workflow
 
