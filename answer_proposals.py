@@ -14,6 +14,12 @@ from strict_json import loads
 
 SCOPE_SCHEMA = 'persona.answer-proposal-scope.v1'
 ENVELOPE_SCHEMA = 'persona.reviewed-answer-proposals.v1'
+SCHEMAS = {version: {name: 'persona.'+kind+'.v'+str(version) for name, kind in
+    [('scope', 'answer-proposal-scope'), ('handoff', 'answer-handoff'), ('bundle', 'answer-proposals'),
+     ('packet', 'answer-proposal-review'), ('envelope', 'reviewed-answer-proposals')]} for version in (1, 2)}
+EXPLANATION_BOUNDARY = (' Citation explanations are declared interpretations attached only to an exact claim/reference/role use. '
+    'They do not authenticate source authorship or establish support, relevance, quotation permission or approval. '
+    'Explicit null remains a missing-explanation prompt even after a declared retain decision.')
 PROPOSAL_FIELDS = {'text', 'claim_type', 'uncertainty', 'citations'}
 MAX_PROPOSALS = 32
 MAX_REFS = 64
@@ -47,20 +53,39 @@ def _output(value):
     return value
 
 
-def template(package, question, topic, reference_year, operator_id):
+def _schemas(scope):
+    if not isinstance(scope, dict): raise ValueError('answer scope must be an object')
+    for schemas in SCHEMAS.values():
+        if scope.get('schema') == schemas['scope']: return schemas
+    raise ValueError('unsupported answer scope schema')
+
+
+def _boundary(scope):
+    return BOUNDARY + (EXPLANATION_BOUNDARY if _schemas(scope) == SCHEMAS[2] else '')
+
+
+def _explanation_origin(claim, origin):
+    for citation in claim['citations']:
+        if 'explanation' in citation: citation['explanation_origin'] = origin
+
+
+def template(package, question, topic, reference_year, operator_id, *, include_citation_explanations=False):
+    if type(include_citation_explanations) is not bool:
+        raise ValueError('include_citation_explanations must be boolean')
     package, question, topic, reference_year, operator_id = _inputs([package, question, topic, reference_year, operator_id])
     package, _ = _sources(package)
     _text(question, 'question'); _text(topic, 'topic'); _text(operator_id, 'operator_id', 128)
     if type(reference_year) is not int or not 1 <= reference_year <= 9999:
         raise ValueError('reference_year must be an integer from 1 to 9999')
-    return dict(schema=SCOPE_SCHEMA, package_sha256=payload_sha256(package), question=question,
+    return dict(schema=SCHEMAS[2 if include_citation_explanations else 1]['scope'], package_sha256=payload_sha256(package), question=question,
         topic=topic, reference_year=reference_year, operator_id=operator_id, evidence_refs=[])
 
 
 def _scope(package, scope):
     if not isinstance(scope, dict) or set(scope) != {'schema', 'package_sha256', 'question', 'topic', 'reference_year', 'operator_id', 'evidence_refs'}:
         raise ValueError('answer scope has missing or unsupported fields')
-    expected = template(package, scope['question'], scope['topic'], scope['reference_year'], scope['operator_id'])
+    expected = template(package, scope['question'], scope['topic'], scope['reference_year'], scope['operator_id'],
+        include_citation_explanations=_schemas(scope) == SCHEMAS[2])
     if any(scope[k] != expected[k] for k in expected if k != 'evidence_refs'):
         raise ValueError('answer scope changed or is bound to a different package')
     refs = scope['evidence_refs']
@@ -84,7 +109,7 @@ def _scope(package, scope):
 def prepare_handoff(package, scope):
     package, scope = _inputs([package, scope]); package, _ = _sources(package)
     evidence = _scope(package, scope)
-    result = dict(schema='persona.answer-handoff.v1', task='propose_answer_candidates_from_explicit_evidence',
+    result = dict(schema=_schemas(scope)['handoff'], task='propose_answer_candidates_from_explicit_evidence',
         bindings=dict(package_sha256=payload_sha256(package), scope_sha256=payload_sha256(scope)),
         question=scope['question'], topic=scope['topic'], reference_year=scope['reference_year'],
         operator_id=scope['operator_id'], evidence=evidence,
@@ -101,7 +126,12 @@ def prepare_handoff(package, scope):
             'Leave citations empty and uncertainty null when unsupported; gaps remain review prompts, not approval.',
             'Topic and year are declared review aids, not evidence of relevance or historical authority. No execution is authorized.'
         ], processing=dict(scope='CURRENT_PREPARATION_ONLY', provider_invoked=False, external_transmission=False, source_reread=False),
-        boundary=BOUNDARY)
+        boundary=_boundary(scope))
+    if _schemas(scope) == SCHEMAS[2]:
+        result['response_contract'].update(citation_fields=['reference', 'role', 'explanation'],
+            explanation_fields=['rationale', 'context_boundary'], explanation_scope='EXACT_CLAIM_REFERENCE_ROLE_DECLARATION',
+            explanation_allows_null=True, context_boundary_allows_null=True, max_explanation_chars=2000)
+        result['instructions'].append('Every citation must explicitly include explanation: null when not supplied, or rationale and context_boundary. Rationale must be nonblank; context_boundary may be null. Do not invent explanations to fill gaps. Explanations are tentative interpretations, not source-author claims or verified semantic support.')
     if len(json.dumps(result, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')) > MAX_HANDOFF_BYTES:
         raise ValueError('answer handoff exceeds the 2 MiB logical JSON limit')
     return result
@@ -126,8 +156,11 @@ def _inspect_claim(package, scope, claim, operator_id):
     if not isinstance(claim['citations'], list) or len(claim['citations']) > MAX_CITATIONS:
         raise ValueError('answer claim allows at most 32 citations')
     allowed = {payload_sha256(ref) for ref in scope['evidence_refs']}
+    citation_fields = {'reference', 'role', 'explanation'} if _schemas(scope) == SCHEMAS[2] else {'reference', 'role'}
     for citation in claim['citations']:
-        if not isinstance(citation, dict) or 'reference' not in citation or payload_sha256(citation['reference']) not in allowed:
+        if not isinstance(citation, dict) or set(citation) != citation_fields:
+            raise ValueError('citation fields do not match the explicit answer scope version')
+        if payload_sha256(citation['reference']) not in allowed:
             raise ValueError('every citation must be an exact explicit scope reference')
     draft = answer_draft.template(package, scope['question'], operator_id)
     draft['claims'] = [copy.deepcopy(claim)]
@@ -137,6 +170,9 @@ def _inspect_claim(package, scope, claim, operator_id):
     if not result['citations']: result['review_prompts'].append('NO_CITATIONS_SUPPLIED')
     if result['missing_uncertainty']: result['review_prompts'].append('UNCERTAINTY_NOT_SUPPLIED')
     if not any(c['role'] == 'support' for c in claim['citations']): result['review_prompts'].append('NO_SUPPORT_CITATION_SUPPLIED')
+    if any(c.get('explanation_review_prompts') for c in result['citations']):
+        result['review_prompts'].append('CITATION_EXPLANATION_NOT_SUPPLIED')
+    _explanation_origin(result, 'OPERATOR_ADOPTED_IMPORTED_INTERPRETATION')
     result['review_prompts'].append('SEMANTIC_SUPPORT_NOT_VALIDATED')
     return result
 
@@ -148,6 +184,7 @@ def _original(package, scope, candidate, operator_id):
     del result['claim_id']
     result.update(origin='UNTRUSTED_IMPORTED_ANSWER_PROPOSAL', citation_role_origin='IMPORTED_PROPOSAL_NOT_OPERATOR_DECISION')
     for citation in result['citations']: citation['role_origin'] = 'IMPORTED_PROPOSAL_NOT_OPERATOR_DECISION'
+    _explanation_origin(result, 'UNTRUSTED_IMPORTED_INTERPRETATION')
     return result
 
 
@@ -164,18 +201,18 @@ def import_response(package, scope, handoff, response, provenance):
         checked = _original(package, scope, candidate, provenance['operator_id'])
         rows.append(dict(candidate_id='answer-candidate-'+str(index+1), proposed_claim=candidate,
             review_prompts=checked['review_prompts'], status='IMPORTED_ANSWER_PROPOSAL_REQUIRES_REVIEW'))
-    return _output(dict(schema='persona.answer-proposals.v1', scope=scope, bindings=handoff['bindings'],
+    return _output(dict(schema=_schemas(scope)['bundle'], scope=scope, bindings=handoff['bindings'],
         import_record=dict(handoff_sha256=payload_sha256(handoff), response_sha256=payload_sha256(response), provenance=provenance),
         candidates=rows, status='ANSWER_PROPOSALS_REQUIRE_REVIEW' if rows else 'NO_ANSWER_PROPOSALS',
         provider=dict(id='offline-answer-response-import', model_id=provenance['model_id'], llm_used=None,
             provenance_status='OPERATOR_DECLARED_NOT_AUTHENTICATED'),
         processing=dict(scope='CURRENT_IMPORT_ONLY', provider_invoked=False, external_transmission=False, source_reread=False),
-        canonical_update_performed=False, boundary=BOUNDARY))
+        canonical_update_performed=False, boundary=_boundary(scope)))
 
 
 def validate_bundle(package, bundle):
     package, bundle = _inputs([package, bundle])
-    if not isinstance(bundle, dict) or bundle.get('schema') != 'persona.answer-proposals.v1':
+    if not isinstance(bundle, dict) or bundle.get('schema') not in tuple(item['bundle'] for item in SCHEMAS.values()):
         raise ValueError('expected an answer proposal bundle')
     rows = bundle.get('candidates'); record = bundle.get('import_record'); scope = bundle.get('scope')
     if not isinstance(rows, list) or len(rows) > MAX_PROPOSALS: raise ValueError('answer bundle allows at most 32 candidates')
@@ -227,13 +264,13 @@ def review_proposals(package, bundle, review):
             original_inspection=_original(package, bundle['scope'], candidate['proposed_claim'], bundle['import_record']['provenance']['operator_id']),
             reviewed_claim=copy.deepcopy(decision.get('reviewed_claim')), reviewed_inspection=reviewed.get(cid)))
     pending = sum(row['decision'] == 'defer' for row in rows)
-    return _output(dict(schema='persona.answer-proposal-review.v1',
+    return _output(dict(schema=_schemas(bundle['scope'])['packet'],
         status='ANSWER_PROPOSAL_REVIEW_INCOMPLETE' if pending else 'ANSWER_PROPOSALS_REVIEWED_NOT_APPROVED' if accepted_ids else 'NO_ACCEPTED_ANSWER_PROPOSALS',
         scope=bundle['scope'], bindings=bundle['bindings'], proposal_bundle_sha256=payload_sha256(bundle), review_sha256=payload_sha256(review),
         reviewer_id=review['reviewer_id'], reviewer_identity='RECORDED_NOT_AUTHENTICATED', import_record=bundle['import_record'],
         provider=bundle['provider'], candidates=rows, accepted_count=len(accepted_ids), deferred_count=pending,
         semantic_validation='NOT_PERFORMED', automatic_approval=False, scientific_execution=False, canonical_update_performed=False,
-        processing=dict(scope='CURRENT_REVIEW_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=BOUNDARY))
+        processing=dict(scope='CURRENT_REVIEW_ONLY', provider_invoked=False, external_transmission=False, source_reread=False), boundary=_boundary(bundle['scope'])))
 
 
 def _require_export(packet):
@@ -243,15 +280,17 @@ def _require_export(packet):
 
 def export_reviewed(package, bundle, review):
     package, bundle, review = _inputs([package, bundle, review]); packet = review_proposals(package, bundle, review); _require_export(packet)
-    return _output(dict(schema=ENVELOPE_SCHEMA, bundle=bundle, review=review))
+    return _output(dict(schema=_schemas(packet['scope'])['envelope'], bundle=bundle, review=review))
 
 
 def inspect_reviewed(package, envelope):
     import answer_draft
     package, envelope = _inputs([package, envelope])
-    if not isinstance(envelope, dict) or set(envelope) != {'schema', 'bundle', 'review'} or envelope['schema'] != ENVELOPE_SCHEMA:
+    if not isinstance(envelope, dict) or set(envelope) != {'schema', 'bundle', 'review'} or envelope['schema'] not in tuple(item['envelope'] for item in SCHEMAS.values()):
         raise ValueError('invalid reviewed answer envelope')
     packet = review_proposals(package, envelope['bundle'], envelope['review']); _require_export(packet)
+    if envelope['schema'] != _schemas(packet['scope'])['envelope']:
+        raise ValueError('answer envelope schema does not match its scope version')
     draft = answer_draft.template(package, packet['scope']['question'], packet['reviewer_id'])
     accepted = [row for row in packet['candidates'] if row['decision'] == 'accept']
     draft['claims'] = [copy.deepcopy(row['reviewed_claim']) for row in accepted]
@@ -259,9 +298,10 @@ def inspect_reviewed(package, envelope):
     result.update(draft_sha256=payload_sha256(envelope), draft_content_sha256=payload_sha256(draft), proposal_review=packet,
         origin='OPERATOR_REVIEWED_IMPORTED_ANSWER_PROPOSALS', historical_model_use='DECLARED_NOT_AUTHENTICATED',
         llm_used=False, execution_scope='CURRENT_INSPECTION_ONLY', processing=dict(scope='CURRENT_INSPECTION_ONLY', provider_invoked=False, external_transmission=False, source_reread=False),
-        boundary=BOUNDARY)
+        boundary=_boundary(packet['scope']))
     for claim, original in zip(result['claims'], accepted):
         for citation in claim['citations']: citation['role_origin'] = 'OPERATOR_ADOPTED_IMPORTED_ROLE'
+        _explanation_origin(claim, 'OPERATOR_ADOPTED_IMPORTED_INTERPRETATION')
         claim['origin'] = 'OPERATOR_ADOPTED_IMPORTED_SYNTHESIS' if claim['claim_type'] == 'operator_synthesis' else 'OPERATOR_ADOPTED_IMPORTED_SOURCE_QUOTE'
         claim['proposal_origin'] = dict(candidate_id=original['candidate']['candidate_id'],
             proposal_bundle_sha256=packet['proposal_bundle_sha256'], review_sha256=packet['review_sha256'],
@@ -273,7 +313,7 @@ def inspect_reviewed(package, envelope):
 
 def render_review(packet):
     """Render an inspected report; rendering alone does not validate it."""
-    from answer_draft import _render_endpoint
+    from answer_draft import _render_endpoint, _render_explanation
     lines = ['Imported answer proposals | NOT RESEARCHER ANSWERS', 'Status: '+packet['status'],
         'Declared reviewer (not authenticated): '+display(packet['reviewer_id']),
         'Proposal bundle sha256: '+packet['proposal_bundle_sha256'], 'Review sha256: '+packet['review_sha256'],
@@ -294,8 +334,9 @@ def render_review(packet):
             lines.append('  Review prompts: '+', '.join(claim['review_prompts']))
             for citation in claim['citations']:
                 lines.append('  Citation role: '+citation['role']+' ['+citation['role_origin']+']')
+                _render_explanation(lines, citation)
                 _render_endpoint(lines, citation['evidence'])
-    lines.append(BOUNDARY); result = '\n'.join(lines)+'\n'
+    lines.append(packet['boundary']); result = '\n'.join(lines)+'\n'
     if len(result.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('answer proposal text report exceeds 16 MiB')
     return result
 
@@ -317,12 +358,14 @@ def main():
         if name == 'template':
             for argument in ('question', 'topic', 'operator-id'): command.add_argument('--'+argument, required=True)
             command.add_argument('--reference-year', required=True, type=int)
+            command.add_argument('--include-citation-explanations', action='store_true')
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
         if name == 'review': command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
     try:
         package = _load(args.package)
-        if args.command == 'template': result = template(package, args.question, args.topic, args.reference_year, args.operator_id)
+        if args.command == 'template': result = template(package, args.question, args.topic, args.reference_year, args.operator_id,
+            include_citation_explanations=args.include_citation_explanations)
         elif args.command == 'prepare': result = prepare_handoff(package, _load(args.scope))
         elif args.command == 'response-template': result = response_template(package, _load(args.scope), _load(args.handoff))
         elif args.command == 'import': result = import_response(package, *[_load(getattr(args, k)) for k in ('scope', 'handoff', 'response', 'provenance')])

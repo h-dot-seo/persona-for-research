@@ -82,6 +82,15 @@ authorization/split fields are errors, not a last-value-wins choice. This applie
 to source intake, package validation/comparison and the projection helper; it does
 not authenticate an authorization declaration or grant source access.
 
+## Explain source-to-claim reasoning
+
+[Optional citation explanations](docs/CITATION_EXPLANATIONS.md) record why one exact
+source passage supports, challenges or contextualizes a specific claim, with a
+declared context boundary. Missing explanations remain review prompts even after
+retain. A versioned offline proposal mode preserves original, edited and rejected
+interpretations; existing answer and argument records replay unchanged. No semantic
+support, researcher agreement or automatic approval is inferred.
+
 ## Adopt offline answer proposals explicitly
 
 [Answer proposals](docs/ANSWER_PROPOSALS.md) prepare an evidence-scoped local

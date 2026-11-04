@@ -2,6 +2,50 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.56 (opt-in claim-specific citation explanations).
+
+- `python -m unittest discover -q`: 748 synthetic tests passed locally.
+- `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 189 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- A standalone 21-command CLI route prepared v2 answer scope/handoff, imported
+  invented explanations, recorded explicit synthetic adoption and rejection,
+  prepared a separately deferred answer review, built a fresh imported argument
+  map, and composed JSON/text/passive HTML with current synthetic source checks.
+  It then pinned and reopened the same inputs. The complete HTML JSON snapshot
+  matched exactly, source quotes matched, and the uncited conclusion stayed uncited.
+
+Most recent separately verified remote baseline: v0.55, commit
+[`30dbde6fa0a9b40ef1d48648a79e452d3403b067`](https://github.com/h-dot-seo/persona-for-research/commit/30dbde6fa0a9b40ef1d48648a79e452d3403b067),
+with 721 tests. This is a prior-commit record, not a claim of remote CI for v0.56.
+
+- [GitHub Actions run 41798951744](https://github.com/h-dot-seo/persona-for-research/actions/runs/41798951744):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-seven new tests cover bounded exact explanation fields, null versus legacy
+absence, strict v1/v2 input contracts and downgrade rejection, full original/edited/
+rejected histories, literal source-quote equality, stale reviews/maps, per-claim
+reference/role isolation, missing prompts after retain, and declaration/route changes
+without changed stored evidence. A frozen synthetic fixture was captured from v0.55
+before production edits. Saved manual and imported answer inspections/text hashes,
+answer and argument handoffs/bundles/envelopes replay identically; expected outputs
+were not regenerated from the new implementation.
+
+An independent read-only audit found no confirmed defect and executed 126 focused
+tests. Separate adversarial checks exercised opposite roles at the same reference,
+retained-but-missing explanations, uncited conclusions, terminal-control escaping,
+and passive HTML tag/attribute/CSP safety. These are not browser/layout checks.
+A preliminary new integration test called a nonexistent revision-impact API; its
+call was corrected to the existing inspect API without changing production behavior.
+
+No actual researcher data, provider call, external source transmission or browser
+execution was used. All adoption choices were invented test fixtures. Supplied
+explanations remain declared interpretations, not verified semantic support, source
+authorship or approval. Actual-browser visual/keyboard/print QA remains
+**BLOCKED/unverified**; no browser retry or restriction bypass was attempted.
+
+## Prior v0.55 imported-argument walkthrough checks
+
 Current local source release: v0.55 (opt-in synthetic imported-argument walkthrough).
 
 - `python -m unittest discover -q`: 721 synthetic tests passed locally.

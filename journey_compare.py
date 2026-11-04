@@ -74,7 +74,8 @@ def _declarations(args,report):
     pattern={key:copy.deepcopy(selected[key]) for key in ('pattern_id','operator_hypothesis','scope_note','alternative_explanation','falsification_check','uncertainty')}
     answer=report['pattern_transfer_review']['answer_design_review']['answer']
     claims=[dict(claim_id=row['claim_id'],text=row['text'],claim_type=row['claim_type'],uncertainty=row['uncertainty'],
-        citations=[dict(reference=copy.deepcopy(citation['evidence']['reference']),role=citation['role']) for citation in row['citations']])
+        citations=[dict(reference=copy.deepcopy(citation['evidence']['reference']),role=citation['role'],
+            **({'explanation':copy.deepcopy(citation['explanation'])} if 'explanation' in citation else {})) for citation in row['citations']])
         for row in answer['claims']]
     applications=[{key:copy.deepcopy(row[key]) for key in sorted(APPLICATION_FIELDS)}
         for row in report.get('method_application_review',{}).get('applications',[])]

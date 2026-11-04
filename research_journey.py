@@ -1,4 +1,6 @@
 """Inspect a source-to-method-to-argument journey without generating or approving research."""
+from answer_draft import explanation_fields
+
 import argparse
 import copy
 import json
@@ -123,7 +125,7 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
                 for citation in claims[claim_id]['citations']:
                     route(citation['evidence'])['direct_argument_uses'].append(dict(step_id=step['step_id'],
                         claim_id=claim_id, argument_role=role, citation_role=citation['role'],
-                        declared_review_decision=decisions.get(claim_id, 'NOT_SUPPLIED')))
+                        declared_review_decision=decisions.get(claim_id, 'NOT_SUPPLIED'), **explanation_fields(citation)))
     for row in routes.values():
         row['actively_used_in_answer_or_design'] = bool(row['answer_uses'] or row['design_uses'])
         for use in row['answer_uses']:

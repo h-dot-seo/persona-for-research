@@ -1,4 +1,6 @@
 """Disclose actual answer/design evidence scope without scoring researcher fidelity."""
+from answer_draft import explanation_fields, _render_explanation
+
 import argparse
 import copy
 import json
@@ -80,6 +82,10 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
     claims = [dict(claim_id=c['claim_id'], text=c['text'], claim_type=c['claim_type'], uncertainty=c['uncertainty'],
         declared_review_decision=decisions.get(c['claim_id'], 'NOT_SUPPLIED'),
         evidence_status=c['evidence_status'], quote_check=c['quote_check'], challenge_citation_supplied=c['challenge_citation_supplied']) for c in answer['claims']]
+    for output, claim in zip(claims, answer['claims']):
+        explained = [dict(reference=copy.deepcopy(c['evidence']['reference']), role=c['role'],
+            **explanation_fields(c)) for c in claim['citations'] if 'explanation' in c]
+        if explained: output['citation_explanations'] = explained
     steps = [dict(step_id=s['step_id'], proposed_action=s['proposed_action'], uncertainty=s['uncertainty'],
         missing_fields=copy.deepcopy(s['missing_fields']), claim_type='operator_proposal') for s in design['steps']]
     result = dict(status='EVIDENCE_SCOPE_DISCLOSURE_NOT_VALIDATION', question=packet['question'],
@@ -165,6 +171,7 @@ def render(package, links, proposal, draft, reference_year, declared_review=None
                     '; recorded selected check=' + row['recorded_selected_check'] + '; observation stance=' + row['observation_stance'])
                 for use in row['answer_uses']:
                     lines.append('      Answer ' + display(use['claim_id']) + ': ' + use['role'] + ' [operator citation role]')
+                    _render_explanation(lines, use)
                 for use in row['design_uses']:
                     lines.append('      Design ' + display(use['step_id']) + ': ' + use['role'] + ' via ' + display(use['link_id']) +
                         '; relation=' + use['relation'] + '; direction=' + use['direction'])

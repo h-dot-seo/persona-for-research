@@ -17,6 +17,9 @@ python answer_draft.py package.json draft.json --review review.json --format tex
 Each claim has `claim_id`, `text`, `claim_type`, nullable `uncertainty`, and `citations`.
 Each citation has a `reference` (paper ID, observation index, nullable reasoning
 dimension) and an explicit operator-assigned role: support, challenge or context.
+An optional `explanation` key records a rationale and nullable context boundary, or
+explicit null. See [citation explanations](CITATION_EXPLANATIONS.md) for the exact
+contract and the distinction between legacy absence and an explicit missing reason.
 
 - `operator_synthesis` is the operator's answer, not an author statement. A claim
   without citations stays visible as `NO_CITATIONS_SUPPLIED`.
@@ -39,7 +42,8 @@ for missing literature or automatic completeness score is performed.
 
 The review template starts with `defer` for every claim. A completed record must
 contain every claim exactly once with retain/revise/reject/defer and a note. Any
-change to question, operator, claim text, uncertainty, citation role or references
+change to question, operator, claim text, uncertainty, citation role, references or
+optional explanation
 changes the draft hash and invalidates the saved review. Package bindings are
 inside that draft hash. Review records are self-consistent declarations, not
 signatures or authenticated reviewers. A caller can author a new review of a new
@@ -67,4 +71,4 @@ and history-preserving imported envelope. Supply that envelope in place of a dra
 The `operator_synthesis` type does not claim wholly operator-authored text; origin
 and adopted citation-role labels distinguish imported material. Separate answer
 review still defaults to defer. Full imported history, even rejected alternatives,
-binds the draft hash and survives every inspection. Manual drafts are unchanged.
+binds the draft hash and survives every inspection. Legacy manual drafts are unchanged.

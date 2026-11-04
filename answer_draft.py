@@ -25,6 +25,36 @@ BOUNDARY = ('Draft text and citation roles are operator supplied, not model-gene
     'validation, publication permission or canonical updates. No LLM or external call is used.')
 
 
+def _inspect_explanation(value):
+    """Validate a declaration, not whether a passage supports a claim."""
+    if value is not None:
+        if not isinstance(value, dict) or set(value) != {'rationale', 'context_boundary'}:
+            raise ValueError('citation explanation requires rationale and context_boundary, or explicit null')
+        _text(value['rationale'], 'citation explanation rationale')
+        if value['context_boundary'] is not None:
+            _text(value['context_boundary'], 'citation explanation context boundary')
+    return dict(explanation=copy.deepcopy(value), explanation_origin='OPERATOR_SUPPLIED_INTERPRETATION',
+        explanation_status='EXPLICITLY_NOT_SUPPLIED' if value is None else 'DECLARED_INTERPRETATION_NOT_VALIDATED',
+        explanation_review_prompts=['CITATION_EXPLANATION_NOT_SUPPLIED'] if value is None else [])
+
+
+def explanation_fields(citation):
+    """Copy only opt-in explanation metadata onto this exact citation use."""
+    return ({key: copy.deepcopy(citation[key]) for key in
+        ('explanation', 'explanation_origin', 'explanation_status', 'explanation_review_prompts')}
+        if 'explanation' in citation else {})
+
+
+def _render_explanation(lines, citation):
+    if 'explanation' not in citation: return
+    lines.append('    Citation explanation: '+citation['explanation_status']+' ['+citation['explanation_origin']+']')
+    value = citation['explanation']
+    if value is not None:
+        lines.append('    Declared rationale: '+display(value['rationale']))
+        lines.append('    Context boundary: '+('NOT_SUPPLIED' if value['context_boundary'] is None else display(value['context_boundary'])))
+    lines.append('    Interpretation is not verified support, source authorship, quotation permission or approval.')
+
+
 def template(package, question, operator_id):
     checked, _ = _sources(package)
     _text(question, 'question'); _text(operator_id, 'operator_id', 128)
@@ -34,7 +64,7 @@ def template(package, question, operator_id):
 
 
 def inspect(package, draft):
-    if isinstance(draft, dict) and draft.get('schema') == 'persona.reviewed-answer-proposals.v1':
+    if isinstance(draft, dict) and draft.get('schema') in ('persona.reviewed-answer-proposals.v1', 'persona.reviewed-answer-proposals.v2'):
         from answer_proposals import inspect_reviewed
         return inspect_reviewed(package, draft)
     checked, papers = _sources(package)
@@ -57,14 +87,16 @@ def inspect(package, draft):
         if not isinstance(claim['citations'], list): raise ValueError('citations must be an array')
         citations, seen = [], set()
         for citation in claim['citations']:
-            if not isinstance(citation, dict) or set(citation) != {'reference', 'role'} or citation['role'] not in ROLES:
+            if not isinstance(citation, dict) or set(citation) not in ({'reference', 'role'}, {'reference', 'role', 'explanation'}) or citation['role'] not in ROLES:
                 raise ValueError('citation requires a reference and supported operator role')
             node = _endpoint(citation['reference'], papers)
             key = (payload_sha256(citation['reference']), citation['role'])
             if key in seen: raise ValueError('duplicate reference/role citation')
             seen.add(key)
             ref = node['reference']; cited.add((ref['paper_id'], ref['observation_index']))
-            citations.append(dict(role=citation['role'], role_origin='OPERATOR_SUPPLIED', evidence=node))
+            resolved = dict(role=citation['role'], role_origin='OPERATOR_SUPPLIED', evidence=node)
+            if 'explanation' in citation: resolved.update(_inspect_explanation(citation['explanation']))
+            citations.append(resolved)
         quote_check = 'NOT_APPLICABLE_OPERATOR_SYNTHESIS'
         if claim['claim_type'] == 'source_quote':
             if len(citations) != 1: raise ValueError('source_quote requires exactly one citation')
@@ -142,6 +174,7 @@ def render(result):
         if decision: lines.append('  Declared decision: ' + decision['decision'] + ' | ' + display(decision['note']))
         for citation in claim['citations']:
             lines.append('  Citation role: ' + citation['role'] + (' ['+citation['role_origin']+']' if 'proposal_review' in result else ' [operator supplied]'))
+            _render_explanation(lines, citation)
             _render_endpoint(lines, citation['evidence'])
     lines.append('Uncited observations (not an inventory of unused components):')
     for node in result['uncited_observations']: _render_endpoint(lines, node)

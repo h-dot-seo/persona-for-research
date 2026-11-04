@@ -5,7 +5,7 @@ import json
 import sys
 from pathlib import Path
 
-from answer_draft import inspect as inspect_answer, review as review_answer, render as render_answer
+from answer_draft import inspect as inspect_answer, review as review_answer, render as render_answer, explanation_fields, _render_explanation
 from publication_scope import audit as audit_scope, render as render_scope
 from persona import payload_sha256
 from review_package import display
@@ -47,7 +47,10 @@ def assemble(package, links, proposal, draft, reference_year, declared_review=No
         for citation in claim['citations']:
             claim_scopes.add(route(citation['evidence'])['publication_scope'])
             route(citation['evidence'])['answer_uses'].append(dict(claim_id=claim['claim_id'],
-                claim_type=claim['claim_type'], role=citation['role']))
+                claim_type=claim['claim_type'], role=citation['role'], **explanation_fields(citation)))
+            for code in citation.get('explanation_review_prompts', []):
+                prompts.append(dict(target='answer_citation', target_id=claim['claim_id'],
+                    reference=copy.deepcopy(citation['evidence']['reference']), role=citation['role'], code=code))
         for timing in ('AFTER_REFERENCE_YEAR', 'SAME_YEAR_ORDER_UNRESOLVED'):
             if timing in claim_scopes:
                 prompts.append(dict(target='answer_claim', target_id=claim['claim_id'], code=timing))
@@ -103,6 +106,7 @@ def render(package, links, proposal, draft, reference_year, declared_review=None
         if node['component'] is not None: lines.append('    Component claim: ' + node['component']['claim_type'])
         for use in route['answer_uses']:
             lines.append('    Answer ' + display(use['claim_id']) + ' [' + use['claim_type'] + ']: citation role=' + use['role'])
+            _render_explanation(lines, use)
         for use in route['design_uses']:
             lines.append('    Design ' + display(use['step_id']) + ': ' + display(use['link_id']) + ' / ' + use['direction'] +
                 '; use role=' + use['role'] + '; link relation=' + use['relation'] + '; ' + use['publication_scope'])

@@ -177,3 +177,11 @@ defeaters, citations and review decisions remain visible. Passive HTML checks co
 escaping, internal structure and exact JSON snapshots, not visual/keyboard/print
 behavior. Actual browser QA remains blocked and unverified; no retry or restriction
 bypass is attempted.
+
+## Enhanced citation context
+
+Selected answer claims may carry [citation explanations](CITATION_EXPLANATIONS.md).
+These remain exact direct-citation declarations with manual/imported origin labels;
+they are not verified support or new argument decisions. Legacy answer inputs keep
+identical argument handoffs and replay. Enhanced answer inputs have fresh hashes,
+so an old map cannot be silently reused or rebound.

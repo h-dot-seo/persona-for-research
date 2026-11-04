@@ -184,3 +184,12 @@ explicit synthetic fixture decisions. They do not authenticate a human decision,
 exercise a real model, verify scientific claims or validate researcher fidelity.
 HTML checks are static parsing/escaping only. Actual-browser visual, keyboard and
 print QA remains blocked and unverified; no restriction bypass is attempted.
+
+## Explain each citation explicitly with v2
+
+Add `--include-citation-explanations` only when creating the scope to request the
+versioned v2 contract. Each original and adopted citation must include a nullable
+explanation slot. Default v1 remains unchanged and rejects those additional fields.
+See [citation explanations](CITATION_EXPLANATIONS.md) for rationale/context limits,
+original-versus-adopted labels, missing prompts, full rejected history and replay
+compatibility. The existing synthetic walkthrough intentionally stays v1.

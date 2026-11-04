@@ -244,3 +244,13 @@ answers. All extensions together run 53 CLI stages. The runner accepts no extern
 candidate/review inputs, keeps final answer review deferred and does not equate
 acyclic ordering with sound inference. Read [argument proposals](ARGUMENT_PROPOSALS.md)
 for the preserved original/reviewed/rejected bridge history and declaration order.
+
+## Claim-specific source interpretations
+
+[Optional citation explanations](CITATION_EXPLANATIONS.md) remain on each exact
+claim/reference/role use, not the shared source record. The agenda names explicit
+missing explanations even for retained claims. Direct argument routes preserve the
+same explanation only for the claim that actually cites the source, with no transfer
+to conclusions. Reader disclosure and passive HTML retain declared and historical
+interpretations; source-byte matching does not validate their meaning. Legacy
+inputs and imported envelopes keep their original outputs.
