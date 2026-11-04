@@ -49,7 +49,7 @@ reports NO_PATTERN_HYPOTHESES, not a modeled researcher's reasoning.
 Each pattern remains labelled `operator_interpretation`. Selected observations and
 components are ordered by supplied publication year, with original research/review
 kind, source hash/locator, method, condition, limitation, topic, quotes, recorded
-checks, original claim labels and any mock-review provenance. Differing method
+checks, original claim labels and any recorded candidate-review provenance. Differing method
 wording stays separate rather than being rewritten into a shared author claim.
 
 The operator's support/challenge roles are shown separately from source stance.

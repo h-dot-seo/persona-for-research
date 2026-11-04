@@ -37,6 +37,40 @@ class SyntheticWalkthroughTests(unittest.TestCase):
             self.assertNotEqual(baseline['package']['persona']['version'],revised['package']['persona']['version'])
             self.assertEqual(before,{p:p.read_bytes() for p in before})
 
+    def test_imported_fixture_runs_actual_handoff_review_and_lineage_clis(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory)/'imported synthetic output'
+            result = subprocess.run([sys.executable, str(demo.ROOT/'synthetic_walkthrough.py'), str(target),
+                '--candidate-source', 'offline-import'], cwd=directory, capture_output=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            receipt = json.loads(result.stdout)
+            self.assertEqual(receipt['command_count'], 17)
+            self.assertEqual(receipt['candidate_source'], 'offline-import')
+            self.assertTrue(receipt['imported_response_is_synthetic_fixture'])
+            self.assertFalse(receipt['llm_used']); self.assertFalse(receipt['external_transmission'])
+            self.assertEqual(receipt['answer_review_status'], 'ALL_DEFERRED')
+            commands = json.loads((target/'commands.json').read_text())
+            self.assertEqual(sum(Path(c['argv'][1]).name == 'model_handoff.py' for c in commands), 3)
+            bundle = json.loads((target/'candidates.json').read_text())
+            lineage = json.loads((target/'lineage.json').read_text())
+            self.assertEqual(bundle['contract_version'], '2')
+            self.assertIsNone(bundle['provider']['llm_used'])
+            self.assertEqual(len(lineage['imported_origin_components']), 2)
+            self.assertEqual(lineage['mock_origin_components'], [])
+            self.assertTrue(all(r['audit_status'] == 'REPLAYED_CURRENT_REVISION' for r in lineage['candidate_origin_components']))
+            self.assertIn('RECORDED_IMPORTED_CANDIDATE_ORIGIN', (target/'reader-scope.txt').read_text())
+            self.assertIn('AFTER_REFERENCE_YEAR', (target/'review-packet.txt').read_text())
+            self.assertIn('Defeater: NOT_SUPPLIED', (target/'argument-map.txt').read_text())
+            self.assertTrue((target/'COMPLETE.json').exists())
+            self.assertFalse((target/'FAILED.txt').exists())
+
+    def test_invalid_candidate_mode_fails_before_directory_creation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory)/'invalid'
+            with self.assertRaisesRegex(ValueError, 'candidate_source'):
+                demo.run(target, candidate_source='external-provider')
+            self.assertFalse(target.exists())
+
     def test_existing_directory_and_files_never_overwritten(self):
         with tempfile.TemporaryDirectory() as directory:
             target=Path(directory)/'existing';target.mkdir();sentinel=target/'sentinel';sentinel.write_bytes(b'keep')

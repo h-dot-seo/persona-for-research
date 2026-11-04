@@ -1,5 +1,6 @@
-"""Replay one declared mock-review revision and trace a design's evidence routes."""
+"""Replay one declared candidate-review revision and trace a design's evidence routes."""
 import argparse
+import copy
 import json
 from pathlib import Path
 
@@ -11,29 +12,49 @@ from persona import payload_sha256
 from strict_json import load
 
 
-def require_mock_only_history(package, candidates=None):
-    """Fail closed: this legacy audit does not cover imported candidate history."""
-    if candidates is not None and (candidates.get('contract_version') != '1'
-            or candidates.get('provider', {}).get('id') != 'synthetic-mock'):
-        raise ValueError('mock-only lineage audit does not support imported candidate bundles')
+MOCK_ORIGIN = 'operator_reviewed_mock_candidate'
+IMPORTED_ORIGIN = 'operator_reviewed_imported_candidate'
+CANDIDATE_ORIGINS = (MOCK_ORIGIN, IMPORTED_ORIGIN)
+
+
+def candidate_records(package):
+    """Yield exact recorded candidate origins; never infer origin from neighbors."""
     for paper in package['knowledge']['papers']:
-        for observation in paper['observations']:
-            for component in observation.get('reasoning', {}).values():
-                if component.get('origin') == 'operator_reviewed_imported_candidate':
-                    raise ValueError('mock-only lineage audit does not support imported candidate history')
+        for index, observation in enumerate(paper['observations']):
+            for dimension, component in observation.get('reasoning', {}).items():
+                if component.get('origin') in CANDIDATE_ORIGINS:
+                    yield (paper['paper_id'], index, dimension), component
+
+
+def candidate_provenance(bundle):
+    """Summarize a validated bundle, not authenticated execution evidence."""
+    result = dict(contract_version=bundle['contract_version'],
+        origin=IMPORTED_ORIGIN if bundle['contract_version'] == '2' else MOCK_ORIGIN,
+        candidate_bundle_sha256=payload_sha256(bundle),
+        provenance_status='RECORDED_NOT_AUTHENTICATED', prior_model_use='NOT_VERIFIED')
+    if bundle['contract_version'] == '2':
+        result['import_record'] = copy.deepcopy(bundle['import_record'])
+    return result
+
+
+def origin_record(key, component):
+    return dict(paper_id=key[0], observation_index=key[1], dimension=key[2],
+        origin=component['origin'], component_sha256=payload_sha256(component),
+        candidate_id=component['candidate_id'],
+        candidate_bundle_sha256=component['candidate_bundle_sha256'],
+        operator_review_sha256=component['operator_review_sha256'],
+        proposed_claim_type=component['proposed_claim_type'], reviewed_claim_type=component['claim_type'])
 
 
 def audit(value, links, proposal, revision_inputs):
     if not isinstance(revision_inputs, dict) or set(revision_inputs) != {'original_corpus', 'candidate_bundle', 'operator_review'}:
         raise ValueError('revision inputs require exactly original_corpus, candidate_bundle and operator_review')
     package = checked_package(value)
-    require_mock_only_history(package)
     design = review_design(package, links, proposal)
     corpus = revision_inputs['original_corpus']
     candidates = revision_inputs['candidate_bundle']
     declared_review = revision_inputs['operator_review']
     base = validate_candidate_bundle(corpus, candidates)  # Pure validation; no provider invocation.
-    require_mock_only_history(base, candidates)
     replay = prepare_revision(corpus, candidates, declared_review,
                               package['persona']['version'], package['persona']['build_id'])
     if replay.get('status') != 'REVIEWED_REVISION_CANDIDATE' or 'package' not in replay:
@@ -45,25 +66,26 @@ def audit(value, links, proposal, revision_inputs):
                  for index, _ in enumerate(paper['observations'])]
     targets = {rule['rule_id']: position for rule, position in zip(base['persona']['rules'], positions)}
     dimensions = {row['candidate_id']: row['dimension'] for row in candidates['candidates']}
-    replaced = {(*targets[decision['target_rule_id']], dimensions[decision['candidate_id']])
+    replaced = {(*targets[decision['target_rule_id']], dimensions[decision['candidate_id']]): decision['candidate_id']
                 for decision in declared_review['decisions'] if decision['decision'] == 'accept'}
     origin_records, origins = [], {}
-    for paper in package['knowledge']['papers']:
-        for index, observation in enumerate(paper['observations']):
-            for dimension, component in observation.get('reasoning', {}).items():
-                if component.get('origin') != 'operator_reviewed_mock_candidate':
-                    continue
-                key = (paper['paper_id'], index, dimension)
-                covered = (key in replaced and component['operator_review_sha256'] == payload_sha256(declared_review)
-                           and component['candidate_bundle_sha256'] == payload_sha256(candidates)
-                           and component['candidate_id'] in replay['applied_candidate_ids'])
-                row = dict(paper_id=key[0], observation_index=index, dimension=dimension,
-                    candidate_id=component['candidate_id'],
-                    candidate_bundle_sha256=component['candidate_bundle_sha256'],
-                    operator_review_sha256=component['operator_review_sha256'],
-                    proposed_claim_type=component['proposed_claim_type'], reviewed_claim_type=component['claim_type'],
-                    audit_status='REPLAYED_CURRENT_REVISION' if covered else 'INHERITED_ORIGIN_NOT_REPLAYED')
-                origin_records.append(row); origins[key] = row['audit_status']
+    for key, component in candidate_records(package):
+        covered = (replaced.get(key) == component['candidate_id'] and component['operator_review_sha256'] == payload_sha256(declared_review)
+                   and component['candidate_bundle_sha256'] == payload_sha256(candidates)
+                   and component['candidate_id'] in replay['applied_candidate_ids'])
+        row = origin_record(key, component)
+        row['audit_status'] = 'REPLAYED_CURRENT_REVISION' if covered else 'INHERITED_ORIGIN_NOT_REPLAYED'
+        origin_records.append(row); origins[key] = row
+    final_keys = {(*key, payload_sha256(component)) for key, component in candidate_records(package)}
+    initial_records = []
+    for key, component in candidate_records(base):
+        row = origin_record(key, component)
+        row.update(retained_exactly_in_final=(*key, payload_sha256(component)) in final_keys,
+                   audit_status='INITIAL_HISTORY_NOT_REPLAYED')
+        initial_records.append(row)
+    imported_history = any(row['origin'] == IMPORTED_ORIGIN for row in initial_records)
+    has_imports = (imported_history or candidates['contract_version'] == '2'
+                   or any(row['origin'] == IMPORTED_ORIGIN for row in origin_records))
 
     link_map = {link['link_id']: link for link in design['evidence_links']['links']}
     routes = []
@@ -86,7 +108,10 @@ def audit(value, links, proposal, revision_inputs):
                     observation_claim_type=node['observation']['claim_type'],
                     selected_component_claim_type=component['claim_type'] if component is not None else None,
                     selected_record_sha256=payload_sha256(component if component is not None else node['observation']),
-                    mock_origin_audit=origins.get(key, 'NO_MOCK_ORIGIN_ON_SELECTED_RECORD')))
+                    recorded_candidate_origin=origins[key]['origin'] if key in origins else None,
+                    candidate_origin_audit=origins[key]['audit_status'] if key in origins else 'NO_CANDIDATE_ORIGIN_ON_SELECTED_RECORD',
+                    mock_origin_audit=(origins[key]['audit_status'] if key in origins and origins[key]['origin'] == MOCK_ORIGIN
+                                       else 'NO_MOCK_ORIGIN_ON_SELECTED_RECORD')))
             uses.append(dict(link_id=use['link_id'], proposed_use_role=use['role'],
                 applicability_note_sha256=payload_sha256(use['applicability_note']),
                 source_relation=link['relation'], relation_claim_type=link['claim_type'], endpoints=endpoints))
@@ -97,23 +122,32 @@ def audit(value, links, proposal, revision_inputs):
             evidence_status=step['evidence_status'], uses=uses))
     inherited = sum(row['audit_status'] == 'INHERITED_ORIGIN_NOT_REPLAYED' for row in origin_records)
     return dict(status='CURRENT_REVISION_MATCH_WITH_INHERITED_ORIGINS' if inherited else 'CURRENT_REVISION_REPLAY_MATCH',
-        audit_scope='ONE_DECLARED_MOCK_REVIEW_REVISION', replayed_package_sha256=payload_sha256(replay['package']),
+        audit_scope='ONE_DECLARED_CANDIDATE_REVIEW_REVISION' if has_imports else 'ONE_DECLARED_MOCK_REVIEW_REVISION',
+        candidate_provenance=candidate_provenance(candidates), replayed_package_sha256=payload_sha256(replay['package']),
         original_corpus_sha256=payload_sha256(corpus), candidate_bundle_sha256=payload_sha256(candidates),
         operator_review_sha256=payload_sha256(declared_review), proposal_sha256=design['proposal_sha256'],
         link_artifact_sha256=design['link_artifact_sha256'],
-        question=design['question'], mock_origin_components=origin_records,
+        question=design['question'], candidate_origin_components=origin_records,
+        mock_origin_components=[row for row in origin_records if row['origin'] == MOCK_ORIGIN],
+        imported_origin_components=[row for row in origin_records if row['origin'] == IMPORTED_ORIGIN],
         inherited_origin_count=inherited, step_evidence_routes=routes,
+        initial_unreplayed_origins=initial_records,
+        initial_history_status='UNREPLAYED_CANDIDATE_ORIGINS_PRESENT' if initial_records else 'NO_CANDIDATE_ORIGIN_MARKERS_IN_INITIAL_CORPUS',
         unreferenced_link_ids=list(design['unreferenced_link_ids']),
         semantic_validation='NOT_PERFORMED', operator_identity='RECORDED_NOT_AUTHENTICATED',
+        execution_scope='CURRENT_AUDIT_ONLY; PRIOR_MODEL_USE_NOT_VERIFIED',
         llm_used=False, provider_invoked=False, canonical_update_performed=False,
         boundary='Exact mechanical replay of one declared revision only, not complete historical lineage, '
-                 'source authenticity, authenticated human review or researcher fidelity. Inherited mock '
-                 'origins are not replayed. Source quotes are checked against supplied segments, not '
+                 'source authenticity, authenticated human review or researcher fidelity. Inherited candidate '
+                 'origins are not replayed, including initial records later replaced. Current-revision status '
+                 'and inherited_origin_count describe final records only; inspect initial_history_status separately. Source quotes are checked against supplied segments, not '
                  'independently obtained publications or source-file bytes. No semantic applicability, '
                  'claim ownership, hypothesis validity or experiment quality is established. Selected-record '
                  'routes identify explicit references only; nearby reasoning components are not inferred as '
                  'used. Missing proposal fields stay missing. No raw source sections or candidate text are '
-                 'included in this audit; retain the separately bound original artifacts.')
+                 'included in this audit; retain the separately bound original artifacts. Imported provider/model/run '
+                 'identities are operator declarations, not authenticated. Execution flags describe this audit '
+                 'only and do not establish or deny actual historical model use.')
 
 
 def main():

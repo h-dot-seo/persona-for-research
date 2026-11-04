@@ -40,7 +40,7 @@ rejected input. No actual researcher, external service or model is used.
   `explicit_statement` is a recorded classification, not verified individual
   author ownership. `operator_interpretation` remains distinct from it.
 - Supplied reasoning components keep their own quotes, locators and claim types.
-  Reviewed mock-origin components also retain candidate/review provenance in JSON.
+  Reviewed mock/imported-origin components also retain candidate/review provenance in JSON.
   A missing question-framing record stays missing; nothing is borrowed from another
   paper or invented. Overall missing dimensions summarize coverage, not quality.
 - Every paper retains its supplied source hash and source locator. Duplicate hashes

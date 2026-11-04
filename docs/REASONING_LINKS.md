@@ -61,7 +61,7 @@ references instead of merely replacing hashes to force acceptance.
 - Identical source hashes are flagged without removing endpoints. Different hashes
   do not prove independent publications, replication or individual authorship.
 - Source limitations, stances, publication kinds and component-specific locators
-  remain attached to each endpoint. JSON preserves documented mock-review provenance.
+  remain attached to each endpoint. JSON preserves documented candidate-review provenance.
 - Duplicate IDs, duplicate same-relation endpoint pairs, self-links, missing nodes,
   unsupported author-attributed edge claims and unknown fields are rejected. For
   contrast links, reversing endpoints is still the same duplicate comparison.

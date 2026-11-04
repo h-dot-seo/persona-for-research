@@ -13,7 +13,9 @@ ROOT = Path(__file__).resolve().parent
 QUESTION = 'Which observation could distinguish two synthetic explanations?'
 
 
-def run(destination):
+def run(destination, *, candidate_source='mock'):
+    if candidate_source not in ('mock', 'offline-import'):
+        raise ValueError('candidate_source must be mock or offline-import')
     requested = Path(destination).absolute()
     if any(p.is_symlink() for p in (requested, *requested.parents)):
         raise ValueError('demo output path must not contain symlinks')
@@ -61,12 +63,22 @@ def run(destination):
         write('corpus.json', corpus); write('mock-response.json', response)
         path = lambda name: destination/name
         command('observation_input.py', [path('corpus.json'), '--question', QUESTION, '--topic', 'model design'], 'baseline.json')
-        bundle = command('extraction_adapter.py', [path('corpus.json'), '--mock-response', path('mock-response.json')], 'candidates.json')
+        if candidate_source == 'mock':
+            bundle = command('extraction_adapter.py', [path('corpus.json'), '--mock-response', path('mock-response.json')], 'candidates.json')
+        else:
+            command('model_handoff.py', ['prepare', path('corpus.json')], 'handoff.json')
+            imported_response = command('model_handoff.py', ['response-template', path('corpus.json'), path('handoff.json')], 'empty-imported-response.json')
+            imported_response['candidates'] = response
+            write('imported-response.json', imported_response)
+            write('declared-provenance.json', dict(provider_id='synthetic-no-provider', model_id='synthetic-no-model',
+                run_id='synthetic-offline-import-fixture', operator_id='synthetic-fixture-operator', execution_location='unknown'))
+            bundle = command('model_handoff.py', ['import', path('corpus.json'), path('handoff.json'),
+                path('imported-response.json'), path('declared-provenance.json')], 'candidates.json')
         command('operator_review.py', [path('corpus.json'), path('candidates.json'), '--targets'], 'candidate-targets.json')
         review = command('operator_review.py', [path('corpus.json'), path('candidates.json'), '--template', '--reviewer-id', 'synthetic-fixture-reviewer'], 'deferred-candidate-review.json')
         if [(c['candidate_id'], c['paper_id'], c['dimension']) for c in bundle['candidates']] != [
             ('candidate-1', 'synthetic-0', 'alternative_explanation'), ('candidate-2', 'synthetic-0', 'uncertainty')]:
-            raise ValueError('bundled mock fixture changed; review the demo script before continuing')
+            raise ValueError('bundled candidate fixture changed; review the demo script before continuing')
         review['decisions'] = [dict(candidate_id=c['candidate_id'], decision='accept', review_note='Fixed synthetic demonstration decision only.',
             target_rule_id='rule-1', target_paper_id='synthetic-0', operation='add', expected_component_sha256=None,
             reviewed_text=c['candidate_text'], reviewed_claim_type='operator_interpretation') for c in bundle['candidates']]
@@ -116,6 +128,7 @@ def run(destination):
         write('commands.json', commands)
         receipt = dict(status='SYNTHETIC_WALKTHROUGH_COMPLETE_NOT_VALIDATED', llm_used=False, external_transmission=False,
             human_review_authenticated=False, answer_review_status='ALL_DEFERRED',
+            candidate_source=candidate_source, imported_response_is_synthetic_fixture=candidate_source == 'offline-import',
             scientific_validation='NOT_PERFORMED', command_count=len(commands), lineage_status=lineage['status'],
             read_first=['reader-scope.txt','review-packet.txt','argument-map.txt','timeline.txt','lineage.json'])
         write('COMPLETE.json', receipt)
@@ -133,8 +146,10 @@ def run(destination):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('new_output_directory', type=Path); args = parser.parse_args()
-    try: result = run(args.new_output_directory)
+    parser.add_argument('new_output_directory', type=Path)
+    parser.add_argument('--candidate-source', choices=('mock', 'offline-import'), default='mock')
+    args = parser.parse_args()
+    try: result = run(args.new_output_directory, candidate_source=args.candidate_source)
     except (ValueError, OSError, KeyError, IndexError, TypeError, subprocess.SubprocessError) as exc: parser.exit(1, str(exc)+'\n')
     print(json.dumps(result, ensure_ascii=True, indent=2))
 

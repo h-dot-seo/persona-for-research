@@ -66,7 +66,10 @@ bundle records declared provider/model/run provenance without pretending the imp
 ran a model or authenticated the producer. Exact source/quote checks and deferred
 operator review remain mandatory; imported origins stay distinct from synthetic
 mocks. No provider is invoked and no data is transmitted by these commands.
-See [offline model handoff and limits](docs/MODEL_HANDOFF.md).
+See [offline model handoff and limits](docs/MODEL_HANDOFF.md). The complete synthetic
+journey also accepts `--candidate-source offline-import` to exercise 17 real CLI
+stages without running a model. Mixed mock/imported revision audits preserve each
+origin and declared provenance while keeping unaudited initial history explicit.
 
 ### Record operator decisions without automatic promotion
 
@@ -84,11 +87,11 @@ See the [review workflow and schema](docs/OPERATOR_REVIEW.md).
 
 ## Included
 
-`audit_design_chain.py` verifies consecutive declared mock-review revisions and maps
+`audit_design_chain.py` verifies consecutive declared candidate-review revisions and maps
 retained final evidence to its introducing stage. Final component coverage remains
 separate from unaudited initial history. See [linear revision-chain audit](docs/DESIGN_CHAIN.md).
 
-`audit_design_lineage.py` replays one declared mock candidate review and checks that
+`audit_design_lineage.py` replays one declared mock or imported candidate review and checks that
 it exactly reproduces the package behind a design scenario. It traces selected
 evidence and missing proposal fields while flagging inherited origins outside that
 replay. See [single-revision lineage audit](docs/DESIGN_LINEAGE.md).
@@ -433,6 +436,6 @@ rebinding any claims. Exact references and enclosing-observation context are dis
 
 For a source-by-source check before selecting a method, use
 `review_package.py ... --evidence-details`: exact observation/component references,
-individual missing reasoning dimensions and complete mock-review provenance remain
+individual missing reasoning dimensions and complete candidate-review provenance remain
 visible. See [evidence detail walkthrough](docs/EVIDENCE_DETAILS.md). The default
 compact rows also preserve the observation's own claim type.

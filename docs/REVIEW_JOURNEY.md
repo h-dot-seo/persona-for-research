@@ -36,7 +36,7 @@ its uncited-observation inventory, which is not an unused-component inventory.
 
 Complete answer/review and design/publication-scope reports follow the index, preserving
 quotes, source locators and hashes, missing fields, rejected claims, unreferenced
-counterevidence and mock-origin provenance. These details intentionally repeat some
+counterevidence and candidate-origin provenance. These details intentionally repeat some
 source records so the packet can be reviewed without external files. They contain
 operator-supplied prose, not generated researcher answers.
 

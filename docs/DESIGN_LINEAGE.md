@@ -1,4 +1,4 @@
-# Audit one mock-review revision behind a design scenario
+# Audit one candidate-review revision behind a design scenario
 
 `audit_design_lineage.py` checks whether declared candidate and review inputs
 reproduce the exact package used by a design scenario. Displaying plausible
@@ -39,7 +39,7 @@ partial output. Hashes remain consistency checks, not signatures.
 
 - Hashes of the original corpus, candidate bundle, operator review, replayed package,
   original link artifact and proposal. Keep those artifacts to inspect their content.
-- Every final mock-origin component, including unused papers/dimensions, with its
+- Every final candidate-origin component, including unused papers/dimensions, with its
   candidate ID, proposed and reviewed claim types, and review/bundle hashes.
 - `REPLAYED_CURRENT_REVISION` only for components at the exact accepted targets
   covered by this replay. Inherited components are `INHERITED_ORIGIN_NOT_REPLAYED`.
@@ -50,7 +50,7 @@ partial output. Hashes remain consistency checks, not signatures.
   Selected endpoint records retain paper/index/dimension references, source kind,
   publication year, source and record locators, observation stance, source hash,
   method/condition/limitation hashes and original claim types.
-- A selected component's mock-origin audit status. Nearby question framing,
+- A selected component's candidate-origin audit status. Nearby question framing,
   falsification or uncertainty components are not inferred to have been used.
   A missing proposal falsification field stays `NOT_SUPPLIED` even when cited source
   evidence contains a criterion. Field presence does not validate scientific design.
@@ -78,19 +78,43 @@ inputs, exact replay mismatches despite recomputed hashes, deferred/rejected rev
 no provider/source reads, JSON-equivalent inputs and exclusion of raw source text.
 No real researcher, actual LLM extraction or authenticated human review is tested.
 
-## Offline imported candidates are outside this audit's scope
+## Offline imported candidates and mixed origins
 
-This legacy audit supports synthetic-mock candidate revisions only. It fails
-closed for imported candidate bundles and for any
-`operator_reviewed_imported_candidate` component in the final package or any
-declared stage's input package. This includes imported history inherited before
-the declared chain and imported records later replaced by mock candidates. No
-mock-only coverage result is emitted for mixed or imported history.
+Both synthetic mock bundles (contract version 1) and offline imported response
+bundles (contract version 2) are replayed deterministically. The imported path
+reconstructs and checks the handoff/response bindings through the same candidate
+validator used by operator review. It does not call a provider or run a model.
 
-The normal explicit operator-review workflow and evidence-scope disclosure support
-imported candidates independently of this limitation. Evidence-scope disclosure
-keeps `recorded_mock_origin_references` restricted to mock records, reports
-`recorded_imported_origin_references` separately, and includes both in
-`recorded_candidate_origin_references`. Those are recorded declarations, not proof
-of actual model invocation or authenticated human review. Execution flags such as
-`llm_used=false` describe the current deterministic command only.
+`candidate_origin_components` covers both recorded origin types.
+`mock_origin_components` contains only `operator_reviewed_mock_candidate` rows;
+`imported_origin_components` contains only `operator_reviewed_imported_candidate`
+rows. Every row includes its exact `origin`, component-content hash, candidate ID,
+bundle/review hashes, proposed/reviewed claim types and replay status. Inherited
+records retain their original hash-bound provenance and remain explicitly unreplayed.
+
+`initial_unreplayed_origins` separately inventories every candidate-origin component
+in the input package, with `retained_exactly_in_final` and `initial_history_status`.
+This warning survives even when all initial imported or mock components are replaced.
+The legacy `status` and `inherited_origin_count` describe final components only: a
+`CURRENT_REVISION_REPLAY_MATCH` with count zero does not erase initial history.
+Inspect both results rather than treating current revision coverage as full lineage.
+
+`candidate_provenance` binds the supplied bundle and its contract/origin. Imported
+bundles additionally include the complete `import_record`: handoff and response
+hashes plus operator-declared provider, model, run, operator and execution location.
+These are **recorded, not authenticated**. An inherited component's bundle hash is
+not enough to reconstruct its missing import record; retain its original artifacts
+and supply earlier stages to the chain audit when available.
+
+Routes use `candidate_origin_audit` and `recorded_candidate_origin` for generic
+coverage. The legacy `mock_origin_audit` is strictly mock-only: an imported selected
+record has `NO_MOCK_ORIGIN_ON_SELECTED_RECORD`, even when its generic replay succeeds.
+Existing mock-only audit scope/status values remain available. Imported or mixed
+history uses `ONE_DECLARED_CANDIDATE_REVIEW_REVISION` for `audit_scope`.
+
+`llm_used=false`, `provider_invoked=false` and `execution_scope` describe the current
+deterministic audit only. They neither establish nor deny prior actual model use.
+No provider/model/run identity, execution location or human reviewer is authenticated.
+A successful replay proves consistency of supplied artifacts, not their truth.
+Run `python -m unittest test_imported_provenance -v` for synthetic imported and
+mixed-stage regression coverage. No actual model/source data or network is used.

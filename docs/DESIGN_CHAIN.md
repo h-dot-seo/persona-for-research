@@ -1,7 +1,7 @@
-# Audit consecutive declared mock-review revisions
+# Audit consecutive declared candidate-review revisions
 
 `audit_design_chain.py` extends the single-revision audit to a supplied linear
-sequence. It can verify retained mock-origin components introduced by earlier
+sequence. It can verify retained candidate-origin components introduced by earlier
 declared stages without pretending that all pre-chain history was audited.
 
 ## Input and command
@@ -49,18 +49,18 @@ final package. A normal workflow wrapper containing `package` is accepted.
 5. The last output must exactly match the supplied final package.
 
 A shorter declaration beginning at a later revision is allowed as its own bounded
-chain, but inherited mock-origin markers are explicitly unaudited. It cannot be
+chain, but inherited candidate-origin markers are explicitly unaudited. It cannot be
 used to claim that omitted earlier history was verified.
 
 ## Two separate coverage results
 
-`final_mock_origin_coverage` describes final component markers only. Each covered
+`final_candidate_origin_coverage` describes final component markers only. Each covered
 record must match an accepted target, candidate ID, candidate/review hashes and exact
 component-content hash from a declared stage. Candidate IDs may repeat between
 stages; they are never treated as globally unique. Final design routes show the
 stage covering the selected record, without claiming use of nearby components.
 
-`initial_unreplayed_origins` separately records mock-origin markers already present
+`initial_unreplayed_origins` separately records candidate-origin markers already present
 before the first declared stage. Its warning persists even if all those components
 are later replaced. A chain can therefore cover every final marker while still
 reporting `DECLARED_CHAIN_MATCH_WITH_UNREPLAYED_HISTORY`. An initial corpus with no
@@ -87,19 +87,43 @@ Tests also replace an inherited pre-chain component while retaining the unaudite
 history warning, reject changed counterevidence/new sources, preserve JSON-equivalent
 alias behavior, and run two actual review CLIs followed by the chain-audit CLI.
 
-## Offline imported candidates are outside this audit's scope
+## Mixed mock and imported stages
 
-This legacy audit supports synthetic-mock candidate revisions only. It fails
-closed for imported candidate bundles and for any
-`operator_reviewed_imported_candidate` component in the final package or any
-declared stage's input package. This includes imported history inherited before
-the declared chain and imported records later replaced by mock candidates. No
-mock-only coverage result is emitted for mixed or imported history.
+Each stage may use a synthetic mock bundle or an offline imported response bundle.
+Every stage's `candidate_provenance` binds its bundle hash, contract and recorded
+origin; imported stages preserve the complete hash-bound `import_record`, including
+operator-declared provider/model/run metadata. Those declarations are not authenticated
+and do not prove actual model use. Stage summaries survive even if all components
+from an imported stage are replaced later.
 
-The normal explicit operator-review workflow and evidence-scope disclosure support
-imported candidates independently of this limitation. Evidence-scope disclosure
-keeps `recorded_mock_origin_references` restricted to mock records, reports
-`recorded_imported_origin_references` separately, and includes both in
-`recorded_candidate_origin_references`. Those are recorded declarations, not proof
-of actual model invocation or authenticated human review. Execution flags such as
-`llm_used=false` describe the current deterministic command only.
+`final_candidate_origins` includes both supported recorded origins.
+`final_mock_origins` and `final_imported_origins` are filtered arrays, never aliases
+that mislabel imported rows as mock. Every final row includes `origin`, exact component
+hash, candidate and review bindings, replay status and the covering stage index.
+`final_mock_origin_coverage` remains strictly about final mock records; use
+`final_candidate_origin_coverage` to assess all final candidate markers. An empty
+mock array does not imply that imported history was covered.
+
+`initial_unreplayed_origins` records both kinds with their original provenance
+hashes; `initial_unreplayed_mock_origins` and `initial_unreplayed_imported_origins`
+provide explicit subsets. `initial_candidate_history_status` reports generic initial
+history. The old `initial_history_status` retains its existing values for mock-only
+chains and uses candidate-origin wording for mixed/imported chains. Initial warnings
+remain even after full replacement. Missing initial artifacts are not fabricated
+from origin hashes or from a later bundle with the same candidate ID.
+
+Generic routes expose `candidate_origin_audit`, `recorded_candidate_origin` and
+`replay_stage_index`. Their `mock_origin_audit` remains mock-only. Candidate IDs may
+repeat even across mock/imported stages: proofs require the exact position, origin,
+content and bundle/review hashes, not the ID alone. No nearby record is implicitly
+included. Mixed chains use `DECLARED_CONSECUTIVE_CANDIDATE_REVIEW_REVISIONS`; existing
+mock-only scope and status values remain supported.
+
+Execution flags and `execution_scope` describe the current deterministic audit,
+not historical model use. No provider is called, no model is inferred to have run,
+and no provider/model/run identity or human review is authenticated. Imported
+provenance cannot turn consistency hashes into signatures or scientific validation.
+
+Run `python -m unittest test_imported_provenance -v` for imported-only, mixed-stage,
+repeated-ID, inherited/replaced-history and tamper regressions. All use synthetic
+local fixtures, without actual model/source data or network calls.

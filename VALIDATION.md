@@ -1,5 +1,40 @@
 # Validation record
 
+## Current verification snapshot (2026-11-04, UTC)
+
+Current local source release: v0.37 (mixed-origin lineage and imported walkthrough).
+
+- `python -m unittest discover -q`: 364 synthetic tests passed locally.
+- `python -m compileall -q .`: passed.
+- `python audit_publication.py`: passed, 135 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- Standalone `synthetic_walkthrough.py --candidate-source offline-import`: all 17
+  CLI stages completed, imported lineage replay matched, answer review stayed deferred.
+
+Most recent separately verified remote baseline: v0.36, commit
+[`4409c1a115e5d2abd62d9259b274bcde1da26630`](https://github.com/h-dot-seo/persona-for-research/commit/4409c1a115e5d2abd62d9259b274bcde1da26630),
+with 360 tests. This is a prior-commit record, not a claim of remote CI for v0.37.
+
+- [GitHub Actions run 41764331631](https://github.com/h-dot-seo/persona-for-research/actions/runs/41764331631):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+These checks include offline model-request preparation/import, complete input and
+response bindings, declared provenance, default-deferred review, explicit target
+replacement, imported-versus-mock attribution, mixed-origin revision chains and both
+the 15-stage default and 17-stage imported-fixture CLI journeys. Initial provenance
+remains explicitly unaudited even after replacement; replay is artifact consistency
+only. No inherited import metadata is invented from a hash.
+They use synthetic/canned responses, not an actual model. No real author source,
+paid API, authenticated provider provenance, semantic support, scholarly fidelity
+or scientific validation was evaluated. Permission declarations and hashes are not
+authentication or rights clearance.
+
+## Historical incremental records
+
+The counts below record earlier snapshots, not the current test-suite size. They
+are retained as development history; use the current snapshot above for present
+verification status. Old local-pass statements do not establish later remote CI.
+
 Release preparation date: 2026-11-02 (Asia/Seoul).
 
 - Python standard-library unittest: 3 synthetic tests passed.

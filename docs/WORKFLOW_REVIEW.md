@@ -332,3 +332,14 @@ source/quote checks and proposed-versus-reviewed labels remain intact. The mock-
 lineage tools reject imported origins, including inherited history, rather than
 silently claiming coverage. This establishes mechanical interoperability only, not
 model quality, authenticated provenance or researcher fidelity.
+
+### Imported revision lineage and complete synthetic journey
+
+The next increment extends deterministic revision replay to imported bundles and
+mixed mock/imported chains. Generic origin coverage includes both, while mock-only
+arrays remain genuinely mock-only. Imported provenance is retained as a declaration
+with exact bundle hashes, not an authenticated model receipt. Initial inherited
+history stays unaudited even if a later stage replaces its component. The optional
+17-stage imported-response walkthrough preserves the review challenge, temporal
+warning, missing falsifier and deferred answer decisions. Its response and provider
+labels are fixed synthetic fixtures; no actual model or real scholar source is used.

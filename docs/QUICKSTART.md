@@ -29,7 +29,7 @@ Open the generated `START_HERE.txt`. Read these files in order:
 3. `argument-map.txt`: explicit operator premises, bridge and assumptions. The
    missing defeater and uncited conclusion remain visible.
 4. `timeline.txt`: the two synthetic publication dates and research/review labels.
-5. `lineage.json`: replay of the single declared mock-candidate review, not full
+5. `lineage.json`: replay of the single declared candidate review, not full
    history authentication or scientific approval.
 
 Success requires exit code zero **and** `COMPLETE.json`. Its status ends in
@@ -80,7 +80,8 @@ reuse its synthetic accept decisions for real candidate outputs. For real work,
 resolve author identity and source rights, choose training/holdout scope, curate
 observations and review each candidate explicitly. Real human review is not
 established by writing a reviewer name. Follow the individual module docs linked
-from README; external model integration remains disabled.
+from README; direct model invocation remains disabled. A separately authorized
+[offline model handoff](MODEL_HANDOFF.md) can import saved responses for review.
 
 After changing any draft, link, package or recorded review, regenerate the affected
 bindings and review the change. Do not hand-edit hashes merely to bypass stale-input
@@ -96,3 +97,21 @@ python -m unittest test_synthetic_walkthrough -v
 The suite executes the complete real-CLI journey in a temporary external directory
 and checks failures, path safety and input preservation. The symlink test may skip
 when the platform does not permit creating symlinks; other path tests still run.
+
+## Exercise the offline response path with synthetic fixtures
+
+```sh
+python synthetic_walkthrough.py ../persona-imported-demo --candidate-source offline-import
+```
+
+This alternative runs 17 real CLI stages, including local handoff preparation, an
+empty response template and saved-response import. It fills that response with the
+same bundled invented candidate rows and an explicitly synthetic provenance
+declaration. **No model ran**; the demo receipt says the imported response is a
+synthetic fixture. It is not an extraction-quality evaluation or a provider receipt.
+
+Reader scope identifies imported origins rather than mocks, and lineage replays
+the exact imported bundle plus explicit fixture review. Proposed/reviewed labels,
+review counterevidence, later-publication warnings and missing design criteria remain
+visible. Answer review stays deferred. All existing no-overwrite/path/failure rules
+apply. The default command still uses the 15-stage mock route.

@@ -89,8 +89,10 @@ The provider record's `llm_used: null` means earlier model use is not verified.
 `inference_performed: false` and `external_transmission: false` describe this local
 import only, not the earlier declared execution. Existing mock version-1 bundles
 remain separate and unchanged. Reader-scope reports distinguish the two origins.
-The current mock-only lineage/chain audits reject imported origins rather than
-silently excluding them from coverage.
+The lineage/chain audits replay declared mock and imported revisions with distinct
+origin inventories and preserved inherited-history warnings. Imported provider/run
+declarations are retained with their bundle hashes, never authenticated by replay.
+Current audit execution does not invoke a model or establish historical model use.
 
 ## Limits and failure behavior
 
