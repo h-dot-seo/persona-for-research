@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.56-citation-explanations",
+  "release": "0.57-citation-reasoning-audit",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 188,
+  "file_count": 192,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 33378,
-      "sha256": "f78eb1f7e82f22def3b214cefe3c93b8a4f06d59a13fae50287752e519fe9b0d"
+      "bytes": 33760,
+      "sha256": "2cac1535a5d92b39e6952bb8f3bf56e7c630647130be5e97846899c7f6733d29"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 49521,
-      "sha256": "e2bd78da2515e59721c437175ef89839a757936ae2256e4361fd8f192e2ece26"
+      "bytes": 52432,
+      "sha256": "6e2fe3263a661305a34d4d04f5a649206d91e4f380b8736d39a7569d701a8078"
     },
     {
       "path": "answer_draft.py",
@@ -97,6 +97,11 @@
       "path": "audit_publication.py",
       "bytes": 1969,
       "sha256": "349bfe9f189da2beaee4d655ba05b8f080f79b5fe7518097eafb6beea5459d08"
+    },
+    {
+      "path": "citation_reasoning.py",
+      "bytes": 12576,
+      "sha256": "b6cae3a477a776a7ef602aa26e67a5aacf52b0d2536841585ef13828d75a2ab4"
     },
     {
       "path": "compare_releases.py",
@@ -165,8 +170,13 @@
     },
     {
       "path": "docs/CITATION_EXPLANATIONS.md",
-      "bytes": 6456,
-      "sha256": "15b439db9128344f621a56e8467e30b29bcc698eb84a5151bec1ba7821df5142"
+      "bytes": 6961,
+      "sha256": "45ea48f1d71777f3cfcf7f7fe23ad7d246487f43d6df81a44721d9b9311972fb"
+    },
+    {
+      "path": "docs/CITATION_REASONING_AUDIT.md",
+      "bytes": 5714,
+      "sha256": "c50c308d7159685e298611c87b4eae8492a8af8253343377a10076baccd77124"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -657,6 +667,16 @@
       "path": "test_citation_explanations.py",
       "bytes": 16559,
       "sha256": "e9bc797ad63d4f7f0d7f171bc0846353014c2e259857a5f2ffcdf6b4bb4ecf91"
+    },
+    {
+      "path": "test_citation_reasoning.py",
+      "bytes": 14500,
+      "sha256": "cd46961c89a954c9ca6dfc48b7efe0e93c1bfd6df9172977ede95d5b8ba9ae26"
+    },
+    {
+      "path": "test_citation_reasoning_integration.py",
+      "bytes": 7770,
+      "sha256": "ce34ca52060f89459f0ebe73e827b61fe969bfbd8d9716d13e3ffc36c4147ace"
     },
     {
       "path": "test_cli_e2e.py",

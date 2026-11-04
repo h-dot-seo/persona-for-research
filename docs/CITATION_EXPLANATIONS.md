@@ -117,3 +117,12 @@ v2 route is exercised separately through the actual CLI; no new automatic fixtur
 adoption flag is added. No real scholar data, semantic evaluation, model execution
 or authenticated human review is included. Actual browser layout, keyboard and
 print QA remains blocked/unverified; HTML checks are structural and snapshot only.
+
+## Audit old and new declarations without changing them
+
+The separately invoked [citation reasoning audit](CITATION_REASONING_AUDIT.md)
+accepts legacy manual and imported v1 drafts as well as enhanced v2 drafts. It
+surfaces the absent/null/declared distinction without inserting fields or prompts
+into existing inspections. Final rejected/deferred claims remain current records;
+original candidate history stays separate from use counts. No draft, review, argument
+map or handoff is upgraded or rebound.

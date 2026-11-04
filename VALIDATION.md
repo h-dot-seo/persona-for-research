@@ -2,6 +2,50 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.57 (standalone citation reasoning audit).
+
+- `python -m unittest discover -q`: 772 synthetic tests passed locally.
+- `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 193 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- A standalone eight-command CLI check covered manual legacy, imported v1 and
+  imported v2 drafts in JSON and readable text, with explicit final-review files.
+  Six successful commands matched API reports; two negative commands rejected a
+  stale final review and an unexported candidate bundle with empty stdout.
+  Input-file hashes remained unchanged. No source bytes beyond explicit input
+  artifacts were read by the audit, and no provider or browser was invoked.
+
+Most recent separately verified remote baseline: v0.56, commit
+[`6b309ffa65d2957e6efdfa65448e27b39a20962e`](https://github.com/h-dot-seo/persona-for-research/commit/6b309ffa65d2957e6efdfa65448e27b39a20962e),
+with 748 tests. This is a prior-commit record, not a claim of remote CI for v0.57.
+
+- [GitHub Actions run 41802919074](https://github.com/h-dot-seo/persona-for-research/actions/runs/41802919074):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-four new tests cover the absent/null/declared distinction, exact use identity,
+full canonical package and imported-envelope bindings, null context boundaries,
+retained/rejected/deferred final reviews, separate uncited/empty states, complete
+non-active original/revised/rejected import history, and stale-history rejection.
+Finite/strict JSON, malformed quotes/references/explanations, collective raw and
+logical input bounds, text/JSON output bounds, immutable inputs, deterministic
+output, terminal-control escaping and actual CLI failures are exercised. Frozen
+v0.55 answer/argument replay remains exact after explicitly requesting this audit.
+
+An independent read-only design assessment identified the legacy inventory gap and
+recommended a separate report rather than changes to existing inspectors. Source
+review and 41 focused tests (24 new plus 17 explanation/frozen regressions) passed.
+This is not a claim of an independent post-implementation audit.
+
+The audit adds no explanation, decision, schema upgrade, rebinding or citation
+transfer. Counts describe supplied declarations, not support quality or completeness.
+Unfinished candidate-review packets remain outside the valid-draft contract;
+final-answer defer remains supported. Human scientific review is still required.
+No real researcher data, model execution or current source verification is included.
+Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**; no browser
+retry or restriction bypass was attempted.
+
+## Prior v0.56 citation explanation checks
+
 Current local source release: v0.56 (opt-in claim-specific citation explanations).
 
 - `python -m unittest discover -q`: 748 synthetic tests passed locally.

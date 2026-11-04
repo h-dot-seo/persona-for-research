@@ -91,6 +91,12 @@ retain. A versioned offline proposal mode preserves original, edited and rejecte
 interpretations; existing answer and argument records replay unchanged. No semantic
 support, researcher agreement or automatic approval is inferred.
 
+To review older records without changing them, run the standalone
+[citation reasoning audit](docs/CITATION_REASONING_AUDIT.md). It separates explanation
+slots never requested, explicit blanks and declared interpretations, while preserving
+rejected/deferred claims and keeping imported candidate history out of current-use
+counts. It produces no quality score or automatic upgrade.
+
 ## Adopt offline answer proposals explicitly
 
 [Answer proposals](docs/ANSWER_PROPOSALS.md) prepare an evidence-scoped local
