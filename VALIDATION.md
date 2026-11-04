@@ -2,6 +2,67 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
+Current local source release: v0.68 (bounded escaped duplicate-key diagnostics).
+
+- `python -m unittest discover -q`: 961 synthetic tests passed locally in 888.833 seconds.
+- `python -m compileall -q .`: passed; 138 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 222 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 221 exact allowlisted entries and file hashes.
+
+Most recent separately verified remote baseline: v0.67, commit
+[`488e90f8cef782116840233f670bd7ca46a8c178`](https://github.com/h-dot-seo/persona-for-research/commit/488e90f8cef782116840233f670bd7ca46a8c178),
+with 957 tests. This is a prior-commit record, not a claim of remote CI for v0.68.
+
+- [GitHub Actions run 41847274021](https://github.com/h-dot-seo/persona-for-research/actions/runs/41847274021):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+The only changed runtime module is `strict_json.py`; the other 55 non-test modules
+match v0.67. A pre-change synthetic duplicate key reproduced literal newline,
+terminal escape and bidirectional characters in the shared loader's exception;
+ordinary argument-map stderr emitted the escape while focused mode already escaped
+it. Duplicate JSON rejection itself was not bypassed, and no command execution is
+claimed. The shared diagnostic is now escaped at its source.
+
+Duplicate detection still compares complete decoded keys exactly. Only after a
+duplicate is found does its diagnostic show an ASCII JSON-quoted prefix of at most
+128 Unicode code points, followed by an explicit truncation notice when needed.
+The decoded diagnostic string is bounded at 1,613 printable ASCII characters even
+for non-BMP code points; enclosing CLI/JSON error formats have their own additional
+syntax. No valid input is shortened or normalized, no new input cap is imposed,
+and distinct long keys sharing a preview remain distinct. Rejection occurs during
+JSON decoding before downstream processing, not before all object values are parsed.
+
+Four new tests cover controls, newlines, bidi and line-separator characters, lone
+surrogates, non-BMP characters, the exact/over-128 boundary, long distinct keys,
+escape-equivalent duplicate keys, valid nested Unicode data and representative
+ordinary CLI error paths. The persona CLI's structured stdout error is checked
+explicitly; its existing output contract is preserved. Raw stderr checks remove
+only one final LF or CRLF, then require the exact printable-ASCII payload, without
+normalizing any embedded control characters.
+
+The final strict-JSON focused run passed all ten tests in 2.987 seconds; the
+focused argument CLI regression passed in 0.449 seconds. Its expected malformed-key
+message now follows the shared JSON-quoted representation. That regression also
+now has explicit 30-second subprocess budgets where it previously had no timeout;
+this is a tightening, not a timeout relaxation. Existing strict-JSON subprocess
+budgets remain 20 seconds. A separate read-only final source/test/doc audit found
+no concrete remaining defect; it performed no tests or browser actions.
+
+A separate compatibility check parsed all 26 existing public JSON fixture files
+with both immutable v0.67 and current loaders. Parsed values matched and original
+file-byte hashes were unchanged. Existing raw-byte hashing, authorization/split
+rejection, non-finite number rejection, nesting checks and valid report snapshots
+are also covered by the complete aggregate above. This is diagnostic-output safety,
+not source authentication, general terminal sandboxing or a guarantee about every
+other error path or external tool.
+
+Only synthetic inputs were used. No researcher data, source download, provider
+execution, external transmission, scientific execution or approval behavior was
+introduced. Browser visual/keyboard/print QA remains **BLOCKED/unverified**, with
+no retry or restriction bypass. Earlier attempts and boundaries remain recorded below.
+
+## Prior v0.67 single-active-argument-step companion
+
 Current local source release: v0.67 (explicit single-active-argument-step companion).
 
 - `python -m unittest discover -q`: 957 synthetic tests passed locally in 824.274 seconds.

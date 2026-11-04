@@ -4,13 +4,22 @@ import math
 from pathlib import Path
 
 MAX_CONTAINER_DEPTH = 128
+MAX_DIAGNOSTIC_KEY_CODEPOINTS = 128
+
+
+def _key_diagnostic(key):
+    """Bound only the display, preserving exact keys for parsing and comparison."""
+    preview = json.dumps(key[:MAX_DIAGNOSTIC_KEY_CODEPOINTS], ensure_ascii=True)
+    if len(key) > MAX_DIAGNOSTIC_KEY_CODEPOINTS:
+        preview += ' [truncated; first 128 Unicode codepoints shown]'
+    return preview
 
 
 def _object(pairs):
     result = {}
     for key, value in pairs:
         if key in result:
-            raise ValueError('duplicate JSON object key: ' + key)
+            raise ValueError('duplicate JSON object key: ' + _key_diagnostic(key))
         result[key] = value
     return result
 

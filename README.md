@@ -81,6 +81,8 @@ overflowing exponents), and more than 128 nested containers. Ambiguous repeated
 authorization/split fields are errors, not a last-value-wins choice. This applies
 to source intake, package validation/comparison and the projection helper; it does
 not authenticate an authorization declaration or grant source access.
+Duplicate-key diagnostics escape control characters and visibly shorten long key
+displays; complete keys still determine rejection and valid data is unchanged.
 
 ## Explain source-to-claim reasoning
 

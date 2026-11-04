@@ -19,3 +19,18 @@ redact source material or turn a private corpus into a safe public release.
 Do not disclose a vulnerability containing private information in a public issue.
 Use an owner-configured private security channel when available. No contact address
 or account-specific reporting endpoint is bundled in this release.
+
+## Duplicate-key diagnostics
+
+The shared strict JSON loader rejects duplicate object keys during JSON decoding,
+before downstream processing. Its error message shows an ASCII-escaped, JSON-quoted
+key prefix of at most 128 Unicode code points, with an explicit truncation notice
+for longer keys. This keeps newline, terminal-control and bidirectional characters
+from being emitted
+literally through that diagnostic. It is not a general terminal sandbox or a claim
+that every third-party error is safe.
+
+Only the diagnostic display is shortened. Duplicate detection still compares the
+complete decoded keys exactly; distinct long keys are not merged, and valid input
+keys/values or original-byte hashes are not rewritten. Rejection does not grant
+authorization, choose between duplicate values or certify source content.

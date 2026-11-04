@@ -190,25 +190,25 @@ class ManualStepViewTests(unittest.TestCase):
             for name, value in [('package', self.p), ('draft', self.d), ('map', self.m)]:
                 path = Path(directory)/(name+'.json'); path.write_text(json.dumps(value)); paths.append(str(path))
             cmd = [sys.executable, str(Path(am.__file__)), *paths]
-            out = subprocess.run(cmd+['--step-id', 'combine'], capture_output=True, check=True)
+            out = subprocess.run(cmd+['--step-id', 'combine'], capture_output=True, check=True, timeout=30)
             self.assertEqual(json.loads(out.stdout), self.view())
-            out = subprocess.run(cmd+['--step-id', 'combine', '--format', 'text'], capture_output=True, check=True)
+            out = subprocess.run(cmd+['--step-id', 'combine', '--format', 'text'], capture_output=True, check=True, timeout=30)
             self.assertEqual(out.stdout.decode(), am.render_step(self.p, self.d, self.m, 'combine'))
             for options in (['--step-id', 'missing'], ['--template', '--step-id', 'combine']):
-                out = subprocess.run(cmd+options, capture_output=True)
+                out = subprocess.run(cmd+options, capture_output=True, timeout=30)
                 self.assertNotEqual(out.returncode, 0); self.assertEqual(out.stdout, b'')
             bad = Path(directory)/'bad.json'
             key = 'unsafe\n\x1b\u202e'
             bad.write_text('{' + json.dumps(key) + ': 1, ' + json.dumps(key) + ': 2}')
             out = subprocess.run([sys.executable, str(Path(am.__file__)), str(bad), *paths[1:],
-                                  '--step-id', 'combine'], capture_output=True)
+                                  '--step-id', 'combine'], capture_output=True, timeout=30)
             self.assertNotEqual(out.returncode, 0); self.assertEqual(out.stdout, b'')
-            self.assertIn(display(key), out.stderr.decode())
+            self.assertIn(json.dumps(key, ensure_ascii=True), out.stderr.decode())
             self.assertEqual(out.stderr.count(b'\n'), 1)
             for control in ('\x1b', '\u202e'): self.assertNotIn(control, out.stderr.decode())
             # Real CLI entrypoint, deliberately tiny focus-only budget, no partial writes.
             script = 'import argument_map as a; a.MAX_STEP_VIEW_BYTES=1; a.main()'
-            out = subprocess.run([sys.executable, '-c', script, *paths, '--step-id', 'combine'], capture_output=True)
+            out = subprocess.run([sys.executable, '-c', script, *paths, '--step-id', 'combine'], capture_output=True, timeout=30)
             self.assertNotEqual(out.returncode, 0); self.assertEqual(out.stdout, b'')
 
 

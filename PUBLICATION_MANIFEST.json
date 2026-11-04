@@ -1,6 +1,6 @@
 {
   "project": "persona-for-research",
-  "release": "0.67-focused-argument-step",
+  "release": "0.68-safe-duplicate-key-diagnostics",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 36648,
-      "sha256": "3a2871cffd104a74d0b626a340b23554c4a42c4f762740a041bf1a659f040f19"
+      "bytes": 36808,
+      "sha256": "6f928fb1f812518d268f630ec02b1165f6a45bc21b5df2b971482d183541b742"
     },
     {
       "path": "RIGHTS.md",
@@ -40,8 +40,8 @@
     },
     {
       "path": "SECURITY.md",
-      "bytes": 1324,
-      "sha256": "9bcf7ee3f4b484ed2af153569946f72fadcf6d8a06a599433e4d80e8525d8f36"
+      "bytes": 2144,
+      "sha256": "0e88cff495c717a4a79f20f5ffb1cdfec2dcafe3ab3df64d19d2f4ffeefc3cdb"
     },
     {
       "path": "SKILL.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 95507,
-      "sha256": "308a0cb80c6cff152de14bf37915ed36aa474725cb99fe40aba1058434506094"
+      "bytes": 99549,
+      "sha256": "b8c8e13074273c5d39a9c0a2ba2d415c5b8005b3fb18256699cebbf260333572"
     },
     {
       "path": "answer_context.py",
@@ -680,8 +680,8 @@
     },
     {
       "path": "strict_json.py",
-      "bytes": 1342,
-      "sha256": "f00c58583669b4ed52167821982539602c7f23460790e086ad3be6e0557f4677"
+      "bytes": 1726,
+      "sha256": "c86cb47308c6121a5c39aca7c25839f05a519e162e529977a32fe881f6d1c001"
     },
     {
       "path": "synthetic_walkthrough.py",
@@ -755,8 +755,8 @@
     },
     {
       "path": "test_argument_step_view.py",
-      "bytes": 20103,
-      "sha256": "bc84e9355fe13f42f53aa165beb0b280d1f640e63cf95347e502139b136e0ac1"
+      "bytes": 20185,
+      "sha256": "07ec13f21adc849afffc8fc7df4757a5e16cce273966ccc6a7d5bd30b60bdc51"
     },
     {
       "path": "test_argument_walkthrough.py",
@@ -1060,8 +1060,8 @@
     },
     {
       "path": "test_strict_json.py",
-      "bytes": 3625,
-      "sha256": "7ff257fc3cf3652a2d0007ca9efe50ae287b262b0738eaf7cac3b050c82993ad"
+      "bytes": 7522,
+      "sha256": "127ec8d9c5fbf82cc60fd6dd0c0c0979c02abbc39269ab19f3863967b0cdc8a6"
     },
     {
       "path": "test_synthetic_evaluation.py",
