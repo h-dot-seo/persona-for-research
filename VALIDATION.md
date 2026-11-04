@@ -44,8 +44,13 @@ The failed attempt remains visible in
 Preflight now checks device/inode/type identity across canonicalization and rejects
 symlinks and Windows reparse points in both spellings, rather than requiring
 identical path spelling. Same-object normalization and different-object substitution
-have separate regressions. This local correction is not a claim that corrected
-remote CI has passed.
+have separate regressions. A second Windows run reached only a regression-fixture
+failure: its synthetic reparse attribute was attached to the pre-canonical spelling,
+so it never reached the tested artifact. The fixture now targets the canonical file
+without weakening the production reparse rejection or the no-read assertion. That
+attempt remains visible in
+[run 41784964842](https://github.com/h-dot-seo/persona-for-research/actions/runs/41784964842).
+These local corrections are not a claim that corrected remote CI has passed.
 
 **Actual-browser visual, keyboard and print QA remains BLOCKED/unverified.** No
 browser retry or restriction workaround was attempted in this increment. The

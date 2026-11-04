@@ -285,7 +285,9 @@ class JourneyInputTests(unittest.TestCase):
 
     def test_reparse_point_attribute_is_rejected_even_without_symlink_mode(self):
         from types import SimpleNamespace
-        path=self.path('declared_review');original=Path.stat
+        # Preflight canonicalizes the root before visiting artifact components.
+        # Bind the mock to that canonical target on Windows as well as POSIX.
+        path=self.path('declared_review').resolve(strict=True);original=Path.stat
         def reparse(current,*args,**kwargs):
             if current==path:
                 return SimpleNamespace(st_mode=original(current,*args,**kwargs).st_mode,st_file_attributes=0x400)
