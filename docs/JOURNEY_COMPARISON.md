@@ -116,3 +116,13 @@ instead validates two complete, independently bound journeys.
   researcher, scholarly semantic support or fidelity has been evaluated. Existing
   actual-browser visual/keyboard/print QA remains blocked and unverified; this
   JSON/text increment neither retries nor bypasses that restriction.
+
+## Imported answer history
+
+For [reviewed answer proposals](ANSWER_PROPOSALS.md), accepted claims are compared
+as declarations separately from candidate, adoption-decision and declared-import
+groups. These extra groups exist only when either side has imported history and
+are labeled as recorded imports, not operator authorship or active evidence.
+Rejected-history changes can alter the full draft identity while accepted claim
+fields remain unchanged. Full before/after reports preserve the complete history;
+manual/imported transitions never silently discard it.

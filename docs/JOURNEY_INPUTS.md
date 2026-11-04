@@ -156,3 +156,11 @@ forms plus deferred context assessments. Its relative-file selection has no chos
 pattern or optional source/review/method inputs, so it is intentionally not a ready
 input card. Follow the documented dependency order and preserve old files; no
 scientific choices, automatic rebinding or source reads are added.
+
+## Imported answer drafts
+
+The draft slot can select a [reviewed answer envelope](ANSWER_PROPOSALS.md), with
+all original/rejected history included in its raw and logical hashes. Every reopen
+revalidates that history. A history-only edit invalidates the card and downstream
+answer-review/argument bindings even if the adopted prose is unchanged. Preparing
+a new card does not repair or approve those artifacts.

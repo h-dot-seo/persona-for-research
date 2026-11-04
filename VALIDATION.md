@@ -2,7 +2,55 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.51 (optional incomplete integrated review starter).
+Current local source release: v0.52 (offline answer proposals with full adoption history).
+
+- `python -m unittest discover -q`: 675 synthetic tests passed locally.
+- `python -m compileall -q .`: passed; all Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 179 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- The existing complete 39-stage synthetic CLI walkthrough passed unchanged.
+- A separate 15-command real CLI route prepared/imported/reviewed/exported canned
+  answer proposals, created an entirely deferred answer review and fresh argument
+  bindings, rendered JSON/text/passive HTML with all three imported histories,
+  reread explicitly selected synthetic source files, prepared an input card and
+  reopened it. The full fresh JSON survived the static HTML snapshot exactly.
+  Candidate adoption remained separate from answer review and research approval.
+
+Most recent separately verified remote baseline: v0.51, commit
+[`ccbe966ade6c329faeeefb3c04d584fd81e6ba40`](https://github.com/h-dot-seo/persona-for-research/commit/ccbe966ade6c329faeeefb3c04d584fd81e6ba40),
+with 649 tests. This is a prior-commit record, not a claim of remote CI for v0.52.
+
+- [GitHub Actions run 41789822962](https://github.com/h-dot-seo/persona-for-research/actions/runs/41789822962):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Twenty-six new synthetic tests cover exact evidence scoping, canonical inner-package
+binding, temporal labels, no implicit source selection, strict quote equality,
+finite/bounded JSON, stale/tampered envelopes and provenance, all-deferred templates,
+complete explicit adoption and distinct final answer review. Original/rewritten/
+rejected histories survive answer, evidence-scope, revision-impact, research-journey,
+input-card, comparison and passive HTML paths. Rejected references do not become
+active claims or argument premises; conclusion citations are not inherited.
+Imported text/citation-role origin remains separate from source-record origin.
+History-only changes invalidate answer reviews, argument maps and pinned files
+without falsely reporting changed accepted prose. Comparison keeps imported-history
+groups distinct from accepted declarations, including manual/imported transitions.
+Synthetic evaluation freezes active metadata and full draft identity, not raw history.
+
+An independent read-only audit passed 69 focused tests and found a revision-impact
+binding gap: imported scopes bind the full checked package, while stale flags had
+compared only persona/paper hashes. The imported path now exposes/compares both full
+package hashes; a regression proves a metadata-only change is stale despite zero
+changed reference endpoints. No additional blocker was found in the reviewed paths.
+Resource limits were inspected and boundary-tested, not broadly stress-tested.
+
+No actual researcher material, provider call or external source transmission was
+used. No authorship, scientific validity, rights clearance or authenticated human
+review is established. Actual-browser visual/keyboard/print QA remains
+**BLOCKED/unverified**. No browser retry or restriction bypass was attempted.
+
+## Prior v0.51 integrated starter checks
+
+Local source release at this snapshot: v0.51 (optional incomplete integrated review starter).
 
 - `python -m unittest discover -q`: 649 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.

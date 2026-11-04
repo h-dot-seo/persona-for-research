@@ -215,3 +215,12 @@ forms plus deferred context assessments. Its relative-file selection has no chos
 pattern or optional source/review/method inputs, so it is intentionally not a ready
 input card. Follow the documented dependency order and preserve old files; no
 scientific choices, automatic rebinding or source reads are added.
+
+## Imported answer intent with full history
+
+The draft input also accepts [reviewed answer proposals](ANSWER_PROPOSALS.md).
+Original, rewritten and rejected text remain in the detailed JSON/text/HTML review.
+Only explicitly adopted claims contribute answer/argument routes; historical
+candidate citations are not active evidence. Recreate the separately deferred
+answer review and argument bindings after adoption, and keep the question identical
+to the explicit context/design. No pattern use or semantic support is inferred.

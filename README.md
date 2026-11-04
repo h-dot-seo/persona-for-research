@@ -82,6 +82,15 @@ authorization/split fields are errors, not a last-value-wins choice. This applie
 to source intake, package validation/comparison and the projection helper; it does
 not authenticate an authorization declaration or grant source access.
 
+## Adopt offline answer proposals explicitly
+
+[Answer proposals](docs/ANSWER_PROPOSALS.md) prepare an evidence-scoped local
+AI/Codex handoff and import a separately produced response. Explicit candidate
+adoption preserves original, rewritten and rejected history in the existing answer,
+argument and research-journey flows. The separate answer review still starts deferred.
+No provider is called, no researcher speech is generated, and citation presence is
+not semantic support. This optional standalone route is not yet a demo-runner flag.
+
 ## Compact review
 
 ```sh

@@ -72,10 +72,14 @@ def _declarations(args,report):
     values=dict(zip(inputs.REQUIRED,args[:len(inputs.REQUIRED)]));review=args[-1]
     selected=report['pattern_transfer_review']['selected_pattern']
     pattern={key:copy.deepcopy(selected[key]) for key in ('pattern_id','operator_hypothesis','scope_note','alternative_explanation','falsification_check','uncertainty')}
+    answer=report['pattern_transfer_review']['answer_design_review']['answer']
+    claims=[dict(claim_id=row['claim_id'],text=row['text'],claim_type=row['claim_type'],uncertainty=row['uncertainty'],
+        citations=[dict(reference=copy.deepcopy(citation['evidence']['reference']),role=citation['role']) for citation in row['citations']])
+        for row in answer['claims']]
     applications=[{key:copy.deepcopy(row[key]) for key in sorted(APPLICATION_FIELDS)}
         for row in report.get('method_application_review',{}).get('applications',[])]
-    return {
-        'answer_claims':('claim_id',values['draft']['claims']),
+    groups={
+        'answer_claims':('claim_id',claims),
         'answer_review_decisions':('claim_id',[] if review is None else review['decisions']),
         'design_steps':('step_id',values['proposal']['steps']),
         'argument_steps':('step_id',values['argument']['steps']),
@@ -84,19 +88,31 @@ def _declarations(args,report):
         'method_applications':('step_id',applications),
         'selected_pattern_text':('pattern_id',[pattern]),
     }
+    if 'proposal_review' in answer:
+        packet=answer['proposal_review']
+        groups.update(answer_proposal_candidates=('candidate_id',[dict(candidate_id=row['candidate']['candidate_id'],
+                proposed_claim=copy.deepcopy(row['candidate']['proposed_claim'])) for row in packet['candidates']]),
+            answer_proposal_decisions=('candidate_id',[dict(candidate_id=row['candidate']['candidate_id'],decision=row['decision'],
+                review_note=row['review_note'],reviewed_claim=copy.deepcopy(row['reviewed_claim'])) for row in packet['candidates']]),
+            answer_proposal_import=('record_id',[dict(record_id='declared-import',scope=copy.deepcopy(packet['scope']),
+                import_record=copy.deepcopy(packet['import_record']),reviewer_id=packet['reviewer_id'])]))
+    return groups
 
 
 def _records(before,after):
     groups=[]
-    for name,(field,previous) in before.items():
-        current=after[name][1];old={row[field]:row for row in previous};new={row[field]:row for row in current};rows=[]
+    for name in dict.fromkeys([*before,*after]):
+        field=before[name][0] if name in before else after[name][0]
+        previous=before.get(name,(field,[]))[1]
+        current=after.get(name,(field,[]))[1];old={row[field]:row for row in previous};new={row[field]:row for row in current};rows=[]
         for key in sorted(old.keys()|new.keys()):
             a=old.get(key);b=new.get(key)
             status='ONLY_CURRENT_DECLARATION' if a is None else 'ONLY_PREVIOUS_DECLARATION' if b is None else ('CHANGED_AT_DECLARED_ID' if payload_sha256(a)!=payload_sha256(b) else 'UNCHANGED_AT_DECLARED_ID')
             rows.append(dict(declared_id=key,status=status,changed_fields=_changed_fields(a,b) if a is not None and b is not None else [],
                 previous=copy.deepcopy(a),current=copy.deepcopy(b)))
         groups.append(dict(group=name,id_field=field,
-            scope='DECLARED_FIELDS_ONLY_NOT_RESOLVED_EVIDENCE_OR_AUTHENTICATED_REVIEW',
+            scope=('RECORDED_IMPORTED_HISTORY_NOT_OPERATOR_AUTHORSHIP_OR_ACTIVE_EVIDENCE' if name.startswith('answer_proposal_')
+                else 'DECLARED_FIELDS_ONLY_NOT_RESOLVED_EVIDENCE_OR_AUTHENTICATED_REVIEW'),
             previous_id_order=[row[field] for row in previous],current_id_order=[row[field] for row in current],
             order_changed=[row[field] for row in previous]!=[row[field] for row in current],records=rows))
     return groups
@@ -182,6 +198,8 @@ def render(previous_card,previous_root,current_card,current_root,*,previous_sour
     lines.append('Declared records (resolved source changes are separate):')
     for group in result['declared_record_comparison']:
         lines.append('  '+group['group']+'; declared ID order changed='+str(group['order_changed']))
+        if group['group'].startswith('answer_proposal_'):
+            lines.append('    Recorded imported history, not operator-authored active evidence.')
         for row in group['records']:
             lines.append('    '+display(row['declared_id'])+': '+row['status']+'; fields='+','.join(row['changed_fields']))
     lines.append('Exact prompt counts (not resolved issues or a score):')

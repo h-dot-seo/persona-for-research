@@ -34,6 +34,9 @@ def template(package, question, operator_id):
 
 
 def inspect(package, draft):
+    if isinstance(draft, dict) and draft.get('schema') == 'persona.reviewed-answer-proposals.v1':
+        from answer_proposals import inspect_reviewed
+        return inspect_reviewed(package, draft)
     checked, papers = _sources(package)
     if not isinstance(draft, dict) or set(draft) != set(BINDINGS) | {'question', 'operator_id', 'claims'}:
         raise ValueError('draft has missing or unknown fields')
@@ -122,23 +125,35 @@ def render(result):
         'Persona sha256: ' + result['persona_sha256'],
         'Knowledge papers sha256: ' + result['knowledge_papers_sha256'],
         'Declared draft operator: ' + display(result['operator_id']) + ' (not authenticated)']
+    if 'proposal_review' in result:
+        lines.append('Draft origin: operator-adopted imported claims, not automatically operator-authored text or researcher speech.')
+        lines.append('Current inspection invokes no provider. Historical generation and reviewer identity are declared, not authenticated.')
     if 'review' in result:
         lines.append('Declared reviewer: ' + display(result['review']['reviewer_id']) + ' (not authenticated)')
         lines.append('Review sha256: ' + result['review_sha256'])
     decisions = {d['claim_id']: d for d in result.get('review', {}).get('decisions', [])}
     for claim in result['claims']:
         lines.append('Claim ' + display(claim['claim_id']) + ' [' + claim['claim_type'] + ']: ' + display(claim['text']))
+        if 'proposal_origin' in claim:
+            lines.append('  Text origin: '+display(claim['origin'])+'; recorded candidate='+display(claim['proposal_origin']['candidate_id']))
         lines.append('  Evidence: ' + claim['evidence_status'] + '; quote check=' + claim['quote_check'])
         lines.append('  Uncertainty: ' + ('NOT_SUPPLIED' if claim['uncertainty'] is None else display(claim['uncertainty'])))
         decision = decisions.get(claim['claim_id'])
         if decision: lines.append('  Declared decision: ' + decision['decision'] + ' | ' + display(decision['note']))
         for citation in claim['citations']:
-            lines.append('  Citation role: ' + citation['role'] + ' [operator supplied]')
+            lines.append('  Citation role: ' + citation['role'] + (' ['+citation['role_origin']+']' if 'proposal_review' in result else ' [operator supplied]'))
             _render_endpoint(lines, citation['evidence'])
     lines.append('Uncited observations (not an inventory of unused components):')
     for node in result['uncited_observations']: _render_endpoint(lines, node)
-    lines.append('Boundary: ' + BOUNDARY)
-    return '\n'.join(lines) + '\n'
+    lines.append('Boundary: ' + result.get('boundary', BOUNDARY))
+    if 'proposal_review' in result:
+        from answer_proposals import render_review, MAX_OUTPUT_BYTES
+        lines.append('Complete imported answer-candidate history, including rejected originals:')
+        lines.append(render_review(result['proposal_review']).rstrip('\n'))
+    output = '\n'.join(lines) + '\n'
+    if 'proposal_review' in result and len(output.encode('utf-8')) > MAX_OUTPUT_BYTES:
+        raise ValueError('imported answer text exceeds 16 MiB')
+    return output
 
 
 def _render_endpoint(lines, node):

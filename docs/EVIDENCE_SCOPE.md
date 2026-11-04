@@ -76,3 +76,11 @@ recorded imported observations, including unused ones, and distinguishes direct
 references from contextual history. These declarations do not authenticate
 actual model use, human approval or earlier append history. Current execution
 flags describe this reader command only.
+
+## Imported answer text is not imported source evidence
+
+[Reviewed answer proposals](ANSWER_PROPOSALS.md) retain text/citation-role origin
+and complete adoption history in this disclosure. Source-record origin categories
+and coverage counts stay separate. Rejected candidate citations are historical
+only; they do not increase active source coverage. Current execution flags do not
+authenticate or deny the declared historical model use.

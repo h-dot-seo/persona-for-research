@@ -45,7 +45,7 @@ def inspect(previous,current,links,proposal,draft,reference_year):
             previous_publication_scope=route['publication_scope'],
             current_publication_scope=None if after is None else ('AFTER_REFERENCE_YEAR' if after['publication_year']>reference_year else 'SAME_YEAR_ORDER_UNRESOLVED' if after['publication_year']==reference_year else 'BEFORE_REFERENCE_YEAR'),
             answer_uses=route['answer_uses'],design_uses=route['design_uses'],unreferenced_link_uses=route['unreferenced_link_uses']))
-    return dict(status='REVISION_IMPACT_REQUIRES_MANUAL_REVIEW',question=prior['question'],reference_year=reference_year,
+    result=dict(status='REVISION_IMPACT_REQUIRES_MANUAL_REVIEW',question=prior['question'],reference_year=reference_year,
         previous_package_bindings=before_bindings,current_package_bindings=after_bindings,
         old_artifacts_stale_for_current_package=before_bindings!=after_bindings,
         previous_packet_input_sha256=prior['packet_input_sha256'],
@@ -56,6 +56,18 @@ def inspect(previous,current,links,proposal,draft,reference_year):
         references=rows,previous_review_prompts=prior['review_prompts'],
         all_artifacts_require_binding_review=before_bindings!=after_bindings,
         source_reread=False,llm_used=False,automatic_rebinding=False,semantic_validation='NOT_PERFORMED',boundary=BOUNDARY)
+    if 'proposal_review' in prior['answer']:
+        from answer_proposals import MAX_OUTPUT_BYTES
+        result.update(previous_full_package_sha256=payload_sha256(old),current_full_package_sha256=payload_sha256(new),
+            old_artifacts_stale_for_current_package=payload_sha256(old)!=payload_sha256(new),
+            all_artifacts_require_binding_review=payload_sha256(old)!=payload_sha256(new),
+            previous_answer_origin=prior['answer']['origin'],
+            previous_answer_proposal_review=prior['answer']['proposal_review'],
+            previous_answer_history_scope='PREVIOUS_DRAFT_ONLY_NOT_REBOUND_TO_CURRENT_PACKAGE',
+            historical_model_use='DECLARED_NOT_AUTHENTICATED',execution_scope='CURRENT_IMPACT_INSPECTION_ONLY')
+        if len(json.dumps(result,ensure_ascii=True,allow_nan=False).encode('utf-8'))>MAX_OUTPUT_BYTES:
+            raise ValueError('imported-answer revision impact exceeds 16 MiB')
+    return result
 
 
 def render(result):
@@ -81,8 +93,17 @@ def render(result):
         for use in row['answer_uses']:lines.append('  Old answer '+display(use['claim_id'])+' citation role='+use['role'])
         for use in row['design_uses']:lines.append('  Old design '+display(use['step_id'])+' link='+display(use['link_id'])+' use='+use['role']+' relation='+use['relation']+' endpoint='+use['direction'])
         for use in row['unreferenced_link_uses']:lines.append('  Unused old link '+display(use['link_id'])+' relation='+use['relation']+' endpoint='+use['direction'])
+    if 'previous_answer_proposal_review' in result:
+        lines.append('Previous full package sha256: '+result['previous_full_package_sha256'])
+        lines.append('Current full package sha256: '+result['current_full_package_sha256'])
+        from answer_proposals import render_review, MAX_OUTPUT_BYTES
+        lines.append('Previous answer-candidate history only; not rebound to the current package:')
+        lines.append(render_review(result['previous_answer_proposal_review']).rstrip('\n'))
     lines.append(BOUNDARY)
-    return '\n'.join(lines)+'\n'
+    output='\n'.join(lines)+'\n'
+    if 'previous_answer_proposal_review' in result and len(output.encode('utf-8'))>MAX_OUTPUT_BYTES:
+        raise ValueError('imported-answer revision impact text exceeds 16 MiB')
+    return output
 
 
 def main():

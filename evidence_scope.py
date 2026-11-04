@@ -101,12 +101,23 @@ def disclose(package, links, proposal, draft, reference_year, declared_review=No
         llm_used=False, provider_invoked=False, source_checks_repeated=False,
         scientific_validation='NOT_PERFORMED', researcher_fidelity_evaluation='NOT_PERFORMED',
         canonical_update_performed=False, boundary=BOUNDARY)
+    if 'proposal_review' in answer:
+        result.update(answer_origin=answer['origin'],answer_proposal_review=copy.deepcopy(answer['proposal_review']),
+            answer_historical_model_use=answer['historical_model_use'],
+            answer_origin_scope='ANSWER_TEXT_ORIGIN_SEPARATE_FROM_SOURCE_RECORD_ORIGIN',
+            execution_scope='CURRENT_DISCLOSURE_ONLY')
+        for output,claim in zip(result['answer_claims'],answer['claims']):
+            output.update(origin=claim['origin'],proposal_origin=copy.deepcopy(claim['proposal_origin']))
     observations = observation_origins(checked)
     if observations:
         result.update(recorded_imported_observation_references=imported_observation_refs,
             active_references_with_imported_observation_context=imported_context_refs,
             recorded_imported_observations=observations,
             observation_origin_scope='BASE_OBSERVATION_CONTEXT_IS_SEPARATE_FROM_SELECTED_COMPONENT_ORIGIN')
+    if 'answer_proposal_review' in result:
+        from answer_proposals import MAX_OUTPUT_BYTES
+        if len(json.dumps(result,ensure_ascii=True,allow_nan=False).encode('utf-8'))>MAX_OUTPUT_BYTES:
+            raise ValueError('imported-answer evidence scope exceeds 16 MiB')
     return result
 
 
@@ -128,6 +139,8 @@ def render(package, links, proposal, draft, reference_year, declared_review=None
     for claim in result['answer_claims']:
         lines.append('  ' + display(claim['claim_id']) + ' [' + claim['claim_type'] + '; declared review=' +
             claim['declared_review_decision'] + ']: ' + display(claim['text']))
+        if 'proposal_origin' in claim:
+            lines.append('    Answer text origin: '+display(claim['origin'])+'; source-record origins remain separate.')
         lines.append('    Uncertainty: ' + ('NOT_SUPPLIED' if claim['uncertainty'] is None else display(claim['uncertainty'])))
         lines.append('    Evidence: ' + claim['evidence_status'] + '; challenge citation supplied=' + str(claim['challenge_citation_supplied']))
         lines.append('    Quote check: ' + claim['quote_check'])
@@ -169,12 +182,20 @@ def render(package, links, proposal, draft, reference_year, declared_review=None
         for row in result['recorded_imported_observations']:
             lines.append('  '+display(row['paper_id'])+' / observation '+str(row['observation_index']))
             lines.extend(origin_lines(row['observation_origin'], display))
+    if 'answer_proposal_review' in result:
+        from answer_proposals import render_review
+        lines.append('Answer text origin is separate from the origin of cited source records; imported histories are not active citations:')
+        lines.append(render_review(result['answer_proposal_review']).rstrip('\n'))
     lines.append('Mechanical review prompts (not exhaustive):')
     for p in result['review_prompts']:
         lines.append('  ' + p['target'] + ' ' + display(p['target_id']) + ': ' + p['code'] + (' / ' + p['field'] if 'field' in p else ''))
     if not result['review_prompts']: lines.append('  None detected; scientific validation remains NOT_PERFORMED.')
     lines.append('Boundary: ' + BOUNDARY)
-    return '\n'.join(lines) + '\n'
+    output='\n'.join(lines) + '\n'
+    if 'answer_proposal_review' in result:
+        from answer_proposals import MAX_OUTPUT_BYTES
+        if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES:raise ValueError('imported-answer evidence scope text exceeds 16 MiB')
+    return output
 
 
 def main():

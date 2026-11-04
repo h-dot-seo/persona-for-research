@@ -59,3 +59,12 @@ python -m unittest test_answer_draft -v
 Real scholarly evaluation requires authorized local sources, quotation rights,
 identity checks and independent scientific review. This tool performs no real AI
 inference, author-fidelity evaluation, external transmission or source acquisition.
+
+## Explicitly adopted imported answers
+
+Use [answer proposals](ANSWER_PROPOSALS.md) for an offline handoff, candidate review
+and history-preserving imported envelope. Supply that envelope in place of a draft.
+The `operator_synthesis` type does not claim wholly operator-authored text; origin
+and adopted citation-role labels distinguish imported material. Separate answer
+review still defaults to defer. Full imported history, even rejected alternatives,
+binds the draft hash and survives every inspection. Manual drafts are unchanged.

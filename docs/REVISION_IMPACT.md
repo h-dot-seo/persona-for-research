@@ -72,3 +72,11 @@ individual authorship or scientific validity, and uses no LLM, network or API.
 ```sh
 python -m unittest test_revision_impact -v
 ```
+
+## Imported answer scope
+
+For a [reviewed answer envelope](ANSWER_PROPOSALS.md), the previous full proposal
+history is included without rebinding to the current package. Stale-binding flags
+also compare complete checked-package hashes, because imported scopes bind more
+than persona/papers alone. A package metadata change can require binding review
+while every compared evidence reference remains unchanged.
