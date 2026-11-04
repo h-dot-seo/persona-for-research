@@ -435,6 +435,15 @@ Operators record consider/exclude/defer, condition comparisons, uncertainty and
 counterevidence; excluded and deferred evidence stays visible. No applicability,
 scientific validity or researcher-specific reasoning is inferred.
 
+## Distinguish review context and shared evidence
+
+[Declared publication context](docs/PUBLICATION_CONTEXT.md) connects a review
+summary, method extension, reanalysis, shared material, version or challenge to
+explicit source references and uncertainty. Add it to timelines or pattern transfer
+without changing evidence counts or approval decisions. Later-review and same-year
+context remain flagged against the target reference year. Missing relationships
+mean unknown, never independent confirmation or a reconstructed change of mind.
+
 ## Review tentative method patterns
 
 [Operator pattern hypotheses](docs/PATTERN_HYPOTHESES.md) connect explicitly selected

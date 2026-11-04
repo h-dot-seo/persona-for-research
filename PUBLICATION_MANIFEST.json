@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.42-reviewed-observation-append",
+  "release": "0.43-publication-review-context",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 147,
+  "file_count": 150,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 27401,
-      "sha256": "18bb2f894526651a75db93a5549bbdf309d77cece1c10cf8688c0947a9963e77"
+      "bytes": 27938,
+      "sha256": "5cd9a6f6d38d633603324dc5199848462c427ae6c74133258835e0d2b1e68ddf"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 18005,
-      "sha256": "723867b26ef43bf1ff5096cce83470a504185a28789381604ca14bb6719e3e55"
+      "bytes": 18574,
+      "sha256": "fdec73a971615d6854568dce35bde7ea13ca8d004593107719f666c5812f2832"
     },
     {
       "path": "answer_draft.py",
@@ -210,8 +210,13 @@
     },
     {
       "path": "docs/PATTERN_TRANSFER_REVIEW.md",
-      "bytes": 5884,
-      "sha256": "27da33ab8f18bddf32dcaf99c04fe1785cbfc2e9f88b3a85bff05ea6526449f5"
+      "bytes": 6484,
+      "sha256": "d3e6d0f9919ef67199947d169aa08db2ddd520be5330fda50612df0a9f6201be"
+    },
+    {
+      "path": "docs/PUBLICATION_CONTEXT.md",
+      "bytes": 9688,
+      "sha256": "384707b7a20a72bf518c6b7c85c82e830cb58b05146d8d864182d283cb09d4c7"
     },
     {
       "path": "docs/PUBLICATION_SCOPE.md",
@@ -220,8 +225,8 @@
     },
     {
       "path": "docs/PUBLICATION_TIMELINE.md",
-      "bytes": 4194,
-      "sha256": "b074eb7f5dadd5ef070fc5e0b901f97df3bd5182a9588a4f3721f041b06a16a5"
+      "bytes": 4794,
+      "sha256": "88ae0c778a94fc12de10a5852aaec087662eac6f0a58953a93ac287536e0adf0"
     },
     {
       "path": "docs/QUICKSTART.md",
@@ -260,8 +265,8 @@
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
-      "bytes": 25322,
-      "sha256": "398eeea3c19703cd937cc83d50d7d26bc6e0539760fdcb22938d0abd771ee571"
+      "bytes": 26340,
+      "sha256": "527b87af494d1ac07f7ca7abf3c6a2769fa7605ff62762f2c29ba463550722b6"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -400,8 +405,8 @@
     },
     {
       "path": "pattern_transfer_review.py",
-      "bytes": 10279,
-      "sha256": "b5478628e0a86544d14003642c3479ff220c5ae657630f67196634f7a05f5345"
+      "bytes": 13627,
+      "sha256": "c9f1eb392de84c3ad490b639de5eb6288f78ee50544076d0f39bf2511556305a"
     },
     {
       "path": "persona.py",
@@ -414,14 +419,19 @@
       "sha256": "b1723c5cf97f99e8bc740db73b60838f50bdb1f9752ddd3a8aed2907b6c3980a"
     },
     {
+      "path": "publication_context.py",
+      "bytes": 13871,
+      "sha256": "76161eb7c0d75b40ed0aa1edcc8878c19072063ed4b90746ce63b2f016ec8070"
+    },
+    {
       "path": "publication_scope.py",
       "bytes": 6553,
       "sha256": "b4ecf5d54f8e38fbb0ca89d02b59ac021a9487f83957016fd3bba618a1e7718f"
     },
     {
       "path": "publication_timeline.py",
-      "bytes": 7853,
-      "sha256": "a4f440b331c62ee82687344848c00d850a64c4a7323086e7570926225be5a95c"
+      "bytes": 10019,
+      "sha256": "1788b66c8e6b979074030d8a39a3085b46103cc172520c321d9b5e140c30aa58"
     },
     {
       "path": "reasoning_cards.py",
@@ -627,6 +637,11 @@
       "path": "test_prepare_local_manifest.py",
       "bytes": 10041,
       "sha256": "89f8b9121ef36eb0dbfb68c1f4735b19afee0e775a7b1a842197273dc03f7182"
+    },
+    {
+      "path": "test_publication_context.py",
+      "bytes": 20249,
+      "sha256": "dffa233d17a381d9e55bbd7639a856ba70b6c8220f0a2e9d4a72fffb1dbcab08"
     },
     {
       "path": "test_publication_scope.py",

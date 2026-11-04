@@ -2,21 +2,29 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.42 (explicit reviewed observation append candidates).
+Current local source release: v0.43 (declared publication and review context).
 
-- `python -m unittest discover -q`: 440 synthetic tests passed locally.
+- `python -m unittest discover -q`: 458 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
-- `python audit_publication.py`: passed, 148 text files scanned including the manifest.
+- `python audit_publication.py`: passed, 151 text files scanned including the manifest.
 - `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
 - Standalone `synthetic_walkthrough.py --candidate-source offline-import`: all 17
   CLI stages completed, imported lineage replay matched, answer review stayed deferred.
 
-Most recent separately verified remote baseline: v0.41, commit
-[`ef2f5872734d182b22f31a4e18a93c5b4c34059e`](https://github.com/h-dot-seo/persona-for-research/commit/ef2f5872734d182b22f31a4e18a93c5b4c34059e),
-with 419 tests. This is a prior-commit record, not a claim of remote CI for v0.42.
+Most recent separately verified remote baseline: v0.42, commit
+[`7a046e346e4307289436ecff2c6298cc5519be3a`](https://github.com/h-dot-seo/persona-for-research/commit/7a046e346e4307289436ecff2c6298cc5519be3a),
+with 440 tests. This is a prior-commit record, not a claim of remote CI for v0.43.
 
-- [GitHub Actions run 41769673804](https://github.com/h-dot-seo/persona-for-research/actions/runs/41769673804):
+- [GitHub Actions run 41771458839](https://github.com/h-dot-seo/persona-for-research/actions/runs/41771458839):
   all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Eighteen publication-context regressions cover typed/directional/symmetric source
+relationships, strict basis refs, recorded-check validation, missing quotes and
+uncertainty, selected/one-sided/outside scopes, later/same-year context, unchanged
+roles/decisions, imported observation and model-pattern provenance, strict CLI input
+and exact v0.42 no-context payload/text snapshots. Independent review confirmed
+provenance and role preservation and prompted a missing-relationship wording fix.
+No relationship, independence, intellectual influence or author belief is inferred.
 
 Twenty-one observation-append regressions cover explicit selection/new identity,
 complete review, null gaps, rejected counterevidence, local-source changes, exact

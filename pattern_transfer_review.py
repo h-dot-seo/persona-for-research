@@ -18,7 +18,7 @@ BOUNDARY=('Shared references are mechanical trace routes, not proof that a patte
     'LLM/API call, automatic plan generation, rebinding or canonical update is performed.')
 
 
-def inspect(package,patterns,context,links,proposal,draft,pattern_id):
+def inspect(package,patterns,context,links,proposal,draft,pattern_id,publication_relations=None):
     patterns_result=inspect_patterns(package,patterns)
     selected=[p for p in patterns_result['hypotheses'] if p['pattern_id']==pattern_id]
     if len(selected)!=1:raise ValueError('select exactly one existing operator pattern ID')
@@ -60,6 +60,11 @@ def inspect(package,patterns,context,links,proposal,draft,pattern_id):
         rows.append(row)
         prompts.extend(dict(reference=ref,code=code) for code in codes)
     bindings=dict(pattern_form_sha256=patterns_result['form_sha256'],context_form_sha256=context_result['form_sha256'],packet_input_sha256=packet['packet_input_sha256'],pattern_id=pattern_id)
+    relations_result=None
+    if publication_relations is not None:
+        from publication_context import inspect as inspect_relations, for_papers
+        relations_result=inspect_relations(package,publication_relations)
+        bindings['publication_relation_form_sha256']=relations_result['form_sha256']
     result=dict(status='PATTERN_TRANSFER_REQUIRES_MANUAL_REVIEW',**bindings,report_input_sha256=payload_sha256(bindings),
         question=packet['question'],target_context=context_result['target_context'],selected_pattern=selected,
         declared_pattern_operator_id=patterns_result['operator_id'],
@@ -70,11 +75,18 @@ def inspect(package,patterns,context,links,proposal,draft,pattern_id):
         result.update(pattern_proposal_review=patterns_result['proposal_review'],
             pattern_origin=patterns_result['origin'],execution_scope='CURRENT_INSPECTION_ONLY',
             historical_model_use='DECLARED_NOT_AUTHENTICATED')
+    if relations_result is not None:
+        selected_ids={route['evidence']['reference']['paper_id'] for route in selected['evidence']}
+        result.update(publication_context_review=relations_result,
+            publication_context_scope=for_papers(relations_result,sorted(selected_ids),context_result['reference_year']),
+            selected_paper_pattern_roles=[dict(paper_id=pid,declared_roles=[role for role in ('support','challenge') if any(
+                route['evidence']['reference']['paper_id']==pid and role in route['declared_roles'] for route in selected['evidence'])])
+                for pid in sorted(selected_ids)])
     return result
 
 
-def render(package,patterns,context,links,proposal,draft,pattern_id):
-    result=inspect(package,patterns,context,links,proposal,draft,pattern_id);pattern=result['selected_pattern']
+def render(package,patterns,context,links,proposal,draft,pattern_id,publication_relations=None):
+    result=inspect(package,patterns,context,links,proposal,draft,pattern_id,publication_relations);pattern=result['selected_pattern']
     lines=['Operator pattern-to-context trace review', 'Status: '+result['status'],
         'Selected operator hypothesis: '+display(pattern['pattern_id'])+' | '+display(pattern['operator_hypothesis']),
         'Declared pattern operator (not authenticated): '+display(result['declared_pattern_operator_id']),
@@ -84,6 +96,8 @@ def render(package,patterns,context,links,proposal,draft,pattern_id):
         'Pattern review prompts: '+(', '.join(result['selected_pattern_review_prompts']) or 'none detected; not validation')]
     if 'pattern_proposal_review' in result:
         lines.insert(1,'Pattern origin: operator-reviewed imported proposal. No model call during this inspection; historical model use is declared, not authenticated.')
+    if 'publication_context_review' in result:
+        lines.insert(1,'Publication relationships remain unverified; paper-level challenges do not change pattern evidence roles or source stance.')
     for field in ('alternative_explanation','falsification_check','uncertainty'):
         lines.append('Pattern '+field+': '+('NOT_SUPPLIED' if pattern[field] is None else display(pattern[field])))
     for route in result['evidence_routes']:
@@ -112,15 +126,39 @@ def render(package,patterns,context,links,proposal,draft,pattern_id):
         from pattern_proposals import render_review
         lines.append('Imported pattern provenance and complete recorded decisions, including rejected proposals:')
         lines.append(render_review(result['pattern_proposal_review']).rstrip('\n'))
+    if 'publication_context_review' in result:
+        from publication_context import render as render_relations
+        scope=result['publication_context_scope']
+        lines.append('Publication context does not change pattern roles or approve applicability:')
+        for row in result['selected_paper_pattern_roles']:
+            lines.append('  Selected pattern use '+display(row['paper_id'])+': '+', '.join(row['declared_roles']))
+        lines.append('Selected papers without declared relationships (independence not established): '+
+            (', '.join(display(pid) for pid in scope['selected_papers_without_declared_relationships']) or 'none (not complete context)'))
+        lines.append('Relationships to other supplied papers (not additional pattern evidence): '+
+            (', '.join(display(row['relation_id']) for row in scope['relations_to_other_supplied_papers']) or 'none supplied'))
+        lines.append('Relationships outside selected pattern papers: '+(', '.join(display(rid) for rid in scope['outside_selection_relation_ids']) or 'none supplied'))
+        lines.append('Relationship context reference year: '+str(scope['reference_year'])+'; assertion time: NOT_SUPPLIED (possibly retrospective).')
+        for row in scope['relations_between_selected_papers']+scope['relations_to_other_supplied_papers']:
+            lines.append('  Context relation '+display(row['relation_id'])+': '+
+                '; '.join(key+'='+value for key,value in row['publication_reference_scope'].items()))
+            for prompt in row['review_prompts']:
+                if prompt.startswith('RELATION_CONTEXT_'):lines.append('    '+prompt)
+        lines.append(scope['timing_boundary'])
+        lines.append('Full supplied publication context, with separately declared relationship-basis references:')
+        lines.append(render_relations(result['publication_context_review']).rstrip('\n'))
     return '\n'.join(lines)+'\n'
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('package','patterns','context','links','proposal','draft'):p.add_argument(name,type=Path)
-    p.add_argument('--pattern-id',required=True);p.add_argument('--format',choices=('json','text'),default='json');a=p.parse_args()
+    p.add_argument('--pattern-id',required=True);p.add_argument('--format',choices=('json','text'),default='json')
+    p.add_argument('--publication-relations',type=Path);a=p.parse_args()
     try:
         inputs=[load(getattr(a,n)) for n in ('package','patterns','context','links','proposal','draft')]+[a.pattern_id]
+        if a.publication_relations:
+            from publication_context import _load as load_relations
+            inputs.append(load_relations(a.publication_relations))
         output=render(*inputs) if a.format=='text' else json.dumps(inspect(*inputs),indent=2)+'\n'
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
     sys.stdout.buffer.write(output.encode('utf-8'))

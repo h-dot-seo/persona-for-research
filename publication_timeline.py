@@ -28,7 +28,7 @@ def _check_label(value, verified):
     return value
 
 
-def timeline(value, topic):
+def timeline(value, topic, publication_relations=None):
     package = checked_package(value)
     if not isinstance(topic, str) or not topic.strip():
         raise ValueError('an explicit nonempty topic is required')
@@ -64,7 +64,7 @@ def timeline(value, topic):
                 attribution='coauthored work; individual ownership not established')
             years.setdefault(paper['year'], []).append(row)
             matching_papers.append(paper)
-    return dict(status='PUBLICATION_TIMELINE_REQUIRES_REVIEW' if years else 'NO_MATCHING_RECORDS',
+    result = dict(status='PUBLICATION_TIMELINE_REQUIRES_REVIEW' if years else 'NO_MATCHING_RECORDS',
         author_id=persona['author_id'], version=persona['version'], build_id=persona['build_id'],
         persona_sha256=payload_sha256(persona), knowledge_papers_sha256=payload_sha256(corpus['papers']),
         topic=topic, topic_matching='EXACT_CASE_INSENSITIVE',
@@ -75,10 +75,19 @@ def timeline(value, topic):
         years=[dict(publication_year=year, papers=years[year]) for year in sorted(years)],
         semantic_validation='NOT_PERFORMED', canonical_update_performed=False, llm_used=False,
         boundary=BOUNDARY)
+    if publication_relations is not None:
+        from publication_context import inspect as inspect_context, for_papers
+        context=inspect_context(package,publication_relations)
+        result.update(publication_context_review=context,
+            publication_context_scope=for_papers(context,[paper['paper_id'] for paper in matching_papers]),
+            timeline_input_sha256=payload_sha256(dict(persona_sha256=result['persona_sha256'],
+                knowledge_papers_sha256=result['knowledge_papers_sha256'],topic=topic,
+                publication_relation_form_sha256=context['form_sha256'])))
+    return result
 
 
-def render(value, topic):
-    result = timeline(value, topic)
+def render(value, topic, publication_relations=None):
+    result = timeline(value, topic, publication_relations)
     lines = ['Publication record timeline | ' + display(result['topic']),
         'Package: ' + ' | '.join(display(result[key]) for key in ('author_id', 'version', 'build_id')),
         'Persona sha256: ' + result['persona_sha256'],
@@ -110,6 +119,18 @@ def render(value, topic):
                 lines.append('      missing supplied dimensions: ' + ', '.join(obs['missing_dimensions']))
     lines.append('Overall missing supplied dimensions: ' + (', '.join(result['missing_dimensions']) or 'none (coverage only)'))
     lines.append('Boundary: ' + BOUNDARY)
+    if 'publication_context_review' in result:
+        from publication_context import render as render_context
+        scope=result['publication_context_scope']
+        lines.append('Declared publication context, not verified historical influence:')
+        lines.append('Timeline/context input sha256: '+result['timeline_input_sha256'])
+        lines.append('Topic-selected papers without declared relationships (independence not established): '+
+            (', '.join(display(pid) for pid in scope['selected_papers_without_declared_relationships']) or 'none (not complete context)'))
+        lines.append('Relationships to other supplied papers (those papers are not added to the topic timeline): '+
+            (', '.join(display(row['relation_id']) for row in scope['relations_to_other_supplied_papers']) or 'none supplied'))
+        lines.append('Relationships outside this timeline: '+(', '.join(display(rid) for rid in scope['outside_selection_relation_ids']) or 'none supplied'))
+        lines.append('Full supplied relationship context, including outside-topic basis records:')
+        lines.append(render_context(result['publication_context_review']).rstrip('\n'))
     return '\n'.join(lines) + '\n'
 
 
@@ -118,10 +139,15 @@ def main():
     parser.add_argument('package', type=Path)
     parser.add_argument('--topic', required=True)
     parser.add_argument('--format', choices=('json', 'text'), default='json')
+    parser.add_argument('--publication-relations',type=Path)
     args = parser.parse_args()
     try:
         value = load(args.package)
-        output = render(value, args.topic) if args.format == 'text' else json.dumps(timeline(value, args.topic), indent=2) + '\n'
+        if args.publication_relations:
+            from publication_context import _load as load_relations
+            relations=load_relations(args.publication_relations)
+        else:relations=None
+        output = render(value, args.topic, relations) if args.format == 'text' else json.dumps(timeline(value, args.topic, relations), indent=2) + '\n'
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
     sys.stdout.buffer.write(output.encode('utf-8'))

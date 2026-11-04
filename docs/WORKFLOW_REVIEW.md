@@ -406,3 +406,18 @@ observation history unreplayed, including broad summary status. The append audit
 reconstructs one complete candidate and does not certify earlier history, human
 approval, actual model generation or scientific validity. Synthetic CLI and
 adversarial tests cover these routes without real data or external models.
+
+### Publication context separates review summaries from independent support
+
+An empty-by-default relationship form now ties declared source-to-source context
+to exact observation/component references, rationale and uncertainty. All links
+remain operator interpretations, distinct from source stance and pattern roles.
+Timeline and pattern-transfer overlays preserve original evidence and model-origin
+history, distinguish both-selected/one-sided/outside sources and bind context edits
+to the report identity. Transfer additionally flags later or same-year contextual
+publications without pretending to know when the relationship was established.
+No transitive dependency group, effective support count, supersession or approval
+is inferred. Independent review caught wording that could imply missing relations
+prove dependence; reports now state that independence is not established. Synthetic
+CLI and compatibility tests cover strict references, temporal scope, imported
+provenance and unchanged no-context outputs.

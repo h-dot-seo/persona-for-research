@@ -97,3 +97,13 @@ Imported origin, original/revised text, rejected proposals and unauthenticated
 model/run/reviewer provenance remain visible in JSON and text. Current inspection
 performs no model call; historical model use is not authenticated. Manual forms are
 unchanged, and neither form approves applicability or creates an answer/design.
+
+## Optional publication relationships
+
+Use `--publication-relations ../publication-relations.json` to add separately
+[declared publication context](PUBLICATION_CONTEXT.md): review summaries, material
+reuse, versions, method extensions and challenges with exact basis references.
+The overlay distinguishes selected, one-sided and outside-source relationships,
+without changing original counts, roles or decisions. Missing declarations do not
+establish independence, and chronology does not prove influence. Omitted context
+preserves earlier output; an explicit empty form adds a bound empty context.

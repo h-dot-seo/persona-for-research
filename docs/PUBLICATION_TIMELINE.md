@@ -69,3 +69,13 @@ Publication dates do not date the underlying experiments, choices or ideas. Miss
 years do not establish inactivity. Reviews are not independent replication, and
 coauthorship does not establish individual ownership. Semantic support, genuine
 researcher fidelity and career-stage interpretation remain unevaluated.
+
+## Optional publication relationships
+
+Use `--publication-relations ../publication-relations.json` to add separately
+[declared publication context](PUBLICATION_CONTEXT.md): review summaries, material
+reuse, versions, method extensions and challenges with exact basis references.
+The overlay distinguishes selected, one-sided and outside-source relationships,
+without changing original counts, roles or decisions. Missing declarations do not
+establish independence, and chronology does not prove influence. Omitted context
+preserves earlier output; an explicit empty form adds a bound empty context.
