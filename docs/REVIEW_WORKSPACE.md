@@ -104,3 +104,12 @@ Before drafting a new plan, use [source-to-context applicability review](APPLICA
 to record explicit comparisons between supplied methods/conditions and your new
 research context. Every topic-matched observation starts deferred; no method is
 selected or transferred into an answer/design automatically.
+
+## Optional integrated starter
+
+[Start an integrated review workspace](INTEGRATED_WORKSPACE.md) with explicit topic
+and target context to create the existing empty pattern, relationship and argument
+forms plus deferred context assessments. Its relative-file selection has no chosen
+pattern or optional source/review/method inputs, so it is intentionally not a ready
+input card. Follow the documented dependency order and preserve old files; no
+scientific choices, automatic rebinding or source reads are added.

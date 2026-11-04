@@ -57,6 +57,12 @@ review prompts first, exact-source links and complete histories next. No scripts
 external resources or approval controls are included. Actual-browser layout/keyboard/
 print QA is currently blocked; see [local HTML review](docs/LOCAL_HTML_REVIEW.md).
 
+To start from your own already-curated package, the optional
+[integrated review starter](docs/INTEGRATED_WORKSPACE.md) creates the existing empty
+pattern/context/relationship/argument forms together. No pattern is selected, all
+context judgments start deferred, and its file selection remains intentionally
+incomplete until explicit authorship and review.
+
 For repeat use, [pin explicit local input files](docs/JOURNEY_INPUTS.md) in a small
 card and reopen the complete journey with one command. Raw-byte and JSON hashes
 reject changed files without automatic rebinding; source roots remain explicit

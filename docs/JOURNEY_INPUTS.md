@@ -147,3 +147,12 @@ changes and resolved source/route changes while retaining both full histories.
 Unchanged text is not stable semantic identity; disappeared prompts are not proof
 of resolution. No automatic rebinding, approval or source-history reconstruction
 occurs. JSON/text output is bounded; browser QA remains unverified.
+
+## Optional integrated starter
+
+[Start an integrated review workspace](INTEGRATED_WORKSPACE.md) with explicit topic
+and target context to create the existing empty pattern, relationship and argument
+forms plus deferred context assessments. Its relative-file selection has no chosen
+pattern or optional source/review/method inputs, so it is intentionally not a ready
+input card. Follow the documented dependency order and preserve old files; no
+scientific choices, automatic rebinding or source reads are added.

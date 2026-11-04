@@ -2,7 +2,48 @@
 
 ## Current verification snapshot (2026-11-04, UTC)
 
-Current local source release: v0.50 (fresh comparison of two pinned research journeys).
+Current local source release: v0.51 (optional incomplete integrated review starter).
+
+- `python -m unittest discover -q`: 649 synthetic tests passed locally.
+- `python -m compileall -q .`: passed.
+- `python audit_publication.py`: passed, 175 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, exact allowlisted inventory and file hashes.
+- A standalone CLI route passed from synthetic local intake to the optional starter,
+  intentional rejection of the unchanged incomplete selection, explicit canned
+  hypothesis authorship, new input-card preparation and fresh journey inspection.
+  All answer/design/argument content stayed empty, all context decisions deferred,
+  and source checking inactive in the new journey. No browser was invoked.
+
+Most recent separately verified remote baseline: v0.50, commit
+[`c9d27317fb33d5039c1ba20d881dfb1f1ce240ed`](https://github.com/h-dot-seo/persona-for-research/commit/c9d27317fb33d5039c1ba20d881dfb1f1ce240ed),
+with 635 tests. This is a prior-commit record, not a claim of remote CI for v0.51.
+
+- [GitHub Actions run 41787414641](https://github.com/h-dot-seo/persona-for-research/actions/runs/41787414641):
+  all four jobs passed for that exact commit, Ubuntu/Windows and Python 3.10/3.12.
+
+Fourteen new synthetic tests cover default-mode golden compatibility (normalizing
+only runtime executable/repository/destination paths), exact reuse of existing
+factories, both-or-neither options, invalid requests before writes, explicit relative
+selection, null pattern/optional fields, inactive null-path source forms, zero-topic
+matches and empty observation packages. The unchanged selection rejects before
+artifact byte reads; arbitrary pattern IDs are not invented. Answer/review/link/
+context edits preserve stale-binding failures. Every new artifact's write-failure
+case preserves partial files without READY; all output serialization precedes mkdir.
+No provider, network, source read, command execution or card preparation occurs in
+setup. Real CLI commands preserve leading-dash/shell-looking values as data and
+complete only after explicit synthetic authorship. Independent read-only review
+passed 135 focused/adjacent tests, found no blocker, and prompted clearer context
+regeneration and filesystem-scope guidance. Python 3.10 grammar was checked locally;
+actual Windows/Python 3.10 execution is established only by separate remote CI.
+
+READY confirms setup files, not a preparable journey or research approval. No
+hypothesis, method choice, reviewer decision or source permission is inferred.
+Actual-browser visual/keyboard/print QA remains **BLOCKED/unverified**; no retry or
+restriction bypass was attempted.
+
+## Prior v0.50 two-card comparison checks
+
+Local source release at this snapshot: v0.50 (fresh comparison of two pinned research journeys).
 
 - `python -m unittest discover -q`: 635 synthetic tests passed locally.
 - `python -m compileall -q .`: passed.
@@ -14,7 +55,7 @@ Current local source release: v0.50 (fresh comparison of two pinned research jou
   Both full reports, current source checks, imported pattern/application histories
   and deferred answer decisions survived exact JSON/text round-trip. No browser ran.
 
-Most recent separately verified remote baseline: v0.49, commit
+Separately verified remote baseline at the v0.50 snapshot: v0.49, commit
 [`0cc0115f64d7a256945fb377de8a62f88dae847c`](https://github.com/h-dot-seo/persona-for-research/commit/0cc0115f64d7a256945fb377de8a62f88dae847c),
 with 611 tests. This is a prior-commit record, not a claim of remote CI for v0.50.
 

@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.50-compare-pinned-journeys",
+  "release": "0.51-incomplete-integrated-starter",
   "date": "2026-11-04",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 172,
+  "file_count": 174,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 30945,
-      "sha256": "f7d81c43ca6fe1bfd04352b53480c1d56c15fd76c46655292bef4ac5bfc9c9e1"
+      "bytes": 31302,
+      "sha256": "63984ce917e41b78cfc9a288b98c3c86003bb13ed0098bfd8a1ec01af587484f"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 30045,
-      "sha256": "274cebaf5fe4a7e546677ab43338e0cf49595f918b85d614b9df6a870db6b5d2"
+      "bytes": 32795,
+      "sha256": "8273e1f5d1c3b3d1618e8a316533461e6d95b269c095e9ab635cbd01714100e3"
     },
     {
       "path": "answer_draft.py",
@@ -174,14 +174,19 @@
       "sha256": "6456506a98f519e0ea0d8df9e85e171e352da0b95c4fcea5e6be29ac4baedd70"
     },
     {
+      "path": "docs/INTEGRATED_WORKSPACE.md",
+      "bytes": 8878,
+      "sha256": "995d1db2958a22b7aaa02a0078517bb0be4617cc1dd4f231e15dbf3f9434b035"
+    },
+    {
       "path": "docs/JOURNEY_COMPARISON.md",
       "bytes": 7733,
       "sha256": "e4e74f62d34dc2e518118ff55ad8fbbd914a1a2605a428020546f979286bcd66"
     },
     {
       "path": "docs/JOURNEY_INPUTS.md",
-      "bytes": 9071,
-      "sha256": "35522f8fc2a05dc0d2ec4e4d3ba3672a6e095f7c32a3b6db27456b8566e595cd"
+      "bytes": 9583,
+      "sha256": "fa732cea64644ed1d847190f6dd20008cbb465dc42f45b4f5f43703fa5535f38"
     },
     {
       "path": "docs/LOCAL_HTML_REVIEW.md",
@@ -260,8 +265,8 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 10974,
-      "sha256": "5347d0912fe7e4059dcddde1a49745902a8db59eff21a79498342b2a62ddace3"
+      "bytes": 11486,
+      "sha256": "577c2a67a49e908cd1c95552b4dea4f2b5b2f348e7303c99d1eee9ecb7912be8"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -270,8 +275,8 @@
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
-      "bytes": 13276,
-      "sha256": "5cd9c023df5f4b1e393d3ea14561eb3149eab917f04106e6a37690aa31c2c0bb"
+      "bytes": 13788,
+      "sha256": "45aaf7014a6897f43b2430478f8f4304390c6cc1d32f8669a2b5f3c8ee09311a"
     },
     {
       "path": "docs/REVIEW_JOURNEY.md",
@@ -280,8 +285,8 @@
     },
     {
       "path": "docs/REVIEW_WORKSPACE.md",
-      "bytes": 6437,
-      "sha256": "2a23c7369135f39cb045ef888e810ef0485ba32efb1fd8a176050d06929d45b2"
+      "bytes": 6949,
+      "sha256": "650c070b3dffed1a8a6cedbea95f3e2dba88b44ea89ae0fb07754433af666962"
     },
     {
       "path": "docs/REVISION_IMPACT.md",
@@ -530,8 +535,8 @@
     },
     {
       "path": "review_workspace.py",
-      "bytes": 6630,
-      "sha256": "c88e8a19790adb0a02b0e71d54e19e92ee1c16e2d97b23726fd6094566ffd84a"
+      "bytes": 13670,
+      "sha256": "be74fb6861ccd41c8ab7e2d78420a6862b3a0a6d095763f9671062ab3a02c93f"
     },
     {
       "path": "revise_local.py",
@@ -647,6 +652,11 @@
       "path": "test_intake_errors.py",
       "bytes": 2372,
       "sha256": "b1632cab953e674c5925b06752f48da9d9d5d8520fe1448045c4e84fb4c126b0"
+    },
+    {
+      "path": "test_integrated_workspace.py",
+      "bytes": 17231,
+      "sha256": "9ea31d4b45608bc6528eef2a770960d9b9d42653827a3fab4a9aa353f641c194"
     },
     {
       "path": "test_journey_compare.py",
