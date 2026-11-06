@@ -670,8 +670,8 @@
     },
     {
       "path": "safe_canonical_read.py",
-      "bytes": 4678,
-      "sha256": "c1a41c723f5938f14176971e8b6f13f8c2be1060e49282a01f41cf6208f09b59"
+      "bytes": 4808,
+      "sha256": "3b35703e93b545819661b7d7e13a08c5fb838896db47a2d45e5d8ffcd7724184"
     },
     {
       "path": "source_recheck.py",
@@ -965,8 +965,8 @@
     },
     {
       "path": "test_persona.py",
-      "bytes": 1639,
-      "sha256": "75d1aef54772e03abe598784940976a3145f4c2f88bf397e298d362963754ea7"
+      "bytes": 2364,
+      "sha256": "d4ad2dfc7d6b0b62b7a868437b2f89ea76d4bd86e6945669195f5ea4c9056b29"
     },
     {
       "path": "test_prepare_local_manifest.py",
