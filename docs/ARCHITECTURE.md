@@ -35,6 +35,13 @@ automate corpus acquisition, semantic extraction, independent evaluation or dial
 | Human validation | A documented expert/rater assessment | Automatic generalization to all topics |
 | Runtime validation | Retrieval, binding and mode boundaries | Scientific correctness of every answer |
 
+The human-validation axis is tooled as a detached record (`human_validation.py`, see
+[human validation records](HUMAN_VALIDATION.md)): raters, date, method, scope topics and
+per-rule judgements bound to the persona and knowledge payload hashes. Its status report
+(`RECORDED_CURRENT`, `STALE_PACKAGE`, `NOT_PERFORMED`) never edits `validation.human_validation`
+inside a persona payload; a changed status is carried only by a new persona version built
+and re-bound through the lifecycle above.
+
 Numerical acceptance thresholds are versioned operating choices, not universal
 scientific standards. Do not publish historical internal scores as general benchmarks.
 Data quantity targets should be justified for the scholar and scope; this public

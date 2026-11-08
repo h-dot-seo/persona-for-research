@@ -250,3 +250,13 @@ See [contextual answer preparation](ANSWER_CONTEXT.md#try-the-contextual-synthet
 for complete commands and how to inspect recorded versus current context. This
 mode adds no model call, real researcher reconstruction, general auto-review or
 browser execution. Omit the flag to retain the earlier v1 answer route unchanged.
+
+## Record a human assessment separately
+
+Every synthetic demo leaves the human-validation axis at `NOT_PERFORMED`. To document a
+rater assessment of one exact package without touching its payload, use the detached
+[human validation record](HUMAN_VALIDATION.md): `human_validation.py template`, `check`
+and `status`, plus `review_package.py --human-validation`. The shipped fictional record
+binds to `examples/trajectory-conditions-package.json`; a record for a demo package needs
+a new template bound to that package's own hashes. Nothing in it is a score, a verified
+independence claim or a change to `validation.human_validation`.

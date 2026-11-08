@@ -1,0 +1,64 @@
+{
+  "schema_version": "human-validation-record.v1",
+  "author_id": "synthetic-scholar",
+  "version": "1",
+  "build_id": "synthetic-trajectory-conditions",
+  "persona_payload_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+  "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+  "raters": [
+    {
+      "rater_id": "synthetic-rater-1",
+      "role": "invented domain reader; no real expertise is claimed"
+    },
+    {
+      "rater_id": "synthetic-rater-2",
+      "role": "invented methods reader; no real expertise is claimed"
+    }
+  ],
+  "assessed_at": "2026-11-08",
+  "method": "Fictional structured rating. Each of the six stored rule statements was read next to its quoted synthetic passage and rated for agreement with that stored observation. No interview, blinding, real researcher, source document or model was involved.",
+  "scope_topics": [
+    "synthetic method conditions"
+  ],
+  "items": [
+    {
+      "item_id": "rule-1",
+      "judgement": "AGREE",
+      "rationale": "The stored support statement restates the quoted synthetic passage for condition A.",
+      "source_locator": "invented passage 1 of synthetic-2020-a"
+    },
+    {
+      "item_id": "rule-2",
+      "judgement": "AGREE",
+      "rationale": "The stored challenge statement matches the quoted synthetic passage for condition B.",
+      "source_locator": "invented passage 1 of synthetic-2022-b"
+    },
+    {
+      "item_id": "rule-3",
+      "judgement": "PARTIAL",
+      "rationale": "The review passage summarizes earlier support; the stored rule should not read as independent corroboration.",
+      "source_locator": "invented passage 1 of synthetic-2023-review"
+    },
+    {
+      "item_id": "rule-4",
+      "judgement": "AGREE",
+      "rationale": "The stored challenge summary matches the quoted review passage and its context-only limitation.",
+      "source_locator": "invented passage 2 of synthetic-2023-review"
+    },
+    {
+      "item_id": "rule-5",
+      "judgement": "DISAGREE",
+      "rationale": "The quoted passage reports one failed synthetic test; the stored rule condition string A reads broader than that passage.",
+      "source_locator": "invented passage 1 of synthetic-2024-a-challenge"
+    },
+    {
+      "item_id": "rule-6",
+      "judgement": "NOT_ASSESSED",
+      "rationale": "Not assessed in this fictional round: the same-year disagreement with rule-5 was left for a later record.",
+      "source_locator": "invented passage 1 of synthetic-2024-a-support"
+    }
+  ],
+  "limitations": "Fictional record for the shipped synthetic trajectory package only. Two invented rater labels assessed six stored rules on one topic; nothing is established about other topics, other packages or any real researcher.",
+  "independence_declaration": "Fictional declaration: the rater labels differ from every author, operator and reviewer label recorded in the package. This is a mechanical label check, not verified independence, expertise or blinding.",
+  "status": "RECORDED"
+}

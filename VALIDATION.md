@@ -1471,3 +1471,85 @@ Removed references to a private development log from this record; remote CI
 results are the public GitHub Actions history. The test workflow now also runs on
 `main`, and this cleanup precedes merging the workflow branch into `main`. No code
 path, test or fixture changed; the manifest was regenerated for the edited text files.
+
+## 2026-11-08 Human validation records (0.70-human-validation-records)
+
+Current local source release: v0.70 (detached human validation records).
+
+- `python -m unittest discover -q`: 980 synthetic tests passed locally in 636.393 seconds
+  (3 pre-existing platform-conditional skips in `test_journey_inputs`: the FIFO and
+  Unix-unlink cases; none in the new module). The v0.69 tree discovers 962 tests with the
+  same loader.
+- `python -m compileall -q .`: passed; 140 Python files also parse with 3.10 grammar.
+- `python audit_publication.py`: passed, 226 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 225 exact allowlisted entries and file hashes.
+
+The architecture's fourth validation axis, human validation, previously had no tooling: a
+persona payload could only ever carry `validation.human_validation: NOT_PERFORMED`. The new
+`human_validation.py` records a rater assessment as a detached document bound to both
+logical payload hashes (`persona_payload_sha256`, `knowledge_papers_sha256`), the way the
+predictive axis keeps its holdout labels outside the package. `template` writes a blank
+record (one blank rater, every available topic, one `NOT_ASSESSED` item per rule,
+`status: null`) with exclusive creation outside the repository. `check` validates exact
+fields, the `AGREE`/`PARTIAL`/`DISAGREE`/`NOT_ASSESSED` enum, a strict `YYYY-MM-DD` date,
+bounded nonblank text (1 to 32 raters, 1 to 4096 items, identifiers of at most 128 and free
+text of at most 2000 characters; every error names the field and its limit) and the
+mechanical `LABEL_DISTINCT_ONLY` rater check, then derives `CURRENT_PACKAGE` or
+`STALE_PACKAGE` by recomputing the hashes; a record for a different `author_id` is an
+error, not a stale record. Only a record bound to the current package has its items
+resolved against it (rule IDs and topics that exist in the supplied package, scope
+consistency). Rule IDs are per-build positions, so a stale record's items and topics are
+not re-resolved: `check` keeps the structural checks and per-label counts, reports
+`items_resolved_against_current_package: false` and lists the recorded IDs and topics that
+are absent from the current package, instead of failing or re-attributing a recorded
+judgement to whichever current rule now carries the same ID. `status` reports
+`RECORDED_CURRENT`, `STALE_PACKAGE` or `NOT_PERFORMED` with per-label judgement counts and
+each record's own logical sha256, and names the persona payload's declared value as
+unchanged. `review_package.py --human-validation RECORD.json` (repeatable) appends the same
+read-only axis lines and reads its records through the same 8 MiB combined input budget as
+`check` and `status`; without the option its output is byte-identical to v0.69. Packages
+may be supplied as the `PERSONA.json KNOWLEDGE.json` pair or as one bound package/wrapper
+file. Combined inputs are bounded at 8 MiB, output at 16 MiB, and text output escapes
+control characters taken from data.
+
+No persona payload field changed and no knowledge binding was rewritten: the shipped
+`examples/persona.json` and `examples/knowledge.json` are byte-identical and still validate.
+The new fictional record `examples/manual-human-validation.json` binds to
+`examples/trajectory-conditions-package.json` (two invented rater labels, six rules on one
+topic, `AGREE=3; PARTIAL=1; DISAGREE=1; NOT_ASSESSED=1`), because the minimal example
+package has no rules to assess and no bound knowledge payload for the release review.
+
+Eighteen new tests in `test_human_validation.py` cover template bindings and listings for
+the pair, package and wrapper forms; the shipped fixture; an unedited template failing
+`check`; stale detection after a rebound rule edit versus hash tampering as an error;
+identity mismatch; stale records against packages rebuilt with a removed, reordered or
+renamed paper, reported without re-resolution and exiting 0 from `check`, `status` and the
+release review while structural errors in such a record still fail; unknown items, unknown
+topics and scope mismatches; author, operator and reviewer label collisions; enum, date and
+field strictness; the status CLI for all three states with byte-identical inputs; the
+unchanged example pair; exclusive output against existing files, missing parents,
+repository paths and symlinks; UTF-8 output under `PYTHONIOENCODING=ascii`; escaped control
+characters; the release-review option with unchanged default output; no input mutation,
+file reads or provider calls; input and output byte bounds including the release-review
+record budget; and the guide's command block executed exactly as written. The focused
+module and its neighbours passed in a serial run of 47 tests in 4.612 seconds; the 15-stage
+synthetic walkthrough still completes with `COMPLETE.json`; the six documented commands were
+also run by hand into a fresh external directory. `docs/HUMAN_VALIDATION.md`, README,
+SKILL.md, the architecture axes note and a quickstart pointer were added or extended, and
+the manifest was regenerated for 225 files.
+
+Review round 1 (same release): a skeptic reproduced that a stale record failed `check`,
+`status` and the release review whenever one of its item IDs or topics no longer occurred in
+the rebuilt package, and that a rebuilt package with the same rule count re-resolved a stale
+record's items against different rules. Both are fixed as described above and covered by
+the two rebuilt-package tests; the release-review record path now shares the 8 MiB input
+budget, and the guide states the numeric bounds that `check` enforces.
+
+Not claimed: a recorded assessment is a documented assertion by named labels about listed
+items of one exact package. It is not generalization to other topics, not fidelity to the
+real researcher, not a score or verdict, and label distinctness is not verified
+independence, expertise or blinding. Hashes bind a record to a payload but do not
+authenticate raters or dates. A stale record's item IDs that still occur in a rebuilt
+package do not establish that they denote the same rules. No real rater, researcher, model
+call, network access or canonical update was involved, and promoting a status into a
+package remains a release decision taken through the normal lifecycle.

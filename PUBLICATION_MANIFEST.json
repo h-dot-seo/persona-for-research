@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.69-public-boundary-cleanup",
+  "release": "0.70-human-validation-records",
   "date": "2026-11-08",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 221,
+  "file_count": 225,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 36808,
-      "sha256": "6f928fb1f812518d268f630ec02b1165f6a45bc21b5df2b971482d183541b742"
+      "bytes": 37822,
+      "sha256": "bcca9f53849883d292940d8c0b0e2309ac9ed7e29eb603c6758fd9c2a0e00b83"
     },
     {
       "path": "RIGHTS.md",
@@ -45,13 +45,13 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 1595,
-      "sha256": "37b3801d3c0b9fee09a59bc9f42d25b584d8b7c90c9e6914c807ef74c5fc51a6"
+      "bytes": 2546,
+      "sha256": "945bdcde11f0b85d4d4bbb925723ca52f24456ec0f5d960efb41cbe79e43acbd"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 99959,
-      "sha256": "e50a91f3709ccea4f5ceb130935d9794f3ccc07d0cfdb54fc71b14e96e26de8d"
+      "bytes": 106214,
+      "sha256": "c7eff12f4e685f41dbddd64c15b25797e325eb38ef4350eb3b96583771a57a5a"
     },
     {
       "path": "answer_context.py",
@@ -165,8 +165,8 @@
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "bytes": 3985,
-      "sha256": "5e638755e7674a75447ea55895ed66afb1358ce1991385fea9097a546c0dc2d0"
+      "bytes": 4478,
+      "sha256": "ff022c17a336f983bcb71d459bb671467d6baf9a69454ce8990f71c1ac88fa06"
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
@@ -217,6 +217,11 @@
       "path": "docs/EXTRACTION_CONTRACT.md",
       "bytes": 4673,
       "sha256": "6456506a98f519e0ea0d8df9e85e171e352da0b95c4fcea5e6be29ac4baedd70"
+    },
+    {
+      "path": "docs/HUMAN_VALIDATION.md",
+      "bytes": 9490,
+      "sha256": "49f2f09aeb8dc01feb90526bce894d7156d7df0d54942e9f4d28967f8db2bb05"
     },
     {
       "path": "docs/INTEGRATED_WORKSPACE.md",
@@ -310,8 +315,8 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 14842,
-      "sha256": "c97e7d6fa04f1abadd69ddc8da3a8e9586fb8b0a4a75d96d96b8477f755600f8"
+      "bytes": 15476,
+      "sha256": "086d714fe6301b25110f3b51e59520c5f36ac2ed45a194a3549a09341c8318c5"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -412,6 +417,11 @@
       "path": "examples/local-selection.json",
       "bytes": 826,
       "sha256": "ded1655839f5cab23e1c769ddcd1df053b2db7a048b3100fc9e17298ffbdf932"
+    },
+    {
+      "path": "examples/manual-human-validation.json",
+      "bytes": 3048,
+      "sha256": "a867521cc8e953283cdd17e1f6189afd219b5e1f5aae9e2acf7e89ef713d3c56"
     },
     {
       "path": "examples/manual-research-card.json",
@@ -527,6 +537,11 @@
       "path": "extraction_adapter.py",
       "bytes": 12243,
       "sha256": "91a5dd4111f4a6b6b0bb26a535053103384dc46dbb16a02f432b43a2fa4427bc"
+    },
+    {
+      "path": "human_validation.py",
+      "bytes": 23849,
+      "sha256": "11ac61d434b8c04e6105fc1f9fed6eab7a40655b9ea1de3857eb4055135e4d9a"
     },
     {
       "path": "journey_compare.py",
@@ -650,8 +665,8 @@
     },
     {
       "path": "review_package.py",
-      "bytes": 8947,
-      "sha256": "02d11094e4fa9af04c83fb8471fb2f16c1b5e6aa13797fde6c4ac851e6ad1575"
+      "bytes": 9824,
+      "sha256": "b115ed0321f75b6616841795cb4900a8fdff10b8227c426a9a9c42108bbb6132"
     },
     {
       "path": "review_workspace.py",
@@ -862,6 +877,11 @@
       "path": "test_extraction_adapter.py",
       "bytes": 6353,
       "sha256": "1a3d9840e6bf66bb565d380a495c8c78922901170f5de4f7df9b7764776e8e03"
+    },
+    {
+      "path": "test_human_validation.py",
+      "bytes": 40786,
+      "sha256": "348c2c23b46eb58adb6578e0bfe5a24b1cc352b4504577e5fa143519ae85cc10"
     },
     {
       "path": "test_imported_provenance.py",
