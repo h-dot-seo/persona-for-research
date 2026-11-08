@@ -1299,7 +1299,7 @@ Second increment: 6 tests passed; failure boundaries and deterministic repeated 
 
 Third increment: 8 tests passed, including supplied-evidence rejection and deterministic output. No external model/search integration tested.
 
-Fourth increment: CLI end-to-end scenarios and failure recovery added. Local tests: 9 passed. Remote CI status is recorded separately in the private development log.
+Fourth increment: CLI end-to-end scenarios and failure recovery added. Local tests: 9 passed. Remote CI status is recorded in the repository's GitHub Actions history.
 
 Cloud methodology chronology increment: 18 standard-library tests passed locally,
 including 9 new synthetic cases for research/review separation, duplicate-paper
@@ -1308,7 +1308,7 @@ exact-condition separation, quote provenance, stable chronological order and inp
 authorization. Publication scan and byte-manifest verification passed. No remote
 CI run or real-scholar validity evaluation is claimed for this uncommitted increment.
 
-Fifth increment: 12 local tests passed. New CLI paths, source boundaries, deterministic output and tamper/no-overwrite checks are covered. See private development log for remote matrix CI.
+Fifth increment: 12 local tests passed. New CLI paths, source boundaries, deterministic output and tamper/no-overwrite checks are covered. Remote matrix CI results are in the GitHub Actions history.
 
 Combined cloud verification: local-file intake and chronology integration passed 21 tests; source ZIP and per-file hashes matched the handoff. No real corpus was used.
 
@@ -1464,3 +1464,10 @@ skipped/reordered stages, changed counterevidence/new sources, stale replacement
 identity reuse, and initial history warnings surviving replacement. Final marker
 coverage is separate from pre-chain history. Actual two-review CLI → chain audit,
 JSON-equivalent aliases, no provider/source access and raw-text exclusion are tested.
+
+## 2026-11-08 Public boundary cleanup (0.69-public-boundary-cleanup)
+
+Removed references to a private development log from this record; remote CI
+results are the public GitHub Actions history. The test workflow now also runs on
+`main`, and this cleanup precedes merging the workflow branch into `main`. No code
+path, test or fixture changed; the manifest was regenerated for the edited text files.
