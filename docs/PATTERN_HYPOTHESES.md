@@ -98,7 +98,7 @@ No real scholar material, LLM, external API or scientific validation is used in
 the synthetic tests.
 
 ```sh
-python -m unittest test_pattern_hypotheses -v
+python -m unittest tests.test_pattern_hypotheses -v
 ```
 
 When a proposed pattern informs a new question, use

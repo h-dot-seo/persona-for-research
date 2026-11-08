@@ -41,3 +41,9 @@ See docs/COMMANDS.md for every local CLI with its exact usage line and docs/WORK
 for the documented workflows and their explicit limitations; README.md keeps only the
 start-here commands and the documentation index. Use only authorized inputs; shipped
 examples are entirely synthetic.
+
+`python persona_cli.py list` prints every root command-line script with the first sentence of
+its docstring, and `python persona_cli.py run <script> [args...]` runs one of them from any
+directory without changing its arguments, output or exit code; the documented
+`python <script>.py ...` form stays primary. The unittest suite is the `tests/` package, run
+with `python -m unittest discover` from the repository root.

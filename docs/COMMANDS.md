@@ -13,7 +13,13 @@ directory); rejected inputs exit nonzero, and each guide states the exact failur
 behaviour, bounds and non-claims of its commands. The shipped `examples/` are entirely
 synthetic. The per-feature narrative is in [WORKFLOWS.md](WORKFLOWS.md).
 
-Scripts in alphabetical order: [`answer_draft.py`](#answer_draftpy), [`answer_proposals.py`](#answer_proposalspy), [`applicability_review.py`](#applicability_reviewpy), [`application_proposals.py`](#application_proposalspy), [`argument_map.py`](#argument_mappy), [`argument_proposals.py`](#argument_proposalspy), [`audit_design_chain.py`](#audit_design_chainpy), [`audit_design_lineage.py`](#audit_design_lineagepy), [`audit_publication.py`](#audit_publicationpy), [`citation_reasoning.py`](#citation_reasoningpy), [`compare_releases.py`](#compare_releasespy), [`corpus_files.py`](#corpus_filespy), [`curate_local.py`](#curate_localpy), [`design_scenario.py`](#design_scenariopy), [`evaluate_synthetic.py`](#evaluate_syntheticpy), [`evidence_scope.py`](#evidence_scopepy), [`extraction_adapter.py`](#extraction_adapterpy), [`human_validation.py`](#human_validationpy), [`journey_compare.py`](#journey_comparepy), [`journey_inputs.py`](#journey_inputspy), [`method_application.py`](#method_applicationpy), [`model_handoff.py`](#model_handoffpy), [`observation_input.py`](#observation_inputpy), [`observation_proposals.py`](#observation_proposalspy), [`observation_revision.py`](#observation_revisionpy), [`operator_review.py`](#operator_reviewpy), [`pattern_hypotheses.py`](#pattern_hypothesespy), [`pattern_proposals.py`](#pattern_proposalspy), [`pattern_transfer_review.py`](#pattern_transfer_reviewpy), [`persona.py`](#personapy), [`prepare_local_manifest.py`](#prepare_local_manifestpy), [`publication_context.py`](#publication_contextpy), [`publication_scope.py`](#publication_scopepy), [`publication_timeline.py`](#publication_timelinepy), [`reasoning_links.py`](#reasoning_linkspy), [`research_journey.py`](#research_journeypy), [`research_workflow.py`](#research_workflowpy), [`review_journey.py`](#review_journeypy), [`review_package.py`](#review_packagepy), [`review_workspace.py`](#review_workspacepy), [`revise_local.py`](#revise_localpy), [`revision_impact.py`](#revision_impactpy), [`safe_canonical_read.py`](#safe_canonical_readpy), [`source_recheck.py`](#source_recheckpy), [`synthetic_walkthrough.py`](#synthetic_walkthroughpy), [`topic_inventory.py`](#topic_inventorypy), [`verify_manifest.py`](#verify_manifestpy).
+Layout: every script and library module is a flat file at the repository root, so the commands
+below run as `python <script>.py ...` from the root, and `python persona_cli.py list` prints the
+scripts that have a command-line entry point. The unittest suite is the `tests/` package:
+`python -m unittest discover` from the root runs it, and one module runs as
+`python -m unittest tests.test_<name> -v`.
+
+Scripts in alphabetical order: [`answer_draft.py`](#answer_draftpy), [`answer_proposals.py`](#answer_proposalspy), [`applicability_review.py`](#applicability_reviewpy), [`application_proposals.py`](#application_proposalspy), [`argument_map.py`](#argument_mappy), [`argument_proposals.py`](#argument_proposalspy), [`audit_design_chain.py`](#audit_design_chainpy), [`audit_design_lineage.py`](#audit_design_lineagepy), [`audit_publication.py`](#audit_publicationpy), [`citation_reasoning.py`](#citation_reasoningpy), [`compare_releases.py`](#compare_releasespy), [`corpus_files.py`](#corpus_filespy), [`curate_local.py`](#curate_localpy), [`design_scenario.py`](#design_scenariopy), [`evaluate_synthetic.py`](#evaluate_syntheticpy), [`evidence_scope.py`](#evidence_scopepy), [`extraction_adapter.py`](#extraction_adapterpy), [`human_validation.py`](#human_validationpy), [`journey_compare.py`](#journey_comparepy), [`journey_inputs.py`](#journey_inputspy), [`method_application.py`](#method_applicationpy), [`model_handoff.py`](#model_handoffpy), [`observation_input.py`](#observation_inputpy), [`observation_proposals.py`](#observation_proposalspy), [`observation_revision.py`](#observation_revisionpy), [`operator_review.py`](#operator_reviewpy), [`pattern_hypotheses.py`](#pattern_hypothesespy), [`pattern_proposals.py`](#pattern_proposalspy), [`pattern_transfer_review.py`](#pattern_transfer_reviewpy), [`persona.py`](#personapy), [`persona_cli.py`](#persona_clipy), [`prepare_local_manifest.py`](#prepare_local_manifestpy), [`publication_context.py`](#publication_contextpy), [`publication_scope.py`](#publication_scopepy), [`publication_timeline.py`](#publication_timelinepy), [`reasoning_links.py`](#reasoning_linkspy), [`research_journey.py`](#research_journeypy), [`research_workflow.py`](#research_workflowpy), [`review_journey.py`](#review_journeypy), [`review_package.py`](#review_packagepy), [`review_workspace.py`](#review_workspacepy), [`revise_local.py`](#revise_localpy), [`revision_impact.py`](#revision_impactpy), [`safe_canonical_read.py`](#safe_canonical_readpy), [`source_recheck.py`](#source_recheckpy), [`synthetic_walkthrough.py`](#synthetic_walkthroughpy), [`topic_inventory.py`](#topic_inventorypy), [`verify_manifest.py`](#verify_manifestpy).
 
 ## Start, validate and publish
 
@@ -26,6 +32,23 @@ usage: synthetic_walkthrough.py [-h] [--candidate-source {mock,offline-import}] 
 ```
 
 Guide: [Quickstart](QUICKSTART.md), [Workflows: synthetic walkthrough routes](WORKFLOWS.md#synthetic-walkthrough-routes).
+
+### `persona_cli.py`
+
+Discover and run the root command-line scripts from any directory, without changing what any script does.
+
+```text
+usage: persona_cli.py [-h] {list,run} ...
+usage: persona_cli.py list [-h]
+usage: persona_cli.py run [-h] script ...
+```
+
+Subcommands:
+
+- `list` — Print every root script that has an `if __name__ == '__main__'` entry point, one line each in name order, with the first sentence of its docstring; the lines are exactly the script entries of this reference.
+- `run` — Run one root script in-process through `runpy` with the remaining arguments passed unchanged, for example `python persona_cli.py run persona.py examples/persona.json examples/knowledge.json`; the script's own `--help`, output and exit code pass through, and a name that is not the exact file name of a root script with an entry point exits 2 without output.
+
+Guide: [README: commands at a glance](../README.md#commands-at-a-glance). The dispatcher resolves scripts relative to its own file, so it works from any current directory; it calls no shell, imports no implementation module for `list`, writes no file and validates nothing itself. The documented `python <script>.py ...` form stays the primary command.
 
 ### `persona.py`
 
@@ -643,4 +666,4 @@ These modules are imported by the scripts above and have no `__main__` entry poi
 - `strict_json.py` — Reject ambiguous keys and non-finite numbers at JSON input boundaries.
 - `verification_receipt.py` — In-process check receipt, not a signature or a Python security boundary.
 
-The `test_*.py` modules are the unittest suite run by `python -m unittest discover`; see [../VALIDATION.md](../VALIDATION.md) for the current verification snapshot.
+The `tests/` package (`tests/__init__.py` and the `tests/test_*.py` modules) is the unittest suite that `python -m unittest discover` runs from the repository root; one module runs as `python -m unittest tests.test_<name> -v`. The implementation modules stay at the root as flat files: `audit_publication.py`, `human_validation.py`, `review_workspace.py`, `revise_local.py`, `synthetic_walkthrough.py` and `verify_manifest.py` resolve the repository root from their own file location, so they are not packaged. See [../VALIDATION.md](../VALIDATION.md) for the current verification snapshot.

@@ -57,7 +57,7 @@ verified. Rejected text and contrary evidence remain visible for the audit.
 Actual synthetic CLI and negative tests:
 
 ```
-python -m unittest test_answer_draft -v
+python -m unittest tests.test_answer_draft -v
 ```
 
 Real scholarly evaluation requires authorized local sources, quotation rights,

@@ -77,7 +77,7 @@ or canonical update occurs.
 ## Synthetic iterative workflow
 
 ```sh
-python -m unittest test_design_chain -v
+python -m unittest tests.test_design_chain -v
 ```
 
 The scenario explicitly accepts mock alternative/uncertainty components, then adds
@@ -124,7 +124,7 @@ not historical model use. No provider is called, no model is inferred to have ru
 and no provider/model/run identity or human review is authenticated. Imported
 provenance cannot turn consistency hashes into signatures or scientific validation.
 
-Run `python -m unittest test_imported_provenance -v` for imported-only, mixed-stage,
+Run `python -m unittest tests.test_imported_provenance -v` for imported-only, mixed-stage,
 repeated-ID, inherited/replaced-history and tamper regressions. All use synthetic
 local fixtures, without actual model/source data or network calls.
 

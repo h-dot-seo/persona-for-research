@@ -83,7 +83,8 @@ python3 -m unittest discover -v
 모든 명령은 저장소 루트에서 `python <스크립트>.py ...` 형태로 실행합니다. 입력을 거부하면
 0이 아닌 종료 코드로 끝나며, 각 안내서가 정확한 실패 동작과 한계를 설명합니다. 전체 목록과
 하위 명령의 정확한 사용법은 [COMMANDS.md](COMMANDS.md)에, 기능별 서술과 경계는
-[WORKFLOWS.md](WORKFLOWS.md)에 있습니다.
+[WORKFLOWS.md](WORKFLOWS.md)에 있습니다. 테스트는 `tests/` 패키지에 있으며 저장소 루트에서
+`python -m unittest discover`로 실행합니다(모듈 하나는 `python -m unittest tests.test_<이름> -v`).
 
 | 명령 | 하는 일 | 안내서 |
 |---|---|---|
@@ -99,6 +100,7 @@ python3 -m unittest discover -v
 | `operator_review.py` | 운영자의 명시적 결정을 별도의 수정 후보에 기록 | [OPERATOR_REVIEW.md](OPERATOR_REVIEW.md) |
 | `answer_proposals.py`, `argument_proposals.py` | 근거 범위가 정해진 오프라인 답변·논증 제안과 명시적 채택 | [ANSWER_PROPOSALS.md](ANSWER_PROPOSALS.md), [ARGUMENT_PROPOSALS.md](ARGUMENT_PROPOSALS.md) |
 | `research_journey.py`, `journey_inputs.py` | 출처→방법→논증 통합 보고서(JSON/text/HTML)와 고정된 입력 카드 | [RESEARCH_JOURNEY.md](RESEARCH_JOURNEY.md) |
+| `persona_cli.py` | 루트 스크립트 목록(`list`)과 그중 하나를 어느 디렉터리에서든 그대로 실행(`run <스크립트> [인자...]`); 문서화된 `python <스크립트>.py` 형태가 기본 | [COMMANDS.md](COMMANDS.md#persona_clipy) |
 
 ## 경계와 하지 않는 것
 

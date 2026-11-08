@@ -89,7 +89,7 @@ and publication permission remain separate. No LLM, network, real scholar corpus
 scientific execution or authenticated reviewer is used by this synthetic example.
 
 ```sh
-python -m unittest test_review_workspace -v
+python -m unittest tests.test_review_workspace -v
 ```
 
 If inspecting the catalog reveals an unsupported manual observation, correct it

@@ -85,7 +85,7 @@ private; this is not anonymization or rights clearance. No real scholar material
 LLM, external API or scientific execution are used in the synthetic workflow.
 
 ```sh
-python -m unittest test_pattern_transfer_review -v
+python -m unittest tests.test_pattern_transfer_review -v
 ```
 
 ## Imported pattern proposals

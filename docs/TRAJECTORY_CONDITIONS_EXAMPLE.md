@@ -100,7 +100,7 @@ The seven-test regression runs the **17 repository CLI stages once in `setUpClas
 
 ```sh
 cd "$REPO"
-python -m unittest test_trajectory_conditions_example -v
+python -m unittest tests.test_trajectory_conditions_example -v
 ```
 
 This is a preservation/regression example, not source authentication, semantic validation, a scientist simulation, or a rule for deciding when research has reversed.

@@ -91,7 +91,7 @@ fidelity benchmark or scientific certification.
 Regression checks:
 
 ```
-python -m unittest test_synthetic_walkthrough -v
+python -m unittest tests.test_synthetic_walkthrough -v
 ```
 
 The suite executes the complete real-CLI journey in a temporary external directory

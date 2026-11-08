@@ -155,7 +155,7 @@ permission to publish. Current execution uses no model or network provider.
 ## Synthetic verification
 
 ```sh
-python -m unittest test_observation_revision -v
+python -m unittest tests.test_observation_revision -v
 ```
 
 Invented publications and canned proposals exercise empty inputs, explicit append

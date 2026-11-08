@@ -70,7 +70,7 @@ permission to republish excerpts. It does not certify a real scholar's thought,
 individual authorship or scientific validity, and uses no LLM, network or API.
 
 ```sh
-python -m unittest test_revision_impact -v
+python -m unittest tests.test_revision_impact -v
 ```
 
 ## Imported answer scope

@@ -48,7 +48,7 @@ permission to publish. It calls no provider and performs no semantic inference.
 ## Reproduce the synthetic user flow
 
 ```sh
-python -m unittest test_topic_inventory -v
+python -m unittest tests.test_topic_inventory -v
 ```
 
 The real CLI test builds a temporary synthetic package, discovers a topic, then

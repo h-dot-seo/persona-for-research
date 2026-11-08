@@ -52,5 +52,5 @@ these mechanical statuses as fidelity scores.
 Reproduce the actual CLI experiment and negative cases:
 
 ```
-python -m unittest test_publication_scope -v
+python -m unittest tests.test_publication_scope -v
 ```

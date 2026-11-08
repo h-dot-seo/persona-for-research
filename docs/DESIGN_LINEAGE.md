@@ -67,7 +67,7 @@ not verified. No model inference, experiment execution or canonical change occur
 ## Synthetic end-to-end check
 
 ```sh
-python -m unittest test_design_lineage -v
+python -m unittest tests.test_design_lineage -v
 ```
 
 This runs actual mock extraction → explicit operator review → reviewed package →
@@ -116,7 +116,7 @@ history uses `ONE_DECLARED_CANDIDATE_REVIEW_REVISION` for `audit_scope`.
 deterministic audit only. They neither establish nor deny prior actual model use.
 No provider/model/run identity, execution location or human reviewer is authenticated.
 A successful replay proves consistency of supplied artifacts, not their truth.
-Run `python -m unittest test_imported_provenance -v` for synthetic imported and
+Run `python -m unittest tests.test_imported_provenance -v` for synthetic imported and
 mixed-stage regression coverage. No actual model/source data or network is used.
 
 ## Base-observation proposal boundary

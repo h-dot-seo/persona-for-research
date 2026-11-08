@@ -24,6 +24,7 @@ source corpora, real persona packages and real validation results are kept out.
 - Logical JSON binding validator (`persona.py`) and a holdout-redacting projection helper (`safe_canonical_read.py`).
 - Detached human validation records (`human_validation.py`): a blank template, a strict check and a read-only axis status bound to both package hashes, never written into the persona payload.
 - Synthetic templates and tests; a portable agent workflow in `SKILL.md`.
+- A `tests/` package for the unittest suite and a root dispatcher, `persona_cli.py`, that lists and runs the root CLIs without changing them.
 
 This is a framework and mechanical tool release. It is not a trained model, a complete
 corpus harvester, a turnkey multi-agent runtime, or proof of scholarly validity.
@@ -91,10 +92,16 @@ Keep real inputs and generated packages outside this public repository.
 | `operator_review.py` | Record explicit operator decisions into a separate revision candidate | [Operator review](docs/OPERATOR_REVIEW.md) |
 | `answer_proposals.py`, `argument_proposals.py` | Offline, evidence-scoped answer and argument proposals with explicit adoption | [Answer proposals](docs/ANSWER_PROPOSALS.md) |
 | `research_journey.py`, `journey_inputs.py` | Integrated source-to-method-to-argument report (JSON/text/HTML) and pinned input cards | [Research journey](docs/RESEARCH_JOURNEY.md) |
+| `persona_cli.py` | Discover the root scripts (`list`) and run one in-process from any directory (`run <script> [args...]`); the `python <script>.py` form stays primary | [Commands](docs/COMMANDS.md#persona_clipy) |
 
 Every script and subcommand, with its exact usage line, is listed in
 [docs/COMMANDS.md](docs/COMMANDS.md); the per-feature narrative with its limits and
 boundaries is in [docs/WORKFLOWS.md](docs/WORKFLOWS.md).
+
+Layout: every script is a flat file at the repository root, and `python persona_cli.py list`
+prints the ones with a command-line entry point. The unittest suite is the `tests/` package:
+`python -m unittest discover` from the root runs it, and one module runs as
+`python -m unittest tests.test_<name> -v`.
 
 ## Documentation
 

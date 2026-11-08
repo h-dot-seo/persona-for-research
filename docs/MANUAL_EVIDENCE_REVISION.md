@@ -85,7 +85,7 @@ No real corpus, model, API, network, scientific execution or actual reviewer is
 used in the synthetic demonstration.
 
 ```sh
-python -m unittest test_revise_local -v
+python -m unittest tests.test_revise_local -v
 ```
 
 Before migrating existing answer/design work, use the read-only

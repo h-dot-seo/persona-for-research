@@ -20,7 +20,7 @@ an existing temporary directory. Output is stdout; the tool does not overwrite
 the package. JSON is the default format. The portable automated demonstration is:
 
 ```sh
-python -m unittest test_publication_timeline -v
+python -m unittest tests.test_publication_timeline -v
 ```
 
 The subprocess demonstration constructs temporary synthetic sources, builds their

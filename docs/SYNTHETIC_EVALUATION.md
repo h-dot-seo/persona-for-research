@@ -92,7 +92,7 @@ into a valid stored quote, rename a claim, omit all claims, tamper with a submis
 and attempt holdout/training boundary violations:
 
 ```
-python -m unittest test_synthetic_evaluation -v
+python -m unittest tests.test_synthetic_evaluation -v
 ```
 
 Real researcher evaluation would require separately authorized sources, prespecified
