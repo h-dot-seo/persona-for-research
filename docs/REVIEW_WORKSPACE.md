@@ -42,7 +42,7 @@ an answer, a complete research design, human review or scientific validation.
   hypothesis, falsification check, alternatives, uncertainty and link-use roles
   remain your responsibility. Do not fill unknown fields with invented assertions.
 
-See the existing [answer draft workflow](../README.md#evidence-bound-answer-drafts),
+See the existing [answer draft workflow](WORKFLOWS.md#evidence-bound-answer-drafts),
 `answer_draft.py --help`, `reasoning_links.py --help`, and
 `design_scenario.py --help` for the existing contracts. The starter adds no new
 answer/plan schema and calls no model.

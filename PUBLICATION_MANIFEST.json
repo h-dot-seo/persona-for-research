@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.70-human-validation-records",
+  "release": "0.71-documentation-restructure",
   "date": "2026-11-08",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 225,
+  "file_count": 229,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 37822,
-      "sha256": "bcca9f53849883d292940d8c0b0e2309ac9ed7e29eb603c6758fd9c2a0e00b83"
+      "bytes": 11841,
+      "sha256": "cd12fa3d87080a4106564917c9ad87cb6ccc9b438001128533a98b56b3a1ca35"
     },
     {
       "path": "RIGHTS.md",
@@ -45,13 +45,13 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 2546,
-      "sha256": "945bdcde11f0b85d4d4bbb925723ca52f24456ec0f5d960efb41cbe79e43acbd"
+      "bytes": 2690,
+      "sha256": "eacdff55be14362bcd02b27d17a329a1d7db98a70f9dbf3e399f44c243b6aa51"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 106214,
-      "sha256": "c7eff12f4e685f41dbddd64c15b25797e325eb38ef4350eb3b96583771a57a5a"
+      "bytes": 3364,
+      "sha256": "03f9eca30b44a482cd427083bf8cf6a05c951ec0c8f86f1fa661d98557929dda"
     },
     {
       "path": "answer_context.py",
@@ -189,6 +189,11 @@
       "sha256": "c50c308d7159685e298611c87b4eae8492a8af8253343377a10076baccd77124"
     },
     {
+      "path": "docs/COMMANDS.md",
+      "bytes": 29794,
+      "sha256": "bbf7a5cfe85c5fecdfabe04bfa94ce70e6a94e57899eb49c0608890489da26c6"
+    },
+    {
       "path": "docs/DESIGN_CHAIN.md",
       "bytes": 8118,
       "sha256": "726a5ea7579874ec546c757627adcfdf5742950472e62fdca7a5ffb050b0449b"
@@ -319,6 +324,11 @@
       "sha256": "086d714fe6301b25110f3b51e59520c5f36ac2ed45a194a3549a09341c8318c5"
     },
     {
+      "path": "docs/README.ko.md",
+      "bytes": 16558,
+      "sha256": "d5d9ecb21b1f2230123c6260a98bf7d2b1cf90bc00ecc8996390892e7bfd77d5"
+    },
+    {
       "path": "docs/REASONING_LINKS.md",
       "bytes": 4716,
       "sha256": "6def14ea4c87e232a6fc7d96632b59498e77c272f24f0336e022292559d2a0f1"
@@ -341,7 +351,7 @@
     {
       "path": "docs/REVIEW_WORKSPACE.md",
       "bytes": 6949,
-      "sha256": "650c070b3dffed1a8a6cedbea95f3e2dba88b44ea89ae0fb07754433af666962"
+      "sha256": "43861af0c6c49d3e741b6d4604d2e8c237fe67c1f92069e4ed421c8c1f682067"
     },
     {
       "path": "docs/REVISION_IMPACT.md",
@@ -367,6 +377,16 @@
       "path": "docs/TRAJECTORY_CONDITIONS_EXAMPLE.md",
       "bytes": 10508,
       "sha256": "af57207387d12d50d08b79e728149d02cd6fb20bd7a32e1c9498840c0d1daff9"
+    },
+    {
+      "path": "docs/VALIDATION_HISTORY.md",
+      "bytes": 111617,
+      "sha256": "c62be1976f5840e2410dab3ce65f25e27abf9f326a762fe7aa4246292e437a0d"
+    },
+    {
+      "path": "docs/WORKFLOWS.md",
+      "bytes": 41705,
+      "sha256": "d66a528b0d6be659b8b594f4f254d5abed0330c72d5ae7ed3bf3aa0820b9965e"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",

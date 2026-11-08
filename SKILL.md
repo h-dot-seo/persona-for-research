@@ -37,5 +37,7 @@ researcher packages and source corpora outside this public repository.
 
 ## Executable increment
 
-See the README workflow section for the new local CLI and explicit limitations.
-Use only authorized inputs; shipped examples are entirely synthetic.
+See docs/COMMANDS.md for every local CLI with its exact usage line and docs/WORKFLOWS.md
+for the documented workflows and their explicit limitations; README.md keeps only the
+start-here commands and the documentation index. Use only authorized inputs; shipped
+examples are entirely synthetic.
