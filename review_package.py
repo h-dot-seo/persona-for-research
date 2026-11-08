@@ -68,7 +68,7 @@ def _details(package, topic):
     return lines
 
 
-def render(value, question, topic, *, evidence_details=False):
+def render(value, question, topic, *, evidence_details=False, human_validation=None):
     package = checked_package(value)
     application = apply(package, question, topic)  # Ignore any saved application summary.
     rules = [r for r in package['persona']['rules'] if r['topic'].casefold() == topic.casefold()]
@@ -112,6 +112,10 @@ def render(value, question, topic, *, evidence_details=False):
     byte_checks = sum(p.get('source_verification') == 'LOCAL_BYTES_SHA256_MATCH' for p in papers)
     lines.append(f'Recorded checks: {observation_checks} observation quote matches; '
                  f'{component_checks} component quote matches; {byte_checks} local byte checks. Not rechecked here.')
+    if human_validation is not None:
+        # Lazy import: human_validation reuses this module's display helper.
+        from human_validation import axis, axis_lines
+        lines.extend(axis_lines(axis(package['persona'], package['knowledge'], human_validation)))
     lines.append('Boundary: curated paper records, not private thoughts or individual authorship. '
                  'Quote matches, coverage and distinct hashes do not establish semantic support, '
                  'independent publications or researcher fidelity. Renderer uses no LLM and makes no canonical update.')
@@ -125,9 +129,17 @@ def main():
     parser.add_argument('--topic', required=True)
     parser.add_argument('--evidence-details', action='store_true',
                         help='Include bound observation/component references, quotes and per-observation gaps')
+    parser.add_argument('--human-validation', type=Path, action='append',
+                        help='Detached human validation record(s) checked against this package; reported read-only')
     args = parser.parse_args()
     try:
-        text = render(load(args.package), args.question, args.topic, evidence_details=args.evidence_details)
+        records = None
+        if args.human_validation:
+            from human_validation import bounded_reader  # Lazy: human_validation imports display from this module.
+            read = bounded_reader()  # Records share the 8 MiB combined input budget of check and status.
+            records = [read(path) for path in args.human_validation]
+        text = render(load(args.package), args.question, args.topic, evidence_details=args.evidence_details,
+                      human_validation=records)
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
     sys.stdout.buffer.write(text.encode('utf-8'))

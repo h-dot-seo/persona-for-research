@@ -269,6 +269,7 @@ without inferring a career narrative. See the [timeline workflow](docs/PUBLICATI
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.
 - Logical JSON binding validator (`persona.py`) and a holdout-redacting projection helper (`safe_canonical_read.py`).
+- Detached human validation records (`human_validation.py`): a blank template, a strict check and a read-only axis status bound to both package hashes, never written into the persona payload.
 - Synthetic templates and tests; a portable agent workflow in `SKILL.md`.
 
 This is a framework and mechanical tool release. It is not a trained model, a complete
@@ -436,6 +437,17 @@ integer, floating-point and boolean values while ignoring object-key ordering. I
 updates either package or approves a release. Paper IDs must remain consistently
 curated; changed hashes do not establish corrections, retractions or a researcher's
 change of mind. Legacy packages without a bound knowledge payload must be rebuilt.
+
+To document the human-validation axis, record a rater assessment as a detached file:
+`python human_validation.py template PERSONA.json KNOWLEDGE.json --output RECORD.json`
+(or one bound package file) writes a blank record bound to both package hashes, `check`
+validates it strictly and derives `CURRENT_PACKAGE` or `STALE_PACKAGE` by recomputing the
+hashes, and `status` reports `RECORDED_CURRENT`, `STALE_PACKAGE` or `NOT_PERFORMED` with
+per-label judgement counts and no score. `python review_package.py ... --human-validation
+RECORD.json` appends the same read-only axis lines. Nothing changes a persona payload's
+`validation.human_validation`; promotion is a release decision through the normal lifecycle,
+and label distinctness is not verified independence.
+See [human validation records](docs/HUMAN_VALIDATION.md).
 
 ## Verified observation intake
 
