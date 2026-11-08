@@ -1,0 +1,129 @@
+# From reviewed proposals to a separate revision candidate
+
+The review gate records explicit operator decisions. It does not authenticate a
+human identity, evaluate semantic correctness, overwrite a canonical package or
+approve deployment. It supports version-1 synthetic mock bundles and version-2
+[offline imported responses](MODEL_HANDOFF.md), with distinct reviewed origin labels.
+Imported provider/model/run provenance remains an unauthenticated declaration bound
+by the complete candidate-bundle hash; it is not proof that a model actually ran.
+
+## Workflow
+
+1. Generate candidates with `extraction_adapter.py` and retain the exact input
+   corpus and candidate bundle outside this public repository.
+2. Generate a hash-bound deferred template:
+
+   ```sh
+   python operator_review.py corpus.json candidates.json --template --reviewer-id reviewer-reference
+   ```
+
+   Every decision is `defer`. No approval or target is inferred. Save the JSON,
+   inspect source context and the candidate bundle, then explicitly edit decisions.
+   Do not automatically fill accept decisions for real evidence.
+3. Inspect all existing same-paper targets before writing an acceptance:
+
+   ```sh
+   python operator_review.py corpus.json candidates.json --targets
+   ```
+
+   This read-only inventory includes support and challenge observations in input
+   order, including different topics. It does not rank relevance, select a target,
+   recommend an operation or record approval. Empty target lists stay empty.
+   Candidate locators and target observation/component locators remain separate.
+   Occupied dimensions include their displayed component and the exact original
+   component hash needed for an explicitly chosen replacement. The hash includes
+   undisplayed metadata; displayed fields are projected and cannot reconstruct it.
+4. Submit the operator-authored review as a separate file:
+
+   ```sh
+   python operator_review.py corpus.json candidates.json review.json --new-version 2 --new-build-id reviewed-candidate
+   ```
+
+5. Retain the resulting separate JSON artifact. If it contains `package`, inspect
+   it with `review_package.py` and compare it with the previous package using
+   `compare_releases.py`. Canonical adoption remains a separate explicit decision.
+
+The tool writes only stdout and never overwrites input files. Keep the original
+corpus, candidate bundle and review record: hashes identify those artifacts but
+do not replace them or function as signatures. Existing bundles lacking the new
+exact `input_corpus_sha256` binding must be regenerated before review.
+
+An inventory validates bundle self-consistency and records its current hash; it
+does not authenticate the original producer. Edited candidate text may form a new
+valid bundle with a different hash. Compare retained references and never treat an
+inventory as an approved review. A review bound to the old hash cannot apply to the
+new bundle. Inventory mode accepts no review file, reviewer ID or version/build
+arguments, and cannot be combined with template mode.
+
+## Reconstruct input from local files
+
+Add `--source-root permitted-source-folder` to any CLI mode when `corpus.json` is a
+local-file manifest. The command verifies all selected bytes and rebuilds segments
+before its normal complete-corpus/bundle/review binding checks. This is the same
+reconstruction used by `model_handoff.py --source-root`; neither mode overwrites
+inputs or invents targets. Source changes and non-derived metadata changes require
+new artifacts and explicit review. See [the local handoff workflow](MODEL_HANDOFF.md).
+The no-flag path still expects an inline segment-containing corpus.
+
+## Review fields
+
+The top-level review has exactly `candidate_bundle_sha256`, `input_corpus_sha256`,
+`reviewer_id` and `decisions`. The template supplies hashes of the full candidate
+bundle and exact logical JSON input, including observation order. JSON object-key
+ordering does not affect hashes. Changed evidence, annotations, targets or candidate
+text requires a newly bound review.
+
+Each candidate needs exactly one explicit decision:
+
+- `reject` or `defer`: `candidate_id`, `decision`, and a nonempty `review_note`.
+- `accept`: those fields plus `target_rule_id`, `target_paper_id`, `operation`,
+  `expected_component_sha256`, `reviewed_text`, and `reviewed_claim_type`.
+
+Acceptance names an existing rule in the exact preflight package and the same
+paper as the candidate. The candidate's reasoning dimension is retained. Creating
+an initial method/condition/limitation observation remains a separate manual task.
+The tool does not infer a target or silently select among ambiguous records.
+
+For `operation: add`, the dimension must be empty and the prior hash must be null.
+For `operation: replace`, the supplied hash must equal `persona.payload_sha256` of
+the existing component in the input corpus. This explicitly confirms replacement
+of that exact content. Two accepted candidates cannot target one component.
+
+`reviewed_text` may revise the proposal, but its source locator and quote are
+rechecked and retained. `reviewed_claim_type` must be `explicit_statement` or
+`operator_interpretation`; the original `proposed_claim_type` remains separate.
+This is an operator declaration, not proof that the quote supports the claim or
+that an individual author endorses it.
+
+## Outcomes and boundaries
+
+- Missing/duplicate/unknown decisions and stale bindings fail without output.
+- Any `defer` yields `REVIEW_INCOMPLETE` and no package, even if other candidates
+  were accepted. Rejected candidates never enter the revision.
+- All rejected, or no candidates, yields `NO_ACCEPTED_CANDIDATES` without a package.
+- Complete review with accepted items yields `REVIEWED_REVISION_CANDIDATE` with a
+  new version/build identity, a decision trail and a separate bound `package`.
+- Reviewed components retain candidate/bundle/review references, mock origin,
+  proposed type and reviewed type. Raw source sections and unknown metadata are
+  excluded by runtime projection. Preserve the referenced sidecar artifacts.
+- Authorization, training splits, segment/source metadata and quoted locators are
+  rechecked. Validation calls no provider and performs no external transmission.
+- Reviewer identity is `RECORDED_NOT_AUTHENTICATED`, semantic validation remains
+  `NOT_PERFORMED`, and `canonical_update_performed` remains false.
+
+The declared reviewer ID and notes are local review data, not authorization to
+share them or source material with a service. Real-source rights, genuine human
+review and later publication/transfer permission remain separate requirements.
+
+## Synthetic end-to-end demonstration
+
+```sh
+python -m unittest test_operator_review -v
+```
+
+This executes the real mock extraction, deferred-template, operator-review,
+compact-view and release-comparison CLIs with temporary synthetic inputs. Decisions
+are explicitly simulated, not genuine human review, and originals remain unchanged.
+Adversarial tests cover stale sources/targets, rejected/deferred rows, conflicting
+targets, explicit replacement, fabricated quotes, unsupported fields, provider
+isolation and shared Python references. No real researcher is evaluated.

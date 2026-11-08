@@ -22,3 +22,8 @@ evidence separately. Preserve disagreement and admit uncovered questions.
 The mechanical validator is not a scientific reviewer. The projection helper does
 not confer access permission or guarantee removal of sensitive content. Keep real
 researcher packages and source corpora outside this public repository.
+
+## Executable increment
+
+See the README workflow section for the new local CLI and explicit limitations.
+Use only authorized inputs; shipped examples are entirely synthetic.

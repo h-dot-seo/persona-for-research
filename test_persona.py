@@ -11,6 +11,17 @@ class PersonaTest(unittest.TestCase):
         self.k = {k:self.p[k] for k in ('author_id','version','build_id')}
         self.k.update(persona_payload_sha256=payload_sha256(self.p), papers=[])
 
+    def test_holdout_statistic_strings_cannot_leak_identifiers(self):
+        value = {'split': 'holdout', 'source_status': 'secret-paper-id',
+                 'score_note': 'secret-doi', 'status': 'PASS', 'count': 3,
+                 'nested': {'reasoning_status': 'secret-author'}}
+        result = sanitize(value)
+        self.assertEqual(result['canonical'], {'status': 'PASS', 'count': 3, 'nested': {}})
+        self.assertEqual(result['redacted_fields'], 4)
+        self.assertNotIn('secret', str(result))
+        self.assertNotIn('blind_papers', sanitize({'blind_papers': {'secret-paper-id': {'score': 4}}})['canonical'])
+        self.assertNotIn('split', sanitize({'split': 'holdout secret-paper-id'})['canonical'])
+
     def test_binding(self):
         self.assertEqual(validate(self.p, self.k), [])
         changed = copy.deepcopy(self.p); changed['identity']['simulation_only'] = False

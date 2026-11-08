@@ -1,0 +1,17 @@
+{
+  "schema": "persona.journey-file-selection.v1",
+  "pattern_id": "synthetic-comparison",
+  "artifacts": {
+    "package": "revision.json",
+    "patterns": "reviewed-patterns.json",
+    "context": "synthetic-context.json",
+    "links": "links.json",
+    "proposal": "proposal.json",
+    "draft": "draft.json",
+    "argument": "argument.json",
+    "publication_relations": "synthetic-publication-relations.json",
+    "declared_review": "answer-review.json",
+    "method_applications": "reviewed-method-applications.json",
+    "source_selection": "synthetic-source-selection.json"
+  }
+}

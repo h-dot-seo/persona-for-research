@@ -1,0 +1,23 @@
+{
+  "schema": "persona.manual-observation.v1",
+  "manifest_sha256": "9851a2b845af38f3bbb16c76dce622dd2460e91b85e0f1b88b6166eb5e8468aa",
+  "paper_id": "synthetic-0",
+  "observation": {
+    "method": "compare competing models before choosing an experiment",
+    "condition": "models predict distinct outcomes",
+    "limitation": "simulation only; no real author attribution",
+    "locator": "synthetic section 1",
+    "topic": "model design",
+    "evidence_quote": "Compare competing models",
+    "claim_type": "explicit_statement",
+    "stance": "support",
+    "reasoning": {
+      "question_framing": {
+        "text": "Which competing explanation should a synthetic comparison distinguish?",
+        "locator": "synthetic section 1",
+        "evidence_quote": "Compare competing models",
+        "claim_type": "operator_interpretation"
+      }
+    }
+  }
+}

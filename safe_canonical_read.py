@@ -27,6 +27,10 @@ def sanitize(document):
         statistic = bool(STATISTIC.search(key))
         identifier = bool(IDENTIFIER.search(key))
         if isinstance(value, dict):
+            # Identifier-keyed mappings can expose identifiers in their keys.
+            if in_blind and identifier:
+                redactions[0] += 1
+                return REMOVE
             record_blind = in_blind or any(
                 isinstance(value.get(k), str) and HOLDOUT.search(value[k])
                 for k in SPLIT_KEYS
@@ -51,17 +55,18 @@ def sanitize(document):
         if isinstance(value, str) and re.search(r'(^|[/\\])(blind|holdout)([/\\]|$)', value, re.I):
             redactions[0] += 1
             return REMOVE
-        if in_blind and isinstance(value, str) and value.upper() in ('DENY', 'ALLOW', 'PASS', 'FAIL', 'BLOCKED', 'NOT_PERFORMED', 'TRAINING_ONLY'):
-            return value
+        if in_blind and isinstance(value, str):
+            # A field name such as "status" or "score" does not make an
+            # arbitrary string safe: it can still contain a source identifier.
+            safe_values = ('DENY', 'ALLOW', 'PASS', 'FAIL', 'BLOCKED',
+                           'NOT_PERFORMED', 'TRAINING_ONLY')
+            safe_splits = ('blind', 'holdout')
+            if value.upper() not in safe_values and not (key in SPLIT_KEYS and value.lower() in safe_splits):
+                redactions[0] += 1
+                return REMOVE
         if in_blind and identifier and not statistic:
             redactions[0] += 1
             return REMOVE
-        # Retain numeric counts, scores, booleans, and documented policy/status.
-        # Reject unknown strings inside a blind record; they may be paper IDs.
-        if in_blind and isinstance(value, str) and not statistic and key not in SPLIT_KEYS:
-            if value.upper() not in ('DENY', 'ALLOW', 'PASS', 'FAIL', 'BLOCKED', 'NOT_PERFORMED', 'TRAINING_ONLY'):
-                redactions[0] += 1
-                return REMOVE
         return value
 
     clean = visit(document)
@@ -76,10 +81,14 @@ def main():
     parser.add_argument('--source-kind', choices=['library-read', 'original-bytes'], default='library-read')
     parser.add_argument('--expected-original-sha256')
     args = parser.parse_args()
-    raw = sys.stdin.buffer.read() if args.input == '-' else Path(args.input).read_bytes()
     if args.expected_original_sha256 and args.source_kind != 'original-bytes':
         parser.error('Original-byte hash verification requires original-bytes input, never reconstructed Library text.')
-    result = sanitize(json.loads(raw))
+    try:
+        from strict_json import loads
+        raw = sys.stdin.buffer.read() if args.input == '-' else Path(args.input).read_bytes()
+        result = sanitize(loads(raw))
+    except (ValueError, OSError, TypeError, RecursionError) as exc:
+        parser.exit(1, str(exc) + '\n')
     if args.source_kind == 'original-bytes':
         actual = hashlib.sha256(raw).hexdigest()
         result['original_sha256'] = actual

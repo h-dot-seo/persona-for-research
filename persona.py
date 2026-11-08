@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from strict_json import load
 
 
 def payload_sha256(value):
@@ -34,6 +35,8 @@ def validate(persona, knowledge):
     if not isinstance(papers, list):
         errors.append('papers must be an array')
         papers = []
+    if 'knowledge_papers_sha256' in persona and persona['knowledge_papers_sha256'] != payload_sha256(papers):
+        errors.append('knowledge papers payload hash mismatch')
     seen = set()
     for row in papers:
         if not isinstance(row, dict):
@@ -45,6 +48,8 @@ def validate(persona, knowledge):
             seen.add(paper_id)
         if row.get('author_id') != persona.get('author_id'):
             errors.append('cross-author runtime record')
+        if row.get('authorized') is not True:
+            errors.append('runtime paper authorization required')
         if row.get('split') != 'training' or row.get('runtime_knowledge_eligible') is not True:
             errors.append('ineligible runtime paper')
         digest = row.get('source_sha256', '')
@@ -60,8 +65,7 @@ def main():
     p.add_argument('persona', type=Path); p.add_argument('knowledge', type=Path)
     args = p.parse_args()
     try:
-        errors = validate(json.loads(args.persona.read_text(encoding='utf-8')),
-                          json.loads(args.knowledge.read_text(encoding='utf-8')))
+        errors = validate(load(args.persona), load(args.knowledge))
     except (OSError, ValueError, TypeError, AttributeError) as exc:
         errors = [str(exc)]
     print(json.dumps({'mechanically_valid': not errors, 'errors': errors,

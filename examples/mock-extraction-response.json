@@ -1,0 +1,18 @@
+[
+  {
+    "paper_id": "synthetic-0",
+    "locator": "synthetic reasoning",
+    "evidence_quote": "Compare explanations.",
+    "dimension": "alternative_explanation",
+    "candidate_text": "Consider whether competing explanations should be compared.",
+    "proposed_claim_type": "operator_interpretation"
+  },
+  {
+    "paper_id": "synthetic-0",
+    "locator": "synthetic reasoning",
+    "evidence_quote": "State uncertainty.",
+    "dimension": "uncertainty",
+    "candidate_text": "State uncertainty.",
+    "proposed_claim_type": "explicit_statement"
+  }
+]

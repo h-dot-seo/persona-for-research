@@ -1,0 +1,23 @@
+{
+  "schema": "persona.manual-observation.v1",
+  "manifest_sha256": "3b6cd8bb00ed5c7af233c8c1fa73dec591e91fc0e3db48aa1a688af525e6a98c",
+  "paper_id": "synthetic-1",
+  "observation": {
+    "method": "Do not treat model comparison alone as evidence that one explanation is correct.",
+    "condition": "models predict distinct outcomes",
+    "limitation": "simulation only; no real author attribution",
+    "locator": "synthetic section 1",
+    "topic": "model design",
+    "evidence_quote": "Compare competing models",
+    "claim_type": "operator_interpretation",
+    "stance": "challenge",
+    "reasoning": {
+      "uncertainty": {
+        "text": "The supplied sentence alone does not establish which model is correct.",
+        "locator": "synthetic section 1",
+        "evidence_quote": "Compare competing models",
+        "claim_type": "operator_interpretation"
+      }
+    }
+  }
+}
