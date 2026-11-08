@@ -47,7 +47,7 @@ exercise flags the later date and missing design falsification rather than silen
 borrowing a criterion from the citation or claiming to know the author's reasoning.
 
 ```
-python -m unittest test_review_journey -v
+python -m unittest tests.test_review_journey -v
 ```
 
 No LLM, external search, actual author corpus, source reread or scientific evaluation

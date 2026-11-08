@@ -126,7 +126,7 @@ escapes control characters taken from data so that supplied text cannot forge re
   same ID in a rebuilt package is not assumed to denote the same rule.
 - Nothing here changes `validation.human_validation` in a persona payload or rebinds knowledge.
 
-Regression: `python -m unittest test_human_validation -v` covers template binding, the
+Regression: `python -m unittest tests.test_human_validation -v` covers template binding, the
 shipped fixture, stale detection, stale records against rebuilt packages with a removed,
 reordered or renamed paper (reported without re-resolution; exit 0 in `status` and in the
 release review), unknown items and topics, label collisions, field strictness, exclusive

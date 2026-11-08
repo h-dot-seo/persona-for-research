@@ -76,7 +76,7 @@ this is not anonymization, permission to publish, or evidence of researcher fide
 ## Synthetic end-to-end scenario
 
 ```sh
-python -m unittest test_reasoning_links -v
+python -m unittest tests.test_reasoning_links -v
 ```
 
 The test builds an earlier synthetic research observation containing an alternative

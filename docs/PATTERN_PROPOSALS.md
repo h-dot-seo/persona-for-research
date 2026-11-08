@@ -206,7 +206,7 @@ rejects duplicate keys and nonfinite numbers. No outputs are partially printed o
 validation errors, and input files are never modified.
 
 ```sh
-python -m unittest test_pattern_proposals -v
+python -m unittest tests.test_pattern_proposals -v
 ```
 
 Tests use invented publications and canned responses only. They cover real CLI
@@ -218,7 +218,7 @@ No actual model, real researcher material or scientific validation is involved.
 Version-two evidence-use regressions run with:
 
 ```sh
-python -m unittest test_pattern_evidence_reasons -v
+python -m unittest tests.test_pattern_evidence_reasons -v
 ```
 
 They additionally compare canonical v1 payload and rendered-text hashes captured

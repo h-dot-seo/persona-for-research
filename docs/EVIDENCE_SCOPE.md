@@ -58,7 +58,7 @@ rejected claims, unreferenced challenges, invalid years and the actual CLI are
 covered by:
 
 ```
-python -m unittest test_evidence_scope -v
+python -m unittest tests.test_evidence_scope -v
 ```
 
 Use the full review packet for detailed quotations and review notes. Real sources,

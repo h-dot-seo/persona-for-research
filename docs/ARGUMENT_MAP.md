@@ -61,7 +61,7 @@ research interpretation and a proposed third answer claim. It exposes the missin
 defeater and uncited conclusion while preserving each source claim's actual label:
 
 ```
-python -m unittest test_argument_map -v
+python -m unittest tests.test_argument_map -v
 ```
 
 No LLM, source reread, external API, real scholar corpus or fidelity evaluation is

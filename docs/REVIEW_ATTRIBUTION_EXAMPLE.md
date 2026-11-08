@@ -55,7 +55,7 @@ The regression additionally unpacks the three raw context objects into temporary
 
 ```sh
 cd "$REPO"
-python -m unittest test_review_attribution_example -v
+python -m unittest tests.test_review_attribution_example -v
 ```
 
 The nine tests cover the real external-directory CLI sequence, exact distinct passage identities, retained rationale/boundaries, exact citation scope, rejection of a context-only citation, empty selection, rejected history versus active claims, all-deferred final review, input immutability, escaped operator control characters, and in-memory operations with file/network access guarded. Existing snapshots and runtime modules are unchanged.

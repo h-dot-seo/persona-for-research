@@ -1623,3 +1623,82 @@ and does not re-verify scientific meaning, source authenticity, browser QA or re
 GitHub Actions history for the merged commit is the remote record. The Korean guide is a
 translation of documented behaviour, not an additional specification, and the one-line
 purposes in `COMMANDS.md` summarize the guides without adding guarantees.
+
+## 2026-11-08 Test package and dispatcher (0.72-test-package-and-dispatcher)
+
+Current local source release: 0.72 (test package and dispatcher). The 83 `test_*.py` modules
+moved from the repository root into the `tests/` package (`tests/__init__.py` holds one
+docstring line); the root gained the dispatcher `persona_cli.py` and the package gained
+`tests/test_dispatcher.py`. No implementation module, fixture or example changed: every
+non-test `.py` file other than the new dispatcher and every file under `examples/` is
+byte-identical to v0.71, `.github/workflows/tests.yml` is unchanged, and the documented
+`python <script>.py ...` commands, including every fenced `sh` block of the tested guide
+`docs/HUMAN_VALIDATION.md`, are unchanged.
+
+- `python -m unittest discover -q`: 989 synthetic tests passed locally in 626.384 seconds
+  (3 pre-existing platform-conditional skips in `tests/test_journey_inputs.py`: the FIFO and
+  Unix-unlink cases). Before the move the same loader discovered 980 tests, which passed in
+  694.145 seconds on a byte-identical copy of the v0.71 tree; after the move it discovers the
+  same 980 tests under their `tests.` names plus the 9 new dispatcher tests, with no load
+  error.
+- `python -m compileall -q .`: passed; 143 Python files. `persona_cli.py`,
+  `tests/__init__.py` and `tests/test_dispatcher.py` also parse with 3.10 grammar, and the
+  dispatcher tests also passed under a second local interpreter (3.13).
+- `python audit_publication.py`: passed, 233 text files scanned including the manifest.
+- `python verify_manifest.py`: passed, 232 exact allowlisted entries and file hashes.
+
+Moved tests. In the moved modules every `ROOT = Path(__file__).resolve().parent` that meant
+the repository root became `Path(__file__).resolve().parents[1]` (35 module constants and one
+inline path in `tests/test_journey_argument_render_reuse.py`; each occurrence was checked and
+none used the parent as a scratch base), and the 80 cross-test import statements (`import
+test_x as alias` and `from test_x import name`, including three function-local ones) became
+`tests.test_x`. Tests that address scripts and examples relative to the current directory
+keep working because `python -m unittest discover` runs from the repository root, exactly as
+CI does. The 41 documentation lines that named `python -m unittest test_x -v` across 30
+guides now name `python -m unittest tests.test_x -v`, and `docs/WORKFLOWS.md` names
+`tests/test_cli_e2e.py`; `docs/VALIDATION_HISTORY.md` keeps its earlier entries verbatim.
+
+Dispatcher. `python persona_cli.py list` parses the root `*.py` files with `ast`, without
+importing them, and prints one line per script that has an `if __name__ == '__main__'` entry
+point: the file name and the first sentence of its docstring, in name order, 47 lines that
+match the script entries of `docs/COMMANDS.md`. `python persona_cli.py run <script>
+[args...]` resolves the exact file name against the dispatcher's own directory, sets
+`sys.argv` and executes the script in-process through `runpy.run_path(...,
+run_name='__main__')`, so arguments, output, `--help` and exit code are the script's own; a
+name that is not an existing root script with an entry point (a path, a library module, the
+dispatcher itself, a case alias, a test module) is rejected with exit code 2 and no stdout. No
+shell is involved and the dispatcher writes no file. The nine tests cover the list format and
+its agreement with the command reference and with an independent text search for the guard;
+byte-identical stdout, stderr and exit codes for six direct-versus-dispatched invocations
+(`verify_manifest.py`, a passing and a failing `persona.py` validation, an argparse error,
+`--help` and a `human_validation.py status` text report); help forwarding; every rejection
+class; the boundary text of `--help`; that `list` imports no repository module and neither
+path imports `subprocess`; that a `__file__`-relative module (`human_validation.py template`)
+still refuses an output inside the repository and writes one outside it; and that nothing is
+created in the current directory, which is a temporary one in every test.
+
+Deliberately not moved: the implementation modules stay flat at the repository root. Six of
+them resolve files relative to their own location (`human_validation.py`,
+`review_workspace.py`, `revise_local.py` and `synthetic_walkthrough.py` define a module-level
+`ROOT`; `verify_manifest.py` and `audit_publication.py` locate the repository in their
+`__main__` block), the documented commands are `python <script>.py ...` at the root, and
+packaging would have changed bytes, paths and bindings for no documented gain. `README.md`
+(one feature bullet, a "Commands at a glance" row and a layout note), `SKILL.md` (one
+paragraph), `docs/COMMANDS.md` (dispatcher entry, layout paragraph and the closing note on
+the `tests/` package and the `__file__`-relative modules), `docs/README.ko.md` (one sentence
+and one table row) and `docs/WORKFLOWS.md` (the `tests/test_cli_e2e.py` path) were updated;
+`docs/ARCHITECTURE.md` is unchanged because it describes the lifecycle, not the file layout.
+The manifest was regenerated for 232 files.
+
+Verification specific to this change: the 15-stage demo was run by hand into a fresh
+external directory, and the 27-stage research-journey route through `python persona_cli.py
+run synthetic_walkthrough.py ...` from a different current directory; both wrote
+`COMPLETE.json`. A local link checker resolved every relative Markdown link and heading
+anchor in the root and `docs/` Markdown files (548 links in 57 files), and all
+text files are UTF-8 without BOM and LF-only.
+
+Not claimed: this is a layout change plus a discovery aid. It adds no scientific behaviour,
+does not re-verify source authenticity, browser QA or remote CI (the GitHub Actions history
+for the merged commit is the remote record), and a dispatcher listing is not an approval of
+any script's inputs. Local passes under Python 3.15 (the full suite) and 3.13 (the dispatcher
+module only) do not establish the 3.10 and 3.12 CI results.

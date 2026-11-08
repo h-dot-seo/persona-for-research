@@ -87,7 +87,7 @@ An explicit_statement label is the operator's declaration, not automatic author
 attribution. The synthetic example cannot establish real researcher representation.
 
 ```sh
-python -m unittest test_curate_local -v
+python -m unittest tests.test_curate_local -v
 ```
 
 ## Continue to an answer/design review

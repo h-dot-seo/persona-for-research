@@ -104,7 +104,7 @@ scientific meaning. Actual local-byte/quote checks still happen in `corpus_files
 Synthetic regression and real CLI round-trip:
 
 ```
-python -m unittest test_prepare_local_manifest -v
+python -m unittest tests.test_prepare_local_manifest -v
 ```
 
 Instead of editing the entire prepared manifest, use the

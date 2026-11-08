@@ -168,7 +168,7 @@ projection is not anonymization or rights clearance. Hashes establish artifact
 consistency, not authentic authorship, genuine review or semantic truth.
 
 ```sh
-python -m unittest test_publication_context -v
+python -m unittest tests.test_publication_context -v
 ```
 
 Tests use invented publications only. They cover all relation types, scopes,

@@ -87,7 +87,7 @@ actual researcher validation occurs.
 ## Synthetic end-to-end scenario
 
 ```sh
-python -m unittest test_design_scenario -v
+python -m unittest tests.test_design_scenario -v
 ```
 
 A later synthetic review supplies a discriminating-test criterion that qualifies

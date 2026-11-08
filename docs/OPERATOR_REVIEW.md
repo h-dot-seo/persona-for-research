@@ -118,7 +118,7 @@ review and later publication/transfer permission remain separate requirements.
 ## Synthetic end-to-end demonstration
 
 ```sh
-python -m unittest test_operator_review -v
+python -m unittest tests.test_operator_review -v
 ```
 
 This executes the real mock extraction, deferred-template, operator-review,

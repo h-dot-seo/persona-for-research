@@ -85,7 +85,7 @@ All output may contain private context, source quotes and identifiers. It is not
 sanitization, rights clearance or permission to publish excerpts.
 
 ```sh
-python -m unittest test_applicability_review -v
+python -m unittest tests.test_applicability_review -v
 ```
 
 For a tentative recurring method across publications, first record an explicit

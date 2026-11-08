@@ -115,7 +115,7 @@ duplicate decisions and invalid labels fail without a partial stdout result.
 Nothing is ranked, deduplicated, truncated, promoted or transmitted automatically.
 
 ```sh
-python -m unittest test_observation_proposals -v
+python -m unittest tests.test_observation_proposals -v
 ```
 
 Tests use invented local text and canned responses, including empty observations,
