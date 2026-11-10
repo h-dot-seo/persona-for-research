@@ -1,0 +1,16 @@
+{
+  "schema": "persona.manual-observation.v1",
+  "manifest_sha256": "ad5cc4f34e603ae26a08a93732adc705bf7d0b281a29941f5bccc67770324bfa",
+  "paper_id": "synthetic-teach-models-research",
+  "observation": {
+    "method": "Compare toy models",
+    "condition": "Separated toy signals",
+    "limitation": "Synthetic operator fixture; no semantic validation or real author attribution.",
+    "locator": "Teaching method",
+    "topic": "model comparison",
+    "evidence_quote": "Compare separated toy models.",
+    "claim_type": "operator_interpretation",
+    "stance": "support",
+    "reasoning": {}
+  }
+}

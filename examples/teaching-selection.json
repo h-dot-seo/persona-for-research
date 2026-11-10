@@ -1,0 +1,85 @@
+{
+  "author_id": "synthetic-scholar",
+  "version": "1",
+  "build_id": "synthetic-teaching",
+  "papers": [
+    {
+      "paper_id": "synthetic-teach-models-research",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "locator": "synthetic teaching fixture",
+      "kind": "research",
+      "year": 2020,
+      "topic": "model comparison",
+      "observations": [],
+      "source_file": "models-research.md"
+    },
+    {
+      "paper_id": "synthetic-teach-models-review",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "locator": "synthetic teaching fixture",
+      "kind": "review",
+      "year": 2020,
+      "topic": "model comparison",
+      "observations": [],
+      "source_file": "models-review.md"
+    },
+    {
+      "paper_id": "synthetic-teach-sampling-research",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "locator": "synthetic teaching fixture",
+      "kind": "research",
+      "year": 2019,
+      "topic": "sample allocation",
+      "observations": [],
+      "source_file": "sampling-research.md"
+    },
+    {
+      "paper_id": "synthetic-teach-sampling-review",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "locator": "synthetic teaching fixture",
+      "kind": "review",
+      "year": 2022,
+      "topic": "sample allocation",
+      "observations": [],
+      "source_file": "sampling-review.md"
+    },
+    {
+      "paper_id": "synthetic-teach-calibration-research",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "locator": "synthetic teaching fixture",
+      "kind": "research",
+      "year": 2021,
+      "topic": "instrument calibration",
+      "observations": [],
+      "source_file": "calibration-research.md"
+    },
+    {
+      "paper_id": "synthetic-teach-calibration-review",
+      "author_id": "synthetic-scholar",
+      "split": "training",
+      "runtime_knowledge_eligible": true,
+      "authorized": true,
+      "locator": "synthetic teaching fixture",
+      "kind": "review",
+      "year": 2023,
+      "topic": "instrument calibration",
+      "observations": [],
+      "source_file": "calibration-review.md"
+    }
+  ]
+}

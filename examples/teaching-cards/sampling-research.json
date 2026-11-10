@@ -1,0 +1,16 @@
+{
+  "schema": "persona.manual-observation.v1",
+  "manifest_sha256": "dce7fd286705ba3339575be57a66d06cfdb500c3e268e38bd4d9928769ece0b3",
+  "paper_id": "synthetic-teach-sampling-research",
+  "observation": {
+    "method": "Balance toy groups",
+    "condition": "Fixed toy budget",
+    "limitation": "Synthetic operator fixture; no semantic validation or real author attribution.",
+    "locator": "Teaching method",
+    "topic": "sample allocation",
+    "evidence_quote": "Balance the invented sample groups before counting.",
+    "claim_type": "operator_interpretation",
+    "stance": "support",
+    "reasoning": {}
+  }
+}

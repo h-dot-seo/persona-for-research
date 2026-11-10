@@ -1,0 +1,16 @@
+{
+  "schema": "persona.manual-observation.v1",
+  "manifest_sha256": "6b839b62a97a59abe7f2255eabd9bbe24ba43b7316802493b2b418aa89eee3b5",
+  "paper_id": "synthetic-teach-calibration-research",
+  "observation": {
+    "method": "Recheck toy reference",
+    "condition": "Drifting toy instrument",
+    "limitation": "Synthetic operator fixture; no semantic validation or real author attribution.",
+    "locator": "Teaching method",
+    "topic": "instrument calibration",
+    "evidence_quote": "Recheck the toy reference before each measurement.",
+    "claim_type": "operator_interpretation",
+    "stance": "support",
+    "reasoning": {}
+  }
+}

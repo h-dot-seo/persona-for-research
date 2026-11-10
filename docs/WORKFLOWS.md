@@ -266,7 +266,8 @@ and split controls remain necessary before intake and before sharing output.
 
 ## Verified intake and authorized local source files
 
-Guides: [local input preparation](LOCAL_INPUT_PREPARATION.md), [manual observation
+Guides: [own-file teaching tutorial](TUTORIAL_OWN_FILES.md),
+[local input preparation](LOCAL_INPUT_PREPARATION.md), [manual observation
 cards](MANUAL_LOCAL_OBSERVATIONS.md), [manual evidence revision](MANUAL_EVIDENCE_REVISION.md),
 [revision impact](REVISION_IMPACT.md), [source recheck](SOURCE_RECHECK.md),
 [workflow review](WORKFLOW_REVIEW.md).

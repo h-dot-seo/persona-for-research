@@ -53,6 +53,10 @@ python synthetic_walkthrough.py ../persona-synthetic-demo
 의도된 안전장치입니다. 자세한 읽기 순서와 실패 시 대처는 [QUICKSTART.md](QUICKSTART.md)에
 있습니다.
 
+두 번째 시작 경로인 [내 파일로 첫 검토 여정 만들기](TUTORIAL_OWN_FILES.md)는
+세 주제의 합성 원문 여섯 개를 준비하고, 관찰 카드와 패턴을 직접 작성·선택한 뒤
+HTML 검토 화면까지 진행합니다. 영어 안내이며 답변·설계·논증 작성은 후속 작업입니다.
+
 출처 → 방법 → 논증을 잇는 통합 경로(27단계)는 다음과 같이 실행합니다.
 
 ```sh
