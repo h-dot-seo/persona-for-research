@@ -1,4 +1,5 @@
 """Prepare and explicitly review offline method-application proposals, without applying them."""
+from exclusive_output import add_output_argument, emit, preflight
 from handoff_text import render_handoff
 
 import argparse
@@ -300,7 +301,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
     for name in ('prepare', 'response-template', 'import', 'review-template', 'review', 'export'):
-        command = commands.add_parser(name)
+        command = commands.add_parser(name); add_output_argument(command)
         for argument in ('package', 'patterns', 'context', 'links', 'proposal'): command.add_argument(argument, type=Path)
         command.add_argument('--pattern-id', required=True)
         for argument in {'prepare': [], 'response-template': ['handoff'], 'import': ['handoff', 'response', 'provenance'],
@@ -309,6 +310,7 @@ def main():
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
         if name in ('prepare', 'review'): command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         values = [_load(getattr(args, name)) for name in ('package', 'patterns', 'context', 'links', 'proposal')]+[args.pattern_id]
         if args.command == 'prepare': result = prepare_handoff(*values)
@@ -323,7 +325,7 @@ def main():
             output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
         if len(output.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('application proposal output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__': main()

@@ -1,4 +1,5 @@
 """Trace old answer/design evidence uses across two bound packages without rebinding."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
 import sys
@@ -110,12 +111,13 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('previous','current','links','proposal','draft'):p.add_argument(name,type=Path)
     p.add_argument('--reference-year',type=int,required=True);p.add_argument('--format',choices=('json','text'),default='json')
-    a=p.parse_args()
+    add_output_argument(p); a=p.parse_args()
+    preflight(p, getattr(a, 'output', None))
     try:
         result=inspect(*[load(getattr(a,n)) for n in ('previous','current','links','proposal','draft')],a.reference_year)
         output=render(result) if a.format=='text' else json.dumps(result,indent=2)+'\n'
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(p, output.encode('utf-8'), getattr(a, 'output', None))
 
 
 if __name__=='__main__':main()

@@ -1,4 +1,5 @@
 """Trace an operator's proposed design to supplied reasoning links, without inference."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -122,7 +123,8 @@ def main():
     parser.add_argument('--question')
     parser.add_argument('--operator-id')
     parser.add_argument('--format', choices=('json', 'text'), default='json')
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         package, links = load(args.package), load(args.links)
         if args.template:
@@ -136,7 +138,7 @@ def main():
             output = render(package, links, proposal) if args.format == 'text' else json.dumps(review(package, links, proposal), indent=2) + '\n'
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

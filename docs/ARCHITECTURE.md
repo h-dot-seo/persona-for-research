@@ -82,3 +82,7 @@ Structural intake uses `prepare_local_manifest.py --report-defects` behind the s
 Offline handoff text is a pure derived view (`handoff_text.py`), not a new artifact
 contract. The complete ASCII-escaped JSON preserves every version and quote; imports
 remain bound to the original handoff payload hash. No builder or import path changes.
+
+## Exclusive result files
+
+Use `--output NEW_FILE` on result CLIs to save their exact UTF-8 bytes without shell re-encoding or overwrite. The destination is checked before input reads; stdout carries only a save receipt with hashes and a potentially private path. Existing directory writers and validators keep their contracts. See [exclusive output](EXCLUSIVE_OUTPUT.md) for coverage, bounds, stable-parent assumptions and retained partial files on write failure. No scientific approval, network call or canonical update is implied.

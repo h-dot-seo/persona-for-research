@@ -1,4 +1,5 @@
 """Inspect a source-to-method-to-argument journey without generating or approving research."""
+from exclusive_output import add_output_argument, emit, preflight
 from answer_draft import explanation_fields
 
 import argparse
@@ -343,7 +344,8 @@ def main():
     parser.add_argument('--pattern-id', required=True); parser.add_argument('--review', type=Path)
     parser.add_argument('--source-selection', type=Path); parser.add_argument('--source-root', type=Path)
     parser.add_argument('--method-applications', type=Path)
-    parser.add_argument('--format', choices=('json', 'text', 'html'), default='json'); args = parser.parse_args()
+    parser.add_argument('--format', choices=('json', 'text', 'html'), default='json'); add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         values = [_load(getattr(args, name)) for name in INPUT_NAMES] + [args.pattern_id, _load(args.review) if args.review else None]
         if (args.source_selection is None) != (args.source_root is None):
@@ -357,7 +359,7 @@ def main():
             output = render(*values, **options).encode('utf-8') if args.format == 'text' else encode_result(inspect(*values, **options))
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write(output)
+    emit(parser, output, getattr(args, 'output', None))
 
 
 if __name__ == '__main__': main()

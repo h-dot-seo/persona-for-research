@@ -1,4 +1,5 @@
 """Apply declared operator decisions to a separate, hash-bound revision candidate."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -174,7 +175,8 @@ def main():
     modes.add_argument('--targets', action='store_true')
     parser.add_argument('--reviewer-id')
     parser.add_argument('--source-root', type=Path, help='Recheck a local file manifest and reconstruct its source segments')
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     def input_corpus():
         corpus = load(args.corpus)
         if args.source_root is not None:
@@ -197,7 +199,7 @@ def main():
                                       args.new_version, args.new_build_id)
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write((json.dumps(result, indent=2) + '\n').encode('utf-8'))
+    emit(parser, (json.dumps(result, indent=2) + '\n').encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

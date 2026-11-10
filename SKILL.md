@@ -121,9 +121,9 @@ a run with `FAILED.txt` are diagnostic only; choose a new destination before ret
 - Never edit hashes to repair stale bindings. Changing links needs a newly bound design,
   not a replaced binding hash. Rebuild through the documented chain.
 - Keep sources and all output outside the repository, including redirected stdout.
-  Only human validation, review workspace, local revision and synthetic walkthrough
-  enforce external output paths; other commands rely on the operator. No backend,
-  permission, scientific validity or completed validation may be inferred from a report.
+  Prefer `--output NEW_FILE` for result CLIs: exact UTF-8 bytes, no overwrite,
+  hash receipt only. See docs/EXCLUSIVE_OUTPUT.md for scope and partial files.
+  No permission, scientific validity or completed validation is implied.
 
 For pasteable handoffs use `prepare --format text`; see docs/MODEL_HANDOFF.md.
 Keep JSON for import. Text grants no transmission permission.

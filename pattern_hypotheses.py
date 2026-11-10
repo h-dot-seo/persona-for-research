@@ -1,4 +1,5 @@
 """Review explicitly proposed cross-publication method patterns, never discover them."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
 import sys
@@ -123,7 +124,8 @@ def render(result, *, imported_proposal=False):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('package',type=Path);p.add_argument('form',type=Path,nargs='?')
-    p.add_argument('--template',action='store_true');p.add_argument('--operator-id');p.add_argument('--format',choices=('json','text'),default='json');a=p.parse_args()
+    p.add_argument('--template',action='store_true');p.add_argument('--operator-id');p.add_argument('--format',choices=('json','text'),default='json');add_output_argument(p); a=p.parse_args()
+    preflight(p, getattr(a, 'output', None))
     try:
         package=load(a.package)
         if a.template:
@@ -133,7 +135,7 @@ def main():
             if a.form is None or a.operator_id is not None:raise ValueError('review requires a form without operator override')
             result=inspect(package,load(a.form));output=render(result) if a.format=='text' else json.dumps(result,indent=2)+'\n'
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(p, output.encode('utf-8'), getattr(a, 'output', None))
 
 
 if __name__=='__main__':main()

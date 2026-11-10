@@ -1,5 +1,6 @@
 """Record and check a detached human validation assessment bound to one persona package."""
 import argparse
+from exclusive_output import add_output_argument, emit, preflight, write_exclusive
 import datetime
 import json
 import re
@@ -155,18 +156,7 @@ def template(persona, knowledge=None):
 
 def write_template(persona, knowledge, destination):
     record = template(persona, knowledge)
-    requested = Path(destination).absolute()
-    if any(p.is_symlink() for p in (requested, *requested.parents)):
-        raise ValueError('record output path must not contain symlinks')
-    target = requested.resolve()
-    if target == ROOT or ROOT in target.parents:
-        raise ValueError('write the record outside the repository; the publication inventory rejects unlisted files')
-    if target.exists():
-        raise ValueError('output already exists; no files are overwritten')
-    if not target.parent.is_dir():
-        raise ValueError('output parent must already exist')
-    with target.open('x', encoding='utf-8', newline='\n') as stream:
-        stream.write(json.dumps(record, ensure_ascii=True, indent=2) + '\n')
+    write_exclusive((json.dumps(record, ensure_ascii=True, indent=2) + '\n').encode('utf-8'), destination)
     return record
 
 
@@ -389,7 +379,10 @@ def main():
     status.add_argument('--human-validation', type=Path, action='append', default=[],
                         help='Checked record(s) to report; repeatable')
     status.add_argument('--text', action='store_true')
+    add_output_argument(checking)
+    add_output_argument(status)
     args = parser.parse_args()
+    preflight(parser, args.output)
     read = bounded_reader()
     try:
         persona = read(args.persona)
@@ -412,7 +405,7 @@ def main():
         output = _bounded(output)
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), None if args.command == 'template' else args.output)
 
 
 if __name__ == '__main__':

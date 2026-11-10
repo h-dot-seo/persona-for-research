@@ -1,4 +1,5 @@
 """Verify curated observations against explicitly supplied text segments."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import hashlib
@@ -51,14 +52,15 @@ def verified_corpus(corpus, *, _local_source_ids=()):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('corpus',type=Path); p.add_argument('--question',required=True); p.add_argument('--topic',required=True)
-    a=p.parse_args()
+    add_output_argument(p); a=p.parse_args()
+    preflight(p, getattr(a, 'output', None))
     try:
         package=build(verified_corpus(load(a.corpus)))
         result=dict(package=package,application=apply(package,a.question,a.topic),
                     boundary='Exact quote and supplied segment hash checked; source authenticity and semantic support unverified')
     except (ValueError,OSError,KeyError,TypeError) as e:
         p.exit(1,str(e)+'\n')
-    sys.stdout.buffer.write((json.dumps(result,ensure_ascii=False,indent=2) + '\n').encode('utf-8'))
+    emit(p, (json.dumps(result,ensure_ascii=False,indent=2) + '\n').encode('utf-8'), getattr(a, 'output', None))
 
 
 if __name__=='__main__': main()

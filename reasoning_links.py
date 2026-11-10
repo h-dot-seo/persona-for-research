@@ -1,4 +1,5 @@
 """Review explicitly supplied cross-publication links, never infer author reasoning."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -158,7 +159,8 @@ def main():
     parser.add_argument('--template', action='store_true')
     parser.add_argument('--operator-id')
     parser.add_argument('--format', choices=('json', 'text'), default='json')
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         value = load(args.package)
         if args.template:
@@ -172,7 +174,7 @@ def main():
             output = render(value, supplied) if args.format == 'text' else json.dumps(review(value, supplied), indent=2) + '\n'
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

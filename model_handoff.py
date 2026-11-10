@@ -1,4 +1,5 @@
 """Prepare or import a local model handoff without invoking or transmitting to a model."""
+from exclusive_output import add_output_argument, emit, preflight
 from handoff_text import render_handoff
 
 import argparse
@@ -25,19 +26,20 @@ def load(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
-    prepare = commands.add_parser('prepare', help='Export source-containing local request JSON')
+    prepare = commands.add_parser('prepare', help='Export source-containing local request JSON'); add_output_argument(prepare)
     prepare.add_argument('corpus', type=Path)
     prepare.add_argument('--format', choices=('json', 'text'), default='json')
-    response_template = commands.add_parser('response-template', help='Prepare an empty response bound to the current handoff')
+    response_template = commands.add_parser('response-template', help='Prepare an empty response bound to the current handoff'); add_output_argument(response_template)
     response_template.add_argument('corpus', type=Path)
     response_template.add_argument('handoff', type=Path)
-    ingest = commands.add_parser('import', help='Check a bound response and separate declared provenance')
+    ingest = commands.add_parser('import', help='Check a bound response and separate declared provenance'); add_output_argument(ingest)
     for name in ('corpus', 'handoff', 'response', 'provenance'):
         ingest.add_argument(name, type=Path)
     for command in (prepare, response_template, ingest):
         command.add_argument('--task', choices=('reasoning', 'observations'), default='reasoning')
         command.add_argument('--source-root', type=Path, help='Read and recheck files from a local manifest instead of supplied segments')
     args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         corpus = load(args.corpus)
         if args.source_root is not None:
@@ -58,7 +60,7 @@ def main():
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
     output = render_handoff(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=False, indent=2) + '\n'
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

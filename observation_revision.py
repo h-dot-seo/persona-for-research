@@ -1,4 +1,5 @@
 """Append explicitly reviewed imported observations to a separate local candidate."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -133,13 +134,14 @@ def encode_result(result):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);commands=parser.add_subparsers(dest='command',required=True)
     for name in ('template','prepare','audit'):
-        command=commands.add_parser(name)
+        command=commands.add_parser(name); add_output_argument(command)
         for field in ('manifest','bundle','review'):command.add_argument(field,type=Path)
         if name=='template':command.add_argument('--operator-id',required=True)
         else:command.add_argument('card',type=Path)
         if name=='audit':command.add_argument('candidate',type=Path)
         command.add_argument('--source-root',type=Path,required=True)
     args=parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         manifest,bundle,review=(_load(getattr(args,key)) for key in ('manifest','bundle','review'))
         if args.command=='template':result=template(manifest,bundle,review,args.source_root,args.operator_id)
@@ -147,7 +149,7 @@ def main():
         else:result=audit_candidate(manifest,bundle,review,_load(args.card),_load(args.candidate),args.source_root)
         output=encode_result(result)
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:parser.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output)
+    emit(parser, output, getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

@@ -1,4 +1,5 @@
 """Review operator-declared premise/conclusion steps without reconstructing private reasoning."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -312,7 +313,8 @@ def main():
     parser.add_argument('map', type=Path, nargs='?'); parser.add_argument('--review', type=Path)
     parser.add_argument('--template', action='store_true'); parser.add_argument('--operator-id')
     parser.add_argument('--step-id')
-    parser.add_argument('--format', choices=('json', 'text'), default='json'); args = parser.parse_args()
+    parser.add_argument('--format', choices=('json', 'text'), default='json'); add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         package, draft = load(args.package), load(args.draft); declared = load(args.review) if args.review else None
         if args.template:
@@ -331,7 +333,7 @@ def main():
                 if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES: raise ValueError('imported argument output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc:
         parser.exit(1, (display(str(exc)) if args.step_id is not None else str(exc)) + '\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__': main()

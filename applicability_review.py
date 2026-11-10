@@ -1,4 +1,5 @@
 """Record operator comparisons of source conditions with a new research context."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
 import sys
@@ -112,7 +113,8 @@ def render(result):
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('package',type=Path);p.add_argument('form',type=Path,nargs='?')
     p.add_argument('--template',action='store_true');p.add_argument('--question');p.add_argument('--target-context');p.add_argument('--topic');p.add_argument('--reference-year',type=int);p.add_argument('--operator-id');p.add_argument('--format',choices=('json','text'),default='json')
-    a=p.parse_args()
+    add_output_argument(p); a=p.parse_args()
+    preflight(p, getattr(a, 'output', None))
     try:
         package=load(a.package)
         if a.template:
@@ -122,7 +124,7 @@ def main():
             if a.form is None or any(getattr(a,k) is not None for k in ('question','target_context','topic','reference_year','operator_id')):raise ValueError('review requires a form and no context overrides')
             result=inspect(package,load(a.form));output=render(result) if a.format=='text' else json.dumps(result,indent=2)+'\n'
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(p, output.encode('utf-8'), getattr(a, 'output', None))
 
 
 if __name__=='__main__':main()

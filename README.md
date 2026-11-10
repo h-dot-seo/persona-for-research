@@ -26,6 +26,7 @@ source corpora, real persona packages and real validation results are kept out.
 - Read-only whole-selection structural reports (`prepare_local_manifest.py --report-defects`) before local preparation.
 - Lossless, ASCII-escaped pasteable handoff views with `prepare --format text`; JSON bindings and imports stay unchanged.
 - UTF-8, LF-only JSON result bytes from the ten formerly text-mode CLIs, independent of the console code page; see [stdout and shell capture](docs/COMMANDS.md#stdout-and-shell-capture).
+- Exclusive `--output NEW_FILE` result files, with bounded hash receipts and no shell redirection.
 - Synthetic templates and tests; a portable agent workflow in `SKILL.md`.
 - A `tests/` package for the unittest suite and a root dispatcher, `persona_cli.py`, that lists and runs the root CLIs without changing them.
 
@@ -83,6 +84,7 @@ Keep real inputs and generated packages outside this public repository.
 
 | Command | Purpose | Reference |
 |---|---|---|
+| Result CLI `--output NEW_FILE` | Save exact UTF-8 results without overwrite; stdout is a hash receipt | [Exclusive output](docs/EXCLUSIVE_OUTPUT.md) |
 | `synthetic_walkthrough.py` | Run the bundled synthetic fixtures through 15 to 53 real CLI stages into a new external directory | [Quickstart](docs/QUICKSTART.md) |
 | `persona.py`, `safe_canonical_read.py` | Validate persona/knowledge hash bindings; project canonical JSON without holdout identifiers | [Architecture](docs/ARCHITECTURE.md) |
 | `observation_input.py` | Verify curated observations and quotes against supplied segments, then build the planning scaffold | [Workflows](docs/WORKFLOWS.md#verified-intake-and-authorized-local-source-files) |
@@ -191,3 +193,7 @@ No license has been selected by the owner yet; see [rights](RIGHTS.md).
 See [local input preparation](docs/LOCAL_INPUT_PREPARATION.md) for converter-neutral text requirements and bounded defect reports.
 
 See [pasteable offline handoffs](docs/MODEL_HANDOFF.md#pasteable-local-handoff-view) for separately authorized assistants.
+
+## Exclusive result files
+
+Use `--output NEW_FILE` on result CLIs to save their exact UTF-8 bytes without shell re-encoding or overwrite. The destination is checked before input reads; stdout carries only a save receipt with hashes and a potentially private path. Existing directory writers and validators keep their contracts. See [exclusive output](docs/EXCLUSIVE_OUTPUT.md) for coverage, bounds, stable-parent assumptions and retained partial files on write failure. No scientific approval, network call or canonical update is implied.

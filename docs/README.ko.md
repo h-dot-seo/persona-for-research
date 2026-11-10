@@ -220,3 +220,7 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 로컬 입력을 준비하기 전에 `prepare_local_manifest.py --report-defects`로 선택 파일 전체의 구조를 읽기 전용으로 확인할 수 있습니다. [안내](LOCAL_INPUT_PREPARATION.md).
 
 오프라인 핸드오프의 `prepare --format text`는 별도로 승인된 로컬·원격 도우미에 붙여넣을 수 있는 전체 JSON 기반 텍스트를 만듭니다. 전송 허가가 아니며 모델을 호출하지 않습니다. 기본 JSON과 import 바인딩은 그대로이고 `response-template`은 JSON 전용입니다. [형식과 크기 경계](MODEL_HANDOFF.md#pasteable-local-handoff-view)를 확인하세요.
+
+## 결과 파일의 배타 저장
+
+결과 명령의 `--output NEW_FILE`은 기존 파일을 덮어쓰지 않고 UTF-8 바이트를 저장하며, stdout에는 해시·경로가 담긴 영수증만 냅니다. 경로도 개인정보일 수 있습니다. [범위와 실패 경계](EXCLUSIVE_OUTPUT.md)를 확인하세요. 검증기·기존 디렉터리 writer는 그대로입니다.

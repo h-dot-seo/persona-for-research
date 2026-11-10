@@ -136,3 +136,5 @@ review topology. Additional original-candidate, adoption-decision and declared-i
 groups retain full history without calling it operator authorship or active evidence.
 Changing a rejected bridge can alter argument identity without changing any adopted
 step; manual/imported transitions keep both complete reports.
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

@@ -223,7 +223,7 @@ class CliUtf8OutputTests(unittest.TestCase):
                 if name in UNESCAPED:
                     self.assertIn(UNICODE.encode('utf-8'), run.stdout)
 
-    def test_each_converted_main_has_one_binary_write_and_no_print(self):
+    def test_each_converted_main_has_one_shared_binary_emitter_and_no_print(self):
         for name in MODULES:
             with self.subTest(script=name):
                 tree = ast.parse((ROOT / (name + '.py')).read_text(encoding='utf-8'))
@@ -234,9 +234,11 @@ class CliUtf8OutputTests(unittest.TestCase):
                                      for node in calls))
                 writes = [node for node in calls if isinstance(node.func, ast.Attribute)
                           and node.func.attr == 'write']
-                self.assertEqual(len(writes), 1)
-                self.assertEqual(ast.dump(writes[0].func),
-                                 ast.dump(ast.parse('sys.stdout.buffer.write', mode='eval').body))
+                self.assertEqual(writes, [])
+                emissions = [node for node in calls if isinstance(node.func, ast.Name)
+                             and node.func.id == 'emit']
+                self.assertEqual(len(emissions), 1)
+
 
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
 """Review publication-dated question and method records, without career inference."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -140,7 +141,8 @@ def main():
     parser.add_argument('--topic', required=True)
     parser.add_argument('--format', choices=('json', 'text'), default='json')
     parser.add_argument('--publication-relations',type=Path)
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         value = load(args.package)
         if args.publication_relations:
@@ -150,7 +152,7 @@ def main():
         output = render(value, args.topic, relations) if args.format == 'text' else json.dumps(timeline(value, args.topic, relations), indent=2) + '\n'
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

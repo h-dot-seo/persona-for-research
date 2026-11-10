@@ -35,9 +35,10 @@ A shell may decode and re-encode native stdout after the program writes it.
 In particular, this change does not make default PowerShell 5 redirection safe
 for UTF-8 input files. Use a byte-preserving capture, such as Python subprocess
 binary capture, when hashes or downstream UTF-8 readers matter. Redirection can
-still overwrite an existing file or leave an empty file on failure. This release
-adds no `--output` or `--version` option; use the existing command-specific writers
-where available and choose new destinations outside the repository.
+still overwrite an existing file or leave an empty file on failure. Use `--output NEW_FILE` on result commands to bypass shell re-encoding and refuse
+overwrite. Stdout then contains only a bounded save receipt; the saved bytes match
+the command result. See [Exclusive output](EXCLUSIVE_OUTPUT.md) for coverage,
+limits, path privacy and partial-write behaviour. No `--version` is added.
 
 Scripts in alphabetical order: [`answer_draft.py`](#answer_draftpy), [`answer_proposals.py`](#answer_proposalspy), [`applicability_review.py`](#applicability_reviewpy), [`application_proposals.py`](#application_proposalspy), [`argument_map.py`](#argument_mappy), [`argument_proposals.py`](#argument_proposalspy), [`audit_design_chain.py`](#audit_design_chainpy), [`audit_design_lineage.py`](#audit_design_lineagepy), [`audit_publication.py`](#audit_publicationpy), [`citation_reasoning.py`](#citation_reasoningpy), [`compare_releases.py`](#compare_releasespy), [`corpus_files.py`](#corpus_filespy), [`curate_local.py`](#curate_localpy), [`design_scenario.py`](#design_scenariopy), [`evaluate_synthetic.py`](#evaluate_syntheticpy), [`evidence_scope.py`](#evidence_scopepy), [`extraction_adapter.py`](#extraction_adapterpy), [`human_validation.py`](#human_validationpy), [`journey_compare.py`](#journey_comparepy), [`journey_inputs.py`](#journey_inputspy), [`method_application.py`](#method_applicationpy), [`model_handoff.py`](#model_handoffpy), [`observation_input.py`](#observation_inputpy), [`observation_proposals.py`](#observation_proposalspy), [`observation_revision.py`](#observation_revisionpy), [`operator_review.py`](#operator_reviewpy), [`pattern_hypotheses.py`](#pattern_hypothesespy), [`pattern_proposals.py`](#pattern_proposalspy), [`pattern_transfer_review.py`](#pattern_transfer_reviewpy), [`persona.py`](#personapy), [`persona_cli.py`](#persona_clipy), [`prepare_local_manifest.py`](#prepare_local_manifestpy), [`publication_context.py`](#publication_contextpy), [`publication_scope.py`](#publication_scopepy), [`publication_timeline.py`](#publication_timelinepy), [`reasoning_links.py`](#reasoning_linkspy), [`research_journey.py`](#research_journeypy), [`research_workflow.py`](#research_workflowpy), [`review_journey.py`](#review_journeypy), [`review_package.py`](#review_packagepy), [`review_workspace.py`](#review_workspacepy), [`revise_local.py`](#revise_localpy), [`revision_impact.py`](#revision_impactpy), [`safe_canonical_read.py`](#safe_canonical_readpy), [`source_recheck.py`](#source_recheckpy), [`synthetic_walkthrough.py`](#synthetic_walkthroughpy), [`topic_inventory.py`](#topic_inventorypy), [`verify_manifest.py`](#verify_manifestpy).
 
@@ -117,7 +118,7 @@ Guide: [Security and publication boundary](../SECURITY.md), [Validation record](
 Verify curated observations against explicitly supplied text segments.
 
 ```text
-usage: observation_input.py [-h] --question QUESTION --topic TOPIC corpus
+usage: observation_input.py [-h] --question QUESTION --topic TOPIC [--output NEW_FILE] corpus
 ```
 
 Guide: [Workflows: verified intake and authorized local source files](WORKFLOWS.md#verified-intake-and-authorized-local-source-files), [Workflow review](WORKFLOW_REVIEW.md).
@@ -127,7 +128,7 @@ Guide: [Workflows: verified intake and authorized local source files](WORKFLOWS.
 Apply operator-curated paper observations as a bounded research planning scaffold.
 
 ```text
-usage: research_workflow.py [-h] --question QUESTION --topic TOPIC corpus
+usage: research_workflow.py [-h] --question QUESTION --topic TOPIC [--output NEW_FILE] corpus
 ```
 
 Guide: [Workflows: paper-to-research-plan workflow](WORKFLOWS.md#paper-to-research-plan-workflow), [Workflow review](WORKFLOW_REVIEW.md).
@@ -137,7 +138,7 @@ Guide: [Workflows: paper-to-research-plan workflow](WORKFLOWS.md#paper-to-resear
 Prepare hashes and section inventory for explicitly selected local training files.
 
 ```text
-usage: prepare_local_manifest.py [-h] --source-root SOURCE_ROOT [--report-defects] selection
+usage: prepare_local_manifest.py [-h] --source-root SOURCE_ROOT [--report-defects] [--output NEW_FILE] selection
 ```
 
 Guide: [Local input preparation](LOCAL_INPUT_PREPARATION.md).
@@ -147,7 +148,7 @@ Guide: [Local input preparation](LOCAL_INPUT_PREPARATION.md).
 Load explicitly authorized local UTF-8 Markdown evidence with byte hashes.
 
 ```text
-usage: corpus_files.py [-h] --source-root SOURCE_ROOT --question QUESTION --topic TOPIC manifest
+usage: corpus_files.py [-h] --source-root SOURCE_ROOT --question QUESTION --topic TOPIC [--output NEW_FILE] manifest
 ```
 
 Guide: [Local input preparation](LOCAL_INPUT_PREPARATION.md), [Workflows: verified intake and authorized local source files](WORKFLOWS.md#verified-intake-and-authorized-local-source-files).
@@ -158,8 +159,8 @@ Append one explicitly authored observation to a pinned local manifest.
 
 ```text
 usage: curate_local.py [-h] {template,append} ...
-usage: curate_local.py template [-h] --paper PAPER manifest
-usage: curate_local.py append [-h] --source-root SOURCE_ROOT manifest card
+usage: curate_local.py template [-h] [--output NEW_FILE] --paper PAPER manifest
+usage: curate_local.py append [-h] [--output NEW_FILE] --source-root SOURCE_ROOT manifest card
 ```
 
 Subcommands:
@@ -175,7 +176,7 @@ Revise one manual observation against unchanged local source bytes, with an audi
 
 ```text
 usage: revise_local.py [-h] {template,apply} ...
-usage: revise_local.py template [-h] --paper PAPER --observation-index OBSERVATION_INDEX manifest
+usage: revise_local.py template [-h] [--output NEW_FILE] --paper PAPER --observation-index OBSERVATION_INDEX manifest
 usage: revise_local.py apply [-h] --source-root SOURCE_ROOT manifest card destination
 ```
 
@@ -191,7 +192,7 @@ Guide: [Manual evidence revision](MANUAL_EVIDENCE_REVISION.md).
 Trace old answer/design evidence uses across two bound packages without rebinding.
 
 ```text
-usage: revision_impact.py [-h] --reference-year REFERENCE_YEAR [--format {json,text}] previous current links proposal draft
+usage: revision_impact.py [-h] --reference-year REFERENCE_YEAR [--format {json,text}] [--output NEW_FILE] previous current links proposal draft
 ```
 
 Guide: [Revision impact](REVISION_IMPACT.md).
@@ -201,7 +202,7 @@ Guide: [Revision impact](REVISION_IMPACT.md).
 Recheck every supplied source file and stored quote without changing a package.
 
 ```text
-usage: source_recheck.py [-h] [--template] [--operator-id OPERATOR_ID] [--source-root SOURCE_ROOT] [--format {json,text}] package [selection]
+usage: source_recheck.py [-h] [--template] [--operator-id OPERATOR_ID] [--source-root SOURCE_ROOT] [--format {json,text}] [--output NEW_FILE] package [selection]
 ```
 
 Guide: [Source recheck](SOURCE_RECHECK.md).
@@ -211,7 +212,7 @@ Guide: [Source recheck](SOURCE_RECHECK.md).
 Discover existing exact-topic scopes without semantic merging or ranking.
 
 ```text
-usage: topic_inventory.py [-h] [--format {json,text}] package
+usage: topic_inventory.py [-h] [--format {json,text}] [--output NEW_FILE] package
 ```
 
 Guide: [Topic discovery](TOPIC_DISCOVERY.md).
@@ -223,7 +224,7 @@ Guide: [Topic discovery](TOPIC_DISCOVERY.md).
 Render a compact read-only review from a validated bound scholarly package.
 
 ```text
-usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] package
+usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--output NEW_FILE] package
 ```
 
 Guide: [Evidence details](EVIDENCE_DETAILS.md), [Human validation](HUMAN_VALIDATION.md), [Workflows: review a candidate release and a bound package](WORKFLOWS.md#review-a-candidate-release-and-a-bound-package).
@@ -233,7 +234,7 @@ Guide: [Evidence details](EVIDENCE_DETAILS.md), [Human validation](HUMAN_VALIDAT
 Read-only comparison of bound evidence packages; never update canonical policy.
 
 ```text
-usage: compare_releases.py [-h] previous candidate
+usage: compare_releases.py [-h] [--output NEW_FILE] previous candidate
 ```
 
 Guide: [Workflows: review a candidate release and a bound package](WORKFLOWS.md#review-a-candidate-release-and-a-bound-package), [Workflow review](WORKFLOW_REVIEW.md).
@@ -245,8 +246,8 @@ Record and check a detached human validation assessment bound to one persona pac
 ```text
 usage: human_validation.py [-h] {template,check,status} ...
 usage: human_validation.py template [-h] --output OUTPUT persona [knowledge]
-usage: human_validation.py check [-h] [--text] record persona [knowledge]
-usage: human_validation.py status [-h] [--human-validation HUMAN_VALIDATION] [--text] persona [knowledge]
+usage: human_validation.py check [-h] [--text] [--output NEW_FILE] record persona [knowledge]
+usage: human_validation.py status [-h] [--human-validation HUMAN_VALIDATION] [--text] [--output NEW_FILE] persona [knowledge]
 ```
 
 Subcommands:
@@ -263,8 +264,8 @@ Freeze synthetic answer metadata, then compare separately supplied holdout label
 
 ```text
 usage: evaluate_synthetic.py [-h] {freeze,evaluate} ...
-usage: evaluate_synthetic.py freeze [-h] package draft
-usage: evaluate_synthetic.py evaluate [-h] submission holdout_labels
+usage: evaluate_synthetic.py freeze [-h] [--output NEW_FILE] package draft
+usage: evaluate_synthetic.py evaluate [-h] [--output NEW_FILE] submission holdout_labels
 ```
 
 Subcommands:
@@ -281,7 +282,7 @@ Guide: [Synthetic evaluation](SYNTHETIC_EVALUATION.md).
 Bounded extraction candidates from a mock or declared offline model response.
 
 ```text
-usage: extraction_adapter.py [-h] --mock-response MOCK_RESPONSE corpus
+usage: extraction_adapter.py [-h] --mock-response MOCK_RESPONSE [--output NEW_FILE] corpus
 ```
 
 Guide: [Extraction contract](EXTRACTION_CONTRACT.md).
@@ -292,9 +293,9 @@ Prepare or import a local model handoff without invoking or transmitting to a mo
 
 ```text
 usage: model_handoff.py [-h] {prepare,response-template,import} ...
-usage: model_handoff.py prepare [-h] [--format {json,text}] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus
-usage: model_handoff.py response-template [-h] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus handoff
-usage: model_handoff.py import [-h] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus handoff response provenance
+usage: model_handoff.py prepare [-h] [--output NEW_FILE] [--format {json,text}] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus
+usage: model_handoff.py response-template [-h] [--output NEW_FILE] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus handoff
+usage: model_handoff.py import [-h] [--output NEW_FILE] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus handoff response provenance
 ```
 
 Subcommands:
@@ -310,7 +311,7 @@ Guide: [Model handoff](MODEL_HANDOFF.md).
 Import and review first-observation proposals without creating runtime records.
 
 ```text
-usage: observation_proposals.py [-h] [--template] [--reviewer-id REVIEWER_ID] [--source-root SOURCE_ROOT] [--format {json,text}] corpus bundle [review]
+usage: observation_proposals.py [-h] [--template] [--reviewer-id REVIEWER_ID] [--source-root SOURCE_ROOT] [--format {json,text}] [--output NEW_FILE] corpus bundle [review]
 ```
 
 Guide: [Observation proposals](OBSERVATION_PROPOSALS.md).
@@ -321,9 +322,9 @@ Append explicitly reviewed imported observations to a separate local candidate.
 
 ```text
 usage: observation_revision.py [-h] {template,prepare,audit} ...
-usage: observation_revision.py template [-h] --operator-id OPERATOR_ID --source-root SOURCE_ROOT manifest bundle review
-usage: observation_revision.py prepare [-h] --source-root SOURCE_ROOT manifest bundle review card
-usage: observation_revision.py audit [-h] --source-root SOURCE_ROOT manifest bundle review card candidate
+usage: observation_revision.py template [-h] [--output NEW_FILE] --operator-id OPERATOR_ID --source-root SOURCE_ROOT manifest bundle review
+usage: observation_revision.py prepare [-h] [--output NEW_FILE] --source-root SOURCE_ROOT manifest bundle review card
+usage: observation_revision.py audit [-h] [--output NEW_FILE] --source-root SOURCE_ROOT manifest bundle review card candidate
 ```
 
 Subcommands:
@@ -339,7 +340,7 @@ Guide: [Observation revision](OBSERVATION_REVISION.md).
 Apply declared operator decisions to a separate, hash-bound revision candidate.
 
 ```text
-usage: operator_review.py [-h] [--new-version NEW_VERSION] [--new-build-id NEW_BUILD_ID] [--template | --targets] [--reviewer-id REVIEWER_ID] [--source-root SOURCE_ROOT] corpus candidates [review]
+usage: operator_review.py [-h] [--new-version NEW_VERSION] [--new-build-id NEW_BUILD_ID] [--template | --targets] [--reviewer-id REVIEWER_ID] [--source-root SOURCE_ROOT] [--output NEW_FILE] corpus candidates [review]
 ```
 
 Guide: [Operator review](OPERATOR_REVIEW.md).
@@ -349,7 +350,7 @@ Guide: [Operator review](OPERATOR_REVIEW.md).
 Replay one declared candidate-review revision and trace a design's evidence routes.
 
 ```text
-usage: audit_design_lineage.py [-h] package links proposal revision_inputs
+usage: audit_design_lineage.py [-h] [--output NEW_FILE] package links proposal revision_inputs
 ```
 
 Guide: [Design lineage](DESIGN_LINEAGE.md).
@@ -359,7 +360,7 @@ Guide: [Design lineage](DESIGN_LINEAGE.md).
 Replay an explicitly supplied linear chain of candidate-review revisions.
 
 ```text
-usage: audit_design_chain.py [-h] package links proposal chain
+usage: audit_design_chain.py [-h] [--output NEW_FILE] package links proposal chain
 ```
 
 Guide: [Design chain](DESIGN_CHAIN.md).
@@ -371,7 +372,7 @@ Guide: [Design chain](DESIGN_CHAIN.md).
 Review publication-dated question and method records, without career inference.
 
 ```text
-usage: publication_timeline.py [-h] --topic TOPIC [--format {json,text}] [--publication-relations PUBLICATION_RELATIONS] package
+usage: publication_timeline.py [-h] --topic TOPIC [--format {json,text}] [--publication-relations PUBLICATION_RELATIONS] [--output NEW_FILE] package
 ```
 
 Guide: [Publication timeline](PUBLICATION_TIMELINE.md).
@@ -381,7 +382,7 @@ Guide: [Publication timeline](PUBLICATION_TIMELINE.md).
 Review explicitly supplied cross-publication links, never infer author reasoning.
 
 ```text
-usage: reasoning_links.py [-h] [--template] [--operator-id OPERATOR_ID] [--format {json,text}] package [links]
+usage: reasoning_links.py [-h] [--template] [--operator-id OPERATOR_ID] [--format {json,text}] [--output NEW_FILE] package [links]
 ```
 
 Guide: [Reasoning links](REASONING_LINKS.md).
@@ -391,7 +392,7 @@ Guide: [Reasoning links](REASONING_LINKS.md).
 Trace an operator's proposed design to supplied reasoning links, without inference.
 
 ```text
-usage: design_scenario.py [-h] [--template] [--question QUESTION] [--operator-id OPERATOR_ID] [--format {json,text}] package links [proposal]
+usage: design_scenario.py [-h] [--template] [--question QUESTION] [--operator-id OPERATOR_ID] [--format {json,text}] [--output NEW_FILE] package links [proposal]
 ```
 
 Guide: [Design scenario](DESIGN_SCENARIO.md).
@@ -401,7 +402,7 @@ Guide: [Design scenario](DESIGN_SCENARIO.md).
 Audit publication-year scope of an operator proposal without historical inference.
 
 ```text
-usage: publication_scope.py [-h] --reference-year REFERENCE_YEAR [--format {json,text}] package links proposal
+usage: publication_scope.py [-h] --reference-year REFERENCE_YEAR [--format {json,text}] [--output NEW_FILE] package links proposal
 ```
 
 Guide: [Publication scope](PUBLICATION_SCOPE.md).
@@ -411,7 +412,7 @@ Guide: [Publication scope](PUBLICATION_SCOPE.md).
 Inspect declared publication relationships without inferring influence or independence.
 
 ```text
-usage: publication_context.py [-h] [--template] [--operator-id OPERATOR_ID] [--format {json,text}] package [form]
+usage: publication_context.py [-h] [--template] [--operator-id OPERATOR_ID] [--format {json,text}] [--output NEW_FILE] package [form]
 ```
 
 Guide: [Publication context](PUBLICATION_CONTEXT.md).
@@ -433,7 +434,7 @@ Guide: [Review workspace](REVIEW_WORKSPACE.md), [Integrated workspace](INTEGRATE
 Inspect evidence-bound answer drafts and declared reviews, without generating answers.
 
 ```text
-usage: answer_draft.py [-h] [--template | --review-template | --review REVIEW] [--question QUESTION] [--operator-id OPERATOR_ID] [--reviewer-id REVIEWER_ID] [--format {json,text}] package [draft]
+usage: answer_draft.py [-h] [--template | --review-template | --review REVIEW] [--question QUESTION] [--operator-id OPERATOR_ID] [--reviewer-id REVIEWER_ID] [--format {json,text}] [--output NEW_FILE] package [draft]
 ```
 
 Guide: [Answer draft](ANSWER_DRAFT.md), [Citation explanations](CITATION_EXPLANATIONS.md).
@@ -443,7 +444,7 @@ Guide: [Answer draft](ANSWER_DRAFT.md), [Citation explanations](CITATION_EXPLANA
 Join answer and design reviews by exact evidence reference, never semantic inference.
 
 ```text
-usage: review_journey.py [-h] --reference-year REFERENCE_YEAR [--review REVIEW] [--format {json,text}] package links proposal draft
+usage: review_journey.py [-h] --reference-year REFERENCE_YEAR [--review REVIEW] [--format {json,text}] [--output NEW_FILE] package links proposal draft
 ```
 
 Guide: [Review journey](REVIEW_JOURNEY.md).
@@ -453,7 +454,7 @@ Guide: [Review journey](REVIEW_JOURNEY.md).
 Disclose actual answer/design evidence scope without scoring researcher fidelity.
 
 ```text
-usage: evidence_scope.py [-h] --reference-year REFERENCE_YEAR [--review REVIEW] [--format {json,text}] package links proposal draft
+usage: evidence_scope.py [-h] --reference-year REFERENCE_YEAR [--review REVIEW] [--format {json,text}] [--output NEW_FILE] package links proposal draft
 ```
 
 Guide: [Evidence scope](EVIDENCE_SCOPE.md).
@@ -463,7 +464,7 @@ Guide: [Evidence scope](EVIDENCE_SCOPE.md).
 Explicit, offline inventory of declared reasoning for each current citation use.
 
 ```text
-usage: citation_reasoning.py [-h] [--review REVIEW] [--format {json,text}] package draft
+usage: citation_reasoning.py [-h] [--review REVIEW] [--format {json,text}] [--output NEW_FILE] package draft
 ```
 
 Guide: [Citation reasoning audit](CITATION_REASONING_AUDIT.md).
@@ -474,15 +475,15 @@ Prepare and explicitly review offline, evidence-scoped answer proposals.
 
 ```text
 usage: answer_proposals.py [-h] {template,prepare,response-template,import,review-template,review,export,inspect,context} ...
-usage: answer_proposals.py template [-h] --question QUESTION --topic TOPIC --operator-id OPERATOR_ID --reference-year REFERENCE_YEAR [--include-citation-explanations] [--patterns PATTERNS] [--context CONTEXT] [--publication-relations PUBLICATION_RELATIONS] [--pattern-id PATTERN_ID] package
-usage: answer_proposals.py prepare [-h] [--format {json,text}] package scope
-usage: answer_proposals.py response-template [-h] package scope handoff
-usage: answer_proposals.py import [-h] package scope handoff response provenance
-usage: answer_proposals.py review-template [-h] --reviewer-id REVIEWER_ID package bundle
-usage: answer_proposals.py review [-h] [--format {json,text}] package bundle review
-usage: answer_proposals.py export [-h] package bundle review
-usage: answer_proposals.py inspect [-h] package envelope
-usage: answer_proposals.py context [-h] [--source-selection SOURCE_SELECTION] [--source-root SOURCE_ROOT] [--format {json,text}] package scope
+usage: answer_proposals.py template [-h] [--output NEW_FILE] --question QUESTION --topic TOPIC --operator-id OPERATOR_ID --reference-year REFERENCE_YEAR [--include-citation-explanations] [--patterns PATTERNS] [--context CONTEXT] [--publication-relations PUBLICATION_RELATIONS] [--pattern-id PATTERN_ID] package
+usage: answer_proposals.py prepare [-h] [--output NEW_FILE] [--format {json,text}] package scope
+usage: answer_proposals.py response-template [-h] [--output NEW_FILE] package scope handoff
+usage: answer_proposals.py import [-h] [--output NEW_FILE] package scope handoff response provenance
+usage: answer_proposals.py review-template [-h] [--output NEW_FILE] --reviewer-id REVIEWER_ID package bundle
+usage: answer_proposals.py review [-h] [--output NEW_FILE] [--format {json,text}] package bundle review
+usage: answer_proposals.py export [-h] [--output NEW_FILE] package bundle review
+usage: answer_proposals.py inspect [-h] [--output NEW_FILE] package envelope
+usage: answer_proposals.py context [-h] [--output NEW_FILE] [--source-selection SOURCE_SELECTION] [--source-root SOURCE_ROOT] [--format {json,text}] package scope
 ```
 
 Subcommands:
@@ -504,7 +505,7 @@ Guide: [Answer proposals](ANSWER_PROPOSALS.md), [Answer context](ANSWER_CONTEXT.
 Review operator-declared premise/conclusion steps without reconstructing private reasoning.
 
 ```text
-usage: argument_map.py [-h] [--review REVIEW] [--template] [--operator-id OPERATOR_ID] [--step-id STEP_ID] [--format {json,text}] package draft [map]
+usage: argument_map.py [-h] [--review REVIEW] [--template] [--operator-id OPERATOR_ID] [--step-id STEP_ID] [--format {json,text}] [--output NEW_FILE] package draft [map]
 ```
 
 Guide: [Argument map](ARGUMENT_MAP.md).
@@ -515,14 +516,14 @@ Prepare and explicitly adopt offline argument suggestions among selected existin
 
 ```text
 usage: argument_proposals.py [-h] {template,prepare,response-template,import,review-template,review,export,inspect} ...
-usage: argument_proposals.py template [-h] [--answer-review ANSWER_REVIEW] --operator-id OPERATOR_ID [--include-recorded-answer-context] package draft
-usage: argument_proposals.py prepare [-h] [--answer-review ANSWER_REVIEW] [--format {json,text}] package draft scope
-usage: argument_proposals.py response-template [-h] [--answer-review ANSWER_REVIEW] package draft scope handoff
-usage: argument_proposals.py import [-h] [--answer-review ANSWER_REVIEW] package draft scope handoff response provenance
-usage: argument_proposals.py review-template [-h] [--answer-review ANSWER_REVIEW] --reviewer-id REVIEWER_ID package draft bundle
-usage: argument_proposals.py review [-h] [--answer-review ANSWER_REVIEW] [--format {json,text}] package draft bundle review
-usage: argument_proposals.py export [-h] [--answer-review ANSWER_REVIEW] package draft bundle review
-usage: argument_proposals.py inspect [-h] [--answer-review ANSWER_REVIEW] package draft envelope
+usage: argument_proposals.py template [-h] [--output NEW_FILE] [--answer-review ANSWER_REVIEW] --operator-id OPERATOR_ID [--include-recorded-answer-context] package draft
+usage: argument_proposals.py prepare [-h] [--output NEW_FILE] [--answer-review ANSWER_REVIEW] [--format {json,text}] package draft scope
+usage: argument_proposals.py response-template [-h] [--output NEW_FILE] [--answer-review ANSWER_REVIEW] package draft scope handoff
+usage: argument_proposals.py import [-h] [--output NEW_FILE] [--answer-review ANSWER_REVIEW] package draft scope handoff response provenance
+usage: argument_proposals.py review-template [-h] [--output NEW_FILE] [--answer-review ANSWER_REVIEW] --reviewer-id REVIEWER_ID package draft bundle
+usage: argument_proposals.py review [-h] [--output NEW_FILE] [--answer-review ANSWER_REVIEW] [--format {json,text}] package draft bundle review
+usage: argument_proposals.py export [-h] [--output NEW_FILE] [--answer-review ANSWER_REVIEW] package draft bundle review
+usage: argument_proposals.py inspect [-h] [--output NEW_FILE] [--answer-review ANSWER_REVIEW] package draft envelope
 ```
 
 Subcommands:
@@ -545,7 +546,7 @@ Guide: [Argument proposals](ARGUMENT_PROPOSALS.md).
 Record operator comparisons of source conditions with a new research context.
 
 ```text
-usage: applicability_review.py [-h] [--template] [--question QUESTION] [--target-context TARGET_CONTEXT] [--topic TOPIC] [--reference-year REFERENCE_YEAR] [--operator-id OPERATOR_ID] [--format {json,text}] package [form]
+usage: applicability_review.py [-h] [--template] [--question QUESTION] [--target-context TARGET_CONTEXT] [--topic TOPIC] [--reference-year REFERENCE_YEAR] [--operator-id OPERATOR_ID] [--format {json,text}] [--output NEW_FILE] package [form]
 ```
 
 Guide: [Applicability review](APPLICABILITY_REVIEW.md).
@@ -555,7 +556,7 @@ Guide: [Applicability review](APPLICABILITY_REVIEW.md).
 Review explicitly proposed cross-publication method patterns, never discover them.
 
 ```text
-usage: pattern_hypotheses.py [-h] [--template] [--operator-id OPERATOR_ID] [--format {json,text}] package [form]
+usage: pattern_hypotheses.py [-h] [--template] [--operator-id OPERATOR_ID] [--format {json,text}] [--output NEW_FILE] package [form]
 ```
 
 Guide: [Pattern hypotheses](PATTERN_HYPOTHESES.md).
@@ -566,12 +567,12 @@ Prepare, import and explicitly review offline cross-publication method hypothese
 
 ```text
 usage: pattern_proposals.py [-h] {prepare,response-template,import,review-template,review,export} ...
-usage: pattern_proposals.py prepare [-h] --topic TOPIC [--include-evidence-reasons] [--format {json,text}] package
-usage: pattern_proposals.py response-template [-h] package handoff
-usage: pattern_proposals.py import [-h] package handoff response provenance
-usage: pattern_proposals.py review-template [-h] --reviewer-id REVIEWER_ID package bundle
-usage: pattern_proposals.py review [-h] [--format {json,text}] package bundle review
-usage: pattern_proposals.py export [-h] package bundle review
+usage: pattern_proposals.py prepare [-h] [--output NEW_FILE] --topic TOPIC [--include-evidence-reasons] [--format {json,text}] package
+usage: pattern_proposals.py response-template [-h] [--output NEW_FILE] package handoff
+usage: pattern_proposals.py import [-h] [--output NEW_FILE] package handoff response provenance
+usage: pattern_proposals.py review-template [-h] [--output NEW_FILE] --reviewer-id REVIEWER_ID package bundle
+usage: pattern_proposals.py review [-h] [--output NEW_FILE] [--format {json,text}] package bundle review
+usage: pattern_proposals.py export [-h] [--output NEW_FILE] package bundle review
 ```
 
 Subcommands:
@@ -590,7 +591,7 @@ Guide: [Pattern proposals](PATTERN_PROPOSALS.md).
 Join one explicitly selected pattern with context review and answer/design evidence uses.
 
 ```text
-usage: pattern_transfer_review.py [-h] --pattern-id PATTERN_ID [--format {json,text}] [--publication-relations PUBLICATION_RELATIONS] [--review REVIEW] package patterns context links proposal draft
+usage: pattern_transfer_review.py [-h] --pattern-id PATTERN_ID [--format {json,text}] [--publication-relations PUBLICATION_RELATIONS] [--review REVIEW] [--output NEW_FILE] package patterns context links proposal draft
 ```
 
 Guide: [Pattern transfer review](PATTERN_TRANSFER_REVIEW.md).
@@ -600,7 +601,7 @@ Guide: [Pattern transfer review](PATTERN_TRANSFER_REVIEW.md).
 Review explicit method-pattern application to design steps, never infer adoption.
 
 ```text
-usage: method_application.py [-h] --pattern-id PATTERN_ID [--template] [--operator-id OPERATOR_ID] [--format {json,text}] package patterns context links proposal [form]
+usage: method_application.py [-h] --pattern-id PATTERN_ID [--template] [--operator-id OPERATOR_ID] [--format {json,text}] [--output NEW_FILE] package patterns context links proposal [form]
 ```
 
 Guide: [Method application](METHOD_APPLICATION.md).
@@ -611,12 +612,12 @@ Prepare and explicitly review offline method-application proposals, without appl
 
 ```text
 usage: application_proposals.py [-h] {prepare,response-template,import,review-template,review,export} ...
-usage: application_proposals.py prepare [-h] --pattern-id PATTERN_ID [--format {json,text}] package patterns context links proposal
-usage: application_proposals.py response-template [-h] --pattern-id PATTERN_ID package patterns context links proposal handoff
-usage: application_proposals.py import [-h] --pattern-id PATTERN_ID package patterns context links proposal handoff response provenance
-usage: application_proposals.py review-template [-h] --pattern-id PATTERN_ID --reviewer-id REVIEWER_ID package patterns context links proposal bundle
-usage: application_proposals.py review [-h] --pattern-id PATTERN_ID [--format {json,text}] package patterns context links proposal bundle review
-usage: application_proposals.py export [-h] --pattern-id PATTERN_ID package patterns context links proposal bundle review
+usage: application_proposals.py prepare [-h] [--output NEW_FILE] --pattern-id PATTERN_ID [--format {json,text}] package patterns context links proposal
+usage: application_proposals.py response-template [-h] [--output NEW_FILE] --pattern-id PATTERN_ID package patterns context links proposal handoff
+usage: application_proposals.py import [-h] [--output NEW_FILE] --pattern-id PATTERN_ID package patterns context links proposal handoff response provenance
+usage: application_proposals.py review-template [-h] [--output NEW_FILE] --pattern-id PATTERN_ID --reviewer-id REVIEWER_ID package patterns context links proposal bundle
+usage: application_proposals.py review [-h] [--output NEW_FILE] --pattern-id PATTERN_ID [--format {json,text}] package patterns context links proposal bundle review
+usage: application_proposals.py export [-h] [--output NEW_FILE] --pattern-id PATTERN_ID package patterns context links proposal bundle review
 ```
 
 Subcommands:
@@ -637,7 +638,7 @@ Guide: [Application proposals](APPLICATION_PROPOSALS.md).
 Inspect a source-to-method-to-argument journey without generating or approving research.
 
 ```text
-usage: research_journey.py [-h] --pattern-id PATTERN_ID [--review REVIEW] [--source-selection SOURCE_SELECTION] [--source-root SOURCE_ROOT] [--method-applications METHOD_APPLICATIONS] [--format {json,text,html}] package patterns context links proposal draft argument publication_relations
+usage: research_journey.py [-h] --pattern-id PATTERN_ID [--review REVIEW] [--source-selection SOURCE_SELECTION] [--source-root SOURCE_ROOT] [--method-applications METHOD_APPLICATIONS] [--format {json,text,html}] [--output NEW_FILE] package patterns context links proposal draft argument publication_relations
 ```
 
 Guide: [Research journey](RESEARCH_JOURNEY.md), [Local HTML review](LOCAL_HTML_REVIEW.md).
@@ -648,9 +649,9 @@ Bind explicit local JSON inputs, then rerun a research journey without rebinding
 
 ```text
 usage: journey_inputs.py [-h] {template,prepare,inspect} ...
-usage: journey_inputs.py template [-h]
-usage: journey_inputs.py prepare [-h] --input-root INPUT_ROOT [--source-root SOURCE_ROOT] input
-usage: journey_inputs.py inspect [-h] --input-root INPUT_ROOT [--source-root SOURCE_ROOT] [--format {json,text,html}] input
+usage: journey_inputs.py template [-h] [--output NEW_FILE]
+usage: journey_inputs.py prepare [-h] [--output NEW_FILE] --input-root INPUT_ROOT [--source-root SOURCE_ROOT] input
+usage: journey_inputs.py inspect [-h] [--output NEW_FILE] --input-root INPUT_ROOT [--source-root SOURCE_ROOT] [--format {json,text,html}] input
 ```
 
 Subcommands:
@@ -666,7 +667,7 @@ Guide: [Journey inputs](JOURNEY_INPUTS.md).
 Compare two freshly reopened input cards without inferring research progress or approval.
 
 ```text
-usage: journey_compare.py [-h] --previous-root PREVIOUS_ROOT --current-root CURRENT_ROOT [--previous-source-root PREVIOUS_SOURCE_ROOT] [--current-source-root CURRENT_SOURCE_ROOT] [--format {json,text}] previous current
+usage: journey_compare.py [-h] --previous-root PREVIOUS_ROOT --current-root CURRENT_ROOT [--previous-source-root PREVIOUS_SOURCE_ROOT] [--current-source-root CURRENT_SOURCE_ROOT] [--format {json,text}] [--output NEW_FILE] previous current
 ```
 
 Guide: [Journey comparison](JOURNEY_COMPARISON.md).
@@ -686,4 +687,4 @@ These modules are imported by the scripts above and have no `__main__` entry poi
 - `strict_json.py` — Reject ambiguous keys and non-finite numbers at JSON input boundaries.
 - `verification_receipt.py` — In-process check receipt, not a signature or a Python security boundary.
 
-The `tests/` package (`tests/__init__.py` and the `tests/test_*.py` modules) is the unittest suite that `python -m unittest discover` runs from the repository root; one module runs as `python -m unittest tests.test_<name> -v`. The implementation modules stay at the root as flat files: `audit_publication.py`, `human_validation.py`, `review_workspace.py`, `revise_local.py`, `synthetic_walkthrough.py` and `verify_manifest.py` resolve the repository root from their own file location, so they are not packaged. See [../VALIDATION.md](../VALIDATION.md) for the current verification snapshot.
+The `tests/` package (`tests/__init__.py` and the `tests/test_*.py` modules) is the unittest suite that `python -m unittest discover` runs from the repository root; one module runs as `python -m unittest tests.test_<name> -v`. The implementation modules stay at the root as flat files: `audit_publication.py`, `exclusive_output.py`, `human_validation.py`, `review_workspace.py`, `revise_local.py`, `synthetic_walkthrough.py` and `verify_manifest.py` resolve the repository root from their own file location, so they are not packaged. See [../VALIDATION.md](../VALIDATION.md) for the current verification snapshot.

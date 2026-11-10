@@ -163,3 +163,5 @@ selection, complete review, null gaps, rejected challenges, same-paper indexes,
 source changes, altered metadata, exact replay, inherited history, provenance across
 downstream tools, manual-edit rejection, JSON aliases and actual CLI execution.
 No real researcher material, external model or scientific validation is used.
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

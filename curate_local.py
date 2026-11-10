@@ -1,4 +1,5 @@
 """Append one explicitly authored observation to a pinned local manifest."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -62,14 +63,15 @@ def append_observation(manifest, card, root):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     sub=parser.add_subparsers(dest='command',required=True)
-    make=sub.add_parser('template');make.add_argument('manifest',type=Path);make.add_argument('--paper',required=True)
-    add=sub.add_parser('append');add.add_argument('manifest',type=Path);add.add_argument('card',type=Path);add.add_argument('--source-root',type=Path,required=True)
+    make=sub.add_parser('template'); add_output_argument(make);make.add_argument('manifest',type=Path);make.add_argument('--paper',required=True)
+    add=sub.add_parser('append'); add_output_argument(add);add.add_argument('manifest',type=Path);add.add_argument('card',type=Path);add.add_argument('--source-root',type=Path,required=True)
     args=parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         manifest=load(args.manifest)
         result=template(manifest,args.paper) if args.command=='template' else append_observation(manifest,load(args.card),args.source_root)
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:parser.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write((json.dumps(result,ensure_ascii=True,indent=2) + '\n').encode('utf-8'))
+    emit(parser, (json.dumps(result,ensure_ascii=True,indent=2) + '\n').encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

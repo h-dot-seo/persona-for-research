@@ -1,4 +1,5 @@
 """Prepare hashes and section inventory for explicitly selected local training files."""
+from exclusive_output import add_output_argument, emit, preflight as preflight_output
 import argparse
 import copy
 import hashlib
@@ -167,10 +168,11 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('selection',type=Path);parser.add_argument('--source-root',type=Path,required=True)
     parser.add_argument('--report-defects',action='store_true',help='report source structure without preparing a manifest')
-    args=parser.parse_args()
+    add_output_argument(parser); args=parser.parse_args()
+    preflight_output(parser, getattr(args, 'output', None))
     try:result=(report_defects if args.report_defects else prepare)(load(args.selection),args.source_root)
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:parser.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write((json.dumps(result,indent=2)+'\n').encode('utf-8'))
+    emit(parser, (json.dumps(result,indent=2)+'\n').encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

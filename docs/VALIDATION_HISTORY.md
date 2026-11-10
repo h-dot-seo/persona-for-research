@@ -1797,3 +1797,53 @@ remote CI results; the exact-commit GitHub Actions matrix remains the remote rec
 Only fictional fixtures were used. No persona payload or binding, model/network
 call, real researcher data, scientific judgment, source authentication or human
 review behavior was added or changed.
+
+## 2026-11-10 Exclusive CLI output (0.76-exclusive-cli-output)
+
+Added `exclusive_output.py` and optional `--output NEW_FILE` on the 40 existing
+stdout-result CLIs, plus human-validation check/status. The 76 output-capable leaf
+commands include the pre-existing human-validation template writer, whose required
+flag, file bytes and original receipt remain. The template reuses the shared writer.
+`revise_local apply`, directory writers, validators, dispatcher, synthetic walkthrough,
+fixtures, package bindings and existing stdout bytes are unchanged. No --version,
+packaging, tag or license decision is included.
+
+The helper checks the destination before inputs are read, rechecks before binary
+exclusive creation, refuses existing paths, dangling/symlink components, repository
+paths and missing parents, and never deletes partial output. Saved files have a
+16 MiB ceiling, retain tighter command limits, and produce only a bounded 64 KiB
+ASCII-safe receipt with path, bytes, raw hash, optional strict-JSON payload hash and
+negative claims. Text/HTML have a raw hash; receipt paths can be private. Trusted,
+stable ancestors are required: this is not a race-proof directory sandbox or a
+Windows junction/reparse security boundary. macOS is not in the CI matrix.
+
+Verification on Python 3.12.14:
+- Final full discovery: `Ran 1029 tests in 316.185s`, `OK`, no failures/errors/skips.
+- Final focused output, UTF-8, human-validation, dispatcher, manifest preparation,
+  structural report, local curation and skill contract checks: 86 tests / 4.743s / OK.
+- New helper/CLI tests cover exact existing bytes for converted result modes, parser
+  coverage and actual helper bindings, every documented usage line, ASCII console,
+  raw/logical hashes, text/HTML, direct research-journey HTML, saved input-card
+  prepare/inspect, refusal before input reads, existing/dangling/ancestor paths,
+  final-create collision, short write, write/close errors and retained partial files.
+- New guide commands were also executed manually under ASCII console encoding;
+  both saved receipts/hashes verified and repeating each refused the existing path.
+- All 144 pre-existing Markdown sh blocks remain byte-identical; bundled examples,
+  validators and synthetic walkthrough remain unchanged.
+- Python 3.10 grammar parsing, compileall, whitespace checks, publication manifest
+  (240 entries) and limited audit (241 files) pass after final documentation updates.
+
+The initial full run (1025 tests / 330.609s) had 3 failures and 2 errors. Four
+preparation/structure failures shared a helper import collision with the existing
+`prepare_local_manifest.preflight`; the output helper now uses a distinct alias and
+all selected modules have a binding regression test. The other failure was the
+existing 8192-byte skill limit; the obsolete writer-boundary paragraph was replaced
+rather than relaxing the limit (8168 bytes). A new direct-journey test initially
+omitted its fixture's declared review and correctly failed binding; the test now
+supplies that exact review. These failed intermediate checks are not final passes.
+
+Only fictional/synthetic data was exercised. Hashes and mechanical checks do not
+establish source authenticity, rights, scientific validity, researcher fidelity,
+human approval or permission to share. No model/network call or canonical update
+occurred. Local success does not claim exact-head Ubuntu/Windows CI success; that
+must be verified separately before merge.
