@@ -211,3 +211,5 @@ python3 -m unittest discover -v
 - [../VALIDATION.md](../VALIDATION.md) — 현재 검증 스냅숏.
 
 로컬 입력을 준비하기 전에 `prepare_local_manifest.py --report-defects`로 선택 파일 전체의 구조를 읽기 전용으로 확인할 수 있습니다. [안내](LOCAL_INPUT_PREPARATION.md).
+
+오프라인 핸드오프의 `prepare --format text`는 별도로 승인된 로컬·원격 도우미에 붙여넣을 수 있는 전체 JSON 기반 텍스트를 만듭니다. 전송 허가가 아니며 모델을 호출하지 않습니다. 기본 JSON과 import 바인딩은 그대로이고 `response-template`은 JSON 전용입니다. [형식과 크기 경계](MODEL_HANDOFF.md#pasteable-local-handoff-view)를 확인하세요.

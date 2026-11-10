@@ -1,4 +1,6 @@
 """Prepare or import a local model handoff without invoking or transmitting to a model."""
+from handoff_text import render_handoff
+
 import argparse
 import json
 import sys
@@ -25,6 +27,7 @@ def main():
     commands = parser.add_subparsers(dest='command', required=True)
     prepare = commands.add_parser('prepare', help='Export source-containing local request JSON')
     prepare.add_argument('corpus', type=Path)
+    prepare.add_argument('--format', choices=('json', 'text'), default='json')
     response_template = commands.add_parser('response-template', help='Prepare an empty response bound to the current handoff')
     response_template.add_argument('corpus', type=Path)
     response_template.add_argument('handoff', type=Path)
@@ -54,7 +57,8 @@ def main():
             result = import_response(corpus, load(args.handoff), load(args.response), load(args.provenance))
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write((json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
+    output = render_handoff(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=False, indent=2) + '\n'
+    sys.stdout.buffer.write(output.encode('utf-8'))
 
 
 if __name__ == '__main__':

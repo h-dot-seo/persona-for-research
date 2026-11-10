@@ -1,4 +1,6 @@
 """Prepare and explicitly adopt offline argument suggestions among selected existing claims."""
+from handoff_text import render_handoff
+
 import argparse
 import copy
 import json
@@ -426,7 +428,7 @@ def main():
             command.add_argument('--operator-id', required=True)
             command.add_argument('--include-recorded-answer-context', action='store_true')
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
-        if name == 'review': command.add_argument('--format', choices=('json', 'text'), default='json')
+        if name in ('prepare', 'review'): command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
     try:
         package, draft = _load(args.package), _load(args.draft)
@@ -439,7 +441,10 @@ def main():
         elif args.command == 'review': result = review_proposals(package, draft, _load(args.bundle), _load(args.review), declared)
         elif args.command == 'export': result = export_reviewed(package, draft, _load(args.bundle), _load(args.review), declared)
         else: result = inspect_reviewed(package, draft, _load(args.envelope), declared)
-        output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
+        if args.command == 'prepare' and args.format == 'text':
+            output = render_handoff(result)
+        else:
+            output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
         if len(output.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('argument proposal output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc)+'\n')
     sys.stdout.buffer.write(output.encode('utf-8'))

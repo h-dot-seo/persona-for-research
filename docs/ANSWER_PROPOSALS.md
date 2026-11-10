@@ -223,3 +223,17 @@ For an explicitly requested current source check in that preview, supply both
 The existing all-paper audit is appended separately from historical labels. Failed
 source checks never silently fall back to the unchecked preview; matches do not
 approve citations or sharing. See [current source checks](ANSWER_CONTEXT.md#optionally-check-current-local-sources-in-the-preview).
+
+## Pasteable handoff view
+
+For a separately authorized local or remote assistant, append `--format text` to
+`prepare` (default JSON is unchanged). With the corresponding prepared inputs in
+`OUTPUT`, an external directory:
+
+```sh
+python answer_proposals.py prepare OUTPUT/package.json OUTPUT/answer-scope.json --format text
+```
+
+Keep the JSON handoff for import; `response-template` remains JSON-only. The text
+is not permission to transmit and makes no model call. See the complete format and
+size boundaries in [Model handoff](MODEL_HANDOFF.md#pasteable-local-handoff-view).

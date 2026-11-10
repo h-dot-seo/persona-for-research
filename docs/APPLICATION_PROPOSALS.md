@@ -146,3 +146,17 @@ reasoning traces or simulated first-person researcher claims.
 Large artifact collections may require an explicitly narrower review. No silent
 truncation, automatic source selection, provider invocation or implicit step choice
 is performed to fit the limits.
+
+## Pasteable handoff view
+
+For a separately authorized local or remote assistant, append `--format text` to
+`prepare` (default JSON is unchanged). With the corresponding prepared inputs in
+`OUTPUT`, an external directory:
+
+```sh
+python application_proposals.py prepare OUTPUT/package.json OUTPUT/patterns.json OUTPUT/context.json OUTPUT/links.json OUTPUT/design.json --pattern-id selected-pattern --format text
+```
+
+Keep the JSON handoff for import; `response-template` remains JSON-only. The text
+is not permission to transmit and makes no model call. See the complete format and
+size boundaries in [Model handoff](MODEL_HANDOFF.md#pasteable-local-handoff-view).
