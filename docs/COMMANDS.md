@@ -19,6 +19,26 @@ scripts that have a command-line entry point. The unittest suite is the `tests/`
 `python -m unittest discover` from the root runs it, and one module runs as
 `python -m unittest tests.test_<name> -v`.
 
+## Stdout and shell capture
+
+The JSON results of `audit_design_chain.py`, `audit_design_lineage.py`,
+`compare_releases.py`, `corpus_files.py`, `curate_local.py`, `extraction_adapter.py`,
+`observation_input.py`, `operator_review.py`, `research_workflow.py` and
+`revise_local.py` are UTF-8 bytes without a BOM, with LF line endings and one final
+LF, independent of the console encoding (including `PYTHONIOENCODING=ascii`).
+Their existing JSON escaping, fields, bindings and exit statuses are unchanged.
+This intentionally changes Windows result stdout from text-mode CRLF and the
+configured encoding, often an ANSI code page, to LF and UTF-8. Existing UTF-8/LF
+POSIX result bytes stay identical. Help and stderr still use argparse's text streams.
+
+A shell may decode and re-encode native stdout after the program writes it.
+In particular, this change does not make default PowerShell 5 redirection safe
+for UTF-8 input files. Use a byte-preserving capture, such as Python subprocess
+binary capture, when hashes or downstream UTF-8 readers matter. Redirection can
+still overwrite an existing file or leave an empty file on failure. This release
+adds no `--output` or `--version` option; use the existing command-specific writers
+where available and choose new destinations outside the repository.
+
 Scripts in alphabetical order: [`answer_draft.py`](#answer_draftpy), [`answer_proposals.py`](#answer_proposalspy), [`applicability_review.py`](#applicability_reviewpy), [`application_proposals.py`](#application_proposalspy), [`argument_map.py`](#argument_mappy), [`argument_proposals.py`](#argument_proposalspy), [`audit_design_chain.py`](#audit_design_chainpy), [`audit_design_lineage.py`](#audit_design_lineagepy), [`audit_publication.py`](#audit_publicationpy), [`citation_reasoning.py`](#citation_reasoningpy), [`compare_releases.py`](#compare_releasespy), [`corpus_files.py`](#corpus_filespy), [`curate_local.py`](#curate_localpy), [`design_scenario.py`](#design_scenariopy), [`evaluate_synthetic.py`](#evaluate_syntheticpy), [`evidence_scope.py`](#evidence_scopepy), [`extraction_adapter.py`](#extraction_adapterpy), [`human_validation.py`](#human_validationpy), [`journey_compare.py`](#journey_comparepy), [`journey_inputs.py`](#journey_inputspy), [`method_application.py`](#method_applicationpy), [`model_handoff.py`](#model_handoffpy), [`observation_input.py`](#observation_inputpy), [`observation_proposals.py`](#observation_proposalspy), [`observation_revision.py`](#observation_revisionpy), [`operator_review.py`](#operator_reviewpy), [`pattern_hypotheses.py`](#pattern_hypothesespy), [`pattern_proposals.py`](#pattern_proposalspy), [`pattern_transfer_review.py`](#pattern_transfer_reviewpy), [`persona.py`](#personapy), [`persona_cli.py`](#persona_clipy), [`prepare_local_manifest.py`](#prepare_local_manifestpy), [`publication_context.py`](#publication_contextpy), [`publication_scope.py`](#publication_scopepy), [`publication_timeline.py`](#publication_timelinepy), [`reasoning_links.py`](#reasoning_linkspy), [`research_journey.py`](#research_journeypy), [`research_workflow.py`](#research_workflowpy), [`review_journey.py`](#review_journeypy), [`review_package.py`](#review_packagepy), [`review_workspace.py`](#review_workspacepy), [`revise_local.py`](#revise_localpy), [`revision_impact.py`](#revision_impactpy), [`safe_canonical_read.py`](#safe_canonical_readpy), [`source_recheck.py`](#source_recheckpy), [`synthetic_walkthrough.py`](#synthetic_walkthroughpy), [`topic_inventory.py`](#topic_inventorypy), [`verify_manifest.py`](#verify_manifestpy).
 
 ## Start, validate and publish

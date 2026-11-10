@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import sys
 from pathlib import Path
 
 from compare_releases import checked_package
@@ -172,7 +173,7 @@ def main():
         result = audit(load(args.package), load(args.links), load(args.proposal), load(args.revision_inputs))
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    print(json.dumps(result, indent=2))
+    sys.stdout.buffer.write((json.dumps(result, indent=2) + '\n').encode('utf-8'))
 
 
 if __name__ == '__main__':

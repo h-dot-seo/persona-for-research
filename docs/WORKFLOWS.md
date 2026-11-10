@@ -8,6 +8,11 @@ subcommand with its exact usage line. Nothing here calls a model, reads the netw
 or approves research: every command is a local step over operator-supplied, authorized
 inputs, and the shipped examples are entirely synthetic.
 
+The ten formerly text-mode JSON result CLIs now write UTF-8/LF bytes directly,
+including on Windows. Shell re-encoding and overwrite risks remain; see
+[stdout and shell capture](COMMANDS.md#stdout-and-shell-capture) before saving
+outputs for UTF-8 readers or raw-byte bindings. Existing commands stay unchanged.
+
 Groups:
 
 1. [Synthetic walkthrough routes](#synthetic-walkthrough-routes)

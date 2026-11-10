@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import sys
 from pathlib import Path
 from curate_local import _paper, validate_manual_observation
 from research_workflow import build
@@ -92,7 +93,7 @@ def main():
             audit=save_revision(manifest,load(args.card),args.source_root,args.destination)
             result={k:audit[k] for k in ('status','previous_manifest_sha256','revised_manifest_sha256')}
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
-    print(json.dumps(result,ensure_ascii=True,indent=2))
+    sys.stdout.buffer.write((json.dumps(result,ensure_ascii=True,indent=2) + '\n').encode('utf-8'))
 
 
 if __name__=='__main__':main()

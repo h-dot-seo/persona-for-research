@@ -1741,3 +1741,59 @@ This is a local derived view, not permission to transmit, proof of model executi
 prompt-injection resistance, scientific judgment, authentication, or scholarly
 validation. No builder, import, persona payload, fixture hash, walkthrough stage,
 adoption rule or review decision changes. Exclusive output files are outside this change.
+
+## 2026-11-10 UTF-8 CLI output (0.75-utf8-cli-output)
+
+Converted the final JSON result write in ten scripts from `print()` to
+`sys.stdout.buffer.write(...encode('utf-8'))`: audit_design_chain,
+audit_design_lineage, compare_releases, corpus_files, curate_local,
+extraction_adapter, observation_input, operator_review, research_workflow and
+revise_local. Each retains its existing JSON escaping, indentation and one final LF.
+The only runtime changes are `import sys` and that final emission in each script;
+builders, validators, argparse usage and error handling are unchanged.
+
+Windows result stdout intentionally changes from CRLF and the configured console
+encoding, often an ANSI code page, to LF and UTF-8 without a BOM. Existing UTF-8/LF
+POSIX result bytes are preserved. Help and stderr remain argparse text streams.
+This does not prevent a shell from re-encoding native stdout: default PowerShell 5
+redirection is still unsuitable for the UTF-8-first input route. Shell redirection
+can still overwrite files or leave empty output after failure. No shared output
+helper, new `--output`, `--version`, packaging or license decision is included.
+
+Before the change, a successful synthetic observation input containing Greek,
+Korean and the micro sign failed at `print()` with `UnicodeEncodeError` under
+`PYTHONIOENCODING=ascii`, leaving empty stdout. Five new tests now cover:
+
+- Fourteen real successful modes across all ten CLIs, using an ASCII text stdout
+  wrapper with explicit CRLF translation to exercise the Windows text-mode hazard
+  on every host. Raw output must match the original JSON formatting plus one LF,
+  decode as UTF-8, contain no BOM/CR, and preserve input files.
+- The same modes under a UTF-8/LF wrapper, including existing JSON escaping and
+  the exclusive revision directory's final `READY.json` marker.
+- Invalid-input exit 1 with empty stdout, no traceback and no revision directory.
+- Six real subprocess successes under `PYTHONIOENCODING=ascii`: all five unescaped
+  JSON writers plus the revision-template subcommand. Fictional Greek/Korean/micro
+  content survives both source-quote intake and result parsing.
+- A structural inventory of the ten converted entry points, each with one binary
+  stdout write and no remaining `print()` in `main()`.
+
+Verification on Python 3.12.14: the new suite passed 5 tests in 0.359 seconds;
+the affected-module/dispatcher/skill focused suite passed 105 tests in 5.340 seconds.
+Full discovery: `Ran 1013 tests in 339.848s`, `OK`, with no failures, errors or skips.
+Separate comparisons against the preceding release found byte-identical UTF-8/LF
+successful outputs in all 14 modes, and identical exit code, empty stdout and stderr
+on the same invalid inputs. All 59 existing Markdown files retain their executable
+`sh` blocks; example bytes and synthetic walkthrough command arrays are unchanged.
+The documented mock extraction command and 15-stage synthetic walkthrough also
+completed manually under ASCII console encoding, with `COMPLETE.json` and all
+answer reviews deferred. Relative link destinations in changed guides resolve.
+
+`python -m compileall -q .` and Python 3.10 grammar checks pass for 148 Python files.
+The final regenerated manifest lists 237 files for this release and date;
+`python verify_manifest.py` and `python audit_publication.py` pass, with 238 text
+files including the manifest. Every published file is UTF-8 without BOM and LF-only.
+Local checks and the emulated CRLF wrapper do not establish native Windows or
+remote CI results; the exact-commit GitHub Actions matrix remains the remote record.
+Only fictional fixtures were used. No persona payload or binding, model/network
+call, real researcher data, scientific judgment, source authentication or human
+review behavior was added or changed.

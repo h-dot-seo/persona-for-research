@@ -40,6 +40,8 @@ public repository.
 See docs/COMMANDS.md for CLI usage and docs/WORKFLOWS.md for workflows and limits.
 README.md indexes the guides. Use only authorized inputs; examples are synthetic.
 
+Preserve stdout bytes when saving; shell re-encoding can change UTF-8/LF.
+
 `python persona_cli.py list` discovers root commands; `python persona_cli.py run <script>`
 dispatches unchanged arguments, output and exit status. Direct script invocation stays
 primary. Run `python -m unittest discover` from the repository root.

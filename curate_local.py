@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import sys
 from pathlib import Path
 from persona import payload_sha256
 from research_workflow import build
@@ -68,7 +69,7 @@ def main():
         manifest=load(args.manifest)
         result=template(manifest,args.paper) if args.command=='template' else append_observation(manifest,load(args.card),args.source_root)
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:parser.exit(1,str(exc)+'\n')
-    print(json.dumps(result,ensure_ascii=True,indent=2))
+    sys.stdout.buffer.write((json.dumps(result,ensure_ascii=True,indent=2) + '\n').encode('utf-8'))
 
 
 if __name__=='__main__':main()
