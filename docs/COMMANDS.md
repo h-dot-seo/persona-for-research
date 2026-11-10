@@ -38,7 +38,7 @@ binary capture, when hashes or downstream UTF-8 readers matter. Redirection can
 still overwrite an existing file or leave an empty file on failure. Use `--output NEW_FILE` on result commands to bypass shell re-encoding and refuse
 overwrite. Stdout then contains only a bounded save receipt; the saved bytes match
 the command result. See [Exclusive output](EXCLUSIVE_OUTPUT.md) for coverage,
-limits, path privacy and partial-write behaviour. No `--version` is added.
+limits, path privacy and partial-write behaviour.
 
 Scripts in alphabetical order: [`answer_draft.py`](#answer_draftpy), [`answer_proposals.py`](#answer_proposalspy), [`applicability_review.py`](#applicability_reviewpy), [`application_proposals.py`](#application_proposalspy), [`argument_map.py`](#argument_mappy), [`argument_proposals.py`](#argument_proposalspy), [`audit_design_chain.py`](#audit_design_chainpy), [`audit_design_lineage.py`](#audit_design_lineagepy), [`audit_publication.py`](#audit_publicationpy), [`citation_reasoning.py`](#citation_reasoningpy), [`compare_releases.py`](#compare_releasespy), [`corpus_files.py`](#corpus_filespy), [`curate_local.py`](#curate_localpy), [`design_scenario.py`](#design_scenariopy), [`evaluate_synthetic.py`](#evaluate_syntheticpy), [`evidence_scope.py`](#evidence_scopepy), [`extraction_adapter.py`](#extraction_adapterpy), [`human_validation.py`](#human_validationpy), [`journey_compare.py`](#journey_comparepy), [`journey_inputs.py`](#journey_inputspy), [`method_application.py`](#method_applicationpy), [`model_handoff.py`](#model_handoffpy), [`observation_input.py`](#observation_inputpy), [`observation_proposals.py`](#observation_proposalspy), [`observation_revision.py`](#observation_revisionpy), [`operator_review.py`](#operator_reviewpy), [`pattern_hypotheses.py`](#pattern_hypothesespy), [`pattern_proposals.py`](#pattern_proposalspy), [`pattern_transfer_review.py`](#pattern_transfer_reviewpy), [`persona.py`](#personapy), [`persona_cli.py`](#persona_clipy), [`prepare_local_manifest.py`](#prepare_local_manifestpy), [`publication_context.py`](#publication_contextpy), [`publication_scope.py`](#publication_scopepy), [`publication_timeline.py`](#publication_timelinepy), [`reasoning_links.py`](#reasoning_linkspy), [`research_journey.py`](#research_journeypy), [`research_workflow.py`](#research_workflowpy), [`review_journey.py`](#review_journeypy), [`review_package.py`](#review_packagepy), [`review_workspace.py`](#review_workspacepy), [`revise_local.py`](#revise_localpy), [`revision_impact.py`](#revision_impactpy), [`safe_canonical_read.py`](#safe_canonical_readpy), [`source_recheck.py`](#source_recheckpy), [`synthetic_walkthrough.py`](#synthetic_walkthroughpy), [`topic_inventory.py`](#topic_inventorypy), [`verify_manifest.py`](#verify_manifestpy).
 
@@ -59,7 +59,7 @@ Guide: [Quickstart](QUICKSTART.md), [Workflows: synthetic walkthrough routes](WO
 Discover and run the root command-line scripts from any directory, without changing what any script does.
 
 ```text
-usage: persona_cli.py [-h] {list,run} ...
+usage: persona_cli.py [-h] [--version] {list,run} ...
 usage: persona_cli.py list [-h]
 usage: persona_cli.py run [-h] script ...
 ```
@@ -70,6 +70,35 @@ Subcommands:
 - `run` — Run one root script in-process through `runpy` with the remaining arguments passed unchanged, for example `python persona_cli.py run persona.py examples/persona.json examples/knowledge.json`; the script's own `--help`, output and exit code pass through, and a name that is not the exact file name of a root script with an entry point exits 2 without output.
 
 Guide: [README: commands at a glance](../README.md#commands-at-a-glance). The dispatcher resolves scripts relative to its own file, so it works from any current directory; it calls no shell, imports no implementation module for `list`, writes no file and validates nothing itself. The documented `python <script>.py ...` form stays the primary command.
+
+#### Version labels
+
+```sh
+python persona_cli.py --version
+```
+
+This read-only flag prints the manifest `release` and `date` and the running Python
+major/minor/micro version, then exits 0. Like argparse's help/version actions it exits
+as soon as the flag is parsed. `run SCRIPT --version` still forwards the flag to that
+script unchanged. The manifest is located beside the dispatcher, not in the current
+directory. `list` and help do not read it; `list` imports no repository modules.
+
+The manifest must be a regular non-symlink file of at most 1,048,576 bytes, UTF-8
+without BOM, containing a JSON object with no duplicate keys or non-finite numbers
+and at most 128 container levels. `release` is a printable 1–128 character string
+with no leading/trailing whitespace; it is printed as an ASCII-escaped JSON string.
+`date` must be a valid calendar date in exact `YYYY-MM-DD` form. Other fields are
+parsed but not validated as a publication inventory. Invalid/missing metadata exits
+1 with no stdout and a bounded diagnostic that never echoes input values or paths.
+Stable trusted repository files are assumed; these checks are not a race-proof sandbox.
+
+**This is not an integrity check or signature.** The manifest excludes itself from
+its own hashes, so these labels are unauthenticated and may be changed independently
+of the listed files. No file hashes are checked. Run `python verify_manifest.py`
+from the repository root (or invoke that script by its path from elsewhere) for
+inventory/file-hash consistency checks; even those checks do not authenticate a
+publisher or establish scientific validity. No files, network calls or model calls
+are produced. Packaging, release tags and licensing are unchanged.
 
 ### `persona.py`
 
