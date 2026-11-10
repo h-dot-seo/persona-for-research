@@ -1,4 +1,5 @@
 """Join one explicitly selected pattern with context review and answer/design evidence uses."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
 import sys
@@ -160,7 +161,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('package','patterns','context','links','proposal','draft'):p.add_argument(name,type=Path)
     p.add_argument('--pattern-id',required=True);p.add_argument('--format',choices=('json','text'),default='json')
-    p.add_argument('--publication-relations',type=Path);p.add_argument('--review',type=Path);a=p.parse_args()
+    p.add_argument('--publication-relations',type=Path);p.add_argument('--review',type=Path);add_output_argument(p); a=p.parse_args()
+    preflight(p, getattr(a, 'output', None))
     try:
         inputs=[load(getattr(a,n)) for n in ('package','patterns','context','links','proposal','draft')]+[a.pattern_id]
         from publication_context import _load as load_relations
@@ -168,7 +170,7 @@ def main():
             load(a.review) if a.review else None])
         output=render(*inputs) if a.format=='text' else json.dumps(inspect(*inputs),indent=2)+'\n'
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(p, output.encode('utf-8'), getattr(a, 'output', None))
 
 
 if __name__=='__main__':main()

@@ -97,3 +97,5 @@ For a selected pattern already being considered in a proposal,
 [trace the pattern, context and answer/design together](PATTERN_TRANSFER_REVIEW.md).
 Excluded/deferred context decisions remain visible beside exact evidence uses;
 sharing a reference is not evidence of correct application.
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

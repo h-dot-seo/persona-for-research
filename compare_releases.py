@@ -1,4 +1,5 @@
 """Read-only comparison of bound evidence packages; never update canonical policy."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
 import sys
@@ -61,12 +62,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('previous', type=Path)
     parser.add_argument('candidate', type=Path)
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         result = compare(load(args.previous), load(args.candidate))
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write((json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
+    emit(parser, (json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

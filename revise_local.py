@@ -1,4 +1,5 @@
 """Revise one manual observation against unchanged local source bytes, with an audit artifact."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -83,9 +84,10 @@ def save_revision(manifest,card,root,destination):
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
-    t=sub.add_parser('template');t.add_argument('manifest',type=Path);t.add_argument('--paper',required=True);t.add_argument('--observation-index',type=int,required=True)
+    t=sub.add_parser('template'); add_output_argument(t);t.add_argument('manifest',type=Path);t.add_argument('--paper',required=True);t.add_argument('--observation-index',type=int,required=True)
     a=sub.add_parser('apply');a.add_argument('manifest',type=Path);a.add_argument('card',type=Path);a.add_argument('destination',type=Path);a.add_argument('--source-root',type=Path,required=True)
     args=p.parse_args()
+    preflight(p, getattr(args, 'output', None))
     try:
         manifest=load(args.manifest)
         if args.command=='template':result=template(manifest,args.paper,args.observation_index)
@@ -93,7 +95,7 @@ def main():
             audit=save_revision(manifest,load(args.card),args.source_root,args.destination)
             result={k:audit[k] for k in ('status','previous_manifest_sha256','revised_manifest_sha256')}
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write((json.dumps(result,ensure_ascii=True,indent=2) + '\n').encode('utf-8'))
+    emit(p, (json.dumps(result,ensure_ascii=True,indent=2) + '\n').encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

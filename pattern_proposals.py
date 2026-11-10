@@ -1,4 +1,5 @@
 """Prepare, import and explicitly review offline cross-publication method hypotheses."""
+from exclusive_output import add_output_argument, emit, preflight
 from handoff_text import render_handoff
 
 import argparse
@@ -350,18 +351,19 @@ def _load(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
-    prepare = commands.add_parser('prepare'); prepare.add_argument('package', type=Path); prepare.add_argument('--topic', required=True)
+    prepare = commands.add_parser('prepare'); add_output_argument(prepare); prepare.add_argument('package', type=Path); prepare.add_argument('--topic', required=True)
     prepare.add_argument('--include-evidence-reasons', action='store_true')
     prepare.add_argument('--format', choices=('json', 'text'), default='json')
-    response = commands.add_parser('response-template'); response.add_argument('package', type=Path); response.add_argument('handoff', type=Path)
-    imported = commands.add_parser('import');
+    response = commands.add_parser('response-template'); add_output_argument(response); response.add_argument('package', type=Path); response.add_argument('handoff', type=Path)
+    imported = commands.add_parser('import'); add_output_argument(imported);
     for name in ('package', 'handoff', 'response', 'provenance'): imported.add_argument(name, type=Path)
-    review = commands.add_parser('review-template'); review.add_argument('package', type=Path); review.add_argument('bundle', type=Path); review.add_argument('--reviewer-id', required=True)
+    review = commands.add_parser('review-template'); add_output_argument(review); review.add_argument('package', type=Path); review.add_argument('bundle', type=Path); review.add_argument('--reviewer-id', required=True)
     for name in ('review', 'export'):
-        command = commands.add_parser(name)
+        command = commands.add_parser(name); add_output_argument(command)
         for argument in ('package', 'bundle', 'review'): command.add_argument(argument, type=Path)
         if name == 'review': command.add_argument('--format', choices=('json','text'), default='json')
     args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         package = _load(args.package)
         if args.command == 'prepare': result = prepare_handoff(package, args.topic, include_evidence_reasons=args.include_evidence_reasons)
@@ -375,7 +377,7 @@ def main():
         else:
             output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, indent=2)+'\n'
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc: parser.exit(1, str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__': main()

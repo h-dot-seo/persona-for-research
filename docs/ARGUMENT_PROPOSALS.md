@@ -338,3 +338,5 @@ python argument_proposals.py prepare OUTPUT/package.json OUTPUT/draft.json OUTPU
 Keep the JSON handoff for import; `response-template` remains JSON-only. The text
 is not permission to transmit and makes no model call. See the complete format and
 size boundaries in [Model handoff](MODEL_HANDOFF.md#pasteable-local-handoff-view).
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

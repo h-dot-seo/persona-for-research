@@ -1,4 +1,5 @@
 """Inspect declared publication relationships without inferring influence or independence."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -188,7 +189,8 @@ def _load(path):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('package',type=Path)
     parser.add_argument('form',type=Path,nargs='?');parser.add_argument('--template',action='store_true')
-    parser.add_argument('--operator-id');parser.add_argument('--format',choices=('json','text'),default='json');args=parser.parse_args()
+    parser.add_argument('--operator-id');parser.add_argument('--format',choices=('json','text'),default='json');add_output_argument(parser); args=parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         if args.template and (args.form is not None or args.format!='json'):
             raise ValueError('template requires JSON and no relationship form')
@@ -198,7 +200,7 @@ def main():
         result=template(package,args.operator_id) if args.template else inspect(package,_load(args.form))
         output=render(result) if args.format=='text' else json.dumps(result,indent=2)+'\n'
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:parser.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

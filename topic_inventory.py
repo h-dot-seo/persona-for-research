@@ -1,4 +1,5 @@
 """Discover existing exact-topic scopes without semantic merging or ranking."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
 import sys
@@ -84,13 +85,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('package', type=Path)
     parser.add_argument('--format', choices=('json', 'text'), default='json')
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         value = load(args.package)
         output = render(value) if args.format == 'text' else json.dumps(inventory(value), indent=2) + '\n'
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

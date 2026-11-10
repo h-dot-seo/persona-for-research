@@ -1,4 +1,5 @@
 """Bind explicit local JSON inputs, then rerun a research journey without rebinding changes."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import hashlib
 import json
@@ -197,19 +198,20 @@ def _load_card(path):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);commands=parser.add_subparsers(dest='command',required=True)
-    commands.add_parser('template')
+    add_output_argument(commands.add_parser('template'))
     for name in ('prepare','inspect'):
-        command=commands.add_parser(name);command.add_argument('input',type=Path)
+        command=commands.add_parser(name); add_output_argument(command);command.add_argument('input',type=Path)
         command.add_argument('--input-root',type=Path,required=True);command.add_argument('--source-root',type=Path)
         if name=='inspect':command.add_argument('--format',choices=('json','text','html'),default='json')
     args=parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         if args.command=='template':output=json.dumps(template(),ensure_ascii=True,indent=2)+'\n'
         elif args.command=='prepare':output=json.dumps(prepare(_load_card(args.input),args.input_root,source_root=args.source_root),ensure_ascii=True,indent=2)+'\n'
         else:output=render(_load_card(args.input),args.input_root,source_root=args.source_root,format=args.format)
         if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES:raise ValueError('bound journey output exceeds 16 MiB')
     except (ValueError,OSError,KeyError,TypeError,AttributeError,RecursionError) as exc:parser.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

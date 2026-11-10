@@ -99,3 +99,5 @@ and visible missing-work reports in one new private folder.
 For an existing manually authored observation that needs correction, use
 [explicit evidence revision](MANUAL_EVIDENCE_REVISION.md): a pinned old observation,
 new version/build, full local checks and a separate before/after audit artifact.
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

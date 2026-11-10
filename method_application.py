@@ -1,4 +1,5 @@
 """Review explicit method-pattern application to design steps, never infer adoption."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -209,7 +210,8 @@ def main():
     parser.add_argument('--format',choices=('json','text'),default='json')
     # Python 3.10 parse_args cannot resume an optional positional after flags.
     # This CLI intentionally accepts the form before or after its named options.
-    args=parser.parse_intermixed_args()
+    add_output_argument(parser); args=parser.parse_intermixed_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         values=[_load(getattr(args,name)) for name in ('package','patterns','context','links','proposal')]+[args.pattern_id]
         if args.template:
@@ -220,7 +222,7 @@ def main():
             form=_load(args.form);output=render(*values,form) if args.format=='text' else json.dumps(inspect(*values,form),ensure_ascii=True,indent=2)+'\n'
         if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES:raise ValueError('method application output exceeds 16 MiB')
     except (ValueError,OSError,KeyError,TypeError,AttributeError,RecursionError) as exc:parser.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

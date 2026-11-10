@@ -151,3 +151,5 @@ preflight or safe-reader failure, including detected concurrent changes, aborts 
 nonzero status and empty stdout. A supplied hash mismatch also aborts, exactly as in
 normal preparation. No files are modified, no manifest is written, and conversion
 fidelity and scholarly quality remain `NOT_ASSESSED`. No model or network is used.
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

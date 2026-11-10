@@ -1,4 +1,5 @@
 """Freeze synthetic answer metadata, then compare separately supplied holdout labels."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
 import re
@@ -168,13 +169,14 @@ def evaluate(submission,labels):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__); sub=parser.add_subparsers(dest='command',required=True)
-    freezing=sub.add_parser('freeze');freezing.add_argument('package',type=Path);freezing.add_argument('draft',type=Path)
-    evaluation=sub.add_parser('evaluate');evaluation.add_argument('submission',type=Path);evaluation.add_argument('holdout_labels',type=Path)
+    freezing=sub.add_parser('freeze'); add_output_argument(freezing);freezing.add_argument('package',type=Path);freezing.add_argument('draft',type=Path)
+    evaluation=sub.add_parser('evaluate'); add_output_argument(evaluation);evaluation.add_argument('submission',type=Path);evaluation.add_argument('holdout_labels',type=Path)
     args=parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         result=freeze(load(args.package),load(args.draft)) if args.command=='freeze' else evaluate(load(args.submission),load(args.holdout_labels))
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:parser.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write((json.dumps(result,indent=2)+'\n').encode('utf-8'))
+    emit(parser, (json.dumps(result,indent=2)+'\n').encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

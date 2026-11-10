@@ -98,3 +98,5 @@ python -m unittest tests.test_synthetic_evaluation -v
 Real researcher evaluation would require separately authorized sources, prespecified
 independent labels, genuine freeze/split governance and domain reviewers. This tool
 implements none of those scientific assurances and makes no actual model calls.
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

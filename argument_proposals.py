@@ -1,4 +1,5 @@
 """Prepare and explicitly adopt offline argument suggestions among selected existing claims."""
+from exclusive_output import add_output_argument, emit, preflight
 from handoff_text import render_handoff
 
 import argparse
@@ -418,7 +419,7 @@ def _load(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__); commands = parser.add_subparsers(dest='command', required=True)
     for name in ('template', 'prepare', 'response-template', 'import', 'review-template', 'review', 'export', 'inspect'):
-        command = commands.add_parser(name); command.add_argument('package', type=Path); command.add_argument('draft', type=Path)
+        command = commands.add_parser(name); add_output_argument(command); command.add_argument('package', type=Path); command.add_argument('draft', type=Path)
         command.add_argument('--answer-review', type=Path)
         for argument in {'template': [], 'prepare': ['scope'], 'response-template': ['scope', 'handoff'],
             'import': ['scope', 'handoff', 'response', 'provenance'], 'review-template': ['bundle'],
@@ -430,6 +431,7 @@ def main():
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
         if name in ('prepare', 'review'): command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         package, draft = _load(args.package), _load(args.draft)
         declared = _load(args.answer_review) if args.answer_review else None
@@ -447,7 +449,7 @@ def main():
             output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
         if len(output.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('argument proposal output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__': main()

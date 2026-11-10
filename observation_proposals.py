@@ -1,4 +1,5 @@
 """Import and review first-observation proposals without creating runtime records."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -222,7 +223,8 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('corpus',type=Path);p.add_argument('bundle',type=Path);p.add_argument('review',type=Path,nargs='?')
     p.add_argument('--template',action='store_true');p.add_argument('--reviewer-id')
-    p.add_argument('--source-root',type=Path);p.add_argument('--format',choices=('json','text'),default='json');a=p.parse_args()
+    p.add_argument('--source-root',type=Path);p.add_argument('--format',choices=('json','text'),default='json');add_output_argument(p); a=p.parse_args()
+    preflight(p, getattr(a, 'output', None))
     try:
         if a.template and (a.review is not None or a.format!='json'):
             raise ValueError('template requires JSON and no review file')
@@ -234,7 +236,7 @@ def main():
         result=review_template(corpus,bundle,a.reviewer_id) if a.template else review_proposals(corpus,bundle,_load(a.review))
         output=render(result) if a.format=='text' else json.dumps(result,ensure_ascii=False,indent=2)+'\n'
     except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(p, output.encode('utf-8'), getattr(a, 'output', None))
 
 
 if __name__=='__main__':main()

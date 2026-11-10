@@ -1,4 +1,5 @@
 """Bounded extraction candidates from a mock or declared offline model response."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -202,12 +203,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('corpus', type=Path)
     parser.add_argument('--mock-response', type=Path, required=True)
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         result = extract_candidates(load(args.corpus), MockProvider(load(args.mock_response)))
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write((json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
+    emit(parser, (json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

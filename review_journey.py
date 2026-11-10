@@ -1,4 +1,5 @@
 """Join answer and design reviews by exact evidence reference, never semantic inference."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -127,13 +128,14 @@ def main():
     parser.add_argument('--reference-year', required=True, type=int)
     parser.add_argument('--review', type=Path)
     parser.add_argument('--format', choices=('json', 'text'), default='json')
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         inputs = (load(args.package), load(args.links), load(args.proposal), load(args.draft),
                   args.reference_year, load(args.review) if args.review else None)
         output = render(*inputs) if args.format == 'text' else json.dumps(assemble(*inputs), indent=2) + '\n'
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc: parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__': main()

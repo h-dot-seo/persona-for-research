@@ -1,4 +1,5 @@
 """Render a compact read-only review from a validated bound scholarly package."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
 import sys
@@ -131,7 +132,8 @@ def main():
                         help='Include bound observation/component references, quotes and per-observation gaps')
     parser.add_argument('--human-validation', type=Path, action='append',
                         help='Detached human validation record(s) checked against this package; reported read-only')
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         records = None
         if args.human_validation:
@@ -142,7 +144,7 @@ def main():
                       human_validation=records)
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write(text.encode('utf-8'))
+    emit(parser, text.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

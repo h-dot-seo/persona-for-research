@@ -1,4 +1,5 @@
 """Replay one declared candidate-review revision and trace a design's evidence routes."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -168,12 +169,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('package', 'links', 'proposal', 'revision_inputs'):
         parser.add_argument(name, type=Path)
-    args = parser.parse_args()
+    add_output_argument(parser); args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         result = audit(load(args.package), load(args.links), load(args.proposal), load(args.revision_inputs))
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    sys.stdout.buffer.write((json.dumps(result, indent=2) + '\n').encode('utf-8'))
+    emit(parser, (json.dumps(result, indent=2) + '\n').encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

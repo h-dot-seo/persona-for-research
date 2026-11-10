@@ -1,4 +1,5 @@
 """Compare two freshly reopened input cards without inferring research progress or approval."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
@@ -232,12 +233,13 @@ def main():
     parser.add_argument('previous',type=Path);parser.add_argument('current',type=Path)
     parser.add_argument('--previous-root',type=Path,required=True);parser.add_argument('--current-root',type=Path,required=True)
     parser.add_argument('--previous-source-root',type=Path);parser.add_argument('--current-source-root',type=Path)
-    parser.add_argument('--format',choices=('json','text'),default='json');args=parser.parse_args()
+    parser.add_argument('--format',choices=('json','text'),default='json');add_output_argument(parser); args=parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         output=render(inputs._load_card(args.previous),args.previous_root,inputs._load_card(args.current),args.current_root,
             previous_source_root=args.previous_source_root,current_source_root=args.current_source_root,format=args.format)
     except (ValueError,OSError,KeyError,TypeError,AttributeError,RecursionError) as exc:parser.exit(1,str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__=='__main__':main()

@@ -707,3 +707,7 @@ The manifest describes LF-normalized published files, enforced by .gitattributes
 External model/search behavior and scientific meaning are not evaluated by CI.
 
 Before local preparation, use `prepare_local_manifest.py --report-defects` for a read-only whole-selection structural report; see [local input preparation](LOCAL_INPUT_PREPARATION.md).
+
+## Exclusive result files
+
+Use `--output NEW_FILE` on result CLIs to save their exact UTF-8 bytes without shell re-encoding or overwrite. The destination is checked before input reads; stdout carries only a save receipt with hashes and a potentially private path. Existing directory writers and validators keep their contracts. See [exclusive output](EXCLUSIVE_OUTPUT.md) for coverage, bounds, stable-parent assumptions and retained partial files on write failure. No scientific approval, network call or canonical update is implied.

@@ -151,3 +151,5 @@ input hashes and changed field names, not conflicting-judgment or correctness
 verdicts. Full recorded and current contexts remain in separate detailed histories
 and the exact JSON snapshot. No decision controls or new external resources are
 added. Browser layout, keyboard and print checks remain blocked/unverified.
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

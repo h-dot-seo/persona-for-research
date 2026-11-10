@@ -169,3 +169,5 @@ The argument slot likewise accepts a [reviewed argument envelope](ARGUMENT_PROPO
 Complete original/adoption/rejection history is pinned, not just the accepted map.
 A history-only edit invalidates the card even if the displayed adopted steps are
 unchanged. Explicit answer-review presence/content remains part of argument binding.
+
+For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.

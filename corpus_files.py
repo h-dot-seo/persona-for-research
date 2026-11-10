@@ -1,4 +1,5 @@
 """Load explicitly authorized local UTF-8 Markdown evidence with byte hashes."""
+from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import hashlib
 import json
@@ -121,14 +122,15 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('manifest',type=Path); p.add_argument('--source-root',type=Path,required=True)
     p.add_argument('--question',required=True); p.add_argument('--topic',required=True)
-    a=p.parse_args()
+    add_output_argument(p); a=p.parse_args()
+    preflight(p, getattr(a, 'output', None))
     try:
         corpus=load_sources(load(a.manifest),a.source_root)
         package=build(corpus)
         result=dict(package=package,application=apply(package,a.question,a.topic),
                     boundary='Local bytes and quoted sections verified; publication authenticity and semantic support unverified')
     except (ValueError,OSError,KeyError,TypeError) as e: p.exit(1,str(e)+'\n')
-    sys.stdout.buffer.write((json.dumps(result,ensure_ascii=False,indent=2) + '\n').encode('utf-8'))
+    emit(p, (json.dumps(result,ensure_ascii=False,indent=2) + '\n').encode('utf-8'), getattr(a, 'output', None))
 
 
 if __name__=='__main__': main()

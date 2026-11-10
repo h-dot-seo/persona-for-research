@@ -1,4 +1,5 @@
 """Prepare and explicitly review offline, evidence-scoped answer proposals."""
+from exclusive_output import add_output_argument, emit, preflight
 from handoff_text import render_handoff
 
 import argparse
@@ -517,7 +518,7 @@ def _load(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__); commands = parser.add_subparsers(dest='command', required=True)
     for name in ('template', 'prepare', 'response-template', 'import', 'review-template', 'review', 'export', 'inspect', 'context'):
-        command = commands.add_parser(name); command.add_argument('package', type=Path)
+        command = commands.add_parser(name); add_output_argument(command); command.add_argument('package', type=Path)
         for argument in {'template': [], 'prepare': ['scope'], 'response-template': ['scope', 'handoff'],
             'import': ['scope', 'handoff', 'response', 'provenance'], 'review-template': ['bundle'],
             'review': ['bundle', 'review'], 'export': ['bundle', 'review'], 'inspect': ['envelope'], 'context': ['scope']}[name]:
@@ -535,6 +536,7 @@ def main():
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
         if name in ('prepare', 'review', 'context'): command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
+    preflight(parser, getattr(args, 'output', None))
     try:
         package = _load(args.package)
         if args.command == 'template':
@@ -564,7 +566,7 @@ def main():
             output = (render_context(result) if args.command == 'context' else render_review(result)) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
         if len(output.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('answer proposal output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc)+'\n')
-    sys.stdout.buffer.write(output.encode('utf-8'))
+    emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
 if __name__ == '__main__': main()
