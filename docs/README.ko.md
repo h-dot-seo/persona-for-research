@@ -209,3 +209,5 @@ python3 -m unittest discover -v
 - [../SECURITY.md](../SECURITY.md) — 보안과 공개 경계.
 - [../RIGHTS.md](../RIGHTS.md) — 권리와 제3자 자료.
 - [../VALIDATION.md](../VALIDATION.md) — 현재 검증 스냅숏.
+
+로컬 입력을 준비하기 전에 `prepare_local_manifest.py --report-defects`로 선택 파일 전체의 구조를 읽기 전용으로 확인할 수 있습니다. [안내](LOCAL_INPUT_PREPARATION.md).

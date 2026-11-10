@@ -71,3 +71,5 @@ New papers, corrections, retractions, provenance errors, counterexamples and sco
 changes trigger controlled reopening. Preserve prior releases and record affected
 rules and revalidation. Knowledge ingestion and canonical policy revision are
 separate operations. No model or platform-specific backend is required by the design.
+
+Structural intake uses `prepare_local_manifest.py --report-defects` behind the same whole-selection authorization and path preflight as preparation. It reports unchanged parser outcomes and lexical surprises without changing source bytes, writing a manifest or assessing conversion fidelity or scholarly quality. See [local input preparation](LOCAL_INPUT_PREPARATION.md).

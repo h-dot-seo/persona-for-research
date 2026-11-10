@@ -1702,3 +1702,21 @@ does not re-verify source authenticity, browser QA or remote CI (the GitHub Acti
 for the merged commit is the remote record), and a dispatcher listing is not an approval of
 any script's inputs. Local passes under Python 3.15 (the full suite) and 3.13 (the dispatcher
 module only) do not establish the 3.10 and 3.12 CI results.
+
+## 2026-11-10 Onboarding defect report (0.73-onboarding-defect-report)
+
+Added `prepare_local_manifest.py --report-defects`: shared whole-selection preflight,
+unchanged parser outcomes, invalid-UTF-8 offsets, BOM/near-miss/invisible-character
+findings, splitlines break counts, preamble counts and bounded heading/finding rows.
+The report is read-only, caps output at 8 MiB, and fails closed on read or hash errors.
+Normal preparation and existing payload/fixture bindings are unchanged. Expanded
+SKILL routing with actual offline proposal families, run markers and agent boundaries;
+static contract tests check its size, frontmatter, paths and documented subcommands.
+
+Validation: focused suite ran 26 tests successfully. Full discovery: `Ran 1003 tests in 298.973s`, `OK` on Python 3.12.14,
+with no failures, errors or skips. The documented report command completed with ALL_SELECTED_FILES_WOULD_PARSE.
+`python -m compileall -q .` covers 145 Python files; manifest verification and publication
+audit cover 234 listed files and 235 text files respectively. All outputs and temporary
+fixtures remain outside the repository. Existing executable guide blocks are unchanged.
+No model/network calls, source conversion, scientific assessment, researcher identity
+verification, real-person evaluation or user-persona publication readiness is claimed.

@@ -23,6 +23,7 @@ source corpora, real persona packages and real validation results are kept out.
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.
 - Logical JSON binding validator (`persona.py`) and a holdout-redacting projection helper (`safe_canonical_read.py`).
 - Detached human validation records (`human_validation.py`): a blank template, a strict check and a read-only axis status bound to both package hashes, never written into the persona payload.
+- Read-only whole-selection structural reports (`prepare_local_manifest.py --report-defects`) before local preparation.
 - Synthetic templates and tests; a portable agent workflow in `SKILL.md`.
 - A `tests/` package for the unittest suite and a root dispatcher, `persona_cli.py`, that lists and runs the root CLIs without changing them.
 
@@ -83,7 +84,7 @@ Keep real inputs and generated packages outside this public repository.
 | `synthetic_walkthrough.py` | Run the bundled synthetic fixtures through 15 to 53 real CLI stages into a new external directory | [Quickstart](docs/QUICKSTART.md) |
 | `persona.py`, `safe_canonical_read.py` | Validate persona/knowledge hash bindings; project canonical JSON without holdout identifiers | [Architecture](docs/ARCHITECTURE.md) |
 | `observation_input.py` | Verify curated observations and quotes against supplied segments, then build the planning scaffold | [Workflows](docs/WORKFLOWS.md#verified-intake-and-authorized-local-source-files) |
-| `prepare_local_manifest.py`, `corpus_files.py` | Prepare and load explicitly authorized local source files with byte hashes | [Local input preparation](docs/LOCAL_INPUT_PREPARATION.md) |
+| `prepare_local_manifest.py`, `corpus_files.py` | Report structural defects with `--report-defects`, then prepare and load authorized local files with byte hashes | [Local input preparation](docs/LOCAL_INPUT_PREPARATION.md) |
 | `research_workflow.py` | Apply operator-curated observations as a bounded, question-specific planning scaffold | [Workflow review](docs/WORKFLOW_REVIEW.md) |
 | `review_package.py` | Compact read-only review of a bound package (`--evidence-details`, `--human-validation`) | [Evidence details](docs/EVIDENCE_DETAILS.md) |
 | `compare_releases.py` | Read-only comparison of two bound packages; never approves a release | [Workflows](docs/WORKFLOWS.md#review-a-candidate-release-and-a-bound-package) |
@@ -184,3 +185,5 @@ See [lifecycle](docs/ARCHITECTURE.md), [workflow](SKILL.md),
 [validation record](VALIDATION.md) is the current verification snapshot; every dated
 entry is in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md).
 No license has been selected by the owner yet; see [rights](RIGHTS.md).
+
+See [local input preparation](docs/LOCAL_INPUT_PREPARATION.md) for converter-neutral text requirements and bounded defect reports.

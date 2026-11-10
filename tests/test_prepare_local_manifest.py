@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-from prepare_local_manifest import prepare
+from prepare_local_manifest import prepare, report_defects
 from corpus_files import load_sources, read_source_bytes
 from research_workflow import build,apply
 
@@ -50,6 +50,7 @@ class PrepareLocalManifestTests(unittest.TestCase):
             other[field]=value;other['source_file']='missing.md';selection['papers'].append(other)
             with patch.object(Path,'resolve',side_effect=AssertionError('filesystem resolved')),patch('prepare_local_manifest.read_source_bytes',side_effect=AssertionError('file opened')):
                 with self.assertRaises(ValueError):prepare(selection,self.root)
+                with self.assertRaises(ValueError):report_defects(selection,self.root)
 
     def test_all_path_metadata_errors_preflight_before_any_source_read(self):
         for name in ('../outside.md','/absolute.md','C:\\outside.md','bad.pdf'):
@@ -58,6 +59,7 @@ class PrepareLocalManifestTests(unittest.TestCase):
             if name=='bad.pdf':(self.root/name).write_bytes(b'synthetic')
             with patch('prepare_local_manifest.read_source_bytes',side_effect=AssertionError('source opened early')):
                 with self.assertRaises((ValueError,OSError)):prepare(selection,self.root)
+                with self.assertRaises((ValueError,OSError)):report_defects(selection,self.root)
 
     def test_existing_hash_pins_bytes_and_curated_evidence_cannot_be_rebaselined(self):
         prepared=prepare(self.selection,self.root);self.assertEqual(prepared,prepare(prepared,self.root))
@@ -75,6 +77,7 @@ class PrepareLocalManifestTests(unittest.TestCase):
             selection=copy.deepcopy(self.selection);selection['papers'][0][field]=value
             with patch('prepare_local_manifest.read_source_bytes',side_effect=AssertionError('read before validation')):
                 with self.assertRaises(ValueError):prepare(selection,self.root)
+                with self.assertRaises(ValueError):report_defects(selection,self.root)
 
     def test_source_read_once_and_annotation_aliases_not_shared(self):
         original=read_source_bytes;calls=[]
