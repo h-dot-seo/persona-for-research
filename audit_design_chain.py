@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import sys
 from pathlib import Path
 
 from audit_design_lineage import (audit as audit_one, candidate_records, candidate_provenance,
@@ -139,7 +140,7 @@ def main():
         result = audit(load(args.package), load(args.links), load(args.proposal), load(args.chain))
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    print(json.dumps(result, indent=2))
+    sys.stdout.buffer.write((json.dumps(result, indent=2) + '\n').encode('utf-8'))
 
 
 if __name__ == '__main__':

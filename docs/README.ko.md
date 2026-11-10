@@ -78,6 +78,13 @@ python3 -m unittest discover -v
 공개 저장소 밖에 두세요. Windows에서 임시 디렉터리 권한이 제한되어 있으면 `TEMP`와 `TMP`를
 쓰기 가능한 디렉터리로 지정한 뒤 테스트를 실행합니다.
 
+기존에 텍스트 모드로 JSON 결과를 출력하던 10개 CLI는 이제 콘솔 코드 페이지와 무관하게
+UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인코딩·CRLF 출력은 의도적으로
+변경되며, UTF-8·LF를 쓰던 POSIX 출력은 같습니다. 셸 자체의 재인코딩과 덮어쓰기 위험은
+남아 있으므로 기본 PowerShell 5 리디렉션을 안전한 저장 방식으로 간주하지 마세요.
+이번 변경에는 새 `--output`·`--version` 옵션이 없습니다.
+대상 명령과 저장 시 주의점은 [표준 출력 안내](COMMANDS.md#stdout-and-shell-capture)를 보세요.
+
 ## 주요 명령
 
 모든 명령은 저장소 루트에서 `python <스크립트>.py ...` 형태로 실행합니다. 입력을 거부하면

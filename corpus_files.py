@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import sys
 import os
 import stat
 from pathlib import Path
@@ -127,7 +128,7 @@ def main():
         result=dict(package=package,application=apply(package,a.question,a.topic),
                     boundary='Local bytes and quoted sections verified; publication authenticity and semantic support unverified')
     except (ValueError,OSError,KeyError,TypeError) as e: p.exit(1,str(e)+'\n')
-    print(json.dumps(result,ensure_ascii=False,indent=2))
+    sys.stdout.buffer.write((json.dumps(result,ensure_ascii=False,indent=2) + '\n').encode('utf-8'))
 
 
 if __name__=='__main__': main()

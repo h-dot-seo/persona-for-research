@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import sys
 from pathlib import Path
 from typing import Protocol
 
@@ -206,7 +207,7 @@ def main():
         result = extract_candidates(load(args.corpus), MockProvider(load(args.mock_response)))
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    sys.stdout.buffer.write((json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
 
 
 if __name__ == '__main__':

@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import sys
 from pathlib import Path
 
 from extraction_adapter import MAX_CANDIDATE_CHARS, MAX_HANDOFF_BYTES, validate_candidate_bundle
@@ -196,7 +197,7 @@ def main():
                                       args.new_version, args.new_build_id)
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    print(json.dumps(result, indent=2))
+    sys.stdout.buffer.write((json.dumps(result, indent=2) + '\n').encode('utf-8'))
 
 
 if __name__ == '__main__':

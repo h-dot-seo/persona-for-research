@@ -62,6 +62,11 @@ from persona-rule inference. Fresh literature is external evidence, not retrospe
 knowledge of the researcher. Apply writing style after reasoning and judgment.
 Return `OUTSIDE_PERSONA_COVERAGE` or `NEED_MORE_EVIDENCE` when appropriate.
 
+JSON result emission in the ten formerly text-mode CLIs writes UTF-8/LF bytes
+directly, without changing logical payloads or their bindings. Console encoding
+and newline conversion are bypassed; shell capture is a separate boundary. See
+[stdout and shell capture](COMMANDS.md#stdout-and-shell-capture).
+
 Discussion among personas is interpretive consultation, not new empirical evidence.
 Do not mix identities or treat consultation output as training data automatically.
 

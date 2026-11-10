@@ -1,15 +1,18 @@
 # Validation record
 
-Current release: `0.74-handoff-text`, 2026-11-10. This file is the current
+Current release: `0.75-utf8-cli-output`, 2026-11-10. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
 
-- 2026-11-10 Pasteable offline handoff text (`0.74-handoff-text`): pure full-handoff
-  rendering on five prepare commands, without builder or import changes.
-  Full entry: [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md#2026-11-10-pasteable-handoff-text-074-handoff-text).
+- 2026-11-10 UTF-8 CLI output (`0.75-utf8-cli-output`): ten formerly print-based
+  JSON result CLIs write UTF-8/LF bytes directly. Windows result stdout intentionally
+  changes from text-mode CRLF and the configured encoding (often an ANSI code page)
+  to LF and UTF-8. Existing UTF-8/LF POSIX bytes, JSON escaping and bindings stay the
+  same; shell re-encoding and overwrite risks remain.
+  Full entry: [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md#2026-11-10-utf-8-cli-output-075-utf8-cli-output).
 
 ## What CI runs
 
@@ -32,17 +35,18 @@ external model/search behaviour or scientific meaning.
 
 From the repository root, with Python 3.10 or later and no third-party packages:
 
-- `python -m unittest discover -q` — the current tree runs 1003 synthetic tests
+- `python -m unittest discover -q` — the current tree runs 1013 synthetic tests
   (platform-specific cases may skip on other hosts). The 2026-11-10 Python 3.12.14
-  local run passed in 298.973 seconds with no failures, errors or skips. One module runs as
+  local run passed in 339.848 seconds with no failures, errors or skips. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.
-- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 234
+- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 237
   listed files. Regenerate the manifest after every other edit of a release.
-- `python audit_publication.py` — expects `"pass": true`; the current tree has 235 text
+- `python audit_publication.py` — expects `"pass": true`; the current tree has 238 text
   files including the manifest. A pass is a limited file-type and secret-pattern scan, not
   proof of anonymity or rights clearance.
-- `python -m compileall -q .` — 145 Python files compile cleanly.
+- `python -m compileall -q .` — 148 Python files compile cleanly and parse with
+  Python 3.10 grammar.
 - `python synthetic_walkthrough.py ../persona-synthetic-demo` — the 15-stage demo must exit 0
   and write `COMPLETE.json` into a new directory outside the repository.
 - `python persona_cli.py list` — prints the 47 root scripts that have a command-line entry

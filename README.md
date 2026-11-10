@@ -25,6 +25,7 @@ source corpora, real persona packages and real validation results are kept out.
 - Detached human validation records (`human_validation.py`): a blank template, a strict check and a read-only axis status bound to both package hashes, never written into the persona payload.
 - Read-only whole-selection structural reports (`prepare_local_manifest.py --report-defects`) before local preparation.
 - Lossless, ASCII-escaped pasteable handoff views with `prepare --format text`; JSON bindings and imports stay unchanged.
+- UTF-8, LF-only JSON result bytes from the ten formerly text-mode CLIs, independent of the console code page; see [stdout and shell capture](docs/COMMANDS.md#stdout-and-shell-capture).
 - Synthetic templates and tests; a portable agent workflow in `SKILL.md`.
 - A `tests/` package for the unittest suite and a root dispatcher, `persona_cli.py`, that lists and runs the root CLIs without changing them.
 

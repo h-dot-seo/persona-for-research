@@ -1,6 +1,7 @@
 """Read-only comparison of bound evidence packages; never update canonical policy."""
 import argparse
 import json
+import sys
 from pathlib import Path
 from persona import payload_sha256, validate
 from strict_json import load
@@ -65,7 +66,7 @@ def main():
         result = compare(load(args.previous), load(args.candidate))
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    sys.stdout.buffer.write((json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
 
 
 if __name__ == '__main__':

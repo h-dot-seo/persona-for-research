@@ -3,6 +3,7 @@ import argparse
 import copy
 import hashlib
 import json
+import sys
 from pathlib import Path
 from research_workflow import build, apply
 from reasoning_cards import validate_components
@@ -57,7 +58,7 @@ def main():
                     boundary='Exact quote and supplied segment hash checked; source authenticity and semantic support unverified')
     except (ValueError,OSError,KeyError,TypeError) as e:
         p.exit(1,str(e)+'\n')
-    print(json.dumps(result,ensure_ascii=False,indent=2))
+    sys.stdout.buffer.write((json.dumps(result,ensure_ascii=False,indent=2) + '\n').encode('utf-8'))
 
 
 if __name__=='__main__': main()

@@ -2,6 +2,7 @@
 import argparse
 import copy
 import json
+import sys
 from pathlib import Path
 from persona import payload_sha256, validate
 from methodology_trajectory import summarize
@@ -176,7 +177,7 @@ def main():
         result = dict(package=package, application=apply(package, a.question, a.topic))
     except (ValueError, OSError, KeyError, TypeError) as e:
         p.exit(1, str(e) + '\n')
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    sys.stdout.buffer.write((json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
 
 
 if __name__ == '__main__':
