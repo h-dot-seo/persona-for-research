@@ -10,6 +10,15 @@ ROOT = Path(__file__).resolve().parent
 SELF = Path(__file__).name
 NAME_WIDTH = 28
 MAX_SOURCE_BYTES = 1_048_576
+MAX_MANIFEST_BYTES = 1_048_576
+MAX_RELEASE_CHARACTERS = 128
+
+VERSION_BOUNDARY = (
+    "Boundary: manifest labels only; NOT an integrity check or signature.\n"
+    "The manifest excludes itself from its hashes; these labels are not authenticated.\n"
+    "No file hashes checked, scientific judgement, model call, network access or file writes.\n"
+    "For inventory and file-hash checks, run: python verify_manifest.py\n"
+)
 
 BOUNDARY = (
     "Boundary: the dispatcher only locates a root script and runs it in-process through runpy with\n"
@@ -20,6 +29,55 @@ BOUNDARY = (
     "discovery aid over the scripts that have an `if __name__ == '__main__'` entry point, not an\n"
     "approval of any input."
 )
+
+
+def version_text():
+    """Read bounded manifest labels only when requested; never verify file hashes."""
+    import datetime
+    import json
+    import stat
+    import strict_json
+
+    manifest_path = ROOT / 'PUBLICATION_MANIFEST.json'
+    try:
+        info = manifest_path.lstat()
+        if not stat.S_ISREG(info.st_mode) or info.st_size > MAX_MANIFEST_BYTES:
+            raise ValueError('not a bounded regular file')
+        with manifest_path.open('rb') as stream:
+            raw = stream.read(MAX_MANIFEST_BYTES + 1)
+        if len(raw) > MAX_MANIFEST_BYTES:
+            raise ValueError('manifest too large')
+        manifest = strict_json.loads(raw.decode('utf-8'))
+        if not isinstance(manifest, dict):
+            raise ValueError('not an object')
+        release, date = manifest.get('release'), manifest.get('date')
+        if (not isinstance(release, str) or not 1 <= len(release) <= MAX_RELEASE_CHARACTERS
+                or not release.isprintable() or release.strip() != release):
+            raise ValueError('invalid release label')
+        if (not isinstance(date, str) or len(date) != 10
+                or datetime.date.fromisoformat(date).isoformat() != date):
+            raise ValueError('invalid date label')
+    except (OSError, ValueError, RecursionError):
+        # Never echo untrusted JSON keys, labels, paths or parser diagnostics.
+        raise ValueError('cannot read version labels: PUBLICATION_MANIFEST.json must be a '
+                         'regular UTF-8 JSON file (no BOM), at most 1048576 bytes, with no '
+                         'duplicate keys or non-finite numbers, a printable release label '
+                         '(1-128 characters, no edge whitespace) and a YYYY-MM-DD date') from None
+    python = '.'.join(str(part) for part in sys.version_info[:3])
+    return ('persona-for-research release: ' + json.dumps(release, ensure_ascii=True)
+            + '\nManifest date: ' + date + '\nPython: ' + python + '\n' + VERSION_BOUNDARY)
+
+
+class VersionAction(argparse.Action):
+    """Like argparse's version action, but defer all manifest reads until invoked."""
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        try:
+            text = version_text()
+        except ValueError as exc:
+            parser.exit(1, SELF + ': error: ' + str(exc) + '\n')
+        sys.stdout.write(text)
+        parser.exit(0)
 
 
 def first_sentence(docstring):
@@ -105,8 +163,10 @@ def render(rows):
 
 
 def build_parser():
-    parser = argparse.ArgumentParser(description=__doc__, epilog=BOUNDARY,
+    parser = argparse.ArgumentParser(description=__doc__, epilog=BOUNDARY + "\n\n" + VERSION_BOUNDARY,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument('--version', action=VersionAction, nargs=0,
+                        help='show manifest release/date and Python version; not a hash check')
     commands = parser.add_subparsers(dest='command', required=True, metavar='{list,run}')
     commands.add_parser('list', help='print every root script that has a command-line entry point, '
                                      'one line each, with the first sentence of its docstring')

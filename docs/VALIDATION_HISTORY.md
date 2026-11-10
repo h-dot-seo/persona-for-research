@@ -1847,3 +1847,47 @@ establish source authenticity, rights, scientific validity, researcher fidelity,
 human approval or permission to share. No model/network call or canonical update
 occurred. Local success does not claim exact-head Ubuntu/Windows CI success; that
 must be verified separately before merge.
+
+## 2026-11-10 Version-label display (0.77-version-labels)
+
+Added `python persona_cli.py --version`: lazily read the adjacent manifest's
+release/date labels and display the running Python major/minor/micro version.
+The read is bounded to 1 MiB from a regular non-symlink file; strict UTF-8 JSON
+rejects BOMs, duplicate keys, non-finite numbers and excessive nesting. Release
+labels are bounded printable strings displayed with ASCII JSON escaping; dates
+must be valid exact YYYY-MM-DD calendar dates. Invalid metadata exits 1 without
+stdout or untrusted diagnostic text. Stable trusted repository files are assumed,
+not a race-proof filesystem sandbox.
+
+The output explicitly says this is not an integrity check or signature, that the
+manifest excludes itself from its hashes and that labels are unauthenticated.
+No file hashes are checked. It directs readers to `python verify_manifest.py` for
+separate inventory/hash consistency checks, not publisher authentication.
+`list` still imports no repository module; help/list do not read the manifest;
+`run SCRIPT --version` is forwarded unchanged. No packaging, tag or license
+decision was made. Existing result stdout paths and all 145 prior Markdown sh
+blocks remain unchanged. English/Korean documentation and the agent skill were
+updated within the existing 8192-byte skill limit (8183 bytes).
+
+Verification on Python 3.12.14:
+- Full discovery: `Ran 1036 tests in 327.414s`, `OK`, no failures/errors/skips.
+- Focused dispatcher/version, skill contract and exclusive-output checks:
+  35 tests / 3.096s / OK. After strengthening help assertions and tightening skill
+  wording, dispatcher/version and skill checks: 19 tests / 2.264s / OK. Final
+  35-test focused rerun after documentation and manifest updates: 3.017s / OK.
+- Synthetic edge cases cover malformed encodings/JSON, duplicate and nested keys,
+  non-finite numbers, nesting limits, invalid types/dates, control/bidi/surrogate
+  labels, inclusive byte/label bounds, growing-file bounded reads, missing files,
+  directories, symlinks, unreadable paths, safe diagnostics, ASCII console output,
+  CWD independence, lazy reads and unchanged run argument forwarding.
+- The documented version command and an absolute-path invocation from an external
+  empty directory were executed manually; labels and boundary text matched.
+- Compileall and Python 3.10 grammar parsing pass for 151 Python files. Publication
+  manifest (241 entries), limited audit (242 files), LF and whitespace checks pass.
+- An initial focused invocation named nonexistent `tests.test_skill`; it failed
+  import, then the corrected `tests.test_skill_contract` invocation passed.
+
+Only fictional/synthetic inputs were exercised. No model/network call or canonical
+update occurred. Passing mechanical checks does not establish source authenticity,
+rights, scientific validity, researcher fidelity or human approval. Local success
+is not an exact-commit Ubuntu/Windows CI result; verify those jobs before merge.

@@ -107,7 +107,7 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 | `operator_review.py` | 운영자의 명시적 결정을 별도의 수정 후보에 기록 | [OPERATOR_REVIEW.md](OPERATOR_REVIEW.md) |
 | `answer_proposals.py`, `argument_proposals.py` | 근거 범위가 정해진 오프라인 답변·논증 제안과 명시적 채택 | [ANSWER_PROPOSALS.md](ANSWER_PROPOSALS.md), [ARGUMENT_PROPOSALS.md](ARGUMENT_PROPOSALS.md) |
 | `research_journey.py`, `journey_inputs.py` | 출처→방법→논증 통합 보고서(JSON/text/HTML)와 고정된 입력 카드 | [RESEARCH_JOURNEY.md](RESEARCH_JOURNEY.md) |
-| `persona_cli.py` | 루트 스크립트 목록(`list`)과 그중 하나를 어느 디렉터리에서든 그대로 실행(`run <스크립트> [인자...]`); 문서화된 `python <스크립트>.py` 형태가 기본 | [COMMANDS.md](COMMANDS.md#persona_clipy) |
+| `persona_cli.py` | 매니페스트 레이블과 Python 버전 표시(`--version`), 루트 스크립트 목록(`list`)과 그중 하나를 어느 디렉터리에서든 그대로 실행(`run <스크립트> [인자...]`); 문서화된 `python <스크립트>.py` 형태가 기본 | [COMMANDS.md](COMMANDS.md#persona_clipy) |
 
 ## 경계와 하지 않는 것
 
@@ -224,3 +224,18 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 ## 결과 파일의 배타 저장
 
 결과 명령의 `--output NEW_FILE`은 기존 파일을 덮어쓰지 않고 UTF-8 바이트를 저장하며, stdout에는 해시·경로가 담긴 영수증만 냅니다. 경로도 개인정보일 수 있습니다. [범위와 실패 경계](EXCLUSIVE_OUTPUT.md)를 확인하세요. 검증기·기존 디렉터리 writer는 그대로입니다.
+
+## 버전 레이블 확인
+
+`python persona_cli.py --version`은 스크립트 옆 매니페스트의 `release`·`date`와
+실행 중인 Python 버전을 읽기 전용으로 표시합니다. 현재 디렉터리와 무관하며,
+`list`와 도움말에서는 매니페스트를 읽지 않습니다. 잘못된 UTF-8/JSON, 중복 키,
+비유한 수, 크기·깊이 한도 초과, 잘못된 레이블은 종료 코드 1로 거부합니다.
+릴리스 레이블은 ASCII 이스케이프된 JSON 문자열로 표시합니다.
+
+**무결성 검사나 서명이 아닙니다.** 매니페스트는 자신의 해시를 포함하지 않으므로
+레이블은 인증되지 않았습니다. 파일 해시도 검사하지 않습니다. 저장소 루트에서
+`python verify_manifest.py`로 별도의 파일 목록·해시 일치 검사를 실행하세요.
+이 검사도 게시자 인증이나 과학적 타당성을 입증하지 않습니다. 모델·네트워크 호출과
+파일 쓰기는 없으며, 패키징·태그·라이선스 결정은 바꾸지 않습니다.
+자세한 한도와 동작은 [버전 레이블](COMMANDS.md#version-labels)을 보세요.

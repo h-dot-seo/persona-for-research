@@ -86,3 +86,13 @@ remain bound to the original handoff payload hash. No builder or import path cha
 ## Exclusive result files
 
 Use `--output NEW_FILE` on result CLIs to save their exact UTF-8 bytes without shell re-encoding or overwrite. The destination is checked before input reads; stdout carries only a save receipt with hashes and a potentially private path. Existing directory writers and validators keep their contracts. See [exclusive output](EXCLUSIVE_OUTPUT.md) for coverage, bounds, stable-parent assumptions and retained partial files on write failure. No scientific approval, network call or canonical update is implied.
+
+## Release-label display
+
+`persona_cli.py --version` lazily reads bounded, strict UTF-8 JSON from the adjacent
+manifest and displays its release/date labels with the running Python version.
+It checks display syntax, not inventory or file hashes. The manifest excludes itself
+from its hashes: labels are not authenticated and the display is not a signature or
+integrity check. Use `python verify_manifest.py` separately. `list` still imports no
+repository module; existing script dispatch is unchanged. See
+[version labels](COMMANDS.md#version-labels) for limits and failure behaviour.
