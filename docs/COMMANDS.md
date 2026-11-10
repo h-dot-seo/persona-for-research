@@ -117,7 +117,7 @@ Guide: [Workflows: paper-to-research-plan workflow](WORKFLOWS.md#paper-to-resear
 Prepare hashes and section inventory for explicitly selected local training files.
 
 ```text
-usage: prepare_local_manifest.py [-h] --source-root SOURCE_ROOT selection
+usage: prepare_local_manifest.py [-h] --source-root SOURCE_ROOT [--report-defects] selection
 ```
 
 Guide: [Local input preparation](LOCAL_INPUT_PREPARATION.md).

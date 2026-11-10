@@ -700,3 +700,5 @@ with Python 3.10 and 3.12. Actions are commit-pinned; token permissions are read
 checkout does not persist credentials, no secrets or deployment steps are used.
 The manifest describes LF-normalized published files, enforced by .gitattributes.
 External model/search behavior and scientific meaning are not evaluated by CI.
+
+Before local preparation, use `prepare_local_manifest.py --report-defects` for a read-only whole-selection structural report; see [local input preparation](LOCAL_INPUT_PREPARATION.md).

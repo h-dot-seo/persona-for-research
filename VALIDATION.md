@@ -1,19 +1,16 @@
 # Validation record
 
-Current release: `0.72-test-package-and-dispatcher`, 2026-11-08. This file is the current
+Current release: `0.73-onboarding-defect-report`, 2026-11-10. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
 
-- 2026-11-08 Test package and dispatcher (`0.72-test-package-and-dispatcher`): the 83
-  `test_*.py` modules moved from the repository root into the `tests/` package, with their
-  repository-root references and cross-test imports rewritten; the same 980 tests are
-  discovered after the move, plus 9 new ones for the root dispatcher `persona_cli.py`, which
-  lists the root command-line scripts and runs one of them in-process without changing it. No
-  implementation module moved and no fixture, example or CI command changed. Full entry:
-  [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md#2026-11-08-test-package-and-dispatcher-072-test-package-and-dispatcher).
+- 2026-11-10 Onboarding defect report (`0.73-onboarding-defect-report`): read-only
+  whole-selection structure diagnostics and a task-routing agent contract. Shared
+  preflight and the unchanged parser preserve normal preparation and payload bindings.
+  Full entry: [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md#2026-11-10-onboarding-defect-report-073-onboarding-defect-report).
 
 ## What CI runs
 
@@ -36,17 +33,17 @@ external model/search behaviour or scientific meaning.
 
 From the repository root, with Python 3.10 or later and no third-party packages:
 
-- `python -m unittest discover -q` — the current tree runs 989 synthetic tests
-  (3 platform-conditional skips in `tests/test_journey_inputs.py`: the FIFO and Unix-unlink
-  cases). The 2026-11-08 local run passed in 626.384 seconds. One module runs as
+- `python -m unittest discover -q` — the current tree runs 1003 synthetic tests
+  (platform-specific cases may skip on other hosts). The 2026-11-10 Python 3.12.14
+  local run passed in 298.973 seconds with no failures, errors or skips. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.
-- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 232
+- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 234
   listed files. Regenerate the manifest after every other edit of a release.
-- `python audit_publication.py` — expects `"pass": true`; the current tree has 233 text
+- `python audit_publication.py` — expects `"pass": true`; the current tree has 235 text
   files including the manifest. A pass is a limited file-type and secret-pattern scan, not
   proof of anonymity or rights clearance.
-- `python -m compileall -q .` — 143 Python files compile cleanly.
+- `python -m compileall -q .` — 145 Python files compile cleanly.
 - `python synthetic_walkthrough.py ../persona-synthetic-demo` — the 15-stage demo must exit 0
   and write `COMPLETE.json` into a new directory outside the repository.
 - `python persona_cli.py list` — prints the 47 root scripts that have a command-line entry

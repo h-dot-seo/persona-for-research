@@ -110,3 +110,44 @@ python -m unittest tests.test_prepare_local_manifest -v
 Instead of editing the entire prepared manifest, use the
 [manual observation cards](MANUAL_LOCAL_OBSERVATIONS.md) to append one explicitly
 written observation at a time, with a runnable research/review synthetic journey.
+
+## Bring your own text: report before preparing
+
+Any external converter is acceptable if its output meets the UTF-8 Markdown contract
+above. This tool never converts PDF, DOCX or HTML; extraction remains your own step.
+Keep converted files outside this repository. Closing `##` and converter `{#id}`
+attributes remain literal parts of locators. Re-converting changes bytes: preserve the
+old record and follow the intentional-revision route, not hash replacement.
+
+Run the read-only report on the bundled synthetic selection:
+
+```sh
+python prepare_local_manifest.py examples/local-selection.json --source-root examples/synthetic-sources --report-defects
+```
+
+Capture stdout to a new file in an external OUTPUT directory if desired. Exit 0 means
+that the report completed, not that every source parses or that evidence is valid.
+The report has schema `persona.source-structure-report.v1`, not a usable manifest.
+`ALL_SELECTED_FILES_WOULD_PARSE` or `SOME_SELECTED_FILES_WOULD_NOT_PARSE` summarizes the
+unchanged parser outcomes (`WOULD_SUCCEED`, `WOULD_RAISE`, `INVALID_UTF8`). The exact
+parser error is included for structural failures. Informational findings such as empty
+sections and whitespace trimming do not themselves imply a parser failure.
+
+Each decoded source reports exact headings, 1-based `splitlines()` line numbers,
+normalized section character counts, and capped findings. Near-miss headings, a BOM
+hiding the first heading and invisible format characters are flagged. Preamble lines
+are discarded by the parser; `preamble_characters` counts their LF-joined text, without
+a trailing newline. Deeper heading lines remain in section bodies. Break counts cover
+LF, CRLF, CR and all other separators recognized by `splitlines()` (including form feed
+from PDF extraction). Line numbers match an LF-based editor only if CR and other
+counts are zero. JSON escapes invisible and non-ASCII characters.
+
+Invalid UTF-8 reports only the first invalid byte offset, never source bytes. No section
+bodies are copied. Headings and paths may still be private. Each paper caps headings and
+findings separately at 1,000 rows with omitted counts; parser status still covers the
+whole file. Output exceeding 8 MiB fails with empty stdout rather than truncating JSON.
+Authorization and every path check finish before reading any selected source. Any
+preflight or safe-reader failure, including detected concurrent changes, aborts with
+nonzero status and empty stdout. A supplied hash mismatch also aborts, exactly as in
+normal preparation. No files are modified, no manifest is written, and conversion
+fidelity and scholarly quality remain `NOT_ASSESSED`. No model or network is used.
