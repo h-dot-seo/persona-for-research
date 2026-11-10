@@ -73,3 +73,7 @@ rules and revalidation. Knowledge ingestion and canonical policy revision are
 separate operations. No model or platform-specific backend is required by the design.
 
 Structural intake uses `prepare_local_manifest.py --report-defects` behind the same whole-selection authorization and path preflight as preparation. It reports unchanged parser outcomes and lexical surprises without changing source bytes, writing a manifest or assessing conversion fidelity or scholarly quality. See [local input preparation](LOCAL_INPUT_PREPARATION.md).
+
+Offline handoff text is a pure derived view (`handoff_text.py`), not a new artifact
+contract. The complete ASCII-escaped JSON preserves every version and quote; imports
+remain bound to the original handoff payload hash. No builder or import path changes.

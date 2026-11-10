@@ -5,8 +5,8 @@ description: Plan, build, review or consult an evidence-bounded scholarly simula
 
 # Research persona workflow
 
-Read README.md and docs/ARCHITECTURE.md. Identify whether the task is build, profile,
-consultation, comparison or update. Do not collect a corpus from an ambiguous name.
+Read README.md and docs/ARCHITECTURE.md. Identify build, profile, consultation,
+comparison or update tasks. Do not collect a corpus from an ambiguous name.
 
 For building: resolve identity and scope; establish source permissions; freeze split;
 parse/QC; extract per-paper evidence; synthesize bounded cross-paper rules; challenge
@@ -31,16 +31,14 @@ distinctness is not verified independence. Never edit `validation.human_validati
 a persona payload or rebind knowledge to carry a status; a changed status needs a new
 persona version through the normal lifecycle. See docs/HUMAN_VALIDATION.md.
 
-The mechanical validator is not a scientific reviewer. The projection helper does
-not confer access permission or guarantee removal of sensitive content. Keep real
-researcher packages and source corpora outside this public repository.
+Mechanical validation is not scientific review. Projection grants no access permission
+or guarantee of sensitive-content removal. Keep real packages and corpora outside this
+public repository.
 
 ## Executable increment
 
-See docs/COMMANDS.md for every local CLI with its exact usage line and docs/WORKFLOWS.md
-for the documented workflows and their explicit limitations; README.md keeps only the
-start-here commands and the documentation index. Use only authorized inputs; shipped
-examples are entirely synthetic.
+See docs/COMMANDS.md for CLI usage and docs/WORKFLOWS.md for workflows and limits.
+README.md indexes the guides. Use only authorized inputs; examples are synthetic.
 
 `python persona_cli.py list` discovers root commands; `python persona_cli.py run <script>`
 dispatches unchanged arguments, output and exit status. Direct script invocation stays
@@ -74,7 +72,7 @@ check this repository's own files, not publication readiness of a user's persona
 
 ## Offline proposal families
 
-Read the relevant guide before acting; these are not interchangeable loops.
+Read each guide; the loops are not interchangeable.
 - `answer_proposals.py` (docs/ANSWER_PROPOSALS.md) and `argument_proposals.py`
   (docs/ARGUMENT_PROPOSALS.md): template, prepare, response-template, separately approved
   external execution, import with separate declared-provenance JSON, review-template,
@@ -124,3 +122,6 @@ a run with `FAILED.txt` are diagnostic only; choose a new destination before ret
   Only human validation, review workspace, local revision and synthetic walkthrough
   enforce external output paths; other commands rely on the operator. No backend,
   permission, scientific validity or completed validation may be inferred from a report.
+
+For pasteable handoffs use `prepare --format text`; see docs/MODEL_HANDOFF.md.
+Keep JSON for import. Text grants no transmission permission.

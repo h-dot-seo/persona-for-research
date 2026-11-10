@@ -1720,3 +1720,24 @@ audit cover 234 listed files and 235 text files respectively. All outputs and te
 fixtures remain outside the repository. Existing executable guide blocks are unchanged.
 No model/network calls, source conversion, scientific assessment, researcher identity
 verification, real-person evaluation or user-persona publication readiness is claimed.
+
+## 2026-11-10 Pasteable handoff text (0.74-handoff-text)
+
+Added `prepare --format json|text` to the five offline handoff command families,
+with complete ASCII-escaped JSON between fixed markers, the original instructions,
+response contract, bound empty skeleton and repeated boundary/hash. A shared pure
+renderer preserves every field; response-template remains JSON-only.
+
+Verification: `python -m unittest discover -q` ran 1008 tests successfully;
+`python -m compileall -q .`, `python verify_manifest.py` and
+`python audit_publication.py` passed. Five new tests cover ten handoff versions,
+lossless control/backslash/bidi/non-BMP round trips, no renderer file/provider/socket
+access, default and explicit JSON bytes, source-root with both model tasks, and
+unchanged proposal output limits without partial output. Default CLI JSON bytes were
+also compared directly against the previous release for all ten versions. Documented
+model preparation was spot-run; existing guide command blocks are unchanged.
+
+This is a local derived view, not permission to transmit, proof of model execution,
+prompt-injection resistance, scientific judgment, authentication, or scholarly
+validation. No builder, import, persona payload, fixture hash, walkthrough stage,
+adoption rule or review decision changes. Exclusive output files are outside this change.

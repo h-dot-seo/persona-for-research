@@ -1,4 +1,6 @@
 """Prepare, import and explicitly review offline cross-publication method hypotheses."""
+from handoff_text import render_handoff
+
 import argparse
 import copy
 import json
@@ -350,6 +352,7 @@ def main():
     commands = parser.add_subparsers(dest='command', required=True)
     prepare = commands.add_parser('prepare'); prepare.add_argument('package', type=Path); prepare.add_argument('--topic', required=True)
     prepare.add_argument('--include-evidence-reasons', action='store_true')
+    prepare.add_argument('--format', choices=('json', 'text'), default='json')
     response = commands.add_parser('response-template'); response.add_argument('package', type=Path); response.add_argument('handoff', type=Path)
     imported = commands.add_parser('import');
     for name in ('package', 'handoff', 'response', 'provenance'): imported.add_argument(name, type=Path)
@@ -367,7 +370,10 @@ def main():
         elif args.command == 'review-template': result = review_template(package, _load(args.bundle), args.reviewer_id)
         elif args.command == 'review': result = review_proposals(package, _load(args.bundle), _load(args.review))
         else: result = export_reviewed(package, _load(args.bundle), _load(args.review))
-        output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, indent=2)+'\n'
+        if args.command == 'prepare' and args.format == 'text':
+            output = render_handoff(result)
+        else:
+            output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, indent=2)+'\n'
     except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc: parser.exit(1, str(exc)+'\n')
     sys.stdout.buffer.write(output.encode('utf-8'))
 

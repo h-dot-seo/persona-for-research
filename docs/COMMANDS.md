@@ -272,7 +272,7 @@ Prepare or import a local model handoff without invoking or transmitting to a mo
 
 ```text
 usage: model_handoff.py [-h] {prepare,response-template,import} ...
-usage: model_handoff.py prepare [-h] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus
+usage: model_handoff.py prepare [-h] [--format {json,text}] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus
 usage: model_handoff.py response-template [-h] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus handoff
 usage: model_handoff.py import [-h] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus handoff response provenance
 ```
@@ -455,7 +455,7 @@ Prepare and explicitly review offline, evidence-scoped answer proposals.
 ```text
 usage: answer_proposals.py [-h] {template,prepare,response-template,import,review-template,review,export,inspect,context} ...
 usage: answer_proposals.py template [-h] --question QUESTION --topic TOPIC --operator-id OPERATOR_ID --reference-year REFERENCE_YEAR [--include-citation-explanations] [--patterns PATTERNS] [--context CONTEXT] [--publication-relations PUBLICATION_RELATIONS] [--pattern-id PATTERN_ID] package
-usage: answer_proposals.py prepare [-h] package scope
+usage: answer_proposals.py prepare [-h] [--format {json,text}] package scope
 usage: answer_proposals.py response-template [-h] package scope handoff
 usage: answer_proposals.py import [-h] package scope handoff response provenance
 usage: answer_proposals.py review-template [-h] --reviewer-id REVIEWER_ID package bundle
@@ -496,7 +496,7 @@ Prepare and explicitly adopt offline argument suggestions among selected existin
 ```text
 usage: argument_proposals.py [-h] {template,prepare,response-template,import,review-template,review,export,inspect} ...
 usage: argument_proposals.py template [-h] [--answer-review ANSWER_REVIEW] --operator-id OPERATOR_ID [--include-recorded-answer-context] package draft
-usage: argument_proposals.py prepare [-h] [--answer-review ANSWER_REVIEW] package draft scope
+usage: argument_proposals.py prepare [-h] [--answer-review ANSWER_REVIEW] [--format {json,text}] package draft scope
 usage: argument_proposals.py response-template [-h] [--answer-review ANSWER_REVIEW] package draft scope handoff
 usage: argument_proposals.py import [-h] [--answer-review ANSWER_REVIEW] package draft scope handoff response provenance
 usage: argument_proposals.py review-template [-h] [--answer-review ANSWER_REVIEW] --reviewer-id REVIEWER_ID package draft bundle
@@ -546,7 +546,7 @@ Prepare, import and explicitly review offline cross-publication method hypothese
 
 ```text
 usage: pattern_proposals.py [-h] {prepare,response-template,import,review-template,review,export} ...
-usage: pattern_proposals.py prepare [-h] --topic TOPIC [--include-evidence-reasons] package
+usage: pattern_proposals.py prepare [-h] --topic TOPIC [--include-evidence-reasons] [--format {json,text}] package
 usage: pattern_proposals.py response-template [-h] package handoff
 usage: pattern_proposals.py import [-h] package handoff response provenance
 usage: pattern_proposals.py review-template [-h] --reviewer-id REVIEWER_ID package bundle
@@ -591,7 +591,7 @@ Prepare and explicitly review offline method-application proposals, without appl
 
 ```text
 usage: application_proposals.py [-h] {prepare,response-template,import,review-template,review,export} ...
-usage: application_proposals.py prepare [-h] --pattern-id PATTERN_ID package patterns context links proposal
+usage: application_proposals.py prepare [-h] --pattern-id PATTERN_ID [--format {json,text}] package patterns context links proposal
 usage: application_proposals.py response-template [-h] --pattern-id PATTERN_ID package patterns context links proposal handoff
 usage: application_proposals.py import [-h] --pattern-id PATTERN_ID package patterns context links proposal handoff response provenance
 usage: application_proposals.py review-template [-h] --pattern-id PATTERN_ID --reviewer-id REVIEWER_ID package patterns context links proposal bundle

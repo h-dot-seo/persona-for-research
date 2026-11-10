@@ -1,16 +1,15 @@
 # Validation record
 
-Current release: `0.73-onboarding-defect-report`, 2026-11-10. This file is the current
+Current release: `0.74-handoff-text`, 2026-11-10. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
 
-- 2026-11-10 Onboarding defect report (`0.73-onboarding-defect-report`): read-only
-  whole-selection structure diagnostics and a task-routing agent contract. Shared
-  preflight and the unchanged parser preserve normal preparation and payload bindings.
-  Full entry: [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md#2026-11-10-onboarding-defect-report-073-onboarding-defect-report).
+- 2026-11-10 Pasteable offline handoff text (`0.74-handoff-text`): pure full-handoff
+  rendering on five prepare commands, without builder or import changes.
+  Full entry: [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md#2026-11-10-pasteable-handoff-text-074-handoff-text).
 
 ## What CI runs
 

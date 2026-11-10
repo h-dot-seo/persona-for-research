@@ -1,4 +1,6 @@
 """Prepare and explicitly review offline method-application proposals, without applying them."""
+from handoff_text import render_handoff
+
 import argparse
 import copy
 import json
@@ -305,7 +307,7 @@ def main():
                          'review-template': ['bundle'], 'review': ['bundle', 'review'], 'export': ['bundle', 'review']}[name]:
             command.add_argument(argument, type=Path)
         if name == 'review-template': command.add_argument('--reviewer-id', required=True)
-        if name == 'review': command.add_argument('--format', choices=('json', 'text'), default='json')
+        if name in ('prepare', 'review'): command.add_argument('--format', choices=('json', 'text'), default='json')
     args = parser.parse_args()
     try:
         values = [_load(getattr(args, name)) for name in ('package', 'patterns', 'context', 'links', 'proposal')]+[args.pattern_id]
@@ -315,7 +317,10 @@ def main():
         elif args.command == 'review-template': result = review_template(*values, _load(args.bundle), args.reviewer_id)
         elif args.command == 'review': result = review_proposals(*values, _load(args.bundle), _load(args.review))
         else: result = export_reviewed(*values, _load(args.bundle), _load(args.review))
-        output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
+        if args.command == 'prepare' and args.format == 'text':
+            output = render_handoff(result)
+        else:
+            output = render_review(result) if getattr(args, 'format', 'json') == 'text' else json.dumps(result, ensure_ascii=True, indent=2)+'\n'
         if len(output.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('application proposal output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc: parser.exit(1, str(exc)+'\n')
     sys.stdout.buffer.write(output.encode('utf-8'))

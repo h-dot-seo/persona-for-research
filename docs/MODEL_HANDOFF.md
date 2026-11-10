@@ -163,3 +163,30 @@ prepare, response-template and import to propose initial method observations fro
 empty-observation corpora. These outputs use a deliberately separate review-only
 packet and cannot enter the reasoning or manual-card gates. Missing conditions,
 limitations and topics remain null. See [the complete workflow and stopping point](OBSERVATION_PROPOSALS.md).
+
+## Pasteable local handoff view
+
+Use `prepare --format text` for one pasteable text for a separately authorized
+assistant, local or remote. Default `--format json` is unchanged; `response-template`
+remains JSON-only. Both reasoning and observations support this view, including
+`--source-root`. This is not permission to transmit source text: confirm destination,
+rights, privacy, cost and retention separately. No model or network is called.
+
+```sh
+python model_handoff.py prepare examples/reasoning-corpus.json --format text
+```
+
+The view repeats the boundary and the JSON handoff's recomputed SHA-256, includes
+its numbered instructions, response contract and empty response skeleton, and embeds
+the complete handoff between `BEGIN LOCAL HANDOFF JSON` and `END LOCAL HANDOFF JSON`.
+All embedded JSON uses ASCII escapes, preserving exact quotes, backslashes, controls,
+non-ASCII characters and references when parsed. This is not prompt-injection
+resistance. Import still binds the original JSON handoff, never the rendered text;
+keep a JSON handoff for response-template and import. Builders, adoption and validation
+semantics are unchanged. No source payload or version-specific field is omitted.
+
+Views can be large: the synthetic contextual answer v3 walkthrough handoff is about
+145 KB, including about 92 KB of reasoning context, and its text view about 152 KB.
+Actual size depends on the inputs. Existing 16 MiB proposal output limits still apply;
+text is never truncated. This command writes stdout; exclusive file output is a
+separate capability, not supplied by this format option.

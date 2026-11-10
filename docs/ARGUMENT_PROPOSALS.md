@@ -324,3 +324,17 @@ These remain exact direct-citation declarations with manual/imported origin labe
 they are not verified support or new argument decisions. Legacy answer inputs keep
 identical argument handoffs and replay. Enhanced answer inputs have fresh hashes,
 so an old map cannot be silently reused or rebound.
+
+## Pasteable handoff view
+
+For a separately authorized local or remote assistant, append `--format text` to
+`prepare` (default JSON is unchanged). With the corresponding prepared inputs in
+`OUTPUT`, an external directory:
+
+```sh
+python argument_proposals.py prepare OUTPUT/package.json OUTPUT/draft.json OUTPUT/argument-scope.json --format text
+```
+
+Keep the JSON handoff for import; `response-template` remains JSON-only. The text
+is not permission to transmit and makes no model call. See the complete format and
+size boundaries in [Model handoff](MODEL_HANDOFF.md#pasteable-local-handoff-view).

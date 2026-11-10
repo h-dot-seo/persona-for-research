@@ -24,6 +24,7 @@ source corpora, real persona packages and real validation results are kept out.
 - Logical JSON binding validator (`persona.py`) and a holdout-redacting projection helper (`safe_canonical_read.py`).
 - Detached human validation records (`human_validation.py`): a blank template, a strict check and a read-only axis status bound to both package hashes, never written into the persona payload.
 - Read-only whole-selection structural reports (`prepare_local_manifest.py --report-defects`) before local preparation.
+- Lossless, ASCII-escaped pasteable handoff views with `prepare --format text`; JSON bindings and imports stay unchanged.
 - Synthetic templates and tests; a portable agent workflow in `SKILL.md`.
 - A `tests/` package for the unittest suite and a root dispatcher, `persona_cli.py`, that lists and runs the root CLIs without changing them.
 
@@ -187,3 +188,5 @@ entry is in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md).
 No license has been selected by the owner yet; see [rights](RIGHTS.md).
 
 See [local input preparation](docs/LOCAL_INPUT_PREPARATION.md) for converter-neutral text requirements and bounded defect reports.
+
+See [pasteable offline handoffs](docs/MODEL_HANDOFF.md#pasteable-local-handoff-view) for separately authorized assistants.

@@ -224,3 +224,17 @@ python -m unittest tests.test_pattern_evidence_reasons -v
 They additionally compare canonical v1 payload and rendered-text hashes captured
 from the verified v0.40 commit, and exercise version isolation, dual-role references,
 explicit reviewed reasons, removed challenges, rejected reasons and context gaps.
+
+## Pasteable handoff view
+
+For a separately authorized local or remote assistant, append `--format text` to
+`prepare` (default JSON is unchanged). With the corresponding prepared inputs in
+`OUTPUT`, an external directory:
+
+```sh
+python pattern_proposals.py prepare OUTPUT/package.json --topic "model design" --format text
+```
+
+Keep the JSON handoff for import; `response-template` remains JSON-only. The text
+is not permission to transmit and makes no model call. See the complete format and
+size boundaries in [Model handoff](MODEL_HANDOFF.md#pasteable-local-handoff-view).
