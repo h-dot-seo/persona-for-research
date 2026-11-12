@@ -1,0 +1,16 @@
+{
+  "schema": "persona.manual-observation.v1",
+  "manifest_sha256": "ce2196a6579b698841aed344b5af1223519f9f1c9c896af24f8dead8734b0597",
+  "paper_id": "synthetic-teach-models-review",
+  "observation": {
+    "method": "Compare toy models",
+    "condition": "Separated toy signals",
+    "limitation": "Synthetic operator fixture; no semantic validation or real author attribution.",
+    "locator": "Teaching method",
+    "topic": "model comparison",
+    "evidence_quote": "The invented Cedar group reports that toy model comparison fails with overlapping signals.",
+    "claim_type": "operator_interpretation",
+    "stance": "challenge",
+    "reasoning": {}
+  }
+}

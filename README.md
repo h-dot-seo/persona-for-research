@@ -29,6 +29,7 @@ source corpora, real persona packages and real validation results are kept out.
 - Exclusive `--output NEW_FILE` result files, with bounded hash receipts and no shell redirection.
 - Read-only `persona_cli.py --version` displays manifest labels and Python version, not integrity or authentication.
 - Synthetic templates and tests; a portable agent workflow in `SKILL.md`.
+- A tested three-topic source-file tutorial through explicit pattern selection and HTML review.
 - A `tests/` package for the unittest suite and a root dispatcher, `persona_cli.py`, that lists and runs the root CLIs without changing them.
 
 This is a framework and mechanical tool release. It is not a trained model, a complete
@@ -66,6 +67,10 @@ extend the same demo to between 30 and 53 stages. Each is explained, with what t
 read first, in [docs/WORKFLOWS.md](docs/WORKFLOWS.md#synthetic-walkthrough-routes) and
 the [quickstart](docs/QUICKSTART.md). No route calls a model, and every final answer
 judgment stays deferred.
+
+For a second starting path, follow [local files to a first review journey](docs/TUTORIAL_OWN_FILES.md):
+six invented files across three topics, explicit observation cards, manual pattern selection
+and a tested HTML review. Answer, link, design and argument authoring remain later work.
 
 ## Quick start
 
@@ -114,6 +119,7 @@ prints the ones with a command-line entry point. The unittest suite is the `test
 **Start and overview**
 
 - [Quickstart](docs/QUICKSTART.md) — run, read and recover the synthetic journey.
+- [Own-file tutorial](docs/TUTORIAL_OWN_FILES.md) — multi-topic synthetic source intake through manual pattern selection.
 - [Workflows](docs/WORKFLOWS.md) — documented behaviour grouped by task.
 - [Commands](docs/COMMANDS.md) — every script and subcommand with its usage line.
 - [한국어 안내](docs/README.ko.md) — purpose, scope, quick start and index in Korean.

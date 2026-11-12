@@ -1891,3 +1891,38 @@ Only fictional/synthetic inputs were exercised. No model/network call or canonic
 update occurred. Passing mechanical checks does not establish source authenticity,
 rights, scientific validity, researcher fidelity or human approval. Local success
 is not an exact-commit Ubuntu/Windows CI result; verify those jobs before merge.
+
+
+## 2026-11-10 Multi-topic teaching walkthrough (0.78-teaching-walkthrough)
+
+- Added six ASCII-only invented Markdown sources across three topics, with one
+  research/review pair per topic and publication labels spanning 2019-2023; each
+  opens with SYNTHETIC TEACHING FIXTURE. Six synthetic operator cards bind the full
+  prepared manifest chain. Existing fixtures and runtime modules are unchanged.
+- Added docs/TUTORIAL_OWN_FILES.md: 15 literal CLI commands using exclusive
+  `--output`, plus three marked JSON edits tested in order. The guide reaches
+  source intake, topic/evidence review, explicit hypothesis authoring and selection,
+  and a pinned JSON/HTML journey. Answer/link/design/argument forms remain empty,
+  context decisions deferred and approval explicitly false. README/Korean entry,
+  quickstart, workflow index, architecture and agent guidance link the route.
+- `python -m unittest discover -q`: 1042 synthetic tests passed on Python 3.12.14
+  in 324.677 seconds, with no failures, errors or skips. An earlier full run found
+  SKILL.md exceeded its existing 8192-byte bound; its guidance was shortened and
+  the full suite rerun successfully. No size limit was relaxed.
+- `python -m unittest tests.test_tutorial_own_files tests.test_skill_contract -q`:
+  9 tests passed, including the six new tutorial tests. The pipeline executes once
+  per class in an external directory with spaces. Tests check exact card replay,
+  three topics, research/review labels, declared disagreement, missing-work status,
+  required pattern selection, stale-card/holdout rejection and fixture preservation.
+  A separate exact-guide rehearsal passed all 15 commands and three JSON edits.
+- `python -m compileall -q .`: passed; all 152 Python files parse with Python 3.10
+  grammar. Changed guides retain every pre-existing sh block byte-for-byte.
+  UTF-8 without BOM and LF-only checks passed for the publication inventory.
+- `python verify_manifest.py`: passed, 256 exact entries.
+  `python audit_publication.py`: passed, 257 text files including the manifest.
+  Manifest release/date are 0.78-teaching-walkthrough / 2026-11-10.
+- These checks establish synthetic mechanical behavior, not semantic support,
+  source authenticity, rights, independent human review, model behavior or real
+  researcher fidelity. CONTESTED groups declared exact-string stances only;
+  same-year chronology cannot order decisions. No schema or license change.
+  Browser visual/keyboard/print QA and remote CI for this release are not claimed.

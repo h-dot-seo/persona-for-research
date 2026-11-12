@@ -96,3 +96,8 @@ from its hashes: labels are not authenticated and the display is not a signature
 integrity check. Use `python verify_manifest.py` separately. `list` still imports no
 repository module; existing script dispatch is unchanged. See
 [version labels](COMMANDS.md#version-labels) for limits and failure behaviour.
+
+The [own-file tutorial](TUTORIAL_OWN_FILES.md) is an additive synthetic source-file
+rehearsal of existing contracts. It ends after explicit pattern authoring and
+selection; empty downstream forms and deferred context judgments remain visible.
+It adds no payload fields, inference, validation axis or automated research approval.

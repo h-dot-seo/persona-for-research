@@ -37,8 +37,8 @@ public repository.
 
 ## Executable increment
 
-See docs/COMMANDS.md for CLI usage and docs/WORKFLOWS.md for workflows and limits.
-README.md indexes the guides. Use only authorized inputs; examples are synthetic.
+See docs/COMMANDS.md and docs/WORKFLOWS.md for usage and limits.
+Use only authorized inputs; examples are synthetic.
 
 `python persona_cli.py list` lists CLIs; `run <script>` preserves arguments, output and exit codes.
 For labels/Python use `python persona_cli.py --version`, not as a
@@ -47,9 +47,10 @@ signature or integrity check: labels are unauthenticated. Check hashes separatel
 
 ## Route the task
 
-For local-file intake, read docs/LOCAL_INPUT_PREPARATION.md first. Start with
-`prepare_local_manifest.py` and `--report-defects` to inspect every selected source,
-then prepare a manifest, use `curate_local.py` (template then append), and build with
+For synthetic file intake through manual pattern selection and empty review forms,
+use docs/TUTORIAL_OWN_FILES.md; never reuse fixture decisions.
+For local intake see docs/LOCAL_INPUT_PREPARATION.md: `prepare_local_manifest.py`
+with `--report-defects`, then prepare, `curate_local.py` template/append and
 `corpus_files.py`. For inline segments use `observation_input.py` and
 `research_workflow.py`; see docs/WORKFLOWS.md.
 The build mechanically maps each observation to one rule. Cross-paper rule synthesis,

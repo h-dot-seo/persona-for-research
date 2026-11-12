@@ -79,8 +79,10 @@ The runner is a fixed educational scenario, not a generic corpus wizard. Do not
 reuse its synthetic accept decisions for real candidate outputs. For real work,
 resolve author identity and source rights, choose training/holdout scope, curate
 observations and review each candidate explicitly. Real human review is not
-established by writing a reviewer name. Follow the individual module docs linked
-from README; direct model invocation remains disabled. A separately authorized
+established by writing a reviewer name. Start with the tested
+[own-file teaching tutorial](TUTORIAL_OWN_FILES.md) for multiple topics, source-file
+intake and manual pattern selection through HTML review. Then follow the individual
+module docs linked from README; direct model invocation remains disabled. A separately authorized
 [offline model handoff](MODEL_HANDOFF.md) can import saved responses for review.
 
 After changing any draft, link, package or recorded review, regenerate the affected

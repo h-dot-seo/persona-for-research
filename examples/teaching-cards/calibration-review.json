@@ -1,0 +1,16 @@
+{
+  "schema": "persona.manual-observation.v1",
+  "manifest_sha256": "842399f94443e464bfaac9f0e341279d0deffd908d38ec6900dfa3a120c1b9dc",
+  "paper_id": "synthetic-teach-calibration-review",
+  "observation": {
+    "method": "Recheck toy reference",
+    "condition": "Drifting toy instrument",
+    "limitation": "Synthetic operator fixture; no semantic validation or real author attribution.",
+    "locator": "Teaching method",
+    "topic": "instrument calibration",
+    "evidence_quote": "The invented Elm group reports that rechecking the toy reference misses abrupt drift.",
+    "claim_type": "operator_interpretation",
+    "stance": "challenge",
+    "reasoning": {}
+  }
+}

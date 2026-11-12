@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.77-version-labels",
+  "release": "0.78-teaching-walkthrough",
   "date": "2026-11-10",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 241,
+  "file_count": 256,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 14290,
-      "sha256": "453a0dc49053f785c42553c18f8bbe35529c54c65ffa2fbe59aa108d5c17150b"
+      "bytes": 14797,
+      "sha256": "8271fb56c3454941fcd7e40c1ed4547dce6a1b2b5e0e2ef41b17694191174835"
     },
     {
       "path": "RIGHTS.md",
@@ -45,13 +45,13 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 8183,
-      "sha256": "486bd80303b03124d14ca5ef7462b4fb979db5ac99d007d12bc2b02b0520fcc8"
+      "bytes": 8191,
+      "sha256": "0bb3fc11fee405cf22886c2608359c171f4516a8d8c5f237c76d15a59d5e9941"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 4158,
-      "sha256": "3543eeb2db7857ef4aab913a29dddbd82f6ccf2876642581912df45d4c273154"
+      "bytes": 4181,
+      "sha256": "88f433261a7f84fa4c8039e900079304b3047e0a198cccb7d69fcdd74812218e"
     },
     {
       "path": "answer_context.py",
@@ -165,8 +165,8 @@
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "bytes": 6532,
-      "sha256": "c6172b140261875ebf7066709fbd049bb64f2d2b7f938018977f469e2cec3891"
+      "bytes": 6862,
+      "sha256": "cba7295ae451baf59ec9ef6813bd19ed699756a95e3286f40a228a7a108bd379"
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
@@ -325,13 +325,13 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 15482,
-      "sha256": "27f13117ed13b5c849f016cb4d0ce9f0b59971015757acc6711f0623e5f5902a"
+      "bytes": 15651,
+      "sha256": "176b0ebd160aa3d0362f2caecac26fb36ce2eaf36712029ec26e061a561acc94"
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 19868,
-      "sha256": "84ac924ec0491671ea041eb5327508504f3b13d869526c3c66b7db0072474178"
+      "bytes": 20198,
+      "sha256": "4e8fde6ae146ecb638f11c974f37ec8b60a8ff9bd7db40b6e077c5a0f1bc382c"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -384,14 +384,19 @@
       "sha256": "1f89c25982494f981933d56d918b1d78db4dfc17e0de0bca7ab3203276214a54"
     },
     {
+      "path": "docs/TUTORIAL_OWN_FILES.md",
+      "bytes": 10967,
+      "sha256": "ff459bc345e2bd068ab751a365fa8a48e848e4f88f94e2a543d285e30ee60602"
+    },
+    {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 130608,
-      "sha256": "256cb0f496bd29e884b55beaeea08737dcd083dbc080c0d1cfe763251f6642f1"
+      "bytes": 133131,
+      "sha256": "8709c8705b3877118dda528e9cef65255ecfae17c39454247b60509b8cfed99f"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 42745,
-      "sha256": "1f3ce87a56f6eeedd69ff964bcd964a6a5897fd76605f84dc22bc0f3941f06ed"
+      "bytes": 42798,
+      "sha256": "f813003032d2e111c5053ffe600a015d0d0fe079596912565c188576347d130b"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -532,6 +537,71 @@
       "path": "examples/synthetic-sources/synthetic-1.md",
       "bytes": 108,
       "sha256": "0c279b364cce4ef0c6e50b83127b7ff448d85a26ad019df28e3ac20cd2a2414d"
+    },
+    {
+      "path": "examples/teaching-cards/calibration-research.json",
+      "bytes": 637,
+      "sha256": "7232709a22075b21eca3bdf55c5feeb144c71463cbf4031aa3233d6a82d44fe5"
+    },
+    {
+      "path": "examples/teaching-cards/calibration-review.json",
+      "bytes": 672,
+      "sha256": "6a9610fc8fd82f3acb31d8a4875a19cdbc2670b53a3ad535f69834991a447333"
+    },
+    {
+      "path": "examples/teaching-cards/models-research.json",
+      "bytes": 600,
+      "sha256": "8366322cfa580f5459cfaac577fc60a551851c82d5cbc0067da3381037272590"
+    },
+    {
+      "path": "examples/teaching-cards/models-review.json",
+      "bytes": 661,
+      "sha256": "9e802ddd3aa25d5329186da2f3eab046d4e9dfa45823b8c25f3eb467a05a2484"
+    },
+    {
+      "path": "examples/teaching-cards/sampling-research.json",
+      "bytes": 620,
+      "sha256": "f87895309e1f04be265a93351d0915d6e7b7a9bdd6850b6bd4479dcdb8fc2034"
+    },
+    {
+      "path": "examples/teaching-cards/sampling-review.json",
+      "bytes": 646,
+      "sha256": "8612360f0b2971b44be4f92aecab0bc998b5f63b8e3c738e4829b47627511d37"
+    },
+    {
+      "path": "examples/teaching-selection.json",
+      "bytes": 2517,
+      "sha256": "09fbe803836108809fcb546ea36dfce572535d7d064eb00ce68550695aa49f65"
+    },
+    {
+      "path": "examples/teaching-sources/calibration-research.md",
+      "bytes": 991,
+      "sha256": "5fd6980215aef77ebe91fd408b02e9e866d147e77f9a4b97876e1e8edf00ad87"
+    },
+    {
+      "path": "examples/teaching-sources/calibration-review.md",
+      "bytes": 1024,
+      "sha256": "fb39604df80cf91b373e12d0b4a78a0cfcdc5a37591ff6919cf543ee2f9e6a11"
+    },
+    {
+      "path": "examples/teaching-sources/models-research.md",
+      "bytes": 970,
+      "sha256": "320bbf7536b3f0633a370d82ffdf1f13c7dfd99b87dee058bcaabe76ef4b3186"
+    },
+    {
+      "path": "examples/teaching-sources/models-review.md",
+      "bytes": 1029,
+      "sha256": "704f586655adfac92590eb5000ae7b0c7167f999724ebbe09715235559003828"
+    },
+    {
+      "path": "examples/teaching-sources/sampling-research.md",
+      "bytes": 992,
+      "sha256": "772ac233e231a470b9336a6eba73d5472a68ef7c3a15297ce7f8cba12f82a4ad"
+    },
+    {
+      "path": "examples/teaching-sources/sampling-review.md",
+      "bytes": 1018,
+      "sha256": "bc7c72ac7c5be7d326e769307f3a7e222eaf43233d40f5aefcab20c3dcf68b17"
     },
     {
       "path": "examples/trajectory-conditions-adoption.json",
@@ -1182,6 +1252,11 @@
       "path": "tests/test_trajectory_conditions_example.py",
       "bytes": 15222,
       "sha256": "e8aef71b3292a486703d05e0bffab4d06451b26b1555d7c2923d645492f4d52a"
+    },
+    {
+      "path": "tests/test_tutorial_own_files.py",
+      "bytes": 8776,
+      "sha256": "b995f888853376315c689c0aa5621b0502d653827cbae7d94c8f05849af34fd4"
     },
     {
       "path": "tests/test_verification_receipt.py",
