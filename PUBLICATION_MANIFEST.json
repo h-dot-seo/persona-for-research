@@ -395,8 +395,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 134883,
-      "sha256": "4f72d1770ba5394317ffc1d516e86cfa9120bb0162f2956fd288bee679e49e62"
+      "bytes": 135179,
+      "sha256": "66ef1af774e69a5d09629c808e17666fb1b7f19255c903c8dbc9d7965603ba4f"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1245,8 +1245,8 @@
     },
     {
       "path": "tests/test_split_declaration.py",
-      "bytes": 17482,
-      "sha256": "26588e335898537c38b8ac50c0e6ac50db3bda7296c150b0c44a027b3f52d8e2"
+      "bytes": 17662,
+      "sha256": "e988d8be0d50695afacef57495d90c09c1a6c5f20df7b7947323e47c16c53fcc"
     },
     {
       "path": "tests/test_strict_json.py",

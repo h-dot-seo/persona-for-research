@@ -1951,3 +1951,8 @@ counts/hashes and conflicts already in a package, not withheld lists.
   semantic validation, proven freeze timing or unseen-holdout claim. Intake gating and
   review_package integration remain later work. Existing protected guide shell blocks
   and existing synthetic fixtures are unchanged.
+
+- Initial PR CI passed both Linux jobs, but Windows found a guide-replay test
+  quoting defect: POSIX shlex consumed native path backslashes. The replay now
+  tokenizes the documented command before substituting native output paths.
+  Application behavior and documented commands are unchanged.

@@ -288,7 +288,9 @@ class SplitDeclarationTests(unittest.TestCase):
         for block in blocks:
             for line in block.splitlines():
                 if not line.strip() or line.startswith('#'):continue
-                argv=shlex.split(line.replace('OUTPUT',str(self.out)))
+                # Parse the documented POSIX command before inserting native paths.
+                # Otherwise Windows backslashes are consumed as shell escapes.
+                argv=[arg.replace('OUTPUT',str(self.out)) for arg in shlex.split(line)]
                 self.assertEqual(argv[0],'python')
                 result=subprocess.run([sys.executable,*argv[1:]],cwd=ROOT,capture_output=True,timeout=60)
                 self.assertEqual(result.returncode,0,(line,result.stderr))
