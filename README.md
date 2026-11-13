@@ -22,6 +22,7 @@ source corpora, real persona packages and real validation results are kept out.
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.
 - Logical JSON binding validator (`persona.py`) and a holdout-redacting projection helper (`safe_canonical_read.py`).
+- Detached frozen split declarations (`split_declaration.py`): census relations, disjoint declared splits, hashes and package training comparison without repeating withheld IDs.
 - Detached human validation records (`human_validation.py`): a blank template, a strict check and a read-only axis status bound to both package hashes, never written into the persona payload.
 - Read-only whole-selection structural reports (`prepare_local_manifest.py --report-defects`) before local preparation.
 - Lossless, ASCII-escaped pasteable handoff views with `prepare --format text`; JSON bindings and imports stay unchanged.
@@ -98,6 +99,7 @@ Keep real inputs and generated packages outside this public repository.
 | `research_workflow.py` | Apply operator-curated observations as a bounded, question-specific planning scaffold | [Workflow review](docs/WORKFLOW_REVIEW.md) |
 | `review_package.py` | Compact read-only review of a bound package (`--evidence-details`, `--human-validation`) | [Evidence details](docs/EVIDENCE_DETAILS.md) |
 | `compare_releases.py` | Read-only comparison of two bound packages; never approves a release | [Workflows](docs/WORKFLOWS.md#review-a-candidate-release-and-a-bound-package) |
+| `split_declaration.py` | Freeze declared census/split records; compare package training IDs with counts/hash-only reports | [Split declaration](docs/SPLIT_DECLARATION.md) |
 | `human_validation.py` | Detached rater assessment bound to both package hashes: `template`, `check`, `status` | [Human validation](docs/HUMAN_VALIDATION.md) |
 | `extraction_adapter.py`, `model_handoff.py` | Mock-only extraction contract; offline handoff and import of a separately produced response | [Model handoff](docs/MODEL_HANDOFF.md) |
 | `operator_review.py` | Record explicit operator decisions into a separate revision candidate | [Operator review](docs/OPERATOR_REVIEW.md) |
@@ -113,6 +115,9 @@ Layout: every script is a flat file at the repository root, and `python persona_
 prints the ones with a command-line entry point. The unittest suite is the `tests/` package:
 `python -m unittest discover` from the root runs it, and one module runs as
 `python -m unittest tests.test_<name> -v`.
+
+For detached census/split governance, see [split declarations](docs/SPLIT_DECLARATION.md).
+No intake gate or holdout evaluation is implied.
 
 ## Documentation
 

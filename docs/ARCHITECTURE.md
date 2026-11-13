@@ -26,6 +26,11 @@ The simulation label and `private_beliefs_inferred: false` are mandatory.
 These stages are a workflow specification; this repository's Python utilities do not
 automate corpus acquisition, semantic extraction, independent evaluation or dialogue.
 
+The detached `split_declaration.py` tools lifecycle steps 2/4 as operator declarations:
+a sorted/hash-bound census, disjoint splits and package training comparison. It does
+not establish real freeze timing, unseen holdout or census completeness. No canonical
+payload or intake path changes. See [split declarations](SPLIT_DECLARATION.md).
+
 ## Validation axes
 
 | Axis | What it establishes | What it cannot establish alone |
