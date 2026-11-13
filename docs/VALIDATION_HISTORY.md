@@ -1956,3 +1956,25 @@ counts/hashes and conflicts already in a package, not withheld lists.
   quoting defect: POSIX shlex consumed native path backslashes. The replay now
   tokenizes the documented command before substituting native output paths.
   Application behavior and documented commands are unchanged.
+
+## 2026-11-13 Optional split review summary (0.80-split-review)
+
+Added `review_package --split` using the existing detached status/text renderer.
+Default rendering remains unchanged. Split-enabled input shares an 8 MiB budget
+across declaration/package/human records, rejects symlink components and redacts
+strict-JSON errors. Output has a 16 MiB bound and existing exclusive preflight.
+Mismatches are report-only, malformed records fail closed. No payload, source
+acquisition, intake gate, CURRENT label or actual unseen-holdout claim is introduced.
+The summary spans the package, not only its displayed topic; existing package
+quotes remain potentially private and are not sanitized by this option.
+
+Independent review found that an explicit JSON null declaration could bypass the
+optional renderer sentinel. CLI declarations now receive immediate frozen-schema
+validation; regression confirms exit 1 with no stdout or output file. Independent
+re-review passed 19 review tests and 23 split tests, including the new guide command.
+Initial full discovery found one stale CLI usage line in COMMANDS.md; it was updated
+to include --split. Final full discovery passed 1076 tests in 285.895 seconds,
+no failures/errors/skips. Manifest has 261 entries; audit passed 262 text files.
+All 155 Python files compile and parse under Python 3.10 grammar; existing guide
+shell blocks are unchanged. After recording results, manifest/audit and 42 focused
+review/split tests were rechecked. No remote CI outcome is claimed in this record.

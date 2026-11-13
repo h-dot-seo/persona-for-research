@@ -69,7 +69,7 @@ def _details(package, topic):
     return lines
 
 
-def render(value, question, topic, *, evidence_details=False, human_validation=None):
+def render(value, question, topic, *, evidence_details=False, human_validation=None, split_declaration=None):
     package = checked_package(value)
     application = apply(package, question, topic)  # Ignore any saved application summary.
     rules = [r for r in package['persona']['rules'] if r['topic'].casefold() == topic.casefold()]
@@ -117,6 +117,10 @@ def render(value, question, topic, *, evidence_details=False, human_validation=N
         # Lazy import: human_validation reuses this module's display helper.
         from human_validation import axis, axis_lines
         lines.extend(axis_lines(axis(package['persona'], package['knowledge'], human_validation)))
+    if split_declaration is not None:
+        # Lazy import: split_declaration reuses this module's display helper.
+        from split_declaration import status as split_status, render as split_render
+        lines.append(split_render(split_status(package, record=split_declaration)).rstrip('\n'))
     lines.append('Boundary: curated paper records, not private thoughts or individual authorship. '
                  'Quote matches, coverage and distinct hashes do not establish semantic support, '
                  'independent publications or researcher fidelity. Renderer uses no LLM and makes no canonical update.')
@@ -132,17 +136,33 @@ def main():
                         help='Include bound observation/component references, quotes and per-observation gaps')
     parser.add_argument('--human-validation', type=Path, action='append',
                         help='Detached human validation record(s) checked against this package; reported read-only')
+    parser.add_argument('--split', type=Path,
+                        help='Frozen private split declaration; read-only comparison, not an intake gate')
     add_output_argument(parser); args = parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
     try:
         records = None
-        if args.human_validation:
+        split = None
+        package = None
+        if args.split:
+            from split_declaration import bounded_reader, validate_declaration
+            read = bounded_reader()
+            split = read(args.split)
+            validate_declaration(split, frozen=True)
+            package = read(args.package)
+            if args.human_validation:
+                records = [read(path) for path in args.human_validation]
+        elif args.human_validation:
             from human_validation import bounded_reader  # Lazy: human_validation imports display from this module.
             read = bounded_reader()  # Records share the 8 MiB combined input budget of check and status.
             records = [read(path) for path in args.human_validation]
-        text = render(load(args.package), args.question, args.topic, evidence_details=args.evidence_details,
-                      human_validation=records)
-    except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
+        text = render(package if args.split else load(args.package), args.question, args.topic,
+                      evidence_details=args.evidence_details, human_validation=records, split_declaration=split)
+        if args.split:
+            from split_declaration import MAX_OUTPUT_BYTES
+            if len(text.encode('utf-8')) > MAX_OUTPUT_BYTES:
+                raise ValueError('split review output exceeds 16 MiB')
+    except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError, RuntimeError) as exc:
         parser.exit(1, str(exc) + '\n')
     emit(parser, text.encode('utf-8'), getattr(args, 'output', None))
 

@@ -1,11 +1,14 @@
 # Validation record
 
-Current release: `0.79-split-declaration`, 2026-11-13. This file is the current
+Current release: `0.80-split-review`, 2026-11-13. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
+
+- 2026-11-13 Optional read-only package-review split summary (`0.80-split-review`).
+  Default output, canonical payload and source-intake behavior remain unchanged.
 
 - 2026-11-13 Detached split declaration (`0.79-split-declaration`): private census/split
   template, sorted/hash-bound freeze and exact package training comparison. Counts/hashes
@@ -33,16 +36,16 @@ external model/search behaviour or scientific meaning.
 
 From the repository root, with Python 3.10 or later and no third-party packages:
 
-- `python -m unittest discover -q` — the current tree runs 1065 synthetic tests
+- `python -m unittest discover -q` — the current tree runs 1076 synthetic tests
   (platform-specific cases may skip on other hosts). The final local verification result is recorded in the release history. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.
-- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 260
+- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 261
   listed files. Regenerate the manifest after every other edit of a release.
-- `python audit_publication.py` — expects `"pass": true`; the current tree has 261 text
+- `python audit_publication.py` — expects `"pass": true`; the current tree has 262 text
   files including the manifest. A pass is a limited file-type and secret-pattern scan, not
   proof of anonymity or rights clearance.
-- `python -m compileall -q .` — 154 Python files compile cleanly and parse with
+- `python -m compileall -q .` — 155 Python files compile cleanly and parse with
   Python 3.10 grammar.
 - `python synthetic_walkthrough.py ../persona-synthetic-demo` — the 15-stage demo must exit 0
   and write `COMPLETE.json` into a new directory outside the repository.

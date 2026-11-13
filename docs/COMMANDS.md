@@ -253,7 +253,7 @@ Guide: [Topic discovery](TOPIC_DISCOVERY.md).
 Render a compact read-only review from a validated bound scholarly package.
 
 ```text
-usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--output NEW_FILE] package
+usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--split SPLIT] [--output NEW_FILE] package
 ```
 
 Guide: [Evidence details](EVIDENCE_DETAILS.md), [Human validation](HUMAN_VALIDATION.md), [Workflows: review a candidate release and a bound package](WORKFLOWS.md#review-a-candidate-release-and-a-bound-package).
@@ -737,3 +737,10 @@ Structural/hash errors fail both. Reports contain split counts/hashes, not withh
 except an ID already present in the package. No intake gate or unseen-holdout claim.
 
 Guide: [Split declaration](SPLIT_DECLARATION.md).
+
+### Optional detached split summary in package review
+
+`review_package.py --split FROZEN.json` adds the whole-package read-only split
+comparison documented in [SPLIT_DECLARATION.md](SPLIT_DECLARATION.md#optional-package-review-summary).
+Omitting it preserves the prior output. Differences are reports, not a source
+acquisition gate or an unseen-holdout guarantee; private withheld lists are omitted.

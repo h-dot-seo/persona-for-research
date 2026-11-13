@@ -118,3 +118,30 @@ filesystem paths must be under the operator's control; these checks are not a de
 against hostile concurrent filesystem replacement. `check/status --output NEW_FILE`
 use the existing private save receipt. A partial write is retained on failure and no
 file is removed or overwritten. See [exclusive output](EXCLUSIVE_OUTPUT.md).
+
+## Optional package review summary
+
+After freezing the synthetic declaration above, append its read-only summary to
+the existing package review with `--split`. Without that option, review output
+is unchanged and no declaration is read.
+
+```sh
+python review_package.py examples/trajectory-conditions-package.json --question "Synthetic review question?" --topic "model design" --split OUTPUT/synthetic-frozen.json --output OUTPUT/split-review.txt
+```
+
+This reuses the standalone split status and text renderer. A well-formed declaration
+that differs from the package is reported as PACKAGE_OUTSIDE_DECLARED_TRAINING
+without failing the review command: this option is not an intake gate. Malformed,
+tampered or oversized input fails before review output is emitted. The optional
+split declaration, package and any `--human-validation` records share an 8 MiB
+input budget, reject symlink components, and use redacted strict-JSON errors.
+The combined split-enabled review is limited to 16 MiB and retains exclusive-output
+preflight. Existing behavior without `--split` is unchanged.
+
+The summary covers the whole package, not only the displayed topic. It contains
+counts, hashes and differences involving package IDs, never a withheld-ID list.
+This does not sanitize the existing review's own package contents or private
+quotes. No CURRENT label, actual unseen-holdout guarantee, identity authentication,
+source acquisition, permissions grant, payload mutation or intake gate is added.
+Human-validation and split summaries are separate supplied records, not evidence
+that a reviewer was independent or blind.
