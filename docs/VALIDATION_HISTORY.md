@@ -1926,3 +1926,28 @@ is not an exact-commit Ubuntu/Windows CI result; verify those jobs before merge.
   researcher fidelity. CONTESTED groups declared exact-string stances only;
   same-year chronology cannot order decisions. No schema or license change.
   Browser visual/keyboard/print QA and remote CI for this release are not claimed.
+
+## 2026-11-13 Detached split declaration (0.79-split-declaration)
+
+Added a detached census/split declaration with template, freeze, check and status.
+The package payload and existing intake paths are unchanged. Structural checks cover
+exact fields, census uniqueness/coverage, disjoint splits, author labels, direct
+relations, declared training-to-withheld relation leakage and sorted logical hashes.
+Policy counts do not reject duplicate/notice training records. Reports expose only
+counts/hashes and conflicts already in a package, not withheld lists.
+
+- New focused suite: 23 tests passed, including the exact guide commands and private
+  output preflight, no-overwrite, symlink, shared byte budget and exit-code boundaries.
+- Independent review found a strict-JSON diagnostic privacy leak; parser details are
+  now redacted. Duplicate private keys, malformed UTF-8 and malformed JSON are covered.
+- Final full discovery: 1065 tests passed in 286.868 seconds, with no failures,
+  errors or skips. Independent re-review found no remaining blockers.
+- Manifest verification: 260 entries; publication audit: 261 text files, passed.
+  All 154 Python files compile and parse under Python 3.10 grammar. SKILL.md is
+  8188 bytes. Protected existing shell blocks are unchanged.
+- After recording these results, the manifest was regenerated and manifest/audit,
+  focused tests and compilation were rechecked. Remote CI is tracked by exact commit.
+- No real scholar/source corpus, provider calls, source acquisition, canonical updates,
+  semantic validation, proven freeze timing or unseen-holdout claim. Intake gating and
+  review_package integration remain later work. Existing protected guide shell blocks
+  and existing synthetic fixtures are unchanged.

@@ -106,6 +106,7 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 | `research_workflow.py` | 운영자가 큐레이션한 관찰을 질문별 계획 스캐폴드로 적용 | [WORKFLOW_REVIEW.md](WORKFLOW_REVIEW.md) |
 | `review_package.py` | 바인딩된 패키지의 읽기 전용 요약 검토 (`--evidence-details`, `--human-validation`) | [EVIDENCE_DETAILS.md](EVIDENCE_DETAILS.md) |
 | `compare_releases.py` | 두 패키지의 읽기 전용 비교, 릴리스를 승인하지 않음 | [WORKFLOWS.md](WORKFLOWS.md#review-a-candidate-release-and-a-bound-package) |
+| `split_declaration.py` | 분리형 census·split 선언 동결과 패키지 training 대조. 비훈련 ID는 출력하지 않고 개수·해시로 보고 | [SPLIT_DECLARATION.md](SPLIT_DECLARATION.md) |
 | `human_validation.py` | 두 패키지 해시에 묶인 분리형 사람 검증 기록: `template`, `check`, `status` | [HUMAN_VALIDATION.md](HUMAN_VALIDATION.md) |
 | `extraction_adapter.py`, `model_handoff.py` | 목(mock) 전용 추출 계약과, 별도로 생성된 모델 응답의 오프라인 핸드오프·가져오기 | [MODEL_HANDOFF.md](MODEL_HANDOFF.md) |
 | `operator_review.py` | 운영자의 명시적 결정을 별도의 수정 후보에 기록 | [OPERATOR_REVIEW.md](OPERATOR_REVIEW.md) |

@@ -1,0 +1,116 @@
+{
+  "schema": "persona.split-declaration.v1",
+  "author_id": "synthetic-scholar",
+  "operator_id": "synthetic-operator",
+  "declared_at": "2026-11-13",
+  "census": [
+    {
+      "record_id": "synthetic-2020-a",
+      "author_id": "synthetic-scholar",
+      "record_relation": "paper",
+      "of_record_id": null,
+      "kind": "research",
+      "year": 2020,
+      "locator": "Synthetic census label only; invented source",
+      "authorized": true,
+      "access_restriction": "Synthetic; no real source access"
+    },
+    {
+      "record_id": "synthetic-2022-b",
+      "author_id": "synthetic-scholar",
+      "record_relation": "paper",
+      "of_record_id": null,
+      "kind": "research",
+      "year": 2022,
+      "locator": "Synthetic census label only; invented source",
+      "authorized": true,
+      "access_restriction": "Synthetic; no real source access"
+    },
+    {
+      "record_id": "synthetic-2023-review",
+      "author_id": "synthetic-scholar",
+      "record_relation": "paper",
+      "of_record_id": null,
+      "kind": "review",
+      "year": 2023,
+      "locator": "Synthetic census label only; invented source",
+      "authorized": true,
+      "access_restriction": "Synthetic; no real source access"
+    },
+    {
+      "record_id": "synthetic-2024-a-challenge",
+      "author_id": "synthetic-scholar",
+      "record_relation": "paper",
+      "of_record_id": null,
+      "kind": "research",
+      "year": 2024,
+      "locator": "Synthetic census label only; invented source",
+      "authorized": true,
+      "access_restriction": "Synthetic; no real source access"
+    },
+    {
+      "record_id": "synthetic-2024-a-support",
+      "author_id": "synthetic-scholar",
+      "record_relation": "paper",
+      "of_record_id": null,
+      "kind": "research",
+      "year": 2024,
+      "locator": "Synthetic census label only; invented source",
+      "authorized": true,
+      "access_restriction": "Synthetic; no real source access"
+    },
+    {
+      "record_id": "synthetic-holdout-only",
+      "author_id": "synthetic-scholar",
+      "record_relation": "paper",
+      "of_record_id": null,
+      "kind": "research",
+      "year": 2025,
+      "locator": "Synthetic census label only; invented source",
+      "authorized": false,
+      "access_restriction": "Synthetic withheld label; not for retrieval"
+    },
+    {
+      "record_id": "synthetic-comparator-only",
+      "author_id": "synthetic-comparator",
+      "record_relation": "paper",
+      "of_record_id": null,
+      "kind": "research",
+      "year": 2025,
+      "locator": "Synthetic census label only; invented source",
+      "authorized": false,
+      "access_restriction": "Synthetic withheld label; not for retrieval"
+    },
+    {
+      "record_id": "synthetic-excluded-only",
+      "author_id": "synthetic-scholar",
+      "record_relation": "paper",
+      "of_record_id": null,
+      "kind": "notice",
+      "year": null,
+      "locator": "Synthetic census label only; invented source",
+      "authorized": false,
+      "access_restriction": "Synthetic withheld label; not for retrieval"
+    }
+  ],
+  "splits": {
+    "training": [
+      "synthetic-2020-a",
+      "synthetic-2022-b",
+      "synthetic-2023-review",
+      "synthetic-2024-a-challenge",
+      "synthetic-2024-a-support"
+    ],
+    "holdout": [
+      "synthetic-holdout-only"
+    ],
+    "comparator": [
+      "synthetic-comparator-only"
+    ],
+    "excluded": [
+      "synthetic-excluded-only"
+    ]
+  },
+  "holdout_reading_declaration": "Synthetic demonstration only. No real holdout has been selected, read or evaluated.",
+  "status": null
+}

@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.78-teaching-walkthrough",
-  "date": "2026-11-10",
+  "release": "0.79-split-declaration",
+  "date": "2026-11-13",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 256,
+  "file_count": 260,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 14797,
-      "sha256": "8271fb56c3454941fcd7e40c1ed4547dce6a1b2b5e0e2ef41b17694191174835"
+      "bytes": 15291,
+      "sha256": "4eeb31be5be44fcc1e4eea18bd868f28c9b52e68a85d65c41ef9976014c1b7c2"
     },
     {
       "path": "RIGHTS.md",
@@ -45,13 +45,13 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 8191,
-      "sha256": "0bb3fc11fee405cf22886c2608359c171f4516a8d8c5f237c76d15a59d5e9941"
+      "bytes": 8188,
+      "sha256": "2f546e56ae7278397bcab090f1d414d16f1a88f4e7fcb6896df8ffed96197cb2"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 4181,
-      "sha256": "88f433261a7f84fa4c8039e900079304b3047e0a198cccb7d69fcdd74812218e"
+      "bytes": 4194,
+      "sha256": "26221bf63264020ba7931cb2efc37812a9ccf9fca0c6313410a7c5658cc6ae0e"
     },
     {
       "path": "answer_context.py",
@@ -165,8 +165,8 @@
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "bytes": 6862,
-      "sha256": "cba7295ae451baf59ec9ef6813bd19ed699756a95e3286f40a228a7a108bd379"
+      "bytes": 7202,
+      "sha256": "d66ee94c211703e42c38833fe4b61799614eb486b6dea3b9a8221bb06cec3a12"
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
@@ -190,8 +190,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 36687,
-      "sha256": "e7d2a8dae6765c0634485ea2a26d41692a5bc50b2428ed19d0a004e7a8cac4d6"
+      "bytes": 37806,
+      "sha256": "8d8d779d8bfc2887cf0925c16535697843fd40eb4d5de546d8359c771db2ca67"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -330,8 +330,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 20198,
-      "sha256": "4e8fde6ae146ecb638f11c974f37ec8b60a8ff9bd7db40b6e077c5a0f1bc382c"
+      "bytes": 20403,
+      "sha256": "ad68f5632b79cbced330460d0f52b67e105fe4ef3a14f69177166c3ac4a39651"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -369,6 +369,11 @@
       "sha256": "0f644c1f40d6b9dcb6ded473af7f6880fb467c411075b6e927dc51927bb8a3d2"
     },
     {
+      "path": "docs/SPLIT_DECLARATION.md",
+      "bytes": 7625,
+      "sha256": "ceae92adfa99d95ff0e96eeb07eaa53a78f6601410773039ecfb36e11023f34c"
+    },
+    {
       "path": "docs/SYNTHETIC_EVALUATION.md",
       "bytes": 6160,
       "sha256": "364fc3fa92003c120e961a2a1abd314f1d305392e7fc24baaaae78bc874eb46b"
@@ -390,13 +395,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 133131,
-      "sha256": "8709c8705b3877118dda528e9cef65255ecfae17c39454247b60509b8cfed99f"
+      "bytes": 134883,
+      "sha256": "4f72d1770ba5394317ffc1d516e86cfa9120bb0162f2956fd288bee679e49e62"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 42798,
-      "sha256": "f813003032d2e111c5053ffe600a015d0d0fe079596912565c188576347d130b"
+      "bytes": 43213,
+      "sha256": "5b2a50630dbfc746a4a0e0a0c37cedfcf5c0482a9c69a29557343649df86d2d4"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -537,6 +542,11 @@
       "path": "examples/synthetic-sources/synthetic-1.md",
       "bytes": 108,
       "sha256": "0c279b364cce4ef0c6e50b83127b7ff448d85a26ad019df28e3ac20cd2a2414d"
+    },
+    {
+      "path": "examples/synthetic-split-declaration.json",
+      "bytes": 3589,
+      "sha256": "c2e0675da4861a116aa61cb26045df42eb89a7f6973c60f68863808fe9381640"
     },
     {
       "path": "examples/teaching-cards/calibration-research.json",
@@ -802,6 +812,11 @@
       "path": "source_recheck.py",
       "bytes": 11640,
       "sha256": "1e83460ce3eda4f0c372fd7df5038817427810f3e89eb709b71da7e51378f241"
+    },
+    {
+      "path": "split_declaration.py",
+      "bytes": 16503,
+      "sha256": "1f623bd97d0d05dd9376aaf161a019331e3cee2c829b3e21a2a5108c6b30dee3"
     },
     {
       "path": "strict_json.py",
@@ -1227,6 +1242,11 @@
       "path": "tests/test_source_structure_report.py",
       "bytes": 7956,
       "sha256": "074adff3804e948e59ebbb050ed677142bc3395d50e56f62baa774f37b9a6c71"
+    },
+    {
+      "path": "tests/test_split_declaration.py",
+      "bytes": 17482,
+      "sha256": "26588e335898537c38b8ac50c0e6ac50db3bda7296c150b0c44a027b3f52d8e2"
     },
     {
       "path": "tests/test_strict_json.py",

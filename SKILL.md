@@ -40,15 +40,16 @@ public repository.
 See docs/COMMANDS.md and docs/WORKFLOWS.md for usage and limits.
 Use only authorized inputs; examples are synthetic.
 
-`python persona_cli.py list` lists CLIs; `run <script>` preserves arguments, output and exit codes.
-For labels/Python use `python persona_cli.py --version`, not as a
-signature or integrity check: labels are unauthenticated. Check hashes separately with
-`python verify_manifest.py`. See docs/COMMANDS.md. Direct invocation stays primary.
+`python persona_cli.py list` lists CLIs; `run <script>` preserves direct invocation.
+`--version` shows unauthenticated labels/Python; check hashes with `verify_manifest.py`.
+
+For declared census/split records use `split_declaration.py template/freeze/check/status`;
+see docs/SPLIT_DECLARATION.md. Preserve private frozen records. No unseen-holdout proof
+or intake gate is implied; no canonical payload changes.
 
 ## Route the task
 
-For synthetic file intake through manual pattern selection and empty review forms,
-use docs/TUTORIAL_OWN_FILES.md; never reuse fixture decisions.
+For synthetic intake/selection use docs/TUTORIAL_OWN_FILES.md; never reuse fixture decisions.
 For local intake see docs/LOCAL_INPUT_PREPARATION.md: `prepare_local_manifest.py`
 with `--report-defects`, then prepare, `curate_local.py` template/append and
 `corpus_files.py`. For inline segments use `observation_input.py` and
@@ -56,8 +57,8 @@ with `--report-defects`, then prepare, `curate_local.py` template/append and
 The build mechanically maps each observation to one rule. Cross-paper rule synthesis,
 independent challenge and real holdout evaluation have no backend here.
 
-For read-only release review use `review_package.py`; for empty answer/design review
-starters use `review_workspace.py`. Read docs/REVIEW_WORKSPACE.md first. For comparison
+For release review use `review_package.py`; for empty answer/design starters use
+`review_workspace.py` and docs/REVIEW_WORKSPACE.md. For comparison
 choose `journey_compare.py`, `compare_releases.py` or `revision_impact.py`, following
 respectively docs/JOURNEY_COMPARISON.md, docs/WORKFLOWS.md or
 docs/REVISION_IMPACT.md. Consultation remains a specification, not a dialogue backend.

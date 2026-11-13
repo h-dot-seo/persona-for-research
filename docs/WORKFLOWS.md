@@ -712,3 +712,11 @@ Before local preparation, use `prepare_local_manifest.py --report-defects` for a
 ## Exclusive result files
 
 Use `--output NEW_FILE` on result CLIs to save their exact UTF-8 bytes without shell re-encoding or overwrite. The destination is checked before input reads; stdout carries only a save receipt with hashes and a potentially private path. Existing directory writers and validators keep their contracts. See [exclusive output](EXCLUSIVE_OUTPUT.md) for coverage, bounds, stable-parent assumptions and retained partial files on write failure. No scientific approval, network call or canonical update is implied.
+
+## Declared census and split governance
+
+Use `split_declaration.py template/freeze/check/status` to preserve a private, detached
+selection declaration and compare an existing bound package. Reports expose counts
+and hashes rather than withheld lists. Actual split choices and reading assertions
+belong to the operator; no intake gate or holdout evaluation is added. See
+[split declarations](SPLIT_DECLARATION.md).
