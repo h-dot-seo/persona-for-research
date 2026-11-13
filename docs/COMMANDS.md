@@ -40,7 +40,7 @@ overwrite. Stdout then contains only a bounded save receipt; the saved bytes mat
 the command result. See [Exclusive output](EXCLUSIVE_OUTPUT.md) for coverage,
 limits, path privacy and partial-write behaviour.
 
-Scripts in alphabetical order: [`answer_draft.py`](#answer_draftpy), [`answer_proposals.py`](#answer_proposalspy), [`applicability_review.py`](#applicability_reviewpy), [`application_proposals.py`](#application_proposalspy), [`argument_map.py`](#argument_mappy), [`argument_proposals.py`](#argument_proposalspy), [`audit_design_chain.py`](#audit_design_chainpy), [`audit_design_lineage.py`](#audit_design_lineagepy), [`audit_publication.py`](#audit_publicationpy), [`citation_reasoning.py`](#citation_reasoningpy), [`compare_releases.py`](#compare_releasespy), [`corpus_files.py`](#corpus_filespy), [`curate_local.py`](#curate_localpy), [`design_scenario.py`](#design_scenariopy), [`evaluate_synthetic.py`](#evaluate_syntheticpy), [`evidence_scope.py`](#evidence_scopepy), [`extraction_adapter.py`](#extraction_adapterpy), [`human_validation.py`](#human_validationpy), [`journey_compare.py`](#journey_comparepy), [`journey_inputs.py`](#journey_inputspy), [`method_application.py`](#method_applicationpy), [`model_handoff.py`](#model_handoffpy), [`observation_input.py`](#observation_inputpy), [`observation_proposals.py`](#observation_proposalspy), [`observation_revision.py`](#observation_revisionpy), [`operator_review.py`](#operator_reviewpy), [`pattern_hypotheses.py`](#pattern_hypothesespy), [`pattern_proposals.py`](#pattern_proposalspy), [`pattern_transfer_review.py`](#pattern_transfer_reviewpy), [`persona.py`](#personapy), [`persona_cli.py`](#persona_clipy), [`prepare_local_manifest.py`](#prepare_local_manifestpy), [`publication_context.py`](#publication_contextpy), [`publication_scope.py`](#publication_scopepy), [`publication_timeline.py`](#publication_timelinepy), [`reasoning_links.py`](#reasoning_linkspy), [`research_journey.py`](#research_journeypy), [`research_workflow.py`](#research_workflowpy), [`review_journey.py`](#review_journeypy), [`review_package.py`](#review_packagepy), [`review_workspace.py`](#review_workspacepy), [`revise_local.py`](#revise_localpy), [`revision_impact.py`](#revision_impactpy), [`safe_canonical_read.py`](#safe_canonical_readpy), [`source_recheck.py`](#source_recheckpy), [`split_declaration.py`](#split_declarationpy), [`synthetic_walkthrough.py`](#synthetic_walkthroughpy), [`topic_inventory.py`](#topic_inventorypy), [`verify_manifest.py`](#verify_manifestpy).
+Scripts in alphabetical order: [`candidate_challenge.py`](#candidate_challengepy), [`answer_draft.py`](#answer_draftpy), [`answer_proposals.py`](#answer_proposalspy), [`applicability_review.py`](#applicability_reviewpy), [`application_proposals.py`](#application_proposalspy), [`argument_map.py`](#argument_mappy), [`argument_proposals.py`](#argument_proposalspy), [`audit_design_chain.py`](#audit_design_chainpy), [`audit_design_lineage.py`](#audit_design_lineagepy), [`audit_publication.py`](#audit_publicationpy), [`citation_reasoning.py`](#citation_reasoningpy), [`compare_releases.py`](#compare_releasespy), [`corpus_files.py`](#corpus_filespy), [`curate_local.py`](#curate_localpy), [`design_scenario.py`](#design_scenariopy), [`evaluate_synthetic.py`](#evaluate_syntheticpy), [`evidence_scope.py`](#evidence_scopepy), [`extraction_adapter.py`](#extraction_adapterpy), [`human_validation.py`](#human_validationpy), [`journey_compare.py`](#journey_comparepy), [`journey_inputs.py`](#journey_inputspy), [`method_application.py`](#method_applicationpy), [`model_handoff.py`](#model_handoffpy), [`observation_input.py`](#observation_inputpy), [`observation_proposals.py`](#observation_proposalspy), [`observation_revision.py`](#observation_revisionpy), [`operator_review.py`](#operator_reviewpy), [`pattern_hypotheses.py`](#pattern_hypothesespy), [`pattern_proposals.py`](#pattern_proposalspy), [`pattern_transfer_review.py`](#pattern_transfer_reviewpy), [`persona.py`](#personapy), [`persona_cli.py`](#persona_clipy), [`prepare_local_manifest.py`](#prepare_local_manifestpy), [`publication_context.py`](#publication_contextpy), [`publication_scope.py`](#publication_scopepy), [`publication_timeline.py`](#publication_timelinepy), [`reasoning_links.py`](#reasoning_linkspy), [`research_journey.py`](#research_journeypy), [`research_workflow.py`](#research_workflowpy), [`review_journey.py`](#review_journeypy), [`review_package.py`](#review_packagepy), [`review_workspace.py`](#review_workspacepy), [`revise_local.py`](#revise_localpy), [`revision_impact.py`](#revision_impactpy), [`safe_canonical_read.py`](#safe_canonical_readpy), [`source_recheck.py`](#source_recheckpy), [`split_declaration.py`](#split_declarationpy), [`synthetic_walkthrough.py`](#synthetic_walkthroughpy), [`topic_inventory.py`](#topic_inventorypy), [`verify_manifest.py`](#verify_manifestpy).
 
 ## Start, validate and publish
 
@@ -253,7 +253,7 @@ Guide: [Topic discovery](TOPIC_DISCOVERY.md).
 Render a compact read-only review from a validated bound scholarly package.
 
 ```text
-usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--split SPLIT] [--output NEW_FILE] package
+usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--split SPLIT] [--challenge-record CHALLENGE_RECORD] [--output NEW_FILE] package
 ```
 
 Guide: [Evidence details](EVIDENCE_DETAILS.md), [Human validation](HUMAN_VALIDATION.md), [Workflows: review a candidate release and a bound package](WORKFLOWS.md#review-a-candidate-release-and-a-bound-package).
@@ -744,3 +744,16 @@ Guide: [Split declaration](SPLIT_DECLARATION.md).
 comparison documented in [SPLIT_DECLARATION.md](SPLIT_DECLARATION.md#optional-package-review-summary).
 Omitting it preserves the prior output. Differences are reports, not a source
 acquisition gate or an unseen-holdout guarantee; private withheld lists are omitted.
+
+### `candidate_challenge.py`
+
+Record and check detached pre-holdout candidate findings (not judgments or approval).
+
+```text
+usage: candidate_challenge.py [-h] {template,check,status} ...
+usage: candidate_challenge.py template [-h] --output OUTPUT persona [knowledge]
+usage: candidate_challenge.py check [-h] [--text] [--output NEW_FILE] record persona [knowledge]
+usage: candidate_challenge.py status [-h] [--challenge-record CHALLENGE_RECORD] [--text] [--output NEW_FILE] persona [knowledge]
+```
+
+Subcommands: `template`, `check`, `status`. Guide: [Candidate findings](CANDIDATE_CHALLENGE.md).

@@ -1978,3 +1978,26 @@ no failures/errors/skips. Manifest has 261 entries; audit passed 262 text files.
 All 155 Python files compile and parse under Python 3.10 grammar; existing guide
 shell blocks are unchanged. After recording results, manifest/audit and 42 focused
 review/split tests were rechecked. No remote CI outcome is claimed in this record.
+
+## 2026-11-13 Detached pre-holdout candidate findings (0.81-candidate-challenge)
+
+- Added `candidate_challenge.py template/check/status` for roadmap lifecycle step 11.
+  Exact detached schema, neutral NOT_EXAMINED templates, caller-supplied finding kinds,
+  label-distinct-only challengers and declared holdout noninspection. No disposition,
+  split binding, payload change, extra validation axis or candidate approval is derived.
+- Current records resolve rule IDs within scope; stale records retain positional IDs
+  without reinterpretation. Duplicate finding/record IDs and contradictory NO_FINDING
+  declarations are rejected. Reports omit finding prose/labels, but JSON stale diagnostics
+  can contain unresolved private IDs/topics; outputs are not sanitization.
+- Optional repeatable `review_package --challenge-record` uses one 8 MiB reader for the
+  package and all challenge/human/split inputs; bounded 16 MiB results and exclusive
+  output. Existing default, evidence-details and human-validation CLI bytes match the
+  previous release in independent comparisons. No model or network calls are introduced.
+- Final local full suite: **Ran 1097 tests in 286.930s — OK**. Focused candidate/split/
+  dispatcher suite: **41 tests — OK**. Independent review found no blocking issue.
+  New guide commands execute exactly as written using synthetic fixtures and paths with
+  spaces. Manifest verifies 265 files; limited publication audit passes 266 files.
+  All 157 Python files compile and parse with Python 3.10 grammar. SKILL.md is 8140 bytes.
+- These checks establish mechanical record/binding/output behavior only, not scholarly
+  validity, authenticated independence, unseen holdout, chronological ordering, or
+  approval of any actual candidate. Remote CI is recorded separately for exact commits.

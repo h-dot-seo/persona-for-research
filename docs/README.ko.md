@@ -244,3 +244,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 이 검사도 게시자 인증이나 과학적 타당성을 입증하지 않습니다. 모델·네트워크 호출과
 파일 쓰기는 없으며, 패키징·태그·라이선스 결정은 바꾸지 않습니다.
 자세한 한도와 동작은 [버전 레이블](COMMANDS.md#version-labels)을 보세요.
+
+후보의 사전 홀드아웃 발견 기록은 [candidate_challenge.py](CANDIDATE_CHALLENGE.md)의 template/check/status를 사용합니다. 판정·점수·승인이 아닌 분리형 기록이며 검증 축을 추가하지 않습니다.

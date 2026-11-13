@@ -106,3 +106,5 @@ The [own-file tutorial](TUTORIAL_OWN_FILES.md) is an additive synthetic source-f
 rehearsal of existing contracts. It ends after explicit pattern authoring and
 selection; empty downstream forms and deferred context judgments remain visible.
 It adds no payload fields, inference, validation axis or automated research approval.
+
+Lifecycle step 11 uses [detached candidate findings](CANDIDATE_CHALLENGE.md): `candidate_challenge.py` records supplied kinds bound to candidate hashes. It is a stage, not an additional validation axis; no payload, split binding or operator disposition is changed.

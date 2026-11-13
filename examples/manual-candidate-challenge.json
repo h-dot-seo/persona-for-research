@@ -1,0 +1,67 @@
+{
+  "schema_version": "persona.candidate-challenge.v1",
+  "author_id": "synthetic-scholar",
+  "version": "1",
+  "build_id": "synthetic-trajectory-conditions",
+  "persona_payload_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+  "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+  "challengers": [
+    {
+      "challenger_id": "synthetic-challenger-one",
+      "role": "Fictional independent label"
+    }
+  ],
+  "challenged_at": "2026-11-13",
+  "method": "Fictional manual inspection of supplied candidate only.",
+  "holdout_inspected": false,
+  "scope_topics": [
+    "synthetic method conditions"
+  ],
+  "findings": [
+    {
+      "finding_id": "finding-1",
+      "item_id": "rule-1",
+      "kind": "SCOPE_EXCEEDED",
+      "rationale": "Fictional scope concern supplied by a fictional challenger.",
+      "source_locator": "Synthetic fixture"
+    },
+    {
+      "finding_id": "finding-2",
+      "item_id": "rule-2",
+      "kind": "NOT_EXAMINED",
+      "rationale": "Fictional item intentionally not examined.",
+      "source_locator": "Synthetic fixture"
+    },
+    {
+      "finding_id": "finding-3",
+      "item_id": "rule-3",
+      "kind": "NOT_EXAMINED",
+      "rationale": "Fictional item intentionally not examined.",
+      "source_locator": "Synthetic fixture"
+    },
+    {
+      "finding_id": "finding-4",
+      "item_id": "rule-4",
+      "kind": "NOT_EXAMINED",
+      "rationale": "Fictional item intentionally not examined.",
+      "source_locator": "Synthetic fixture"
+    },
+    {
+      "finding_id": "finding-5",
+      "item_id": "rule-5",
+      "kind": "NOT_EXAMINED",
+      "rationale": "Fictional item intentionally not examined.",
+      "source_locator": "Synthetic fixture"
+    },
+    {
+      "finding_id": "finding-6",
+      "item_id": "rule-6",
+      "kind": "NOT_EXAMINED",
+      "rationale": "Fictional item intentionally not examined.",
+      "source_locator": "Synthetic fixture"
+    }
+  ],
+  "limitations": "Synthetic fixture, not researcher validation.",
+  "independence_declaration": "Fictional distinct label only; no identity authentication.",
+  "status": "RECORDED"
+}
