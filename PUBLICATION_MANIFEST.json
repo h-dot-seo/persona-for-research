@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.80-split-review",
+  "release": "0.81-candidate-challenge",
   "date": "2026-11-13",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 261,
+  "file_count": 265,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 15583,
-      "sha256": "84b31070f4bd50425b1299286365712b285f0476dd4bbc140ad6543866e9b077"
+      "bytes": 16019,
+      "sha256": "11262067efdc4a415e5bb50099cc6c7207f3d1a80788e8b935ae0620df175885"
     },
     {
       "path": "RIGHTS.md",
@@ -45,13 +45,13 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 8188,
-      "sha256": "2f546e56ae7278397bcab090f1d414d16f1a88f4e7fcb6896df8ffed96197cb2"
+      "bytes": 8140,
+      "sha256": "e4285bf9935adaa15585ce9acb3ef658c43956aabd360b7137b836826bd56148"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 4355,
-      "sha256": "6d0ead3d5c67a777e2af32fc6b3cbc1d467e10c1db152a81d816c8c7fe6cd458"
+      "bytes": 4520,
+      "sha256": "aa65d59c9115e1e18d5c96a4b84b7aaa1015d0b6aadc144c9fed9e585761e495"
     },
     {
       "path": "answer_context.py",
@@ -102,6 +102,11 @@
       "path": "audit_publication.py",
       "bytes": 1969,
       "sha256": "349bfe9f189da2beaee4d655ba05b8f080f79b5fe7518097eafb6beea5459d08"
+    },
+    {
+      "path": "candidate_challenge.py",
+      "bytes": 16083,
+      "sha256": "e99ee5a1ab1b75fba3db641024e1478bb7a6b395812af9bbd15fadd8a44e0262"
     },
     {
       "path": "citation_reasoning.py",
@@ -165,8 +170,8 @@
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "bytes": 7202,
-      "sha256": "d66ee94c211703e42c38833fe4b61799614eb486b6dea3b9a8221bb06cec3a12"
+      "bytes": 7468,
+      "sha256": "50ef3ed1dfb35c9756e3c830e255d66432aa49148dd15d0be64586c123bd0491"
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
@@ -177,6 +182,11 @@
       "path": "docs/ARGUMENT_PROPOSALS.md",
       "bytes": 21208,
       "sha256": "523f0508c62048bc14aa9dd009752773037b77a37284f590dd22969840a79b8d"
+    },
+    {
+      "path": "docs/CANDIDATE_CHALLENGE.md",
+      "bytes": 4351,
+      "sha256": "cf6fc6f772fdc8148a447499f26be959a983bf96a76a59869a6ce2a9cf637532"
     },
     {
       "path": "docs/CITATION_EXPLANATIONS.md",
@@ -190,8 +200,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 38223,
-      "sha256": "b63d00ec744235d1ed94851d3e4c88a0e5ad23a7b75bd505056a95097710634a"
+      "bytes": 38910,
+      "sha256": "29f80ba3b9f6616cdbb7b6f72b70f7d9bd6981b35411bdd1e7f13ec57a2e08f9"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -325,13 +335,13 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 15651,
-      "sha256": "176b0ebd160aa3d0362f2caecac26fb36ce2eaf36712029ec26e061a561acc94"
+      "bytes": 15746,
+      "sha256": "d39f226b47b9d328209aaa3b917cbbce4ea8847b44cf29975de0fce00d0f1a63"
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 20403,
-      "sha256": "ad68f5632b79cbced330460d0f52b67e105fe4ef3a14f69177166c3ac4a39651"
+      "bytes": 20642,
+      "sha256": "5d1c91f22e2eb7449354896fabcbb42fd2108ce730dad1cd08270b550cc2bc9b"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -395,8 +405,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 136704,
-      "sha256": "71d8316d66e5cf3c6eeb71bcc827cf1a3d7b4299ef67b6df92c7af77a8dff4fe"
+      "bytes": 138516,
+      "sha256": "41edda393638f6b989a4dfb2e5c58d11104b7377a4daafe3ae68c714d6513771"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -452,6 +462,11 @@
       "path": "examples/local-selection.json",
       "bytes": 826,
       "sha256": "ded1655839f5cab23e1c769ddcd1df053b2db7a048b3100fc9e17298ffbdf932"
+    },
+    {
+      "path": "examples/manual-candidate-challenge.json",
+      "bytes": 2170,
+      "sha256": "14b48a06a86218d226aaac695d95a5d7ad6791dbffdfd61dfe5ac4f13951219b"
     },
     {
       "path": "examples/manual-human-validation.json",
@@ -785,8 +800,8 @@
     },
     {
       "path": "review_package.py",
-      "bytes": 11189,
-      "sha256": "c2dab98416b4ba60dba00fd7534d6b2fcff0272a15cb6599f14f7720e46a6639"
+      "bytes": 12288,
+      "sha256": "9d08271b65d66308c5f986a81baccc76bc742d6066e3e638e2e85a15eeca6bdf"
     },
     {
       "path": "review_workspace.py",
@@ -907,6 +922,11 @@
       "path": "tests/test_argument_walkthrough.py",
       "bytes": 15421,
       "sha256": "80b5f4b00a8779c137248dc34f18c5bb1643ffbf935f3257ef630721d10f9e88"
+    },
+    {
+      "path": "tests/test_candidate_challenge.py",
+      "bytes": 9745,
+      "sha256": "1b795ccac581f858ecaa7f53e5fbb3f3742512d83cf8d5ec89ff1b31ff95a4a0"
     },
     {
       "path": "tests/test_citation_explanation_integration.py",

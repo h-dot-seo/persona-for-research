@@ -262,3 +262,5 @@ and `status`, plus `review_package.py --human-validation`. The shipped fictional
 binds to `examples/trajectory-conditions-package.json`; a record for a demo package needs
 a new template bound to that package's own hashes. Nothing in it is a score, a verified
 independence claim or a change to `validation.human_validation`.
+
+For lifecycle step 11, see [detached pre-holdout candidate findings](CANDIDATE_CHALLENGE.md).

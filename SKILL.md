@@ -37,13 +37,12 @@ public repository.
 
 ## Executable increment
 
-See docs/COMMANDS.md and docs/WORKFLOWS.md for usage and limits.
 Use only authorized inputs; examples are synthetic.
 
 `python persona_cli.py list` lists CLIs; `run <script>` preserves direct invocation.
 `--version` shows unauthenticated labels/Python; check hashes with `verify_manifest.py`.
 
-For declared census/split records use `split_declaration.py template/freeze/check/status`;
+Declared splits: `split_declaration.py template/freeze/check/status`;
 see docs/SPLIT_DECLARATION.md. Preserve private frozen records. No unseen-holdout proof
 or intake gate is implied; no canonical payload changes.
 
@@ -57,7 +56,7 @@ with `--report-defects`, then prepare, `curate_local.py` template/append and
 The build mechanically maps each observation to one rule. Cross-paper rule synthesis,
 independent challenge and real holdout evaluation have no backend here.
 
-For release review use `review_package.py`; for empty answer/design starters use
+Review with `review_package.py`; empty answer/design starters:
 `review_workspace.py` and docs/REVIEW_WORKSPACE.md. For comparison
 choose `journey_compare.py`, `compare_releases.py` or `revision_impact.py`, following
 respectively docs/JOURNEY_COMPARISON.md, docs/WORKFLOWS.md or
@@ -96,7 +95,6 @@ These loops write stdout; select new destinations outside the repository. Reuse 
 same approved source folder throughout a local-file chain; the source root is not saved
 as authorization. Only the context operation of `answer_proposals.py` and
 `research_journey.py` require `--source-selection` together with `--source-root`.
-See docs/JOURNEY_INPUTS.md. Other commands may take `--source-root` alone.
 
 ## Read the run markers
 
@@ -128,3 +126,5 @@ a run with `FAILED.txt` are diagnostic only; choose a new destination before ret
 
 For pasteable handoffs use `prepare --format text`; see docs/MODEL_HANDOFF.md.
 Keep JSON for import. Text grants no transmission permission.
+
+Step 11: `candidate_challenge.py template/check/status` records supplied findings, not approval; see docs/CANDIDATE_CHALLENGE.md.
