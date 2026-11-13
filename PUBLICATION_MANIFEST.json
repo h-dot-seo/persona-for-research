@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.79-split-declaration",
+  "release": "0.80-split-review",
   "date": "2026-11-13",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 260,
+  "file_count": 261,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 15291,
-      "sha256": "4eeb31be5be44fcc1e4eea18bd868f28c9b52e68a85d65c41ef9976014c1b7c2"
+      "bytes": 15583,
+      "sha256": "84b31070f4bd50425b1299286365712b285f0476dd4bbc140ad6543866e9b077"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 4194,
-      "sha256": "26221bf63264020ba7931cb2efc37812a9ccf9fca0c6313410a7c5658cc6ae0e"
+      "bytes": 4355,
+      "sha256": "6d0ead3d5c67a777e2af32fc6b3cbc1d467e10c1db152a81d816c8c7fe6cd458"
     },
     {
       "path": "answer_context.py",
@@ -190,8 +190,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 37806,
-      "sha256": "8d8d779d8bfc2887cf0925c16535697843fd40eb4d5de546d8359c771db2ca67"
+      "bytes": 38223,
+      "sha256": "b63d00ec744235d1ed94851d3e4c88a0e5ad23a7b75bd505056a95097710634a"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -370,8 +370,8 @@
     },
     {
       "path": "docs/SPLIT_DECLARATION.md",
-      "bytes": 7625,
-      "sha256": "ceae92adfa99d95ff0e96eeb07eaa53a78f6601410773039ecfb36e11023f34c"
+      "bytes": 9230,
+      "sha256": "116cf999d2e8ed2574ea90f8afd4aad9dbffa5c7193ed1af99dc671db03a9e47"
     },
     {
       "path": "docs/SYNTHETIC_EVALUATION.md",
@@ -395,8 +395,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 135179,
-      "sha256": "66ef1af774e69a5d09629c808e17666fb1b7f19255c903c8dbc9d7965603ba4f"
+      "bytes": 136704,
+      "sha256": "71d8316d66e5cf3c6eeb71bcc827cf1a3d7b4299ef67b6df92c7af77a8dff4fe"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -785,8 +785,8 @@
     },
     {
       "path": "review_package.py",
-      "bytes": 9992,
-      "sha256": "e9941e73f28c1ccd61eb15d0cbf0fbf6750a5838151f78cc4395265111cbdab1"
+      "bytes": 11189,
+      "sha256": "c2dab98416b4ba60dba00fd7534d6b2fcff0272a15cb6599f14f7720e46a6639"
     },
     {
       "path": "review_workspace.py",
@@ -1202,6 +1202,11 @@
       "path": "tests/test_review_package.py",
       "bytes": 4880,
       "sha256": "c8ff80b6fc248c0af42cc47d06a6bfa756c5a9ee0e5858bf284aa2c7712c48fb"
+    },
+    {
+      "path": "tests/test_review_package_split.py",
+      "bytes": 7089,
+      "sha256": "665686eb47817694622f8d3b46cb1d48a8721e8b810988e4b8dbd09cd055fd61"
     },
     {
       "path": "tests/test_review_workspace.py",

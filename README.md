@@ -211,3 +211,8 @@ See [pasteable offline handoffs](docs/MODEL_HANDOFF.md#pasteable-local-handoff-v
 Use `--output NEW_FILE` on result CLIs to save their exact UTF-8 bytes without shell re-encoding or overwrite. The destination is checked before input reads; stdout carries only a save receipt with hashes and a potentially private path. Existing directory writers and validators keep their contracts. See [exclusive output](docs/EXCLUSIVE_OUTPUT.md) for coverage, bounds, stable-parent assumptions and retained partial files on write failure. No scientific approval, network call or canonical update is implied.
 
 See [version labels](docs/COMMANDS.md#version-labels) for bounded metadata display and the separate integrity-check command.
+
+Package reviews can optionally append a detached split comparison with
+`review_package.py --split FROZEN.json`; see the
+[private split review guide](docs/SPLIT_DECLARATION.md#optional-package-review-summary).
+This is read-only reporting, not a source-intake gate or proof of unseen holdout.
