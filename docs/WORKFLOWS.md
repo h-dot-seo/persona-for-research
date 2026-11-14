@@ -307,7 +307,7 @@ unimplemented. Keep real inputs and generated packages outside the public reposi
 
 #### Prepare authorized local source files
 
-Optionally start with the [CSL-JSON census](CENSUS_IMPORT.md): exact-match groups are not merged, and the skeleton still needs explicit operator declarations. This is not a frozen split declaration or an approval.
+Optionally start with the [CSL-JSON/RIS census](CENSUS_IMPORT.md): exact-match groups are not merged, and the skeleton still needs explicit operator declarations. This is not a frozen split declaration or an approval.
 
 After intake, inspect the full bound package with [package_overview.py](PACKAGE_HTML.md), without supplying a question or narrowing topics. JSON and passive HTML contain the same inspector snapshot, not an approval or recommendation.
 

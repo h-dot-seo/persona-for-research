@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.96-ris-census — 2026-11-14
+
+`census_import.py import --format ris` accepts the strict fixed-column subset with literal authors/types/identifier tags, occurrence hashes and unchanged unapproved selection output. Existing CSL census records remain accepted; newly imported records carry the changed implementation hash.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-fixed-column-ris-census-096-ris-census).
+
 ## 0.95-package-overview — 2026-11-14
 
 `package_overview.py` presents one bound package as JSON or passive HTML, without a question or multi-artifact journey. Declared axes and supplied human summaries remain separate; no source reread, selection, score or approval is derived.

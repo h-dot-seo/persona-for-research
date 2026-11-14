@@ -2333,3 +2333,33 @@ Manifest 291 entries, audit 292 files and compilation/Python 3.10 grammar for 17
 Python files passed after final regeneration. All fixtures remain synthetic and LF
 bytes are explicit where needed. Original payload/four-axis/approval semantics remain
 unchanged; no runtime validity or source recheck is inferred from the view.
+
+
+## 2026-11-14 Fixed-column RIS census (`0.96-ris-census`)
+
+Roadmap #64 RIS follow-up: copied ris_export_parser.py byte-for-byte from Sensei
+main 8bf887f94a582113a62e5835ea4410d6466e24c3, Git blob
+73667be25fdd18dbf79b7ba006cc412053e891d0, SHA256
+53e16edc7fd8e2ec5fbdf30ac228bd18b4b01340c3294f66bb04246b0200e39c.
+The parser snapshot retains TY/empty ER, fixed columns, six-space continuations
+and strict UTF-8/BOM behavior. Persona keeps its 8 MiB/10,000-record wrapper limits
+and 16 MiB output limits; parser physical-line cap also applies. Scalar alias
+conflicts fail instead of silent selection. Authors and ID/SN/UR remain literal;
+no PMID/ISBN/kind/identity mapping is inferred. All ordered tag/value pairs enter
+the logical entry hash, without positional spans or line terminators. RIS binds
+the parser hash separately. Existing CSL records remain accepted and CSL extraction
+is unchanged, apart from newly generated implementation/payload hashes.
+
+Validation: focused 37 tests passed in 2.715 seconds; expanded census, command-help,
+catalog and changelog 69 tests passed in 16.069 seconds. Full discovery passed
+1,280 tests in 326.683 seconds. Independent review reran 28 CSL/RIS tests in
+0.391 seconds, exercised actual 10,000-record acceptance/10,001 rejection, conflict
+messages without copied source content, dangling output rejection and Python 3.10
+syntax. Existing import_csl, selection and save_selection ASTs were unchanged.
+The parser copy matched current Sensei bytes independently; origin commit/tree was
+verified before copying. Synthetic guide commands and filled prepare/load roundtrip
+passed; no untouched skeleton receives authorization. LF/CRLF/CR/BOM, unknown tags,
+rehashed malformed format metadata and output collisions were tested.
+Manifest 294 entries, audit 295 files, compile/Python 3.10 grammar for 173 Python
+files passed after regeneration. No real exports, network or paid API was used;
+package payload, four axes, approval, rights and identity boundaries are unchanged.

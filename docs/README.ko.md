@@ -102,7 +102,7 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 | `synthetic_walkthrough.py` | 번들된 합성 픽스처를 실제 CLI 15~53단계로 실행해 새 외부 디렉터리에 결과를 남김 | [QUICKSTART.md](QUICKSTART.md) |
 | `persona.py`, `safe_canonical_read.py` | 페르소나/지식 해시 바인딩 검증, 홀드아웃 식별자를 제거한 투영 | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | `observation_input.py` | 제공된 텍스트 구간에 대해 관찰과 인용문을 검증한 뒤 계획 스캐폴드 생성 | [WORKFLOWS.md](WORKFLOWS.md#verified-intake-and-authorized-local-source-files) |
-| `census_import.py` | CSL-JSON의 정확 일치 목록과 미승인 선택 골격 생성 | [CENSUS_IMPORT.md](CENSUS_IMPORT.md) |
+| `census_import.py` | CSL-JSON/RIS의 정확 일치 목록과 미승인 선택 골격 생성 | [CENSUS_IMPORT.md](CENSUS_IMPORT.md) |
 | `package_overview.py` | 결합 패키지 전체 기록을 JSON 또는 수동형 비공개 HTML로 조회 | [PACKAGE_HTML.md](PACKAGE_HTML.md) |
 | `prepare_local_manifest.py`, `corpus_files.py` | 명시적으로 허가된 로컬 원문 파일의 해시·섹션 목록 준비와 적재 | [LOCAL_INPUT_PREPARATION.md](LOCAL_INPUT_PREPARATION.md) |
 | `research_workflow.py` | 운영자가 큐레이션한 관찰을 질문별 계획 스캐폴드로 적용 | [WORKFLOW_REVIEW.md](WORKFLOW_REVIEW.md) |
@@ -261,6 +261,6 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 
 [릴리스 변경 색인](../CHANGELOG.md)에서 명령과 동작 변경을 확인하세요. 상세 검증·실패·한계 기록은 기존 검증 이력에 보존됩니다.
 
-[CSL-JSON 목록 안내](CENSUS_IMPORT.md): 내보내기에서 복사한 값도 운영자가 확인해야 합니다.
+[CSL-JSON/RIS 목록 안내](CENSUS_IMPORT.md): 내보내기에서 복사한 값도 운영자가 확인해야 합니다.
 
 [패키지 HTML 안내](PACKAGE_HTML.md): 저장된 인용과 출처 표시는 익명화되지 않으며 공유 승인을 뜻하지 않습니다.

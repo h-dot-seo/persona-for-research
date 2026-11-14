@@ -1,8 +1,8 @@
-# CSL-JSON census: supplied facts, not publication identity
+# CSL-JSON/RIS census: supplied facts, not publication identity
 
 This offline exact-fact listing supports the work before source intake. It does
 not complete bibliographic census or resolve duplicate, notice or independent
-contribution dispositions. CSL-JSON only; RIS and BibTeX are deferred. No network,
+contribution dispositions. CSL-JSON and the fixed-column RIS subset below; BibTeX is deferred. No network,
 DOI lookup, model, merge, ranking, kind classification or author disambiguation.
 A CSL `review` item type is copied, not mapped to the persona publication kind.
 Raw data and supplied titles are never instructions.
@@ -20,6 +20,8 @@ targets must be new. The following block is executed by tests without redirectio
 ```sh
 python census_import.py import examples/synthetic-bibliography.csl.json --format csl-json --output OUTPUT/census.json
 python census_import.py selection OUTPUT/census.json --census-id census-000001 --census-id census-000002 --output OUTPUT/selection
+python census_import.py import examples/synthetic-bibliography.ris --format ris --output OUTPUT/ris-census.json
+python census_import.py selection OUTPUT/ris-census.json --census-id census-000001 --census-id census-000002 --output OUTPUT/ris-selection
 ```
 
 The selection directory contains `selection-skeleton.json`,
@@ -32,7 +34,7 @@ hash to make an edited census pass. Re-import the original export instead.
 Input is strict UTF-8, with an optional initial BOM recorded and stripped only for
 parsing. NUL and other encodings are rejected. Duplicate JSON keys and non-finite
 numbers fail. LF and CRLF exports are accepted and their original byte hashes
-remain different. Export input is at most 8 MiB and 10,000 nonempty-array records;
+remain different. Export input is at most 8 MiB and 10,000 records (CSL requires a nonempty array);
 census replay accepts at most 16 MiB. Serialized import output and total selection
 output are each bounded to 16 MiB, using the shared exclusive-output limit.
 
@@ -82,3 +84,40 @@ concurrent filesystem, special-file blocking or every resource-exhaustion case.
 All validation and serialization precedes output creation; a failed write can
 leave partial files, never cleaned up or overwritten, and produces no success
 stdout. A partial READY file after an I/O failure is not proof of completion.
+
+
+## Fixed-column RIS subset
+
+The parser is copied byte-for-byte from the same owner's Sensei repository at
+commit `8bf887f94a582113a62e5835ea4410d6466e24c3`, file `ris_export_parser.py`.
+Its recorded source SHA256 is `53e16edc7fd8e2ec5fbdf30ac228bd18b4b01340c3294f66bb04246b0200e39c`.
+This is a documented snapshot, not a promise that future parsers remain synchronized.
+No license choice or new redistribution permission is asserted by this provenance.
+
+Records start with `TY` and end with an explicit empty `ER`. Tags are two uppercase
+alphanumeric characters in fixed columns (`TY  - JOUR`); only six-space continuation
+lines are accepted. Blank lines are allowed only outside records. Unknown tags and
+types are retained by the parser, not classified. UTF-8/BOM and LF/CRLF/CR are accepted;
+malformed columns, invalid encoding, NUL, missing ER and invalid continuations fail
+with physical line numbers. The parser also limits physical lines to 200,000. The
+census wrapper applies its stricter 8 MiB and 10,000-record limits unchanged.
+
+TI/T1 supply title, JO/JF/T2 container title, DO the literal DOI, and PY the year.
+Repeated scalar fields or aliases must have identical logical values; conflicting
+values fail instead of selecting a preferred field. Continuation values are joined
+with LF. PY accepts exactly four ASCII digits or a four-digit `YYYY/` prefix followed
+by the rest of a single line; no free-text date parsing. AU occurrences stay ordered
+literal strings (including LF continuations), unlike CSL's supplied name-part objects.
+ID, SN and UR are copied under those exact tag names: SN is not assumed to be ISBN,
+ID is not assumed to be PMID, and UR is not fetched. No other tag is copied into the
+listing, but every ordered tag/value-lines pair, including unknown tags, is covered
+by the full logical entry hash. The entry hash excludes positional spans and raw
+line terminators; identical records retain distinct occurrence IDs and equal entry
+hashes. The original export hash still binds BOM and exact original line endings.
+
+RIS census records additionally bind `ris_parser_sha256`; old CSL records remain
+valid without it. The script's implementation hash changes when implementation bytes
+change, so newly imported CSL output differs in implementation/payload hashes from
+older versions even though CSL extraction/selection semantics are unchanged. Neither
+hash proves execution, origin, authenticity, completeness, identity, rights or approval.
+All existing skeleton, private-output and unsigned-hash limitations apply equally.
