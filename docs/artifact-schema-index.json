@@ -1095,6 +1095,26 @@
       "note": "Explicit comparator-only local source check. Mapping is operator authored; no authenticated receipt or approval consumer."
     },
     {
+      "schema_id": null,
+      "workflow": "documentation-audit",
+      "role": "maintainer-report",
+      "variant": "supported-subset",
+      "category": "maintainer",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "tests/doc_conformance.py",
+        "api": "audit",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/DOCUMENTATION_AUDIT.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Untagged maintainer report; partial Markdown subset, no guide execution or approval. No private artifact inputs."
+    },
+    {
       "schema_id": "human-validation-record.v1",
       "workflow": "human-validation-record",
       "role": "artifact",

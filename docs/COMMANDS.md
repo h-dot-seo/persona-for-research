@@ -905,3 +905,5 @@ usage: comparator_overlap.py [-h] --topic TOPIC [--format {json,text}] [--source
 Library only: optional comparator source selection/recheck for `comparator_overlap.py`; no standalone CLI. See [source guide](COMPARATOR_SOURCES.md).
 
 Manual input rejection detail library: `rejection_details.py` has no CLI. See [opt-in contract](MANUAL_REJECTION_DETAILS.md).
+
+Maintainer-only documentation audit: `python -m tests.doc_conformance` (no private inputs, no command execution). See [scope and unresolved results](DOCUMENTATION_AUDIT.md). This is not a root product CLI.

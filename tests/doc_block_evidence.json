@@ -1,0 +1,35 @@
+[
+  {
+    "path": "docs/COMPARATOR_OVERLAP.md",
+    "ordinal": 1,
+    "raw_sha256": "1c045f5b4ac680413cd6b201bf54fe5d1f783806c37a38ddcdb350a62aba3a3d",
+    "test": "tests.test_comparator_overlap.ComparatorTests.test_actual_guide_and_deterministic_hashseeds",
+    "coverage": "FULL_BLOCK",
+    "substitution": "Native repository paths after shlex; shipped fictional package and comparator",
+    "manual_steps": "None; explicitly authored fixture declarations already present",
+    "note": "All three documented commands require rc0, including the empty-topic report. Also runs two hash seeds.",
+    "test_source_sha256": "e28b0c9dc30d906357acd8220848011bc80e0a4dde155dc06a0c9d8410b2c7d0"
+  },
+  {
+    "path": "docs/COMPARATOR_SOURCES.md",
+    "ordinal": 1,
+    "raw_sha256": "bd03b906b165032d9f1be0cb6fafbaa6c00ccf16cf3a0be71b8de80c1410d8fc",
+    "test": "tests.test_comparator_sources.ComparatorSourceTests.test_guide",
+    "coverage": "FULL_BLOCK",
+    "substitution": "Native repository paths after shlex; separate fictional comparator sources and explicit mapping",
+    "manual_steps": "None; mapping is pre-authored synthetic data, not user permission",
+    "note": "The one command executes with rc0 and verifies comparator-only source-check status.",
+    "test_source_sha256": "045001d355755cfd5ceb1a25453278e1adbe7628b382ba00f259eb36f8bb2307"
+  },
+  {
+    "path": "docs/MANUAL_REJECTION_DETAILS.md",
+    "ordinal": 1,
+    "raw_sha256": "f448b5adc31a6af61c834285fc0894114d072b2170033b2bbcf19a1dab547e7d",
+    "test": "tests.test_rejection_details.RejectionDetailTests.test_actual_documented_rejection_examples",
+    "coverage": "FULL_BLOCK_EXPECTED_REJECTION",
+    "substitution": "OUTPUT becomes a new path with spaces under TemporaryDirectory; native paths after shlex",
+    "manual_steps": "None; intentionally wrong corpus-as-card shape",
+    "note": "Both documented commands require rc1, empty stdout, two stderr lines and no revision directory. Not successful authoring.",
+    "test_source_sha256": "35c288791037b0a89f84cf0af5c71bfaf70b8b05965df7599c0d58dee1d56337"
+  }
+]

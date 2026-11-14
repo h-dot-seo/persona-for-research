@@ -109,7 +109,10 @@ class ArtifactSchemaTests(unittest.TestCase):
 
     def test_maintainer_fixture_and_untagged_separate(self):
         maintainer={r['schema_id'] for r in self.rows if r['category']=='maintainer'}
-        self.assertEqual(maintainer,{'persona.test-timing.v1','persona.capacity-observation.v1','persona.capacity-run.v1'})
+        self.assertEqual(maintainer,{None,'persona.test-timing.v1','persona.capacity-observation.v1','persona.capacity-run.v1'})
+        untagged=[r for r in self.rows if r['category']=='maintainer' and r['schema_id'] is None]
+        self.assertEqual([r['workflow'] for r in untagged],['documentation-audit'])
+        self.assertEqual(untagged[0]['producer']['module'],'tests/doc_conformance.py')
         self.assertEqual(sum(r['category']=='fixture-only' for r in self.rows),2)
         self.assertEqual(sum(r['role']=='response' and r['schema_id'] is None for r in self.rows),10)
 
