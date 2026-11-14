@@ -3140,3 +3140,40 @@ from173 to169; unresolved syntax remains46 and the audit still does not execute
 guides. Final tree contains1502 tests,207 Python files,357 manifest entries and358
 audit files; CLI60 and SKILL8187 remain unchanged. Final full, independent, and
 remote CI results are tracked externally after freezing this tree.
+
+
+## 2026-11-14 Local source repair diagnostics (0.118-source-rejection-details)
+
+Roadmap #82 extends the existing opt-in helper to one complete local selection
+repair flow: prepare_local_manifest and source_recheck, including preparation
+--report-defects preflight and recheck template input loading. Only static
+selection/package labels and existing closed-field checks gain bounded known-key
+missing lists or unsupported-key counts. Original error strings and processing
+default stdout/stderr/exit remain unchanged; help adds the new option.
+
+Existing shared runtime_papers, source_paths and _sources modules are unchanged.
+Earlier authorization-declaration gates, invalid package checks and validation/read
+order remain authoritative: missing authorized still fails at its earlier gate
+without an invented closed-key diagnosis. Unknown paper IDs, stale binding, paths,
+quote/hash issues and wrong-type/wrong-schema exact-key inputs gain no guessed
+attribution. The added detail is capped at512 ASCII bytes; first-line errors may
+still contain private data. Python APIs keep plain ValueError by default and
+accept explicit optional rejection_label only for diagnostic metadata.
+
+Eight new tests cover nested missing/unknown fields, untrusted-key privacy, prior
+gates/read counts, APIs and actual commands. A seven-command synthetic guide
+repairs a missing kind, prepares local data, appends one existing manual card,
+builds a package, creates a fresh recheck template, rejects a missing source_file,
+and explicitly fills paths before rechecking both files. It preserves original
+source/package bytes and verification labels; empty-quote papers and incomplete
+templates are not upgraded to semantic evidence, permissions, HV or approval.
+Existing guide blocks and examples are unchanged.
+
+Focused84 tests passed in5.653 seconds, doc/artifact22 in3.729 seconds. Separate
+round45/46 actual subprocess comparison found16 default cases byte-identical in
+stdout/stderr/exit; two actual joined-help usages matched COMMANDS. A pre-manifest
+catalog check had two expected changed-module source-hash failures, not final
+validation. Manifest regeneration precedes the final immutable-tree suite.
+Final counts:1510 tests,208 Python files,359 manifest entries and360 audit files;
+CLI60 and SKILL8187 unchanged. Full/independent/remote results are recorded
+externally after freezing; local syntax checks do not replace Windows/3.10 CI.

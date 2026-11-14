@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.117-manual-guide-flow",
+  "release": "0.118-source-rejection-details",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 357,
+  "file_count": 359,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 18889,
-      "sha256": "3f82f8b80a67a2bf18b9dfee8b24839b74714d99fe2ebb878b3a03e70b0e41e3"
+      "bytes": 19433,
+      "sha256": "e9b17f003f1e7764e555309aa44d36ac17aa671f62d0ffb8c5817ff0f5d06d57"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 20545,
-      "sha256": "c5d911ec787e6fe1c2172f5e35abe95db0aa460303922c748522490b95187cb4"
+      "bytes": 20698,
+      "sha256": "0068b78ee03c6b4b5c2d92e537dc82b889210bb39c9f36a56b4b266db9303a8c"
     },
     {
       "path": "RIGHTS.md",
@@ -45,8 +45,8 @@
     },
     {
       "path": "SECURITY.md",
-      "bytes": 3166,
-      "sha256": "9c65926695ba8031f4a2357e8c0ee160edcb2409e62ddb9a21d0e3c7ef811583"
+      "bytes": 3511,
+      "sha256": "1e47d181c06c9e6eb109165cbe4138d72fc0370adc053217104365f9509bc42b"
     },
     {
       "path": "SKILL.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 11666,
-      "sha256": "59972e042f6f516465fb38b742a0079a58897da5968f2f9a2f92691ca5893259"
+      "bytes": 11860,
+      "sha256": "456575abbf48a5d5d3d1829c601843dce12469d3778efa7db2afab9ca00c8d3e"
     },
     {
       "path": "answer_context.py",
@@ -235,8 +235,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 46481,
-      "sha256": "d42307727093f167cd676112462f0a4c2e7d002e43f2e7dc92bb057c5471053e"
+      "bytes": 46665,
+      "sha256": "cd82da4fe8b310813d4ad656d26736d4034badb97fc757711822cf01c5a39171"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -499,6 +499,11 @@
       "sha256": "0f644c1f40d6b9dcb6ded473af7f6880fb467c411075b6e927dc51927bb8a3d2"
     },
     {
+      "path": "docs/SOURCE_REJECTION_DETAILS.md",
+      "bytes": 5016,
+      "sha256": "7b96b749088c69c444fd301438fb662a24340053c6c63eb541c13630f505f04e"
+    },
+    {
       "path": "docs/SPLIT_DECLARATION.md",
       "bytes": 9230,
       "sha256": "116cf999d2e8ed2574ea90f8afd4aad9dbffa5c7193ed1af99dc671db03a9e47"
@@ -535,8 +540,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 221129,
-      "sha256": "443589b86f3f5e73a738a536e1b8573bfdb3521ca1b8e870438daefdf76f75dd"
+      "bytes": 223554,
+      "sha256": "3501dd4add13b06b0c50508a70460b1958ff1d8137d86a508ebaf1e7e38e907e"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -980,8 +985,8 @@
     },
     {
       "path": "prepare_local_manifest.py",
-      "bytes": 8746,
-      "sha256": "5cffce7eefbc56ea5fa8dd19763eec4934715fbd52276543457f458ae42dbfa3"
+      "bytes": 9404,
+      "sha256": "446e202d0074eb841c7d731ec4b34cd3ed561327cf985af59d9a5a0ba6532e3b"
     },
     {
       "path": "publication_context.py",
@@ -1015,8 +1020,8 @@
     },
     {
       "path": "rejection_details.py",
-      "bytes": 2401,
-      "sha256": "b3a837c9a72ff36734a9256492bae2936cca97711c1597299b27cc21c87a5c40"
+      "bytes": 2853,
+      "sha256": "1d6a4aca51b5f302626f1e0e8842380d25b7855f19e078e5c5609e355daca986"
     },
     {
       "path": "release_record.py",
@@ -1100,8 +1105,8 @@
     },
     {
       "path": "source_recheck.py",
-      "bytes": 11673,
-      "sha256": "66104c4eb896382ed39745a5f30c22fa0a9e8dd0276a2533643e5f784ee58708"
+      "bytes": 12136,
+      "sha256": "c5290f378431702337d811fcbcdff76cd3b2c9c1756bf652a4687f4c1b5fee2c"
     },
     {
       "path": "split_declaration.py",
@@ -1697,6 +1702,11 @@
       "path": "tests/test_source_recheck.py",
       "bytes": 21702,
       "sha256": "830ba5072a5102624119c50047ce567349b598e697c6be3c2bc392f669e2737a"
+    },
+    {
+      "path": "tests/test_source_rejection_details.py",
+      "bytes": 15709,
+      "sha256": "6bdee8340bc94185554556a1d0271431ee8ea4cf015ca5f2ca072c716882525b"
     },
     {
       "path": "tests/test_source_structure_report.py",

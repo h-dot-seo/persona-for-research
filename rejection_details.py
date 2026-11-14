@@ -1,8 +1,13 @@
-"""Opt-in static-label rejection details for manual input cards; not a general diagnostic API."""
+"""Opt-in static-label rejection details for manual cards and local source selections; not a general diagnostic API."""
 from strict_json import _key_diagnostic
 
 MAX_DETAIL_BYTES=512
+LABELS=('manifest','card','selection','package')
 CONTRACTS={
+ 'local-selection':({'author_id','version','build_id','papers'},set()),
+ 'paper-selection':({'paper_id','author_id','split','runtime_knowledge_eligible','authorized','locator','kind','year','topic','source_file','observations'},{'source_sha256','input_inventory'}),
+ 'source-selection':({'schema','package_sha256','operator_id','sources'},set()),
+ 'source-selection-row':({'paper_id','source_file'},set()),
  'append-card':({'schema','manifest_sha256','paper_id','observation'},set()),
  'revision-card':({'schema','manifest_sha256','paper_id','observation_index','previous_observation_sha256','observation','operator_id','revision_reason','new_version','new_build_id'},set()),
  'manual-observation':({'method','condition','limitation','locator','topic','evidence_quote','claim_type'},{'stance','reasoning'}),
@@ -18,7 +23,7 @@ class InputRejected(ValueError):
 
 
 def closed_rejection(message,value,contract,label):
-    if type(value) is not dict or label not in ('manifest','card'):return ValueError(message)
+    if type(value) is not dict or label not in LABELS:return ValueError(message)
     required,optional=CONTRACTS[contract]
     # Never stringify or sort untrusted keys. Non-string Python API keys get no detail.
     if any(type(key) is not str for key in value):return ValueError(message)
@@ -36,7 +41,7 @@ def load_input(loader,path,label,explain):
     except ValueError as exc:
         if not explain:raise
         # Only the individual loader is running here; no cross-input attribution.
-        if label not in ('manifest','card'):raise
+        if label not in LABELS:raise
         raise InputRejected(str(exc),'  input='+label) from exc
 
 

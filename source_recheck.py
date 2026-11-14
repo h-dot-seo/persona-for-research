@@ -14,6 +14,7 @@ from design_scenario import _text
 from persona import payload_sha256
 from review_package import display
 from strict_json import read_bounded, InputLimitError, loads
+from rejection_details import closed_rejection, load_input, exit_rejected
 
 SCHEMA = 'persona.source-recheck-selection.v1'
 MAX_JSON_BYTES = 8 * 1024 * 1024
@@ -54,17 +55,17 @@ def _relative(name):
     return name
 
 
-def audit(value, selection, source_root):
+def audit(value, selection, source_root, *, rejection_label=None):
     inputs=_detach(dict(package=value, selection=selection))
     package, papers=_sources(inputs['package']);selection=inputs['selection']
     if not isinstance(selection, dict) or set(selection)!={'schema','package_sha256','operator_id','sources'} or selection['schema']!=SCHEMA:
-        raise ValueError('source selection has missing or unsupported fields; cached reports are not source selections')
+        raise closed_rejection('source selection has missing or unsupported fields; cached reports are not source selections',selection,'source-selection',rejection_label)
     _text(selection['operator_id'], 'operator_id', 128)
     if selection['package_sha256']!=payload_sha256(package): raise ValueError('source selection is stale for this package')
     if not isinstance(selection['sources'], list): raise ValueError('sources must be an array')
     selected={}
     for row in selection['sources']:
-        if not isinstance(row, dict) or set(row)!={'paper_id','source_file'}: raise ValueError('source selection row requires paper_id and source_file only')
+        if not isinstance(row, dict) or set(row)!={'paper_id','source_file'}: raise closed_rejection('source selection row requires paper_id and source_file only',row,'source-selection-row',rejection_label)
         pid=row['paper_id']
         if not isinstance(pid, str) or pid not in papers or pid in selected: raise ValueError('source selection needs every known paper exactly once')
         selected[pid]=_relative(row['source_file'])
@@ -150,19 +151,21 @@ def _load(path):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('package',type=Path);parser.add_argument('selection',type=Path,nargs='?')
     parser.add_argument('--template',action='store_true');parser.add_argument('--operator-id');parser.add_argument('--source-root',type=Path)
-    parser.add_argument('--format',choices=('json','text'),default='json');add_output_argument(parser); args=parser.parse_args()
+    parser.add_argument('--format',choices=('json','text'),default='json')
+    parser.add_argument('--explain-rejection',action='store_true');add_output_argument(parser); args=parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
     try:
-        package=_load(args.package)
+        package=load_input(_load,args.package,'package',args.explain_rejection)
         if args.template:
             if args.selection or args.source_root or args.format!='json': raise ValueError('template needs JSON output and no source selection/root')
             result=template(package,args.operator_id)
         else:
             if args.selection is None or args.source_root is None or args.operator_id is not None: raise ValueError('recheck needs explicit source selection and source root, without operator override')
-            result=audit(package,_load(args.selection),args.source_root)
+            result=audit(package,load_input(_load,args.selection,'selection',args.explain_rejection),args.source_root,
+                **({'rejection_label':'selection'} if args.explain_rejection else {}))
         output=render(result) if args.format=='text' else json.dumps(result,ensure_ascii=True,indent=2)+'\n'
         if len(output.encode('utf-8'))>MAX_JSON_BYTES: raise ValueError('source recheck output exceeds 8 MiB')
-    except (ValueError,OSError,KeyError,TypeError,AttributeError,RecursionError) as exc: parser.exit(1,str(exc)+'\n')
+    except (ValueError,OSError,KeyError,TypeError,AttributeError,RecursionError) as exc: exit_rejected(parser,exc,args.explain_rejection)
     emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
 
 
