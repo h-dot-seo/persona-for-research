@@ -3,6 +3,7 @@ from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import copy
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -56,22 +57,75 @@ def _render_explanation(lines, citation):
     lines.append('    Interpretation is not verified support, source authorship, quotation permission or approval.')
 
 
-def template(package, question, operator_id):
-    checked, _ = _sources(package)
+_TEMPLATE_MAX_NODES = 8192
+_TEMPLATE_MAX_TEXT = 65536
+_TEMPLATE_SOURCES = _sources
+
+
+def _plain_template_inputs(*values):
+    """Bound optimization work only; non-plain/aliased values use the original path."""
+    seen = set()
+    pending = [(value, 0) for value in values]
+    remaining = _TEMPLATE_MAX_NODES - len(pending)
+    text_remaining = _TEMPLATE_MAX_TEXT
+    try:
+        while pending:
+            value, depth = pending.pop()
+            kind = type(value)
+            if kind is str:
+                if len(value) > text_remaining: return False
+                text_remaining -= len(value)
+                if any(0xD800 <= ord(char) <= 0xDFFF for char in value): return False
+            elif kind is float:
+                if not math.isfinite(value): return False
+            elif kind is type(None) or kind is bool or kind is int:
+                pass
+            elif kind is dict or kind is list:
+                if depth >= 64 or id(value) in seen: return False
+                seen.add(id(value))
+                children = len(value) * (2 if kind is dict else 1)
+                if children > remaining: return False
+                remaining -= children
+                if kind is dict:
+                    if any(type(key) is not str for key in value): return False
+                    pending.extend((key, depth + 1) for key in value)
+                    pending.extend((child, depth + 1) for child in value.values())
+                else:
+                    pending.extend((child, depth + 1) for child in value)
+            else: return False
+        return remaining >= 0
+    except (ValueError, TypeError, RuntimeError, RecursionError, OverflowError):
+        return False
+
+
+def _template_checked(checked, question, operator_id):
     _text(question, 'question'); _text(operator_id, 'operator_id', 128)
     return dict(persona_sha256=payload_sha256(checked['persona']),
         knowledge_papers_sha256=payload_sha256(checked['knowledge']['papers']),
         question=question, operator_id=operator_id, claims=[])
 
 
+def template(package, question, operator_id):
+    checked, _ = _sources(package)
+    return _template_checked(checked, question, operator_id)
+
+
+_PUBLIC_TEMPLATE = template
+
+
 def inspect(package, draft):
     if isinstance(draft, dict) and draft.get('schema') in ('persona.reviewed-answer-proposals.v1', 'persona.reviewed-answer-proposals.v2', 'persona.reviewed-answer-proposals.v3'):
         from answer_proposals import inspect_reviewed
         return inspect_reviewed(package, draft)
+    initially_plain = _plain_template_inputs(package, draft)
     checked, papers = _sources(package)
     if not isinstance(draft, dict) or set(draft) != set(BINDINGS) | {'question', 'operator_id', 'claims'}:
         raise ValueError('draft has missing or unknown fields')
-    expected = template(checked, draft['question'], draft['operator_id'])
+    raw_inputs = (checked, draft) if package is checked else (package, checked, draft)
+    reusable = (initially_plain and _sources is _TEMPLATE_SOURCES and template is _PUBLIC_TEMPLATE
+                and _plain_template_inputs(*raw_inputs))
+    expected = (_template_checked(checked, draft['question'], draft['operator_id']) if reusable
+                else template(checked, draft['question'], draft['operator_id']))
     if any(draft[k] != expected[k] for k in BINDINGS):
         raise ValueError('draft is bound to a different package')
     if not isinstance(draft['claims'], list): raise ValueError('claims must be an array')

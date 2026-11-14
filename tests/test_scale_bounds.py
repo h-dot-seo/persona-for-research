@@ -34,8 +34,8 @@ class ScaleBoundsTests(unittest.TestCase):
     def test_exact_small_counts_and_bytes(self):
         result=c.observe(1,1,2,1)
         self.assertTrue(result['success'])
-        expected=[(76,75,0,803,636804,11508),(47,47,0,526,385415,68856),
-                  (69,69,0,778,555751,33871),(1,1,1,10,7480,1010)]
+        expected=[(49,48,0,587,478125,11508),(32,32,0,406,297260,68856),
+                  (51,51,0,634,449965,33871),(1,1,1,10,7480,1010)]
         for row,e in zip(result['stages'],expected):
             self.assertEqual(tuple(row['counts'][k] for k in ('build','validated_source_rules','apply','payload_sha256','hash_serialized_bytes'))+(row['output_bytes'],),e)
         self.assertFalse(result['computed_cli_combined_8mib_exceeded'])

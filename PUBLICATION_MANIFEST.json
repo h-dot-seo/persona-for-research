@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.107-capacity-observations",
+  "release": "0.108-answer-template-reuse",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 324,
+  "file_count": 325,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 14077,
-      "sha256": "f14da9dad44a55a87ee517bd435a6c2629408a26005db2790ec907c4b6ddc25b"
+      "bytes": 14515,
+      "sha256": "816adf0635366138d667b84c95a00ead2e7b21da61a62890ad6f0b51465cd2fc"
     },
     {
       "path": "PUBLICATION.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 9872,
-      "sha256": "0f0cb113621ffdfe057a9bf385e27682d637a2f36f1b1b19944cf7143b03da4f"
+      "bytes": 10063,
+      "sha256": "01ff0ff22137a0cf85eaabd716553df10d652728873b0272c921c70ac0afc217"
     },
     {
       "path": "answer_context.py",
@@ -65,8 +65,8 @@
     },
     {
       "path": "answer_draft.py",
-      "bytes": 18187,
-      "sha256": "82b23d92d5253f0719a1c7c04fbae547c56ea48b119a42ad18c055fe03a9d67c"
+      "bytes": 20457,
+      "sha256": "d094465bac53af729970667d1f46037074c75e21ca3f84939b16b7f2c27b21ee"
     },
     {
       "path": "answer_proposals.py",
@@ -200,8 +200,8 @@
     },
     {
       "path": "docs/CAPACITY.md",
-      "bytes": 5301,
-      "sha256": "e0999912beb2d663a101146d53fc23138263a6c2d8dd7352ddf92cdf8b3d9b9b"
+      "bytes": 6634,
+      "sha256": "cfdcfa1f4a4a0d0c18d0821ee573306b4cdb6a408636e5c90f5571142110985b"
     },
     {
       "path": "docs/CENSUS_IMPORT.md",
@@ -485,8 +485,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 193692,
-      "sha256": "93af6df6c5c00eb042fd9de77abf990d899fe4971abe4e9b721d4b12db3635d7"
+      "bytes": 196180,
+      "sha256": "23b7f4a7f8cfd001c05fb592f46d6b610d117ae8983713e0ded3834995bee074"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1064,6 +1064,11 @@
       "sha256": "086231c16dbaad2bf85352c92c30dcbf190cebee457fb68afc69975092a93994"
     },
     {
+      "path": "tests/test_answer_template_reuse.py",
+      "bytes": 8111,
+      "sha256": "383383f86399813c58234ddb2f06f8d697606dac7ab33ccda0018fdf442120a2"
+    },
+    {
       "path": "tests/test_answer_walkthrough.py",
       "bytes": 13623,
       "sha256": "071877cd98b23e7e666730b9dfd72480b86a50e308d01afabcaf3a7786bdf318"
@@ -1521,7 +1526,7 @@
     {
       "path": "tests/test_scale_bounds.py",
       "bytes": 7579,
-      "sha256": "fcdba5e946410e1059aeb4214990fd50729147b46b8e650806e868800ea4b541"
+      "sha256": "3ac330159ba6df729f6c96e07e2253d2ea3a52c65b54cdae308dd2f132ec480d"
     },
     {
       "path": "tests/test_skill_contract.py",

@@ -2748,3 +2748,37 @@ focused suite passed 60 in 67.380 seconds, independent review 23; all existing r
 product modules and existing test bodies are byte-unchanged. Manifest passes 324
 files, audit 325; 192 Python files compile and parse Python 3.10 grammar. Root CLI
 count remains 58. Exact PR/main CI is checked separately.
+
+## 2026-11-14 Call-local answer template reuse (0.108-answer-template-reuse)
+
+Measured roadmap #85 follow-up, one production module only. answer_draft.inspect()
+previously called _sources once and template(checked) immediately repeated the same
+validation. A private checked-template constructor now reuses only the current call's
+freshly checked package for eligible exact JSON inputs. Public template still validates
+freshly, inspect still performs its first full validation, and reviewed-envelope dispatch
+is unchanged. No global/cross-call cache, identity memo, external verification receipt,
+policy/approval change or removal of other replay paths.
+
+Eligibility is fixed before the first _sources and checked again afterward. The bounded
+exact-builtins walk does not invoke custom comparison or iteration: custom types,
+aliases/cycles, nonfinite/surrogate text, depth>=64, more than8192 nodes or65536 total
+text code points use the original path. These are optimization budgets, not new input
+rejections. Replaced _sources/template functions also use the original path. Initial
+review prompted a preflight refinement: a real string subclass normalizes itself in
+first validation; it must remain ineligible even after becoming plain. Its regression
+keeps two build replays, no guard-induced custom-method calls, and identical results.
+
+Fresh repeat calls, mutation/stale/source/rule/type errors, error order, reviewed answer
+versions, contextual/replay and full byte outputs are checked. Representative synthetic
+(8,4,4,2) journey text build replays drop79 to56 with exactly identical text bytes;
+this is a measured replay-count reduction, not a general wall-time improvement claim.
+Only the current small capacity count gates change; prior measurements above remain.
+No original fixtures, external inputs, real data, source transmission or CI changes.
+Full suite passed 1,432 tests in 387.342 seconds with one platform skip. Expanded
+focused answer/contextual/replay suite passed 81 in 130.782 seconds. Independent
+review passed 44 tests and separate-process previous/current complete outputs and
+six malformed-input type/message comparisons; the preflight refinement re-review
+passed 23 including the self-normalizing string and non-invoking exact-type guard.
+Manifest passes 325 entries, audit 326; 193 Python files compile and parse Python
+3.10 grammar. Root CLI count remains 58. No wall-time claim follows from these
+separate test runs. Exact PR/main CI is checked separately.
