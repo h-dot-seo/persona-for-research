@@ -22,6 +22,7 @@ source corpora, real persona packages and real validation results are kept out.
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.
 - Logical JSON binding validator (`persona.py`) and a holdout-redacting projection helper (`safe_canonical_read.py`).
+- Detached reopening records (`release_record.py`): supplied trigger, prior impact and revalidation plan, with read-only candidate diff prompts.
 - Detached pre-holdout candidate findings (`candidate_challenge.py`): supplied kinds, package bindings and read-only counts, not approval.
 - Detached frozen split declarations (`split_declaration.py`): census relations, disjoint declared splits, hashes and package training comparison without repeating withheld IDs.
 - Detached human validation records (`human_validation.py`): a blank template, a strict check and a read-only axis status bound to both package hashes, never written into the persona payload.
@@ -100,6 +101,7 @@ Keep real inputs and generated packages outside this public repository.
 | `research_workflow.py` | Apply operator-curated observations as a bounded, question-specific planning scaffold | [Workflow review](docs/WORKFLOW_REVIEW.md) |
 | `review_package.py` | Compact read-only review of a bound package (`--evidence-details`, `--human-validation`) | [Evidence details](docs/EVIDENCE_DETAILS.md) |
 | `compare_releases.py` | Read-only comparison of two bound packages; never approves a release | [Workflows](docs/WORKFLOWS.md#review-a-candidate-release-and-a-bound-package) |
+| `release_record.py` | Record prior-release reopening triggers and declared impact; never approve a candidate | [Reopening records](docs/RELEASE_RECORD.md) |
 | `candidate_challenge.py` | Record/check supplied pre-holdout candidate findings, not judgments | [Candidate findings](docs/CANDIDATE_CHALLENGE.md) |
 | `split_declaration.py` | Freeze declared census/split records; compare package training IDs with counts/hash-only reports | [Split declaration](docs/SPLIT_DECLARATION.md) |
 | `human_validation.py` | Detached rater assessment bound to both package hashes: `template`, `check`, `status` | [Human validation](docs/HUMAN_VALIDATION.md) |
@@ -220,3 +222,5 @@ Package reviews can optionally append a detached split comparison with
 This is read-only reporting, not a source-intake gate or proof of unseen holdout.
 
 See [Detached candidate challenge records](docs/CANDIDATE_CHALLENGE.md) for lifecycle step 11 and `review_package.py --challenge-record RECORD`.
+
+See [Controlled reopening declarations](docs/RELEASE_RECORD.md) for supplied update triggers and prior-package impact plans.

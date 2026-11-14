@@ -264,3 +264,5 @@ a new template bound to that package's own hashes. Nothing in it is a score, a v
 independence claim or a change to `validation.human_validation`.
 
 For lifecycle step 11, see [detached pre-holdout candidate findings](CANDIDATE_CHALLENGE.md).
+
+For a supplied update trigger, see [controlled reopening declarations](RELEASE_RECORD.md).
