@@ -2461,3 +2461,37 @@ fresh inspection, all four option headers, source pairing, stale hashes and unch
 judgment boundaries; no blocker remained. Manifest passed for 299 listed files, audit
 for 300 text files; all 177 Python files compile and parse Python 3.10 grammar. Remote
 PR/main CI is checked separately for exact commits.
+
+## 2026-11-14 Exact rule-record correspondence (0.100-rule-correspondence)
+
+Roadmap #74 adjusted first slice: rule_correspondence inventory/compare accepts validated
+bound packages (including wrappers or split persona/knowledge), never derived inventories.
+checked_package/validated_source_rules and same supplied author_id enforce existing package
+boundaries, not authenticated identity. The full-rule key hashes {rule: full rule excluding
+rule_id, source_sha256: bound paper source hash}; the observation key hashes existing
+observation_provenance.content_sha256 plus paper_id and source_sha256. Components use exact
+payload hashes. Rule/paper/component changed-field names remain visible, including historical
+verification labels and paper metadata changes. Keys are content equality, not stable IDs.
+
+Either key duplicated on either side blocks every involved position from automatic pairing,
+even if the other key is unique. All positions and full hashes remain visible. Locator-only
+candidates use grouped previous/current positions rather than a Cartesian product and never
+establish identity. ONLY_* is presence in supplied packages, not withdrawal/addition of
+literature or changed beliefs. No old human-record resolution, citation transfer, automatic
+release decision, source reread, provider call or payload/validation-axis change. Existing
+fixtures and prior outputs are unchanged; the new synthetic package reorders papers and
+inserts one explicit synthetic observation. No actual researcher data used.
+
+All supplied files share 8 MiB; inventory row growth and final JSON/text outputs are bounded
+to 16 MiB without truncation. Display escapes controls in text; shared exclusive output
+preserves existing files. Output can contain private quotes and provenance labels. No
+semantic/stable-identity guarantee; HV and compare_releases integration remain deferred.
+Guide argv tokenization precedes native path substitution, including Windows spaces/escapes.
+All 1,328 synthetic tests passed in 336.993 seconds. Expanded focused suite: 77 tests
+passed in 20.033 seconds. Independent reviewer passed 36 new/comparison/dispatcher tests
+and checked 40 randomized reordering/duplicate/content/source-hash cases against a separate
+pairing/unmatched oracle. Existing build/payload/judgment modules remained byte-identical;
+no blocker remained. A reviewer test-module typo was corrected before the successful
+36-test rerun; it was not a product failure. Manifest passed for 303 listed files, audit
+for 304 text files; all 179 Python files compile and parse Python 3.10 grammar. Dispatcher
+lists 55 root CLIs. Exact remote PR/main CI is checked separately.

@@ -102,6 +102,7 @@ Keep real inputs and generated packages outside this public repository.
 | `persona.py`, `safe_canonical_read.py` | Validate persona/knowledge hash bindings; project canonical JSON without holdout identifiers | [Architecture](docs/ARCHITECTURE.md) |
 | `observation_input.py` | Verify curated observations and quotes against supplied segments, then build the planning scaffold | [Workflows](docs/WORKFLOWS.md#verified-intake-and-authorized-local-source-files) |
 | `census_import.py` | List supplied CSL-JSON/RIS facts and create an unapproved selection skeleton | [Census import](docs/CENSUS_IMPORT.md) |
+| `rule_correspondence.py` | Inspect exact content correspondence across rebuilt packages without rebinding | [Rule correspondence](docs/RULE_CORRESPONDENCE.md) |
 | `tabular_export.py` | Export fresh package references, journey agendas or evidence routes as private CSV/TSV | [Tabular export](docs/TABULAR_EXPORT.md) |
 | `package_overview.py` | Inspect all bound package records as JSON or passive private HTML | [Package overview](docs/PACKAGE_HTML.md) |
 | `prepare_local_manifest.py`, `corpus_files.py` | Report structural defects with `--report-defects`, then prepare and load authorized local files with byte hashes | [Local input preparation](docs/LOCAL_INPUT_PREPARATION.md) |

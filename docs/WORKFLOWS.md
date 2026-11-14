@@ -771,3 +771,11 @@ manifests, canonical payloads and validation axes are not modified. Output size 
 newly capped: a multi-file producer can still create a package over a downstream
 JSON reader's 8 MiB limit. The bound is bytes read, not a wall-clock, memory-allocation
 or scientific-validation guarantee. No source authentication or approval is implied.
+
+## Exact record correspondence after rebuilding
+
+Use [rule_correspondence.py](RULE_CORRESPONDENCE.md) inventory/compare to inspect
+exact content hashes after observation insertion or paper reordering. Position changes
+are not stable semantic IDs, priority changes or evidence that old reviews/citations
+remain valid. Duplicate keys are ambiguous, not automatically paired. This separate
+read-only view does not rebind human records or alter release decisions.
