@@ -786,3 +786,7 @@ read-only view does not rebind human records or alter release decisions.
 sidecar only. Operator-supplied literature/consultation labels are not lookups, persona
 knowledge, citation support or permission. It does not detect holdout/comparator
 contamination. No answer/journey/handoff integration or external transmission occurs.
+
+## Preserve a private review folder
+
+Use [folder_inventory.py declare/verify](FOLDER_INVENTORY.md) to compare raw file bytes before and after handover. Keep the declaration outside the folder and repository. This does not interpret READY/COMPLETE, run commands, or verify content bindings.

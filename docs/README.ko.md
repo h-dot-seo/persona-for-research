@@ -274,3 +274,7 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 
 답변·근거 범위 보고서의 [`--external`](EXTERNAL_EVIDENCE.md#optional-answer-and-scope-display)은
 명시한 로컬 사이드카를 인용·출처 집계·판정과 분리해 표시합니다.
+
+## 비공개 폴더 인벤토리
+
+[폴더 인벤토리](FOLDER_INVENTORY.md)로 인계 전 파일 바이트를 선언하고 이후 수정·누락·추가를 확인합니다. 내용 검증이나 승인이 아니며 파일명은 공개하지 않습니다.
