@@ -54,13 +54,11 @@ The build mechanically maps each observation to one rule. Cross-paper rule synth
 independent challenge and real holdout evaluation have no backend here.
 
 Review with `review_package.py`; empty answer/design starters:
-`review_workspace.py` and docs/REVIEW_WORKSPACE.md. For comparison
-choose `journey_compare.py`, `compare_releases.py` or `revision_impact.py`, following
-respectively docs/JOURNEY_COMPARISON.md, docs/WORKFLOWS.md or
+`review_workspace.py` and docs/REVIEW_WORKSPACE.md. Compare via `journey_compare.py`, `compare_releases.py` or `revision_impact.py`, using docs/JOURNEY_COMPARISON.md, docs/WORKFLOWS.md or
 docs/REVISION_IMPACT.md. Consultation remains a specification, not a dialogue backend.
 Updates are only partly supported by `revise_local.py`, `revision_impact.py` and
 `source_recheck.py`; read docs/MANUAL_EVIDENCE_REVISION.md and docs/SOURCE_RECHECK.md.
-Report missing operations, never invent completion.
+Report gaps; never invent completion.
 
 Keep the validation axes separate: `persona.py` checks evidence bindings and
 `source_recheck.py` checks current local bytes; `evaluate_synthetic.py` is synthetic-only
@@ -69,7 +67,7 @@ Runtime validation is not shipped: `safe_canonical_read.py` is only a projection
 When contributing to this repository, `audit_publication.py` and `verify_manifest.py`
 check this repository's own files, not publication readiness of a user's persona.
 
-Folder byte checks: docs/FOLDER_INVENTORY.md, not content approval.
+Bytes: docs/FOLDER_INVENTORY.md. Response extraction: docs/HANDOFF_PACKET.md. Neither approves.
 
 ## Offline proposal families
 

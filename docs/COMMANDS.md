@@ -862,3 +862,12 @@ usage: folder_inventory.py [-h] {declare,verify} ...
 usage: folder_inventory.py declare [-h] --output NEW_FILE root
 usage: folder_inventory.py verify [-h] --root ROOT [--format {json,text}] [--output NEW_FILE] manifest
 ```
+
+### `handoff_packet.py`
+
+Literal single-message response extraction, not model attestation. [Guide](HANDOFF_PACKET.md).
+
+```text
+usage: handoff_packet.py [-h] {extract-response} ...
+usage: handoff_packet.py extract-response [-h] --output-dir NEW_DIR [--occurrence OCCURRENCE] transcript handoff
+```

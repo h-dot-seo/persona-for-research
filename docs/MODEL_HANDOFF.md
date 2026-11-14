@@ -190,3 +190,5 @@ Views can be large: the synthetic contextual answer v3 walkthrough handoff is ab
 Actual size depends on the inputs. Existing 16 MiB proposal output limits still apply;
 text is never truncated. This command writes stdout; exclusive file output is a
 separate capability, not supplied by this format option.
+
+For a copied single-message JSON fence, use [literal response extraction](HANDOFF_PACKET.md), then this guide's unchanged importer. Extraction does not authenticate model execution or supply provenance.

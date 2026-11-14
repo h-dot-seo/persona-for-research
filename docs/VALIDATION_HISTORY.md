@@ -2634,3 +2634,40 @@ Windows CI is required to confirm the diagnosis. Local 16-test rerun passes with
 one Windows-only skip. Independent re-review confirmed injection is not weakened
 and exercised a canonical relative-alias target. Corrected full suite passed
 1,384 tests in 365.198 seconds with one platform skip.
+
+## 2026-11-14 Literal bound response extraction (0.105-literal-response)
+
+Roadmap #90 remaining extraction only. An initial planning interpretation treated turn
+selection as a prerequisite; rereading the complete adjustment corrected that inference:
+whole conversations/vendor exports were already excluded in favor of one explicit message
+and manual occurrence selection. All ten existing render variants contain no standalone
+JSON fence. Existing rendering is therefore reused unchanged, not repackaged or extended.
+
+handoff_packet.py extract-response reads a synthetic/explicit UTF-8 message and handoff,
+with aggregate 8 MiB input. Exact standalone json fences, strict JSON and handoff hash
+identify literal candidates; zero or ambiguous matches fail unless occurrence is explicit.
+Response bytes and LF/CRLF are preserved. Receipt records selected occurrence, byte offsets
+(end exclusive) and raw hashes, not conversation/message IDs or provenance declarations.
+BOM, NUL, bare CR, invalid UTF-8 and unsupported/unclosed/nested fences fail closed.
+
+All output serializes within combined 16 MiB before creating an external exclusive NEW_DIR.
+response.json, extraction-receipt.json then READY.json are written in that order. A write
+failure can leave partial files, including partial READY; nothing is auto-deleted. READY
+existence alone is not success: check successful completion and complete marker/receipt/
+response hashes. No role authentication, model execution, semantic validation, approval or
+transmission permission is inferred; a bound empty response is not model attestation.
+Existing import must still rebuild and validate current handoff inputs. No provider call,
+vendor parser, provenance prefill or changes to existing prepare/render/import/fixtures.
+
+Only synthetic data. Ten actual response-template variants roundtrip, the existing
+nonempty attribution response preserves bytes and unchanged import results, and existing
+renderer packets alone yield NO_BOUND_RESPONSE. Mixed LF/CRLF, non-ASCII byte offsets,
+ambiguity/selection, strict malformed JSON, fence injection, budgets and partial output
+are exercised. Corrected full suite passed 1,398 tests in 365.026 seconds with
+one inherited Windows-only junction skip; focused 52 passed in 16.955 seconds.
+Independent 28 tests plus 40 Unicode/mixed-newline/terminal-newline combinations
+verified exact bytes/offsets; even explicitly selecting an earlier valid fence
+does not ignore later malformed JSON. Manifest passes 317 files, audit 318; all
+187 Python files compile and parse Python 3.10 grammar; dispatcher lists 58 CLIs.
+The inherited round32 Windows mock fixture correction is retained above. Exact
+PR/main CI is verified separately.

@@ -340,3 +340,5 @@ is not permission to transmit and makes no model call. See the complete format a
 size boundaries in [Model handoff](MODEL_HANDOFF.md#pasteable-local-handoff-view).
 
 For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.
+
+For a copied single-message JSON fence, use [literal response extraction](HANDOFF_PACKET.md), then this guide's unchanged importer. Extraction does not authenticate model execution or supply provenance.
