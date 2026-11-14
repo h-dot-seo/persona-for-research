@@ -252,3 +252,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 [공급된 릴리스 결정](RELEASE_DECISION.md): 사람이 적은 결정을 기록하며 human 기록 해시만 대조합니다. 미수행 축은 명시하고 자동 승인·게이트·새 검증 축을 만들지 않습니다.
 
 [기계판독 명령 목록](COMMAND_LIST.md): `persona_cli.py list --json`은 모듈을 실행·import하지 않고 AST로 이름과 설명을 나열합니다. 호출 인자·아티팩트 스키마·승인 계약은 아닙니다.
+
+[선택 명령 설명](COMMAND_DESCRIPTION.md): `persona_cli.py describe SCRIPT --json`은 허용목록·게시 소스 해시가 맞는 스크립트의 실제 --help를 시간·출력 제한으로 수집합니다. argparse 없는 검사는 실행하지 않으며 아티팩트 스키마·승인을 추론하지 않습니다.

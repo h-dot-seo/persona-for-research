@@ -114,3 +114,5 @@ Updates: [reopening declarations](RELEASE_RECORD.md) bind supplied triggers, pri
 Lifecycle step 14 decision record: [supplied release choices](RELEASE_DECISION.md) are distinct from reopening plans and tool approval. Only existing human records can be referenced; evidence is recomputed mechanically, predictive/runtime remain NO_RECORD_TYPE. No canonical validation field is changed.
 
 Local discovery: `persona_cli.py list --json` exposes the existing AST-discovered command names and first docstring sentences. This inventory is not an invocation/schema contract, package validation, authentication or approval; discovered scripts are not imported or executed. See [Command list](COMMAND_LIST.md).
+
+Selected command descriptions capture actual argparse help in bounded child processes after exact-name allowlist and selected-source inventory checks. Argparse-free checks remain static. This is invocation shape, not an artifact-schema, permission or validation contract. See [Command descriptions](COMMAND_DESCRIPTION.md).

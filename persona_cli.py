@@ -33,7 +33,8 @@ BOUNDARY = (
     "judgement, calls no model, reads no network and validates no package itself; the dispatcher\n"
     "writes no file, and whatever a script writes is that script's documented behaviour. `list` is a\n"
     "discovery aid over the scripts that have an `if __name__ == '__main__'` entry point, not an\n"
-    "approval of any input."
+    "approval of any input. `describe` captures explicitly selected trusted script help in bounded child\n"
+    "processes; argparse-free checks are described statically, never executed."
 )
 
 
@@ -181,15 +182,178 @@ def render_json(rows):
     return output
 
 
+DESCRIBE_SCHEMA = 'persona.command-description.v1'
+MAX_HELP_BYTES = 1_048_576
+HELP_TIMEOUT_SECONDS = 10
+DESCRIBE_BOUNDARY = ('Invocation shape from the running interpreter argparse help, not artifact schemas, '
+    'input permission, scientific validation or approval. Only explicitly selected, allowlisted root scripts '
+    'whose source matches the local publication inventory may be queried. Source hashes are not signatures; '
+    'dependencies and interpreter integrity are not authenticated. Argparse-free checks are described '
+    'statically, never executed. Help queries use bounded child processes, not command workflows. '
+    'No model/network call or dispatcher file write is performed; list/run behavior is unchanged.')
+TRUSTED_HELP_SCRIPTS = ('answer_draft.py', 'answer_proposals.py', 'applicability_review.py', 'application_proposals.py', 'argument_map.py', 'argument_proposals.py', 'audit_design_chain.py', 'audit_design_lineage.py', 'audit_publication.py', 'candidate_challenge.py', 'citation_reasoning.py', 'compare_releases.py', 'corpus_files.py', 'curate_local.py', 'design_scenario.py', 'evaluate_synthetic.py', 'evidence_scope.py', 'extraction_adapter.py', 'human_validation.py', 'journey_compare.py', 'journey_inputs.py', 'method_application.py', 'model_handoff.py', 'observation_input.py', 'observation_proposals.py', 'observation_revision.py', 'operator_review.py', 'pattern_hypotheses.py', 'pattern_proposals.py', 'pattern_transfer_review.py', 'persona.py', 'prepare_local_manifest.py', 'publication_context.py', 'publication_scope.py', 'publication_timeline.py', 'reasoning_links.py', 'release_record.py', 'research_journey.py', 'research_workflow.py', 'review_journey.py', 'review_package.py', 'review_workspace.py', 'revise_local.py', 'revision_impact.py', 'safe_canonical_read.py', 'source_recheck.py', 'split_declaration.py', 'synthetic_walkthrough.py', 'topic_inventory.py', 'verify_manifest.py')
+
+
+def _unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError('duplicate manifest key')
+        result[key] = value
+    return result
+
+
+def _help_source(name):
+    """Exact root selection and allowlist plus current publication-inventory source match."""
+    import hashlib
+    import json
+    if name not in TRUSTED_HELP_SCRIPTS:
+        raise ValueError('script is not allowlisted for help queries')
+    path = resolve_script(name)
+    with path.open('rb') as stream:
+        raw = stream.read(MAX_SOURCE_BYTES + 1)
+    if len(raw) > MAX_SOURCE_BYTES:
+        raise ValueError('source exceeds bound')
+    manifest_path = ROOT / 'PUBLICATION_MANIFEST.json'
+    if manifest_path.is_symlink() or not manifest_path.is_file():
+        raise ValueError('publication inventory must be a regular file')
+    with manifest_path.open('rb') as stream:
+        manifest_raw = stream.read(MAX_MANIFEST_BYTES + 1)
+    if len(manifest_raw) > MAX_MANIFEST_BYTES or manifest_raw.startswith(b'\xef\xbb\xbf'):
+        raise ValueError('invalid publication inventory')
+    def nonfinite(value):
+        raise ValueError('nonfinite manifest number')
+    def finite_float(value):
+        import math
+        parsed = float(value)
+        if not math.isfinite(parsed):
+            raise ValueError('nonfinite manifest number')
+        return parsed
+    manifest = json.loads(manifest_raw.decode('utf-8'), object_pairs_hook=_unique_object,
+                          parse_constant=nonfinite, parse_float=finite_float)
+    rows = manifest.get('files') if isinstance(manifest, dict) else None
+    if not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows):
+        raise ValueError('invalid publication inventory rows')
+    matching = [row for row in rows if row.get('path') == name]
+    digest = hashlib.sha256(raw.replace(b'\r\n', b'\n')).hexdigest()
+    if len(matching) != 1 or matching[0].get('sha256') != digest:
+        raise ValueError('selected source does not match publication inventory')
+    return path, ast.parse(raw, filename=path.name), digest
+
+
+def _capture_help(path, arguments):
+    """Read a bounded merged help stream; kill on timeout/overflow, with no shell or temporary files."""
+    import os
+    import subprocess
+    import threading
+    environment = dict(os.environ, PYTHONIOENCODING='utf-8', PYTHONDONTWRITEBYTECODE='1',
+                       COLUMNS='10000', NO_COLOR='1', PYTHON_COLORS='0')
+    environment.pop('FORCE_COLOR', None)
+    environment.pop('PYTHONSTARTUP', None)
+    environment.pop('PYTHONPATH', None)
+    environment.pop('PYTHONHOME', None)
+    chunks = []
+    size = [0]
+    failed = []
+    process = subprocess.Popen([sys.executable, '-B', str(path), *arguments, '--help'],
+        cwd=ROOT, env=environment, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT, shell=False)
+    def read():
+        try:
+            while True:
+                chunk = process.stdout.read(4096)
+                if not chunk:
+                    break
+                size[0] += len(chunk)
+                if size[0] > MAX_HELP_BYTES:
+                    failed.append('overflow')
+                    process.kill()
+                    break
+                chunks.append(chunk)
+        except (OSError, ValueError):
+            failed.append('read')
+    worker = threading.Thread(target=read, daemon=True)
+    worker.start()
+    try:
+        process.wait(timeout=HELP_TIMEOUT_SECONDS)
+    except subprocess.TimeoutExpired:
+        failed.append('timeout')
+        process.kill()
+        process.wait()
+    worker.join(timeout=HELP_TIMEOUT_SECONDS)
+    if worker.is_alive():
+        failed.append('reader timeout')
+    if not worker.is_alive():
+        process.stdout.close()
+    if failed or process.returncode != 0:
+        raise ValueError('help capture failed or exceeded bounds')
+    text = b''.join(chunks).decode('utf-8').replace('\r\n', '\n')
+    if not text.startswith('usage: '):
+        raise ValueError('selected script did not return argparse usage')
+    return text
+
+
+def _usage(help_text):
+    return ' '.join(help_text.split('\n\n', 1)[0].split())
+
+
+def describe_script(name):
+    """Capture selected trusted help, or statically describe argparse-free scripts without running them."""
+    import re
+    path, tree, digest = _help_source(name)
+    argparse_found = any((isinstance(node, ast.Import) and any(a.name == 'argparse' for a in node.names))
+                         or (isinstance(node, ast.ImportFrom) and node.module == 'argparse') for node in ast.walk(tree))
+    result = dict(schema=DESCRIBE_SCHEMA, script=path.name, source_sha256=digest,
+        source_hash_kind='LF-normalized source bytes matched to local inventory, not authentication',
+        description=ast.get_docstring(tree) or '', reference='docs/COMMANDS.md#' + path.name.replace('.', ''),
+        argparse=argparse_found, invocation='python ' + path.name, usage=[], subcommands=[],
+        status='CATALOG_DESCRIBES_INVOCATION_SHAPE_ONLY', input_artifact_schema='NOT_DERIVED',
+        output_artifact_schema='NOT_DERIVED', boundary=DESCRIBE_BOUNDARY)
+    if not argparse_found:
+        result['generated_from'] = 'STATIC_SOURCE_ONLY_NOT_EXECUTED'
+        return result
+    root_help = _capture_help(path, [])
+    result.update(generated_from='argparse --help', help=root_help, usage=[_usage(root_help)])
+    render_description(result)
+    has_subparsers = any(isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                        and node.func.attr == 'add_subparsers' for node in ast.walk(tree))
+    if has_subparsers:
+        groups = re.findall(r'\{([a-z][a-z0-9_-]*(?:,[a-z][a-z0-9_-]*)*)\}', result['usage'][0])
+        if len(groups) != 1:
+            raise ValueError('cannot identify one unambiguous subcommand group from help')
+        names = groups[0].split(',')
+        if len(names) > 64 or len(set(names)) != len(names):
+            raise ValueError('invalid subcommand list')
+        for command in names:
+            help_text = _capture_help(path, [command])
+            usage = _usage(help_text)
+            result['subcommands'].append(dict(name=command, usage=usage, help=help_text))
+            result['usage'].append(usage)
+            render_description(result)
+    render_description(result)  # Aggregate output bound as well as each capture bound.
+    return result
+
+
+def render_description(value):
+    import json
+    output = json.dumps(value, ensure_ascii=True, indent=2, allow_nan=False) + '\n'
+    if len(output.encode('utf-8')) > MAX_LIST_OUTPUT_BYTES:
+        raise ValueError('description exceeds its 1048576-byte output bound')
+    return output
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description=__doc__, epilog=BOUNDARY + "\n\n" + VERSION_BOUNDARY,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--version', action=VersionAction, nargs=0,
                         help='show manifest release/date and Python version; not a hash check')
-    commands = parser.add_subparsers(dest='command', required=True, metavar='{list,run}')
+    commands = parser.add_subparsers(dest='command', required=True, metavar='{list,describe,run}')
     listing = commands.add_parser('list', help='print every root script that has a command-line entry point, '
                                      'one line each, with the first sentence of its docstring')
     listing.add_argument('--json', action='store_true', help='emit bounded schema/scripts/boundary JSON, not executable contracts')
+    describing = commands.add_parser('describe', help='capture one trusted script help; never run its workflow')
+    describing.add_argument('script', help='exact allowlisted root script filename')
+    describing.add_argument('--json', action='store_true', help='explicit JSON request (the only description format)')
     runner = commands.add_parser('run', help='run one root script in-process: '
                                              'python persona_cli.py run <script> [args...]')
     runner.add_argument('script', help='exact file name of a root script, such as persona.py')
@@ -210,6 +374,13 @@ def main(argv=None):
         return 0
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.command == 'describe':
+        try:
+            output = render_description(describe_script(args.script))
+        except (OSError, ValueError, SyntaxError, RecursionError, TypeError, AttributeError):
+            parser.exit(1, SELF + ': error: cannot capture bounded trusted command help\n')
+        sys.stdout.buffer.write(output.encode('utf-8'))
+        return 0
     if args.command == 'list':
         try:
             rows = root_scripts()

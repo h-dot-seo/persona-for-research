@@ -5,7 +5,7 @@ description: Plan, build, review or consult an evidence-bounded scholarly simula
 
 # Research persona workflow
 
-Read README.md and docs/ARCHITECTURE.md. Identify the task; never collect a corpus from an ambiguous name.
+Read README.md and docs/ARCHITECTURE.md. Never collect from an ambiguous name.
 
 For building: resolve identity and scope; establish source permissions; freeze split;
 parse/QC; extract per-paper evidence; synthesize bounded cross-paper rules; challenge
@@ -13,7 +13,7 @@ independently; freeze candidate; evaluate holdout; bind training-only knowledge;
 test runtime; record separate validation statuses. Perform only available operations
 and report missing backends instead of fabricating artifacts or validation scores.
 
-For consultation: require an exact usable canonical package and authorized knowledge.
+Consultation requires an exact canonical package and authorized knowledge.
 Verify identity/version/build/hash binding; deny holdout/comparator retrieval; state
 the simulation boundary. Ground answers in rule/source IDs. Label current external
 evidence separately. Preserve disagreement and admit uncovered questions.
@@ -36,7 +36,7 @@ public repository.
 
 Use only authorized inputs; examples are synthetic.
 
-`python persona_cli.py list [--json]` lists CLIs (docs/COMMAND_LIST.md); `run <script>` preserves direct invocation.
+`persona_cli.py list [--json]` discovers; `describe SCRIPT --json` captures trusted help (docs/COMMAND_DESCRIPTION.md); `run SCRIPT` forwards arguments.
 `--version` shows unauthenticated labels/Python; check hashes with `verify_manifest.py`.
 
 Declared splits: `split_declaration.py template/freeze/check/status`;

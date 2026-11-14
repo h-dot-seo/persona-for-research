@@ -150,7 +150,7 @@ class DispatcherTests(unittest.TestCase):
         result = self.dispatch('--help')
         self.assertEqual(result.returncode, 0, result.stderr)
         text = result.stdout.decode('utf-8').replace('\r\n', '\n')
-        self.assertTrue(text.startswith('usage: persona_cli.py [-h] [--version] {list,run} ...'))
+        self.assertTrue(text.startswith('usage: persona_cli.py [-h] [--version] {list,describe,run} ...'))
         for phrase in ('changes none of a script\'s arguments, outputs or exit codes',
                        'remains the primary command', 'calls no model, reads no network',
                        'writes no file', 'not an\napproval of any input',

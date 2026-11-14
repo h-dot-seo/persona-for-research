@@ -2067,3 +2067,28 @@ review/split tests were rechecked. No remote CI outcome is claimed in this recor
 - Manifest verifies 275 files; limited publication audit passes 276. All 161 Python files
   compile and parse with Python 3.10 grammar; SKILL.md is 8180 bytes. No actual researcher
   records or external API calls. Remote CI is recorded separately for exact commits.
+
+## 2026-11-14 Selected trusted command descriptions (0.85-command-description)
+
+- Added roadmap #87's next increment: `persona_cli.py describe SCRIPT --json` captures
+  actual root/subcommand argparse help for one explicitly selected trusted source. Exact
+  filename allowlist and selected-source publication hash matching precede capture. Scripts
+  without argparse, including verification/audit checks, are described statically, not run.
+- Lazy subprocess capture uses shell=False, fixed UTF-8/color/width/bytecode environment,
+  10-second per-help timeout, 1 MiB per-capture and aggregate JSON bounds. Dynamic subcommands
+  come from unambiguous actual root usage. No full-catalog flag, persistent server, workflow
+  execution or artifact-schema inference. Source inventory is not a signature or sandbox.
+- A preliminary static-only approach was replaced before publication with actual bounded
+  help capture, matching the roadmap. Independent review found numeric overflow in local
+  manifest parsing; finite-float validation and valid-inventory regression cases now reject
+  1e999/-1e999/NaN/Infinity. Final independent review found no blocker.
+- Final local full suite: **Ran 1173 tests in 292.518s — OK**. Focused description/list/
+  dispatcher suite: **42 tests — OK**. Actual usage lines for all 50 allowlisted scripts
+  match COMMANDS.md, including dynamically declared subcommands. New guide executes exactly
+  as written; old guide shell blocks remain unchanged. Plain list/run behavior is preserved.
+- Manifest verifies 277 files; limited publication audit passes 278. All 162 Python files
+  compile and parse with Python 3.10 grammar; SKILL.md is 8177 bytes. No actual researcher
+  data or external model/API calls. Remote CI is tracked separately for exact commits.
+- Help describes invocation shape, not data validity, permission, output safety, scientific
+  truth or approval. Trusted script imports/parser setup execute before help exits; the
+  selected source hash does not authenticate imported dependencies or interpreter state.
