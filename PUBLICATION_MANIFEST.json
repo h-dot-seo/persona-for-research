@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.112-manual-editor-documents",
+  "release": "0.113-comparator-inventory",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 339,
+  "file_count": 343,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 16389,
-      "sha256": "032a86f680ee1a78972e96b16be35df2db9a6a6c9be1aacfbfdf719dbd50f605"
+      "bytes": 16886,
+      "sha256": "8976df160bd1d9f03908f6c57dbf316ba3de00a69021929bb0e97267d666cfe5"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 20247,
-      "sha256": "b01785a9626a0d1fd94cbd8ba595f9db632a8d0fd66979eae6e12814010716fe"
+      "bytes": 20394,
+      "sha256": "bd9164ec1cdc6366c35fa471184d0ab9e55ab9040bb556ecf8b01537a6db6c96"
     },
     {
       "path": "RIGHTS.md",
@@ -50,13 +50,13 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 8189,
-      "sha256": "01a5ece9217ebca44b86cec4844f0d0d8d55c4e27bb9a771333e5bd3d78411c3"
+      "bytes": 8187,
+      "sha256": "7a5609d131390468da587a515d6234c877d6cf32c0469935e122977cfecd39f2"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 10776,
-      "sha256": "6fffa8ca937e133133b180feed23b2f165260bfbb9f2bab6499c65e462ed26e5"
+      "bytes": 10957,
+      "sha256": "4e9fabad5899ba64c0c6bd76e79f86608a9e7f32486fabe026cdf8f6ce1a4e92"
     },
     {
       "path": "answer_context.py",
@@ -129,6 +129,11 @@
       "sha256": "4b3017b27ff46e574b1b81ea19859e30eba50f559d34ad7bcc2a5641b6381535"
     },
     {
+      "path": "comparator_overlap.py",
+      "bytes": 8843,
+      "sha256": "449720ae6099e70f5a1caa3b4978d57cfa173139372a77e048ef4c371c527b87"
+    },
+    {
       "path": "compare_releases.py",
       "bytes": 5002,
       "sha256": "f7d75bb9b3ae5719476cac34ede961c1a71e68317cd6f6ee2227ba267a958b49"
@@ -185,8 +190,8 @@
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "bytes": 9416,
-      "sha256": "9ad5fcefef3566d478276a6eced2b39acbf32b50a81a08ec27e7286b7e8d123c"
+      "bytes": 9486,
+      "sha256": "08296f8e6aa31a31edfc621251d4bfa3bdd46268d8d43a94557c07c065a3c2c2"
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
@@ -225,8 +230,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 45567,
-      "sha256": "956616944092268852ee09e76694cd02e2955cd2d19a1c64bd4e728dec0e5a9c"
+      "bytes": 45794,
+      "sha256": "25d2bb7ef3e6e6b75b23de2889d79d021e9416b0152bbbbb96ccee872efe7368"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -242,6 +247,11 @@
       "path": "docs/COMMAND_LIST.md",
       "bytes": 2345,
       "sha256": "e894027baf5f90f06d29989f25d9a92f8be3e10748983165093fdc6b3ccedf6d"
+    },
+    {
+      "path": "docs/COMPARATOR_OVERLAP.md",
+      "bytes": 5323,
+      "sha256": "e521e5e3b041eec677b73e6c8c7003bd67699ffac8d70a4e88247cd5b584e3d1"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -410,8 +420,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 24519,
-      "sha256": "b54687b0f2dd5634bd458f4fb23ee01a55d06e6f066b1405f352a13104c76a35"
+      "bytes": 24661,
+      "sha256": "0495f9941ab292d1674fdac4c38402eb804fe8158f7302cf5c4700ff04409c8e"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -460,8 +470,8 @@
     },
     {
       "path": "docs/SCHEMAS.md",
-      "bytes": 8531,
-      "sha256": "d811ebe996f35fafb5513b2f24faa217fafc8d3a83b2fd93182977729f3af2b6"
+      "bytes": 8769,
+      "sha256": "6d5caa4db5de87b0dbbc73ef68ef5e0b27ec2be9f49b24d7603b6995fe723f81"
     },
     {
       "path": "docs/SOURCE_RECHECK.md",
@@ -505,13 +515,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 205816,
-      "sha256": "b8d33a8e6237f3d294863bb336c3957c6341b18e205def6382be2c585aadcc65"
+      "bytes": 209306,
+      "sha256": "64edd9f816e380620b54769ed9a0ea8c64faa5cc9ddc4a742034793498ecc08b"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 50431,
-      "sha256": "ffb0165f353df00dca343b4993818f5849ae680c5e209d6acba6d14079d84831"
+      "bytes": 50573,
+      "sha256": "e7d708c6d037b5f4f82af1c7656dd65b7ba70c7ece0a8f61df870c8334e3c762"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -520,8 +530,8 @@
     },
     {
       "path": "docs/artifact-schema-index.json",
-      "bytes": 77961,
-      "sha256": "faa6a25696f7af45f591adf36b0ec9501af4841a969761309db0d029fdefd2b7"
+      "bytes": 79461,
+      "sha256": "162601a490cae2476e3e942a4a4291c0fdb8f82a3077fc4dbeebd6eed7f7d45d"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -667,6 +677,11 @@
       "path": "examples/synthetic-bibliography.ris",
       "bytes": 470,
       "sha256": "398c188d5f89a8e5f6a738f6a32f45aae3ff8185b5a740d878bf49796b6790c0"
+    },
+    {
+      "path": "examples/synthetic-comparator-corpus.json",
+      "bytes": 1683,
+      "sha256": "68124fbd5f6a2c25b55a79016e91165061f81fed33478e50f6fa2d8aa20f94c7"
     },
     {
       "path": "examples/synthetic-external-draft.json",
@@ -925,8 +940,8 @@
     },
     {
       "path": "persona_cli.py",
-      "bytes": 25409,
-      "sha256": "d9fd041b0042cd1ca1983488a2da5d47d594bc230dbca0d58563be9c0622f069"
+      "bytes": 25434,
+      "sha256": "485be60dabe0bbf0026d0a66d0721f346511668117965564eed87a70d1ff1448"
     },
     {
       "path": "prepare_local_manifest.py",
@@ -1232,6 +1247,11 @@
       "path": "tests/test_command_list_json.py",
       "bytes": 7258,
       "sha256": "cd2fb27e7de3261896655459bbea0318cf6da5e4d2c7496c32996fe779301aee"
+    },
+    {
+      "path": "tests/test_comparator_overlap.py",
+      "bytes": 10430,
+      "sha256": "601482f7e911504d077693297dd48defb276071515feb307f0df709a0560cbb1"
     },
     {
       "path": "tests/test_compare_releases.py",

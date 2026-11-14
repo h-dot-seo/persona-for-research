@@ -1001,6 +1001,50 @@
       "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
     },
     {
+      "schema_id": "persona.comparator-corpus.v1",
+      "workflow": "comparator-overlap",
+      "role": "declared-corpus",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": {
+        "module": "comparator_overlap.py",
+        "api": "validate_corpus",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/COMPARATOR_OVERLAP.md",
+      "source_mentions": [
+        "comparator_overlap.py"
+      ],
+      "response_contract": null,
+      "note": "Declared structural comparator input or exact-string report, not specificity. Operator input has no automated producer; report has no downstream approval consumer."
+    },
+    {
+      "schema_id": "persona.comparator-overlap.v1",
+      "workflow": "comparator-overlap",
+      "role": "report",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "comparator_overlap.py",
+        "api": "inspect",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/COMPARATOR_OVERLAP.md",
+      "source_mentions": [
+        "comparator_overlap.py"
+      ],
+      "response_contract": null,
+      "note": "Declared structural comparator input or exact-string report, not specificity. Operator input has no automated producer; report has no downstream approval consumer."
+    },
+    {
       "schema_id": "human-validation-record.v1",
       "workflow": "human-validation-record",
       "role": "artifact",

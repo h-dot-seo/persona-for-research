@@ -2916,3 +2916,54 @@ Final tree contains1458 tests,198 Python files,339 manifest entries and340 audit
 files; CLI59/SKILL8189 unchanged. Metadata/manifest are frozen before final full and
 independent tree validation. Exact results and timing are recorded externally in the
 publication record and roadmap logs without modifying the tree during validation.
+
+
+## 2026-11-14 Declared comparator exact-string inventory (0.113-comparator-inventory)
+
+Roadmap #78 structure-mode independent comparator processing: checked target package,
+validated source rules and existing trajectory grouping against exact standalone
+comparator declarations. Single distinct author label, exact5 top/11 paper/8 observation
+fields, explicit comparator/non-runtime/authorized declarations only. Source files,
+verification labels, reasoning, origin and segments are outside this v1 input contract
+and rejected; no source bytes, external lookup, provider or network are accessed.
+
+Method/condition match exactly; topic casefolding does not infer semantic equivalence.
+Separate positional observation refs preserve duplicates, supplied hash counts deduplicate
+identical digests, and target/comparator topic absence is distinguished. Specificity is
+NOT_DERIVED: absence is not uniqueness, shared strings are not shared practice, labels
+and handling declarations are not authenticated identity or independence. Target author,
+paper-ID and source-hash overlap have distinct errors. No score, ranking, payload, HV,
+canonical, freeze or knowledge-admission policy changes.
+
+The old roadmap assertion that split declarations do not exist is obsolete: current
+split_declaration exists. No comparator-source binding contract is inferred from it.
+Source-root, multi-author and split integration remain excluded, holdout overlap is
+NOT_CHECKED. Existing training-only intake barriers remain unchanged; seven knowledge
+entry paths are tested as rejecting comparator material (persona.validate returns
+errors rather than raising). Neither an authorized:true field nor this report grants
+source access, sharing permission, rights or human approval.
+
+Focused51 tests passed in5.199 seconds. Independent37 passed in2.838 seconds and verified
+source-open prohibition, exact whitespace distinctions, empty-target distinction,
+source hash deduplication and unchanged inputs. Existing root products differ only
+in trusted CLI help registration; existing fixtures are byte-identical. Aggregate
+8MiB input, whole16MiB output, fixed errors with empty stdout, real guide commands and
+two hash seeds are exercised. Artifact index adds two identifiers with explicit roles.
+
+Final tree contains1467 tests,200 Python files,343 manifest entries and344 audit files;
+CLI60 and SKILL8187 bytes. Metadata and manifest are frozen before final independent
+Git-tree and full verification; exact outcomes/timing are recorded externally without
+changing the tree during those runs. Browser UI or real comparator efficacy is not claimed.
+
+
+Windows CI fixture correction: initial PR45 head36053e49cba4a2b68a34c099fc154ed29fa8880e
+run43633475811 failed the new fixed-error assertion on Windows: argparse native
+stderr ended CRLF while the test incorrectly required LF. Product exit1, empty
+stdout and error wording were correct. Both round41 and dependent round42 now
+compare exact native stderr bytes via os.linesep, without stripping or normalizing
+content. All new stdout/stderr checks were inspected: binary stdout.buffer golden
+bytes remain LF by product contract; in-process StringIO and empty stderr tests
+are separate. Focused41 nine tests passed; dependent42 nineteen passed(skip1
+native Windows source-path test). Product files are unchanged by this fix.
+Initial frozen full1467/385.054 seconds is preserved; corrected final full and
+Windows CI must be verified on the newly frozen tree before merging.

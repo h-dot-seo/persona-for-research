@@ -16,7 +16,7 @@ The simulation label and `private_beliefs_inferred: false` are mandatory.
 6. Parse deterministically and assess structural defects separately from scientific interpretation.
 7. Extract each training paper with question, argument, evidence hierarchy, conditions, counterevidence and limitations.
 8. Synthesize rules across papers; preserve contradictory papers, topic dependence and temporal change.
-9. Check author specificity against independently handled comparator evidence.
+9. Inspect an [exact-string comparator inventory](COMPARATOR_OVERLAP.md) for operator review; specificity and independent handling are not verified.
 10. Build a versioned canonical candidate with separate reasoning, judgment, uncertainty, writing and dialogue policies.
 11. Conduct an independent pre-holdout challenge; bind findings to the current candidate.
 12. Freeze the candidate hash and evaluate on withheld material; record actual methods and limits.

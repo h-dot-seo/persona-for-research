@@ -822,3 +822,5 @@ Use the [descriptive artifact index](SCHEMAS.md) to find identifiers, evidenced 
 ## Edit optional declaration forms
 
 [Editor schema documentation](EDITOR_SCHEMAS.md) supports source-recheck selections, declared provenance and human records as separate optional workflows. No schema checker, payload fields, judgment defaults or editor settings are installed.
+
+[Comparator exact-string inventory](COMPARATOR_OVERLAP.md): separately declared observations, never author specificity or persona knowledge.

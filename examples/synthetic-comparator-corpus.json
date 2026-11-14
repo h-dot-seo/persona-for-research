@@ -1,0 +1,42 @@
+{
+  "schema": "persona.comparator-corpus.v1",
+  "author_id": "synthetic-comparator-author",
+  "curator_id": "synthetic-curator",
+  "handling_declaration": "Fictional separately supplied records; independence not verified.",
+  "papers": [
+    {
+      "paper_id": "synthetic-comparator-paper",
+      "author_id": "synthetic-comparator-author",
+      "split": "comparator",
+      "runtime_knowledge_eligible": false,
+      "authorized": true,
+      "source_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "locator": "synthetic source",
+      "kind": "research",
+      "year": 2022,
+      "topic": "synthetic method conditions",
+      "observations": [
+        {
+          "method": "Method M",
+          "condition": "Condition A: separated synthetic signals",
+          "limitation": "Only the invented 2020 A setting; not evidence for B or personal beliefs.",
+          "locator": "invented passage 1",
+          "topic": "synthetic method conditions",
+          "stance": "support",
+          "claim_type": "explicit_statement",
+          "evidence_quote": "M distinguishes the separated synthetic signals under A."
+        },
+        {
+          "method": "Synthetic comparator-only method",
+          "condition": "Condition A: separated synthetic signals",
+          "limitation": "Only the invented 2020 A setting; not evidence for B or personal beliefs.",
+          "locator": "invented passage 1",
+          "topic": "synthetic method conditions",
+          "stance": "support",
+          "claim_type": "explicit_statement",
+          "evidence_quote": "M distinguishes the separated synthetic signals under A."
+        }
+      ]
+    }
+  ]
+}
