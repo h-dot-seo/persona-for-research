@@ -2,8 +2,9 @@
 
 This tool checks supplied declarations against one bound package and answer draft.
 It does not judge external evidence, retrieve a source, add knowledge or satisfy a
-citation. The sidecar is independent: answer_draft, evidence_scope, journeys,
-human-validation axes, handoff scopes and input-card schemas are unchanged.
+citation. The sidecar is independent: core answer_draft/evidence_scope calculations, journeys,
+human-validation axes, handoff scopes and input-card schemas are unchanged. Optional
+top-level display in the two CLIs is described at the end of this guide.
 No HTML or interactive UI is provided.
 
 ## Synthetic commands
@@ -73,7 +74,8 @@ or permission. No relative-year classifications are added.
 `--review ANSWER_REVIEW` uses the existing answer_draft.review checker, including
 its exact draft binding and complete claim-decision requirements. Output reports
 that checker's answer_status and the review hash, not copied review rationales or
-new judgments. A stale/invalid review fails; defer is not promoted to retain.
+new judgments. A stale/invalid review fails; defer is not promoted to retain. An explicitly supplied
+review file containing JSON null is rejected, not treated as an omitted option.
 This option does not make external items citations or validate their relation to
 a claim. Without it the existing draft inspection status is reported and the
 review hash is null. The output schema is persona.external-evidence-review.v1.
@@ -101,3 +103,44 @@ so during predictive evaluation can contaminate the evaluation. This warning is
 not permission to access such material. Identifiers, rationales and identity labels
 may be private. Keep the outputs local unless separately authorized to share them;
 writing a sidecar is not rights clearance or transmission authorization.
+
+## Optional answer and scope display
+
+`answer_draft.py` and `evidence_scope.py` accept --external SIDECAR for a detached
+display only. It is freshly checked against the current package/draft and optional
+--review artifact. JSON adds only top-level external_evidence_review, exactly the
+independent sidecar review result. Text appends an explicitly labeled External
+evidence (not persona knowledge) section after the unchanged normal report.
+
+No nested calculations receive the sidecar. Existing status, decisions, claims,
+citations, coverage, active references, source groups and freeze output are
+unchanged, even with this option. Reject/defer decisions are never promoted to
+retain. Without the option, both CLI outputs and input-budget policies are unchanged.
+The core Python inspect/review/disclose/render functions remain unchanged.
+
+These synthetic commands reuse the existing package/draft/sidecar and explicitly
+create empty links/design artifacts for scope inspection. Empty artifacts are not
+approvals. Use a new existing OUTPUT directory; no generated files are published.
+Tokenize with shlex before substituting native paths, as above.
+
+```sh
+python reasoning_links.py examples/trajectory-conditions-package.json --template --operator-id synthetic-external-operator --output OUTPUT/display-links.json
+python design_scenario.py examples/trajectory-conditions-package.json OUTPUT/display-links.json --template --question "What can the invented synthetic record illustrate?" --operator-id synthetic-external-operator --output OUTPUT/display-design.json
+python answer_draft.py examples/trajectory-conditions-package.json examples/synthetic-external-draft.json --external examples/synthetic-external-evidence.json --output OUTPUT/answer-with-external.json
+python evidence_scope.py examples/trajectory-conditions-package.json OUTPUT/display-links.json OUTPUT/display-design.json examples/synthetic-external-draft.json --reference-year 2025 --external examples/synthetic-external-evidence.json --format text --output OUTPUT/scope-with-external.txt
+```
+
+The opt-in path shares 8 MiB across **all** selected inputs: package, draft, external
+sidecar, optional declared answer review, and for evidence scope also links/design.
+The complete combined JSON or text output is bounded to 16 MiB before any emission.
+This cap includes the normal report and detached section, not just the sidecar.
+Exclusive output semantics remain unchanged. Stale draft/package/review bindings or
+invalid source/rule consistency fail closed, with no partial stdout or new output.
+
+For answer_draft, --external requires draft inspection/review mode and rejects
+--template, --review-template, absent draft and question/operator/reviewer overrides
+before reading inputs. Optional --review still invokes the existing checker; explicitly supplying a JSON
+null review is rejected in the new display paths. Omitting --review is supported. No
+journey/card-v2, model adapter, external-file import, human-validation integration,
+other-agent contact, source acquisition or attribution policy is added. Keeping
+external declarations visible is not knowledge admission or transmission approval.

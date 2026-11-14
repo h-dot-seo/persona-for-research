@@ -271,3 +271,6 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 릴리스 비교에 정확 규칙 내용 대응표를 선택적으로 붙이려면
 [규칙 대응 안내](RULE_CORRESPONDENCE.md#optional-release-comparison-attachment)를 참조하세요.
 기본 보고서와 릴리스 판정은 그대로입니다.
+
+답변·근거 범위 보고서의 [`--external`](EXTERNAL_EVIDENCE.md#optional-answer-and-scope-display)은
+명시한 로컬 사이드카를 인용·출처 집계·판정과 분리해 표시합니다.

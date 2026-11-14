@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.103-external-display — 2026-11-14
+
+`answer_draft.py` and `evidence_scope.py --external` optionally append freshly checked local context in a separate top-level/text section. Default results, citation support, coverage, source groups and decisions remain unchanged; no transmission or knowledge adoption.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-optional-external-context-display-0103-external-display).
+
 ## 0.102-external-context — 2026-11-14
 
 `external_evidence.py template/review` keeps explicit external-context declarations in a private package/draft-bound sidecar, never adding persona knowledge or citation support. No lookup, other-agent call, transmission, identity validation or existing answer/journey change.

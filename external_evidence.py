@@ -160,7 +160,12 @@ def main():
     try:
         read=bounded_reader();package=read(args.package);draft=read(args.draft)
         if args.command=='template':result=template(package,draft,args.operator_id)
-        else:result=review(package,draft,read(args.sidecar),read(args.review) if args.review else None)
+        else:
+            sidecar=read(args.sidecar)
+            declared=read(args.review) if args.review else None
+            if args.review is not None and declared is None:
+                raise ValueError('explicit answer review must not be JSON null')
+            result=review(package,draft,sidecar,declared)
         raw=render_text(result) if getattr(args,'format','json')=='text' else encode(result)
     except (ValueError,OSError,KeyError,TypeError,AttributeError,RuntimeError,RecursionError) as exc:
         parser.exit(1,str(exc)+'\n')
