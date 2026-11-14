@@ -605,6 +605,26 @@ command to try seven more real CLI stages with canned candidates and explicit
 fixture decisions. With all options above, the complete flow has 46 stages; all
 final answer judgments remain deferred. See [the quickstart](QUICKSTART.md).
 
+### Cite an adopted consultation by hand
+
+For operators using both repositories, a Sensei version supporting
+[optional declared challenge origin](https://github.com/h-dot-seo/sensei-for-evidence/blob/main/docs/INTERPRETIVE_CHALLENGE_ORIGIN.md)
+can record a manually supplied `INTERPRETIVE_SIMULATION` origin. Cite the canonical
+`payload_sha256` of the exact bound package as `package_sha256`, and of the complete
+adopted answer/argument envelope as `consultation_record_sha256`; existing inspection
+calls expose the latter as `draft_sha256`/`argument_map_sha256`. Do not substitute a
+raw file-byte hash, internal persona/knowledge binding hash, or projected content hash.
+The envelope's `bundle.import_record.provenance` contains the five declared fields
+`provider_id`, `model_id`, `run_id`, `operator_id`, `execution_location`; copying them
+is still a self-declaration, not authenticated execution or identity. Check the installed
+Sensei contract first; no cross-repository version negotiation is performed. The operator
+writes every challenge field, statement selection and recording review in Sensei.
+Hashes/origin are `DECLARED_NOT_VERIFIED`, not the simulated scholar's view, new empirical
+evidence, independence, scientific approval or a gate decision. Use a simulation label,
+not a private author identifier; inspect source text and provenance for private data and
+obtain any required sharing permission before transferring anything. This paragraph
+provides no exporter, automatic challenge, transmission, review or readiness change.
+
 ### Review proposed argument connections
 
 [Argument proposals](ARGUMENT_PROPOSALS.md) prepare an offline handoff over

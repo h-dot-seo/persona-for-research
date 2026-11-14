@@ -2823,3 +2823,33 @@ claim that every relationship was exercised. After final documentation/manifest 
 the exact final tree is independently rechecked and its full-run result retained in
 the external publication record, avoiding further edits during verification. Exact
 PR/main CI is checked separately.
+
+## 2026-11-14 Manual consultation reference guidance (0.110-manual-consultation-reference)
+
+Roadmap #100 adjusted Persona scope is prose only, separate from the preceding contract
+index. WORKFLOWS links the optional declared-origin guide for supporting Sensei versions.
+Operators may manually cite exact canonical bound-package and complete adopted-envelope
+hashes, keeping raw-file hashes, persona/knowledge bindings and projected content hashes
+separate. Existing inspection exposes complete envelope hashes as draft_sha256 or
+argument_map_sha256. Provenance at bundle.import_record.provenance has the same five
+declared fields, not authenticated identity or execution.
+
+Challenge content, statement selection and recording review remain the operator's work.
+INTERPRETIVE_SIMULATION and hashes are DECLARED_NOT_VERIFIED, not the simulated scholar's
+view, new empirical evidence, independence, scientific approval or a readiness decision.
+No automatic exporter, challenge, transfer, new permission, gate or product-code change.
+Private identifiers/source text/provenance require review and sharing permission before
+any actual transfer. Installed support must be checked; no version negotiation is added.
+Publication is held until the linked Sensei optional-origin contract is on verified main.
+
+Three synthetic regressions exercise existing adopted answer/argument flows and verify
+complete envelope/package hashes, projected/raw/internal-hash distinction, five provenance
+fields and unchanged inputs. Local focused3 passed in0.236 seconds; independent3 passed
+in0.230 seconds, with all existing product modules byte-identical to the prior release.
+No Sensei workflow is executed by these tests and no live integration is claimed.
+
+The full suite contains1443 synthetic tests,196 Python files,330 listed manifest entries
+and331 audit text files; root CLI count remains59. Final metadata and manifest are frozen
+before independent/full verification. Exact final-tree test/CI outcomes and timing are
+recorded in the external publication record and roadmap logs, not by editing files during
+those runs. This avoids the preceding round's moving-manifest comparison failure.
