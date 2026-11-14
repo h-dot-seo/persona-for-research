@@ -35,9 +35,9 @@ def _package(value):
     return package
 
 
-def _date(value):
+def _date(value, name="declared_at"):
     if not isinstance(value, str) or re.fullmatch('[0-9]{4}-[0-9]{2}-[0-9]{2}', value) is None:
-        raise ValueError('declared_at must be YYYY-MM-DD')
+        raise ValueError(name + ' must be YYYY-MM-DD')
     datetime.date(int(value[:4]), int(value[5:7]), int(value[8:]))
 
 
@@ -59,7 +59,7 @@ def template(value):
         revalidation_axes_required=[], revision_audit_sha256=None, status=None)
 
 
-def check(record, previous, candidate=None, human_records=()):
+def reopening_check(record, previous, candidate=None, human_records=()):
     previous = _package(previous)
     _keys(record, FIELDS, 'reopening record')
     if record['schema_version'] != SCHEMA or record['status'] != 'RECORDED':
@@ -141,17 +141,23 @@ def check(record, previous, candidate=None, human_records=()):
         llm_used=False, canonical_update_performed=False, persona_payload_modified=False, boundary=BOUNDARY)
 
 
-def status(previous, records=(), human_records=()):
+def status(previous, records=(), human_records=(), release_decision=None):
     previous = _package(previous)
     human_records = list(human_records)
     axis(previous['persona'], previous['knowledge'], human_records)
-    rows = [check(record, previous, human_records=human_records) for record in records]
+    rows = [reopening_check(record, previous, human_records=human_records) for record in records]
     if len({row['record_sha256'] for row in rows}) != len(rows):
         raise ValueError('duplicate reopening record')
-    return dict(status='RECORDED_CURRENT' if rows else 'NOT_PERFORMED',
+    result = dict(status='RECORDED_CURRENT' if rows else 'NOT_PERFORMED',
         prior_package=bindings(previous['persona'], previous['knowledge']), records=rows,
         record_count=len(rows), verdict='NOT_DERIVED', release_decision='NOT_RECORDED',
         llm_used=False, canonical_update_performed=False, persona_payload_modified=False, boundary=BOUNDARY)
+    if release_decision is not None:
+        result['supplied_release_decision'] = decision_check(release_decision, previous, human_records)
+        result['reopening_status'] = result['status']
+        result['status'] = 'DETACHED_RELEASE_RECORDS_REPORTED'
+        result['release_decision'] = 'SUPPLIED_OPERATOR_DECLARATION'
+    return result
 
 
 def render(result):
@@ -162,11 +168,100 @@ def render(result):
     return output
 
 
+DECISION_SCHEMA = 'persona.release-decision-record.v1'
+DECISIONS = ('NOT_RELEASED', 'RELEASED_FOR_CONSULTATION', 'WITHDRAWN')
+DECISION_FIELDS = ('schema_version', *BINDING_KEYS, 'axis_records', 'declared_thresholds',
+                   'decision', 'decided_by', 'decided_at', 'rationale', 'status')
+DECISION_BOUNDARY = ('This is a supplied operator decision, not a decision derived, authenticated or approved '
+    'by this tool. A reopening record declares a trigger and impact plan; this separate decision record '
+    'declares a release choice for its exact package. Neither executes publication or changes access. '
+    'Evidence integrity is mechanically recomputed, not scientific validation. Human record hashes bind '
+    'supplied content, not identity, expertise or independence. Missing/stale human records and unavailable '
+    'predictive/runtime record types are reported without blocking or approving the declared choice. '
+    'Thresholds, dates and rationale are supplied declarations, not evaluated or authenticated. '
+    'No fifth validation axis, canonical status update, payload modification, network or model/API call '
+    'is performed. Labels and prose are omitted but package bindings and dates can still be private.')
+
+
+def decision_template(value):
+    package = _package(value)
+    return dict(schema_version=DECISION_SCHEMA, **bindings(package['persona'], package['knowledge']),
+        axis_records=dict(human=None, predictive=None, runtime=None), declared_thresholds='',
+        decision=None, decided_by='', decided_at='', rationale='', status=None)
+
+
+def decision_check(record, package, human_records=()):
+    package = _package(package)
+    _keys(record, DECISION_FIELDS, 'release decision record')
+    if record['schema_version'] != DECISION_SCHEMA or record['status'] != 'RECORDED':
+        raise ValueError('completed release decision schema/status required')
+    for key in ('author_id', 'version', 'build_id', 'decided_by'):
+        _identifier(record[key], key)
+    for key in ('persona_payload_sha256', 'knowledge_papers_sha256'):
+        _hash(record[key], key)
+    current = bindings(package['persona'], package['knowledge'])
+    if any(record[key] != current[key] for key in BINDING_KEYS):
+        raise ValueError('decision record requires its exact bound package; no stale rebinding')
+    if record['decision'] not in DECISIONS:
+        raise ValueError('unsupported supplied release decision')
+    _date(record['decided_at'], 'decided_at')
+    for key in ('declared_thresholds', 'rationale'):
+        _text(record[key], key)
+    refs = record['axis_records']
+    _keys(refs, ('human', 'predictive', 'runtime'), 'axis_records')
+    if refs['predictive'] is not None or refs['runtime'] is not None:
+        raise ValueError('predictive/runtime record types are not implemented; references must be null')
+    if refs['human'] is not None:
+        _hash(refs['human'], 'human record reference')
+    human_records = list(human_records)
+    if len(human_records) > 1:
+        raise ValueError('a decision references at most one human record; supply only that record')
+    if human_records and (refs['human'] is None or payload_sha256(human_records[0]) != refs['human']):
+        raise ValueError('supplied human record does not match the declared logical hash')
+    human = axis(package['persona'], package['knowledge'], human_records)
+    human_state = 'NOT_SUPPLIED'
+    if human['record_count']:
+        human_state = 'CURRENT' if human['current_record_count'] else 'STALE'
+    axes = dict(evidence_integrity='RECOMPUTED_VALID', human=human_state,
+                predictive='NO_RECORD_TYPE', runtime='NO_RECORD_TYPE')
+    missing = [key for key, value in axes.items() if value not in ('RECOMPUTED_VALID', 'CURRENT')]
+    prompts = ['DECISION_RECORDED_WITH_UNPERFORMED_AXES'] if missing else []
+    return dict(status='SUPPLIED_RELEASE_DECISION_RECORDED', record_sha256=payload_sha256(record),
+        record_hash_kind='logical JSON payload hash, not file bytes', package=current,
+        recorded_decision=record['decision'], decision_origin='SUPPLIED_OPERATOR_DECLARATION',
+        decided_at=record['decided_at'], decision_authenticity='NOT_VERIFIED',
+        thresholds_verification='DECLARED_NOT_EVALUATED', axis_status=axes,
+        human_record_reference=refs['human'], human_record_reference_check=(
+            'NOT_DECLARED' if refs['human'] is None else 'NOT_SUPPLIED' if not human_records else 'LOGICAL_HASH_MATCH'),
+        axes_with_current_record=['human'] if human_state == 'CURRENT' else [],
+        axes_not_performed=missing, review_prompts=prompts,
+        verdict='NOT_DERIVED', candidate_approval='NOT_DERIVED', aggregate_score='NOT_COMPUTED',
+        llm_used=False, publication_performed=False, canonical_update_performed=False,
+        persona_payload_modified=False, boundary=DECISION_BOUNDARY)
+
+
+def check(record, previous, candidate=None, human_records=()):
+    if isinstance(record, dict) and record.get('schema_version') == DECISION_SCHEMA:
+        if candidate is not None:
+            raise ValueError('a decision binds one exact package; candidate comparison is reopening-only')
+        return decision_check(record, previous, human_records)
+    return reopening_check(record, previous, candidate, human_records)
+
+
+def decision_lines(result):
+    # Only checked enum values, hashes and a validated date; no supplied rationale or labels.
+    return ['Supplied release decision (not tool approval): ' + result['recorded_decision'],
+            'Decision record sha256: ' + result['record_sha256'] + '; supplied date=' + result['decided_at'],
+            'Decision axis observations: ' + '; '.join(k + '=' + v for k, v in result['axis_status'].items()),
+            'Decision review prompts: ' + (', '.join(result['review_prompts']) or 'none'),
+            'Release decision boundary: ' + DECISION_BOUNDARY]
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
     blank = sub.add_parser('template', help='Write an incomplete detached reopening declaration')
-    blank.add_argument('kind', choices=('reopening',))
+    blank.add_argument('kind', choices=('reopening', 'decision'))
     blank.add_argument('package', type=Path)
     blank.add_argument('--output', required=True, type=Path)
     checking = sub.add_parser('check', help='Check prior bindings and optional candidate changes; never approve')
@@ -175,6 +270,7 @@ def main():
     checking.add_argument('candidate', type=Path, nargs='?')
     reporting = sub.add_parser('status', help='Report records bound to the exact prior package')
     reporting.add_argument('package', type=Path)
+    reporting.add_argument('--release-decision', type=Path)
     reporting.add_argument('--reopening', type=Path, action='append', default=[])
     for command in (checking, reporting):
         command.add_argument('--human-validation', type=Path, action='append', default=[])
@@ -186,18 +282,21 @@ def main():
     try:
         package = read(args.package)
         if args.command == 'template':
-            value = template(package)
+            value = decision_template(package) if args.kind == 'decision' else template(package)
             write_exclusive(render(value).encode('utf-8'), args.output)
-            result = dict(status='REOPENING_TEMPLATE_WRITTEN', template_sha256=payload_sha256(value),
-                next_step='Supply trigger, IDs, operation and revalidation plan; set status RECORDED, then check.',
-                verdict='NOT_DERIVED', llm_used=False, persona_payload_modified=False, boundary=BOUNDARY)
+            result = dict(status='RELEASE_DECISION_TEMPLATE_WRITTEN' if args.kind == 'decision' else 'REOPENING_TEMPLATE_WRITTEN', template_sha256=payload_sha256(value),
+                next_step=('Supply a decision, reference hashes, rationale, date and labels; set status RECORDED, then check.'
+                           if args.kind == 'decision' else 'Supply trigger, IDs, operation and revalidation plan; set status RECORDED, then check.'),
+                verdict='NOT_DERIVED', llm_used=False, persona_payload_modified=False,
+                boundary=DECISION_BOUNDARY if args.kind == 'decision' else BOUNDARY)
         else:
             human = [read(path) for path in args.human_validation]
             result = check(read(args.record), package, read(args.candidate) if args.candidate else None, human) \
-                if args.command == 'check' else status(package, [read(path) for path in args.reopening], human)
+                if args.command == 'check' else status(package, [read(path) for path in args.reopening], human,
+                    read(args.release_decision) if args.release_decision else None)
         output = render(result)
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError, RuntimeError):
-        parser.exit(1, 'invalid reopening input or unavailable output; no release decision was made\n')
+        parser.exit(1, 'invalid release record input or unavailable output; no tool decision was made\n')
     emit(parser, output.encode('utf-8'), None if args.command == 'template' else args.output)
 
 

@@ -69,7 +69,7 @@ def _details(package, topic):
     return lines
 
 
-def render(value, question, topic, *, evidence_details=False, human_validation=None, split_declaration=None, challenge_records=None):
+def render(value, question, topic, *, evidence_details=False, human_validation=None, split_declaration=None, challenge_records=None, release_decision=None):
     package = checked_package(value)
     application = apply(package, question, topic)  # Ignore any saved application summary.
     rules = [r for r in package['persona']['rules'] if r['topic'].casefold() == topic.casefold()]
@@ -117,6 +117,9 @@ def render(value, question, topic, *, evidence_details=False, human_validation=N
         # Lazy import: human_validation reuses this module's display helper.
         from human_validation import axis, axis_lines
         lines.extend(axis_lines(axis(package['persona'], package['knowledge'], human_validation)))
+    if release_decision is not None:
+        from release_record import decision_check, decision_lines
+        lines.extend(decision_lines(decision_check(release_decision, package, human_validation or ())))
     if challenge_records is not None:
         from candidate_challenge import status, status_lines
         lines.extend(status_lines(status(package, records=challenge_records)))
@@ -143,6 +146,8 @@ def main():
                         help='Frozen private split declaration; read-only comparison, not an intake gate')
     parser.add_argument('--challenge-record', type=Path, action='append',
                         help='Detached pre-holdout candidate findings; repeatable, read-only')
+    parser.add_argument('--release-decision', type=Path,
+                        help='Supplied operator release decision, not tool approval')
     add_output_argument(parser); args = parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
     try:
@@ -150,11 +155,13 @@ def main():
         split = None
         package = None
         challenges = None
-        if args.challenge_record:
+        decision = None
+        if args.challenge_record or args.release_decision:
             from candidate_challenge import bounded_reader
             read = bounded_reader()
             package = read(args.package)
-            challenges = [read(path) for path in args.challenge_record]
+            challenges = [read(path) for path in args.challenge_record] if args.challenge_record else None
+            decision = read(args.release_decision) if args.release_decision else None
             if args.human_validation:
                 records = [read(path) for path in args.human_validation]
             if args.split:
@@ -173,14 +180,14 @@ def main():
             from human_validation import bounded_reader  # Lazy: human_validation imports display from this module.
             read = bounded_reader()  # Records share the 8 MiB combined input budget of check and status.
             records = [read(path) for path in args.human_validation]
-        text = render(package if args.split or args.challenge_record else load(args.package), args.question, args.topic,
-                      evidence_details=args.evidence_details, human_validation=records, split_declaration=split, challenge_records=challenges)
-        if args.split or args.challenge_record:
+        text = render(package if args.split or args.challenge_record or args.release_decision else load(args.package), args.question, args.topic,
+                      evidence_details=args.evidence_details, human_validation=records, split_declaration=split, challenge_records=challenges, release_decision=decision)
+        if args.split or args.challenge_record or args.release_decision:
             from split_declaration import MAX_OUTPUT_BYTES
             if len(text.encode('utf-8')) > MAX_OUTPUT_BYTES:
                 raise ValueError('split review output exceeds 16 MiB')
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError, RuntimeError) as exc:
-        parser.exit(1, ('invalid candidate challenge review input' if args.challenge_record else str(exc)) + '\n')
+        parser.exit(1, ('invalid detached release review input' if args.challenge_record or args.release_decision else str(exc)) + '\n')
     emit(parser, text.encode('utf-8'), getattr(args, 'output', None))
 
 

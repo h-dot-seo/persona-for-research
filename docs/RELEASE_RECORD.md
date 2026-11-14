@@ -78,5 +78,5 @@ All CLI input files share an 8 MiB strict-JSON budget; output is bounded to 16 M
 `--output` uses exclusive creation outside the repository and rejects existing paths,
 dangling symlinks and missing parents. Invalid supplied records are rejected even when
 no reopening record accompanies them. Status rejects duplicate reopening hashes and
-requires each record to match the exact prior package. Release decisions, candidate
-approval and review_package integration are deliberately deferred to a separate increment.
+requires each record to match the exact prior package. Supplied release decisions and optional review summaries now have a separate
+[decision-record guide](RELEASE_DECISION.md). Candidate approval is never derived.

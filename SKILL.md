@@ -126,4 +126,4 @@ Keep JSON for import. Text grants no transmission permission.
 
 Step 11: `candidate_challenge.py template/check/status` (docs/CANDIDATE_CHALLENGE.md).
 
-Updates: `release_record.py template reopening/check/status` records supplied prior-release triggers and impact plans, not approval; see docs/RELEASE_RECORD.md.
+Updates: `release_record.py template reopening/check/status` records prior impact plans (docs/RELEASE_RECORD.md). `template decision` records supplied choices and human hashes, never approval (docs/RELEASE_DECISION.md).

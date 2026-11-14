@@ -266,3 +266,5 @@ independence claim or a change to `validation.human_validation`.
 For lifecycle step 11, see [detached pre-holdout candidate findings](CANDIDATE_CHALLENGE.md).
 
 For a supplied update trigger, see [controlled reopening declarations](RELEASE_RECORD.md).
+
+For an operator-supplied release choice, see [decision records](RELEASE_DECISION.md), not an automatic approval path.

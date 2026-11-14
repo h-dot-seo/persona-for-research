@@ -2024,3 +2024,26 @@ review/split tests were rechecked. No remote CI outcome is claimed in this recor
 - Mechanical consistency is not scientific validation, authentic correction/retraction,
   preserved archive proof, candidate revalidation or approval. IDs/bindings may be private;
   omission of notice prose and operator labels is not sanitization or rights clearance.
+
+## 2026-11-14 Supplied release decision records (0.83-release-decision)
+
+- Added roadmap #79's second limited increment: `release_record.py template decision`,
+  schema-dispatched check, distinct status field and optional `review_package --release-decision`.
+  Supplied NOT_RELEASED/RELEASED_FOR_CONSULTATION/WITHDRAWN labels are retained, never derived
+  or executed. No approval, access change, publication, new validation axis or payload update.
+- Exact package bindings and logical human-record references are checked. Current/stale/
+  missing human evidence is explicit; predictive/runtime references must be null and remain
+  NO_RECORD_TYPE. Missing evidence prompts review without making a release gate. Supplied
+  thresholds, dates, rationale and identities are not scientifically evaluated/authenticated.
+- Final local full suite: **Ran 1140 tests in 308.616s — OK**. Focused decision/reopening/
+  candidate/split/dispatcher suite: **84 tests — OK**. Independent review caught a top-level
+  status contradiction in decision-only reports; separate reopening/supplied-decision states
+  now have regression tests. Final review found no blocker; new 20 tests passed independently.
+- Actual default/evidence-details/human-validation/challenge CLI stdout and stderr matched
+  the previous release byte-for-byte in independent comparisons. New guide executes exactly
+  as written, with spaces in output paths. Existing guide shell blocks remain unchanged.
+- Manifest verifies 273 files; limited publication audit passes 274. All 160 Python files
+  compile and parse with Python 3.10 grammar; SKILL.md is 8148 bytes. Synthetic fixtures only,
+  no model/API/network calls. Remote CI is tracked separately for the exact commit.
+- Mechanical checks do not authenticate operator decisions or prove candidate quality.
+  Omitted prose/labels are not sanitization; hashes, package bindings and dates can be private.
