@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.99-route-tables",
+  "release": "0.100-rule-correspondence",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 299,
+  "file_count": 303,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 10545,
-      "sha256": "172843341102443f0957bacb1d87a81da08c74b3787253561753b23bf01eb6ec"
+      "bytes": 10987,
+      "sha256": "552dbddd4a2ff5ae45d5161c740a75dbd2ce953ad5f7e60757dbc1e98ade4a0c"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 18654,
-      "sha256": "365260548f2be0e23a919defc9523909f1b02cb3dc1451a6efc6886f14bb8d86"
+      "bytes": 18817,
+      "sha256": "ea306c8af86903bd2ae235d64790ae998503c018e5af9d57554351c6df01296a"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 8157,
-      "sha256": "e709a6c2aac7dcf0ba8bbc0289c7afd1fb3fcb74666761e1fa6381c5d738cb23"
+      "bytes": 8368,
+      "sha256": "1965e9b97d9f88a9f109e9fd28ff2c7a90bdf1e8b9b71da1196e3a6213b8fee9"
     },
     {
       "path": "answer_context.py",
@@ -215,8 +215,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 42976,
-      "sha256": "29881e61dae137341241586b08d01c3efb6bbcebdea5805b588fc1dae84d1ec8"
+      "bytes": 43570,
+      "sha256": "0c153652afdc026171a3ddf47ea6e1a92ff0305eb60a8a390d2bb144467c68a2"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -375,8 +375,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 22880,
-      "sha256": "9b9445ed7384d41277d9f4314904bac55d3d61de9f90528fdd69b5604c8333ba"
+      "bytes": 23038,
+      "sha256": "2378841525178acf6453100169b876dfd197a4b1f3d51c801010f21fbce0e5eb"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -419,6 +419,11 @@
       "sha256": "19eab7f870aae03d6568edfae206b7ac8eb160f59f0680b38c2b0c72a7a3e565"
     },
     {
+      "path": "docs/RULE_CORRESPONDENCE.md",
+      "bytes": 6122,
+      "sha256": "88646e9a0fc87cfb3fab2be923654ee1884ef466cc28edd2db9ca3c053fdba27"
+    },
+    {
       "path": "docs/SOURCE_RECHECK.md",
       "bytes": 6984,
       "sha256": "0f644c1f40d6b9dcb6ded473af7f6880fb467c411075b6e927dc51927bb8a3d2"
@@ -455,13 +460,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 172253,
-      "sha256": "6e296dc2fdaaab1de249e7c79df25f2021c6001daaa9ffd3b0ce3d3e96605188"
+      "bytes": 174910,
+      "sha256": "154c4b5d5abec35f576bfa94faf86eb71cb104d086fef30fc6ba254a9661b978"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 46910,
-      "sha256": "9e7b6571178bdf11385f11c021aab5251fd1204771909d405f1f755900def52a"
+      "bytes": 47371,
+      "sha256": "a646c7fa8e832b4019076837b295997593f17d44694629e31dc52c207bc55796"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -617,6 +622,11 @@
       "path": "examples/synthetic-journey-inputs.json",
       "bytes": 585,
       "sha256": "cd6d2e055b8700bc2a1d52c36b681eb4a32a219c2da1fad782df294323c15722"
+    },
+    {
+      "path": "examples/synthetic-rule-reordered-package.json",
+      "bytes": 13747,
+      "sha256": "79ac73e88c103460cc4075bc792fa7c8e2e403dd2a86a6b284c445432f6a24b7"
     },
     {
       "path": "examples/synthetic-sources/synthetic-0.md",
@@ -835,8 +845,8 @@
     },
     {
       "path": "persona_cli.py",
-      "bytes": 25292,
-      "sha256": "9698658b11c70b2bce51022506521a9c7ac021d1071a81c86394c54b9d9190c4"
+      "bytes": 25318,
+      "sha256": "d3ed418821d8e85d6126994568ecaf40af1e1c7954a8b2e6a87f3dd87c4cf788"
     },
     {
       "path": "prepare_local_manifest.py",
@@ -917,6 +927,11 @@
       "path": "ris_export_parser.py",
       "bytes": 5218,
       "sha256": "53e16edc7fd8e2ec5fbdf30ac228bd18b4b01340c3294f66bb04246b0200e39c"
+    },
+    {
+      "path": "rule_correspondence.py",
+      "bytes": 11278,
+      "sha256": "0d4aba819454ac7c08419fffbfa20e6fd8a91318131ad4200d235332ab401efe"
     },
     {
       "path": "safe_canonical_read.py",
@@ -1397,6 +1412,11 @@
       "path": "tests/test_revision_impact.py",
       "bytes": 8598,
       "sha256": "15516abb166ba046d9a1e32669259ba10edb61db17811d448e2f255968a23093"
+    },
+    {
+      "path": "tests/test_rule_correspondence.py",
+      "bytes": 13102,
+      "sha256": "1100c8d1f00bac8a88d07ad58cf0506babecc7fae337dfda2311f1d2c72b4cdb"
     },
     {
       "path": "tests/test_rule_source_consistency.py",

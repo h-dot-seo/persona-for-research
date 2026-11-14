@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.100-rule-correspondence — 2026-11-14
+
+`rule_correspondence.py inventory/compare` derives exact rule/observation/component hashes from bound packages and shows positional correspondence, ambiguous duplicates and manual locator groups. No stable-ID claim, semantic matching, stale-review rebinding or payload change.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-exact-rule-record-correspondence-0100-rule-correspondence).
+
 ## 0.99-route-tables — 2026-11-14
 
 `tabular_export.py evidence-routes` exports fresh bound journey routes with exact evidence/use JSON and separate observation/component labels. Four explicit column sets follow pinned method/source options; old catalog/agenda bytes and decision boundaries remain unchanged.
