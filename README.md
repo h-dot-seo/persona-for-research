@@ -255,3 +255,7 @@ callers now reject oversized inputs. See [input budget scope](docs/WORKFLOWS.md#
 For opt-in exact rule-content correspondence beside a release comparison, see
 [the rule correspondence guide](docs/RULE_CORRESPONDENCE.md#optional-release-comparison-attachment).
 Default release reports and decisions are unchanged.
+
+Answer and evidence-scope CLI reports can show explicit local sidecars with
+[`--external`](docs/EXTERNAL_EVIDENCE.md#optional-answer-and-scope-display),
+separately from citations, source groups and unchanged decisions.

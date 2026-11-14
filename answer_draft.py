@@ -212,6 +212,33 @@ def _render_endpoint(lines, node):
         '; selected=' + record.get('evidence_verification', 'NOT_PERFORMED'))
 
 
+MAX_EXTERNAL_OUTPUT_BYTES = 16 * 1024 * 1024
+
+
+def external_output(args):
+    """Opt-in detached display only; existing calculations and default rendering stay unchanged."""
+    from external_evidence import bounded_reader, review as check_external, render_text
+    if (args.template or args.review_template or args.draft is None or args.question is not None
+            or args.operator_id is not None or args.reviewer_id is not None):
+        raise ValueError('external display requires a draft, no template or identity/question overrides')
+    read = bounded_reader()
+    package, draft = read(args.package), read(args.draft)
+    declared = read(args.review) if args.review else None
+    if args.review is not None and declared is None:
+        raise ValueError('explicit answer review must not be JSON null')
+    sidecar = read(args.external)
+    result = review(package, draft, declared) if declared is not None else inspect(package, draft)
+    detached = check_external(package, draft, sidecar, declared)
+    if args.format == 'text':
+        output = render(result) + '\nExternal evidence (not persona knowledge)\n' + render_text(detached).decode('utf-8')
+    else:
+        result['external_evidence_review'] = detached
+        output = json.dumps(result, indent=2) + '\n'
+    if len(output.encode('utf-8')) > MAX_EXTERNAL_OUTPUT_BYTES:
+        raise ValueError('combined answer and external evidence output exceeds 16 MiB')
+    return output
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('package', type=Path); parser.add_argument('draft', type=Path, nargs='?')
@@ -220,8 +247,16 @@ def main():
     mode.add_argument('--review', type=Path)
     parser.add_argument('--question'); parser.add_argument('--operator-id'); parser.add_argument('--reviewer-id')
     parser.add_argument('--format', choices=('json', 'text'), default='json')
+    parser.add_argument('--external', type=Path)
     add_output_argument(parser); args = parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
+    if args.external is not None:
+        try:
+            output = external_output(args)
+        except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
+            parser.exit(1, str(exc) + '\n')
+        emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
+        return
     try:
         package = load(args.package)
         if args.template:

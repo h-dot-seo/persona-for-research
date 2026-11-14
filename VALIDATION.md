@@ -1,11 +1,13 @@
 # Validation record
 
-Current release: `0.102-external-context`, 2026-11-14. This file is the current
+Current release: `0.103-external-display`, 2026-11-14. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
+
+- 2026-11-14 Optional external context display (`0.103-external-display`): two existing reports can show fresh local declarations separately, without changing default results or decisions.
 
 - 2026-11-14 Declared external context sidecar (`0.102-external-context`): inert operator-authored context separate from package knowledge, citations and existing decisions.
 
@@ -86,19 +88,19 @@ trigger or release-publishing step is configured.
 
 From the repository root, with Python 3.10 or later and no third-party packages:
 
-- `python -m unittest discover -q` — the current tree runs 1356 synthetic tests
+- `python -m unittest discover -q` — the current tree runs 1368 synthetic tests
   (platform-specific cases may skip on other hosts). The final local verification result is recorded in the release history. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.
-- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 309
+- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 310
   listed files. Regenerate the manifest after every other edit of a release using
   `python regenerate_manifest.py --release REL --date YYYY-MM-DD --output ../NEW.json`,
   explicitly naming new/deleted paths with --add/--remove. Review the external candidate
   before manually replacing the original manifest; see PUBLICATION.md.
-- `python audit_publication.py` — expects `"pass": true`; the current tree has 310 text
+- `python audit_publication.py` — expects `"pass": true`; the current tree has 311 text
   files including the manifest. A pass is a limited file-type and secret-pattern scan, not
   proof of anonymity or rights clearance.
-- `python -m compileall -q .` — 182 Python files compile cleanly and parse with
+- `python -m compileall -q .` — 183 Python files compile cleanly and parse with
   Python 3.10 grammar.
 - `python synthetic_walkthrough.py ../persona-synthetic-demo` — the 15-stage demo must exit 0
   and write `COMPLETE.json` into a new directory outside the repository.

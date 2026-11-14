@@ -2553,3 +2553,38 @@ review boundaries and unchanged answer/freeze/HV modules verified; no blocker re
 Manifest passed for 309 listed files, audit for 310 text files; all 182 Python files
 compile and parse Python 3.10 grammar. Dispatcher lists 56 root CLIs. Exact PR/main CI
 is checked separately.
+
+## 2026-11-14 Optional external context display (0.103-external-display)
+
+Roadmap #77 remaining two-tool display integration from the first adjusted slice.
+answer_draft.py/evidence_scope.py --external use lazy opt-in helpers to inspect the same
+current package/draft and optional declared review, then check the explicit local sidecar.
+JSON adds only external_evidence_review at top level; text adds a clearly labeled separate
+section after the existing report. Existing inspect/review/disclose/render calculations,
+status, coverage, source groups, active references, citation satisfaction and freeze stay
+unchanged. It is not knowledge adoption, release approval or retain/reject promotion.
+
+No lookup, transmission, other-agent/provider calls, source reread, new permissions or
+HV/attribution/card/handoff changes. The local declaration schema is reused; #92 adapters
+and journey-v2 integration remain deferred. External+template/review-template/question/
+operator/reviewer overrides are rejected before input reads. Opt-in inputs share 8 MiB
+including sidecar/review and all scope artifacts; combined full JSON/text is bounded to
+16 MiB before emission. Default input/output behavior is unchanged. Existing exclusive
+output preflight/no-overwrite remains. Inert malicious strings are escaped as display data.
+
+Only synthetic fixtures, no changes to existing fixtures or unrelated production modules.
+Guide path substitution follows shlex tokenization; default comparison tests capture raw
+bytes rather than mixing native Windows CRLF with universal-newline text decoding.
+Independent review found an explicit JSON-null review was mistaken for an absent
+review by the new display helpers and the prior standalone context CLI. Before
+publication, all three CLI boundaries were corrected to reject a supplied null;
+core API None-as-absent and the historical default scope behavior remain unchanged.
+Regression checks require exit 1, no stdout/output file or traceback, while absent
+reviews still succeed. The initial passing tests did not cover this defect.
+Final corrected full suite passed 1,368 tests in 353.300 seconds; focused suite
+passed 81 in 13.503 seconds. Independent re-review passed 60 tests and repeated
+the three CLI null failures, absent-review success and preserved legacy scope
+behavior. Eight default raw-output combinations and core AST checks also passed.
+Manifest passed 310 listed entries, audit 311 files; 183 Python files compile and
+parse Python 3.10 grammar. Dispatcher remains 56 CLIs. Exact PR/main CI is checked
+separately, not inferred from this local result.

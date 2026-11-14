@@ -483,7 +483,7 @@ Guide: [Review workspace](REVIEW_WORKSPACE.md), [Integrated workspace](INTEGRATE
 Inspect evidence-bound answer drafts and declared reviews, without generating answers.
 
 ```text
-usage: answer_draft.py [-h] [--template | --review-template | --review REVIEW] [--question QUESTION] [--operator-id OPERATOR_ID] [--reviewer-id REVIEWER_ID] [--format {json,text}] [--output NEW_FILE] package [draft]
+usage: answer_draft.py [-h] [--template | --review-template | --review REVIEW] [--question QUESTION] [--operator-id OPERATOR_ID] [--reviewer-id REVIEWER_ID] [--format {json,text}] [--external EXTERNAL] [--output NEW_FILE] package [draft]
 ```
 
 Guide: [Answer draft](ANSWER_DRAFT.md), [Citation explanations](CITATION_EXPLANATIONS.md).
@@ -503,7 +503,7 @@ Guide: [Review journey](REVIEW_JOURNEY.md).
 Disclose actual answer/design evidence scope without scoring researcher fidelity.
 
 ```text
-usage: evidence_scope.py [-h] --reference-year REFERENCE_YEAR [--review REVIEW] [--format {json,text}] [--output NEW_FILE] package links proposal draft
+usage: evidence_scope.py [-h] --reference-year REFERENCE_YEAR [--review REVIEW] [--external EXTERNAL] [--format {json,text}] [--output NEW_FILE] package links proposal draft
 ```
 
 Guide: [Evidence scope](EVIDENCE_SCOPE.md).

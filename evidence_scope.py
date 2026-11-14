@@ -206,12 +206,45 @@ def render(package, links, proposal, draft, reference_year, declared_review=None
     return output
 
 
+MAX_EXTERNAL_OUTPUT_BYTES = 16 * 1024 * 1024
+
+
+def external_output(args):
+    """Opt-in detached display only; existing calculations and default rendering stay unchanged."""
+    from external_evidence import bounded_reader, review as check_external, render_text
+    read = bounded_reader()
+    package, links, proposal, draft = (read(path) for path in (args.package, args.links, args.proposal, args.draft))
+    declared = read(args.review) if args.review else None
+    if args.review is not None and declared is None:
+        raise ValueError('explicit answer review must not be JSON null')
+    sidecar = read(args.external)
+    inputs = (package, links, proposal, draft, args.reference_year, declared)
+    detached = check_external(package, draft, sidecar, declared)
+    if args.format == 'text':
+        output = render(*inputs) + '\nExternal evidence (not persona knowledge)\n' + render_text(detached).decode('utf-8')
+    else:
+        result = disclose(*inputs)
+        result['external_evidence_review'] = detached
+        output = json.dumps(result, indent=2) + '\n'
+    if len(output.encode('utf-8')) > MAX_EXTERNAL_OUTPUT_BYTES:
+        raise ValueError('combined scope and external evidence output exceeds 16 MiB')
+    return output
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('package', 'links', 'proposal', 'draft'): parser.add_argument(name, type=Path)
     parser.add_argument('--reference-year', required=True, type=int); parser.add_argument('--review', type=Path)
+    parser.add_argument('--external', type=Path)
     parser.add_argument('--format', choices=('json', 'text'), default='json'); add_output_argument(parser); args = parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
+    if args.external is not None:
+        try:
+            output = external_output(args)
+        except (ValueError, OSError, KeyError, TypeError, AttributeError) as exc:
+            parser.exit(1, str(exc) + '\n')
+        emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
+        return
     try:
         inputs = (load(args.package), load(args.links), load(args.proposal), load(args.draft),
                   args.reference_year, load(args.review) if args.review else None)

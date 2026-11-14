@@ -168,7 +168,7 @@ class ExternalEvidenceTests(unittest.TestCase):
             self.assertEqual(result.stdout,e.encode(self.review()) if format=='json' else e.render_text(self.review()))
 
     def test_guide_commands_and_native_windows_paths(self):
-        text=(ROOT/'docs/EXTERNAL_EVIDENCE.md').read_text(encoding='utf-8');count=0
+        text=(ROOT/'docs/EXTERNAL_EVIDENCE.md').read_text(encoding='utf-8').split('## Optional answer and scope display',1)[0];count=0
         for block in text.split('```sh\n')[1:]:
             for line in block.split('```',1)[0].splitlines():
                 if not line.strip():continue
