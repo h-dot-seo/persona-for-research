@@ -871,3 +871,9 @@ Literal single-message response extraction, not model attestation. [Guide](HANDO
 usage: handoff_packet.py [-h] {extract-response} ...
 usage: handoff_packet.py extract-response [-h] --output-dir NEW_DIR [--occurrence OCCURRENCE] transcript handoff
 ```
+
+### Optional maintainer test timing
+
+`python -m tests.timing [tests.test_MODULE ...]` observes published synthetic test
+modules in one fresh worker. It is not a root product CLI; normal unittest and CI
+remain unchanged. See [TEST_TIMING.md](TEST_TIMING.md).
