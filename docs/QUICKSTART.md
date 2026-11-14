@@ -268,3 +268,5 @@ For lifecycle step 11, see [detached pre-holdout candidate findings](CANDIDATE_C
 For a supplied update trigger, see [controlled reopening declarations](RELEASE_RECORD.md).
 
 For an operator-supplied release choice, see [decision records](RELEASE_DECISION.md), not an automatic approval path.
+
+For agent-friendly command discovery without executing scripts, see [JSON command list](COMMAND_LIST.md).

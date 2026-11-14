@@ -2047,3 +2047,23 @@ review/split tests were rechecked. No remote CI outcome is claimed in this recor
   no model/API/network calls. Remote CI is tracked separately for the exact commit.
 - Mechanical checks do not authenticate operator decisions or prove candidate quality.
   Omitted prose/labels are not sanitization; hashes, package bindings and dates can be private.
+
+## 2026-11-14 Machine-readable command discovery (0.84-command-list)
+
+- Added roadmap #87's first increment, `persona_cli.py list --json`: deterministic
+  schema/scripts/boundary discovery from the existing AST entry-point scanner. Names and
+  first docstring sentences are not an invocation/schema contract, integrity check or
+  approval. No discovered script is imported/executed and no subprocess/model/network call
+  or output-file write is introduced. Describe/catalog capture remains a separate increment.
+- Source reads enforce the existing 1 MiB bound while reading; JSON output has a 1 MiB
+  bound, ASCII-escaped UTF-8/LF bytes and redacted failures without partial JSON. Plain list
+  formatting and run forwarding are unchanged; no --output flag is added to the dispatcher.
+- Final local full suite: **Ran 1153 tests in 289.738s — OK**. Focused JSON-list/dispatcher:
+  **22 tests — OK**. Independent review found no blocker and verified round11 plain list,
+  run persona and run release_record exit-code/stdout/stderr byte equivalence.
+- Executable guide and 13 new tests cover discovery shape, deterministic escaping, empty
+  lists, bounds, failure redaction, source nonexecution, external cwd, symlink exclusion,
+  no repository imports/subprocess and no writes. Existing guide shell blocks are preserved.
+- Manifest verifies 275 files; limited publication audit passes 276. All 161 Python files
+  compile and parse with Python 3.10 grammar; SKILL.md is 8180 bytes. No actual researcher
+  records or external API calls. Remote CI is recorded separately for exact commits.

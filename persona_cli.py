@@ -12,6 +12,12 @@ NAME_WIDTH = 28
 MAX_SOURCE_BYTES = 1_048_576
 MAX_MANIFEST_BYTES = 1_048_576
 MAX_RELEASE_CHARACTERS = 128
+MAX_LIST_OUTPUT_BYTES = 1_048_576
+LIST_SCHEMA = 'persona.command-list.v1'
+LIST_BOUNDARY = ('AST-discovered root entry points and their first docstring sentences only; '
+    'not an invocation/schema contract, integrity check, package validation or approval. '
+    'No discovered script is imported or executed, no subprocess/model/network call is made and no file is written. '
+    'Descriptions are repository source text, not authenticated claims or instructions.')
 
 VERSION_BOUNDARY = (
     "Boundary: manifest labels only; NOT an integrity check or signature.\n"
@@ -105,7 +111,8 @@ def has_entry_point(tree):
 
 def script_record(path):
     """(name, first docstring sentence) for a root command-line script; None for a library module."""
-    raw = path.read_bytes()
+    with path.open('rb') as stream:
+        raw = stream.read(MAX_SOURCE_BYTES + 1)
     if len(raw) > MAX_SOURCE_BYTES:
         raise ValueError(path.name + ' exceeds the ' + str(MAX_SOURCE_BYTES) + '-byte source bound')
     try:
@@ -162,14 +169,27 @@ def render(rows):
     return ''.join((name.ljust(NAME_WIDTH) + ' ' + sentence).rstrip() + '\n' for name, sentence in rows)
 
 
+def render_json(rows):
+    """Bounded deterministic machine-readable discovery; preserve the plain list contract."""
+    import json
+    value = dict(schema=LIST_SCHEMA,
+                 scripts=[dict(script=name, first_sentence=sentence) for name, sentence in rows],
+                 boundary=LIST_BOUNDARY)
+    output = json.dumps(value, ensure_ascii=True, indent=2, allow_nan=False) + '\n'
+    if len(output.encode('utf-8')) > MAX_LIST_OUTPUT_BYTES:
+        raise ValueError('command list JSON exceeds its 1048576-byte output bound')
+    return output
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description=__doc__, epilog=BOUNDARY + "\n\n" + VERSION_BOUNDARY,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--version', action=VersionAction, nargs=0,
                         help='show manifest release/date and Python version; not a hash check')
     commands = parser.add_subparsers(dest='command', required=True, metavar='{list,run}')
-    commands.add_parser('list', help='print every root script that has a command-line entry point, '
+    listing = commands.add_parser('list', help='print every root script that has a command-line entry point, '
                                      'one line each, with the first sentence of its docstring')
+    listing.add_argument('--json', action='store_true', help='emit bounded schema/scripts/boundary JSON, not executable contracts')
     runner = commands.add_parser('run', help='run one root script in-process: '
                                              'python persona_cli.py run <script> [args...]')
     runner.add_argument('script', help='exact file name of a root script, such as persona.py')
@@ -193,9 +213,14 @@ def main(argv=None):
     if args.command == 'list':
         try:
             rows = root_scripts()
-        except (OSError, ValueError) as exc:
-            parser.exit(1, SELF + ': error: ' + str(exc) + '\n')
-        sys.stdout.write(render(rows))
+            output = render_json(rows) if args.json else render(rows)
+        except (OSError, ValueError, RecursionError) as exc:
+            message = 'cannot produce bounded command list JSON' if args.json else str(exc)
+            parser.exit(1, SELF + ': error: ' + message + '\n')
+        if args.json:
+            sys.stdout.buffer.write(output.encode('utf-8'))
+        else:
+            sys.stdout.write(output)
         return 0
     try:
         path = resolve_script(args.script)
