@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.93-change-index",
+  "release": "0.94-csl-census",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 283,
+  "file_count": 287,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 8123,
-      "sha256": "e656cdbcb199226dca5c52ecabae3933ed1740a2359617e3db2b4f0c609055ad"
+      "bytes": 8481,
+      "sha256": "dbc65ab42cce485fee39f47541b26be21c5044755202b746efd08b240498ec4c"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 17990,
-      "sha256": "5a7e8681e42ef949a3436bbb365a3d20c24b4e4b31c394c1b624e26620192494"
+      "bytes": 18229,
+      "sha256": "dba83354d70a901e8f7da277fe57a798dde4a43dba006f3fa936a63cec17ba40"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 7086,
-      "sha256": "f4abf2e56c44b8e00b588ec7e277ce54198d6d13290014c988c56cbe15b9a206"
+      "bytes": 7264,
+      "sha256": "5a981b7563d2e8510323533694c54526adadcc0c8a4d3b4a0215998a48c7cc0e"
     },
     {
       "path": "answer_context.py",
@@ -112,6 +112,11 @@
       "path": "candidate_challenge.py",
       "bytes": 16083,
       "sha256": "e99ee5a1ab1b75fba3db641024e1478bb7a6b395812af9bbd15fadd8a44e0262"
+    },
+    {
+      "path": "census_import.py",
+      "bytes": 10932,
+      "sha256": "7f704868b2ce4d8ed13207fb9d4d54e692b9ca267b7a446aabae16fd099dd4b4"
     },
     {
       "path": "citation_reasoning.py",
@@ -194,6 +199,11 @@
       "sha256": "cf6fc6f772fdc8148a447499f26be959a983bf96a76a59869a6ce2a9cf637532"
     },
     {
+      "path": "docs/CENSUS_IMPORT.md",
+      "bytes": 5251,
+      "sha256": "00f8ba7447898a10c5a9ff42062092061e63cf46f7b89b1cee2c363aae68e4ad"
+    },
+    {
       "path": "docs/CITATION_EXPLANATIONS.md",
       "bytes": 6961,
       "sha256": "45ea48f1d71777f3cfcf7f7fe23ad7d246487f43d6df81a44721d9b9311972fb"
@@ -205,8 +215,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 41234,
-      "sha256": "bafc2e8fb93eb1548c4c9940879ea71f11ed784d3600eb64c465c21ca1076fa1"
+      "bytes": 41743,
+      "sha256": "f7309023d2686e79938bea949f4e757dbac6a31b5656e69178a2f4484e19dad3"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -285,8 +295,8 @@
     },
     {
       "path": "docs/LOCAL_INPUT_PREPARATION.md",
-      "bytes": 10350,
-      "sha256": "eb144e978a2bc9d8b96f4e58ca19ff649c652b0e8b81dbf5ec0bcaf124514b41"
+      "bytes": 10553,
+      "sha256": "1349bef96c104a9a9d7cc141e5ffd0ddfd6cf256739eafa92b79635720b1cc18"
     },
     {
       "path": "docs/MANUAL_EVIDENCE_REVISION.md",
@@ -360,8 +370,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 22162,
-      "sha256": "6481d4630e77df10d195401d08a7e62b778be538833932caab2473c5d2b4eb36"
+      "bytes": 22411,
+      "sha256": "6a9ec9840a294bd8ea77c6f1bc268f07818a499899df99fb001b89ec4644fb87"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -435,13 +445,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 158917,
-      "sha256": "67cc209f8775a92e707f33ae21a54a135a3e3075f8c8057628b1050a2763523d"
+      "bytes": 160747,
+      "sha256": "50831d121a904a5f80f81b7940210948dc557ba914a05d3488aa63fdd2fbcb94"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 46456,
-      "sha256": "b9d630a5edc05f6870155d4e05a7e1d6cfe567d6a59b936bbc721ed68e2b9470"
+      "bytes": 46671,
+      "sha256": "ab51f31ce37cc4d7d113dca47415dd37df520fe54fff55cac71cdbbc3f1f2df7"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -577,6 +587,11 @@
       "path": "examples/review-attribution-scope.json",
       "bytes": 12351,
       "sha256": "6259e821312b9cb2859fb0beb2f909ae627b7ccaf7050de0a98775ec4df7850a"
+    },
+    {
+      "path": "examples/synthetic-bibliography.csl.json",
+      "bytes": 1136,
+      "sha256": "1442b6c19b2fa51c40915cad2effef5164d6c48b8c4ce52c8b6b4f4859de5e9a"
     },
     {
       "path": "examples/synthetic-holdout-labels.json",
@@ -795,8 +810,8 @@
     },
     {
       "path": "persona_cli.py",
-      "bytes": 25228,
-      "sha256": "687a6ca5bef1ffe9c9bf3ccfd21f8296b09074699f642e348d3690e6b510b058"
+      "bytes": 25248,
+      "sha256": "b73bc2e6b0cf0fdc944667a8fef790c28064292de1e3ff3d00048679e2355343"
     },
     {
       "path": "prepare_local_manifest.py",
@@ -982,6 +997,11 @@
       "path": "tests/test_candidate_challenge.py",
       "bytes": 9745,
       "sha256": "1b795ccac581f858ecaa7f53e5fbb3f3742512d83cf8d5ec89ff1b31ff95a4a0"
+    },
+    {
+      "path": "tests/test_census_import.py",
+      "bytes": 11354,
+      "sha256": "5ae842e5a4754c51c9101497c57f3618e45606d2a13639ffbfcce93c87e3ac05"
     },
     {
       "path": "tests/test_changelog.py",

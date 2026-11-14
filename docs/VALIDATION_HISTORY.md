@@ -2274,3 +2274,30 @@ Manifest 283 entries, publication audit 284 files, compile/Python 3.10 grammar f
 166 Python files passed after regeneration. All test fixtures remain synthetic;
 no source, user data, provider or external permission change occurred. This index
 is not an authenticity, rights, scientific-validity or release-approval claim.
+
+
+## 2026-11-14 Supplied CSL census (`0.94-csl-census`)
+
+Roadmap #64 CSL-only first slice: census_import.py imports strict UTF-8/BOM CSL-JSON
+exports within 8 MiB/10,000 records, preserving copied fields and full hashes.
+Occurrence IDs distinguish identical records; DOI exact-string and casefold title
+groups are not merged. An explicitly selected skeleton has null/false operator
+declarations, a positional mapping sidecar and last-written READY in a new external
+directory. Output/census input limits are 16 MiB. Unsigned hashes detect inconsistent
+edits but do not authenticate origin or recheck original export bytes at selection.
+RIS, identity resolution, classification, canonical payload changes and authorization
+are excluded. No paid API or external lookup occurs.
+
+Validation: full discovery 1,248 tests passed in 321.656 seconds. Implementation
+focus covered 41 tests / 2.592s. Expanded catalog/description/census/changelog checks
+initially found a missing root usage line in COMMANDS.md (two failures); adding the
+actual root usage, without weakening tests, yielded 58 passing tests / 15.405s.
+Independent 10 cases covered exact-string distinctions, entry/original hashes,
+rehashed malformed metadata/groups, encoding, pre-read rejection of unapproved
+skeletons, positional mapping and collision-preserved output. Synthetic guide commands
+and operator-filled skeleton through prepare/load were exercised; the untouched
+skeleton fails before source reads. Explicit byte fixtures preserve LF on Windows.
+Manifest 287 entries, audit 288 files, compilation and Python 3.10 grammar for 168
+Python files passed after final regeneration. Original package/four-axis/approval
+semantics are unchanged. Census hashes are not source authenticity or scholarly
+identity, and no source rights or completeness assertion is inferred.

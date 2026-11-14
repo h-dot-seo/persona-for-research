@@ -307,6 +307,8 @@ unimplemented. Keep real inputs and generated packages outside the public reposi
 
 #### Prepare authorized local source files
 
+Optionally start with the [CSL-JSON census](CENSUS_IMPORT.md): exact-match groups are not merged, and the skeleton still needs explicit operator declarations. This is not a frozen split declaration or an approval.
+
 `prepare_local_manifest.py` fills byte hashes and section-locator inventory for an
 explicit training-only file selection, leaving observations empty. The result uses
 the existing manifest format and feeds `corpus_files.py` after manual curation.

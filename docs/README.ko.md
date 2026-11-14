@@ -102,6 +102,7 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 | `synthetic_walkthrough.py` | 번들된 합성 픽스처를 실제 CLI 15~53단계로 실행해 새 외부 디렉터리에 결과를 남김 | [QUICKSTART.md](QUICKSTART.md) |
 | `persona.py`, `safe_canonical_read.py` | 페르소나/지식 해시 바인딩 검증, 홀드아웃 식별자를 제거한 투영 | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | `observation_input.py` | 제공된 텍스트 구간에 대해 관찰과 인용문을 검증한 뒤 계획 스캐폴드 생성 | [WORKFLOWS.md](WORKFLOWS.md#verified-intake-and-authorized-local-source-files) |
+| `census_import.py` | CSL-JSON의 정확 일치 목록과 미승인 선택 골격 생성 | [CENSUS_IMPORT.md](CENSUS_IMPORT.md) |
 | `prepare_local_manifest.py`, `corpus_files.py` | 명시적으로 허가된 로컬 원문 파일의 해시·섹션 목록 준비와 적재 | [LOCAL_INPUT_PREPARATION.md](LOCAL_INPUT_PREPARATION.md) |
 | `research_workflow.py` | 운영자가 큐레이션한 관찰을 질문별 계획 스캐폴드로 적용 | [WORKFLOW_REVIEW.md](WORKFLOW_REVIEW.md) |
 | `review_package.py` | 바인딩된 패키지의 읽기 전용 요약 검토 (`--evidence-details`, `--human-validation`) | [EVIDENCE_DETAILS.md](EVIDENCE_DETAILS.md) |
@@ -258,3 +259,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 [전체 명령 카탈로그](COMMAND_CATALOG.md): `persona_cli.py describe --all --json`은 기존 허용목록만 합산 시간·출력 예산 내에서 수집합니다. 실패·출력 생략·미시도를 분리하며 PARTIAL_CATALOG를 전체 성공으로 해석하지 않습니다.
 
 [릴리스 변경 색인](../CHANGELOG.md)에서 명령과 동작 변경을 확인하세요. 상세 검증·실패·한계 기록은 기존 검증 이력에 보존됩니다.
+
+[CSL-JSON 목록 안내](CENSUS_IMPORT.md): 내보내기에서 복사한 값도 운영자가 확인해야 합니다.
