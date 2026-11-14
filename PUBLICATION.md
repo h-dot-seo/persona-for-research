@@ -47,3 +47,40 @@ scan, not rights clearance, anonymity or publication approval. Existing symlink/
 checks are unchanged; this is not a hostile-filesystem sandbox or a new resource/time
 bound. Filenames and existing diagnostics may contain private information. No claim
 is made about untested tag/archive byte equivalence.
+
+
+## Regenerate an explicit file inventory
+
+Run the generator from a trusted checkout, with an explicit release and calendar date.
+`--release` accepts a dotted numeric version (two or three numeric components) and an
+optional lowercase hyphen-separated suffix. `--date` must be an actual YYYY-MM-DD date.
+For example (replace the illustrative paths with your selected tree and a new external file):
+
+```text
+python /trusted/persona/regenerate_manifest.py /selected/tree --release 0.92-manifest-regeneration --date 2026-11-14 --output /outside/new-manifest.json
+```
+
+The generator copies existing declaration fields and key order, sorts file rows by POSIX
+path, and hashes raw file bytes. It does not normalize line endings: CR-containing selected
+files are rejected. Existing files are rehashed, never silently added or removed. Repeat
+`--add PATH` for each newly selected file and `--remove PATH` for each deleted file. A
+removed file still present in the tree is unlisted and therefore rejected. Unnamed extras,
+missing listed files, symlinks, unsafe paths, invalid metadata or duplicate selections fail
+before output creation. Both the candidate manifest (including preserved metadata) and the
+selected tree undergo the existing publication pattern scan; this does not replace human
+review. No license/flag/project change option is provided.
+
+The new UTF-8 JSON file uses indent=2, escaped JSON text and a final LF. The original
+manifest is unchanged. Output must be a new file outside both trees with an existing parent
+and no symlink components. Exclusive text creation prevents ordinary overwrites. The JSON
+stdout summary lists added, removed, rehashed and changed relative paths and a boundary;
+paths and file names may themselves be private. Do not redirect stdout over the original
+manifest: the shell can truncate it before the generator reads it. Review the generated file,
+then replace the committed manifest yourself and run the trusted verify and audit commands.
+The generator never performs that replacement, commits, tags, changes permissions or publishes.
+
+Source bytes, inventory and original manifest are rechecked before creation. This is not an
+atomic filesystem snapshot or protection against all concurrent/hostile path replacements.
+No new file-size, runtime or memory bound is claimed for inventory files. Write failure may
+leave a partial new output; it is not removed. Hash agreement is not authenticity, rights
+clearance, anonymity or release approval. Audit and human review remain separate gates.

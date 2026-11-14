@@ -28,17 +28,10 @@ def has_symlink(root, relative):
     return False
 
 
-def verify(root):
+def inventory(root):
+    """Return exact file names and existing traversal diagnostics without following links."""
     root = Path(root)
     errors = []
-    if (root / MANIFEST).is_symlink():
-        return ['manifest symlink is not allowed']
-    try:
-        manifest = load(root / MANIFEST)
-    except (OSError, ValueError, TypeError) as exc:
-        return ['manifest unreadable or invalid: ' + str(exc)]
-    if not isinstance(manifest, dict) or not isinstance(manifest.get('files'), list):
-        return ['manifest files must be an array']
     actual = set()
     def walk_error(error):
         raise error
@@ -64,7 +57,29 @@ def verify(root):
                     else:
                         errors.append(rel.as_posix() + ': nonregular file')
     except OSError as exc:
-        return errors + ['cannot enumerate release files: ' + str(exc)]
+        return actual, errors + ['cannot enumerate release files: ' + str(exc)], False
+    return actual, errors, True
+
+
+def file_digest(raw):
+    """Hash original bytes; checkout, not this helper, supplies LF normalization."""
+    return len(raw), hashlib.sha256(raw).hexdigest()
+
+
+def verify(root):
+    root = Path(root)
+    errors = []
+    if (root / MANIFEST).is_symlink():
+        return ['manifest symlink is not allowed']
+    try:
+        manifest = load(root / MANIFEST)
+    except (OSError, ValueError, TypeError) as exc:
+        return ['manifest unreadable or invalid: ' + str(exc)]
+    if not isinstance(manifest, dict) or not isinstance(manifest.get('files'), list):
+        return ['manifest files must be an array']
+    actual, errors, enumerated = inventory(root)
+    if not enumerated:
+        return errors
     seen = set()
     for row in manifest['files']:
         if not isinstance(row, dict) or not portable_path(row.get('path')):
@@ -96,7 +111,7 @@ def verify(root):
         except OSError as exc:
             errors.append(name + ': unreadable: ' + str(exc))
             continue
-        if len(raw) != row['bytes'] or hashlib.sha256(raw).hexdigest() != digest:
+        if file_digest(raw) != (row['bytes'], digest):
             errors.append(name + ': size/hash mismatch')
     if type(manifest.get('file_count')) is not int or manifest['file_count'] != len(seen):
         errors.append('file count mismatch')
