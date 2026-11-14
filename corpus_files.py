@@ -12,6 +12,8 @@ from research_workflow import build, apply
 from corpus_projection import runtime_papers
 from strict_json import load
 
+MAX_SOURCE_FILE_BYTES = 8 * 1024 * 1024
+
 
 def sections(text):
     result={}; current=None; lines=[]
@@ -102,7 +104,8 @@ def load_segment_corpus(manifest, root, *, max_total_bytes=None):
     corpus=json.loads(json.dumps(manifest,ensure_ascii=False,allow_nan=False))
     remaining=max_total_bytes
     for paper,path in zip(corpus['papers'],paths):
-        raw=read_source_bytes(path) if remaining is None else read_source_bytes(path, max_bytes=remaining)
+        limit=MAX_SOURCE_FILE_BYTES if remaining is None else min(MAX_SOURCE_FILE_BYTES, remaining)
+        raw=read_source_bytes(path, max_bytes=limit)
         if remaining is not None:remaining-=len(raw)
         if hashlib.sha256(raw).hexdigest()!=paper.get('source_sha256'):
             raise ValueError('source byte hash mismatch: '+paper['paper_id'])

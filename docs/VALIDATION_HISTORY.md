@@ -2160,3 +2160,22 @@ are unchanged; fixtures remain synthetic.
 - Final focused invocation initially named the nonexistent `tests.test_checkout_smoke`;
   this was a selection error, not a product test failure. Corrected invocation below
   uses strict JSON, manifest, dispatcher and model-handoff modules.
+
+## 2026-11-14 Per-file local source bound (`0.89-source-file-bound`)
+
+The two source preparation/segment-loading entry points now pass an 8 MiB file
+ceiling to the unchanged pinned-descriptor reader. Existing explicit aggregate budgets
+remain stricter via min(file ceiling, remaining total). No new aggregate default,
+output cap, approval, source authentication or payload/axis change is introduced.
+This intentionally rejects source files larger than 8 MiB; multiple individually valid
+files may still exceed that in total and may produce a package too large for downstream
+JSON readers. Documents state this asymmetry and the lack of time/object-memory bounds.
+
+- Full synthetic suite: 1206 tests, 323.509 seconds, OK.
+- Focused source tests: 34, OK. Independent focused review: 45, OK; no blockers.
+- Boundary coverage includes real exact 8 MiB/+1, no new total default, existing total
+  cannot relax the file bound, effective remaining budgets, input/metadata preservation.
+- Independent reviewer initially named a nonexistent walkthrough module, then corrected
+  the test selection and reran the 45 applicable tests; this was not a product failure.
+- Manifest279/audit280; compile and Python 3.10 grammar163. Exact-head remote PR/main
+  CI is checked separately; local tests alone do not establish remote success.

@@ -21,6 +21,8 @@ scripts that have a command-line entry point. The unittest suite is the `tests/`
 
 Shared JSON file reads now reject inputs over 8 MiB, including previously unbounded
 callers; projection stdin is also bounded. Existing aggregate budgets are retained.
+Selected local Markdown/text sources now have an 8 MiB per-file bound in preparation
+and segment loading, without a new corpus-total ceiling (see LOCAL_INPUT_PREPARATION.md).
 Eleven proposal/journey/handoff/audit file loaders share the bounded byte reader while
 keeping their original errors, per-module limits and encoding rules.
 No CLI limit override is added. See [WORKFLOWS.md](WORKFLOWS.md#shared-json-input-byte-budget).

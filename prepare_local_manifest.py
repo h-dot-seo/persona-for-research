@@ -9,7 +9,7 @@ import re
 import unicodedata
 from pathlib import Path
 
-from corpus_files import source_paths, sections, read_source_bytes
+from corpus_files import source_paths, sections, read_source_bytes, MAX_SOURCE_FILE_BYTES
 from corpus_projection import runtime_papers
 from research_workflow import build
 from strict_json import load
@@ -41,7 +41,7 @@ def prepare(selection, root):
     result={key:copy.deepcopy(selection[key]) for key in ('author_id','version','build_id')}
     result['papers']=[]
     for original,path in zip(selection['papers'],paths):
-        raw=read_source_bytes(path);digest=hashlib.sha256(raw).hexdigest()
+        raw=read_source_bytes(path, max_bytes=MAX_SOURCE_FILE_BYTES);digest=hashlib.sha256(raw).hexdigest()
         if 'source_sha256' in original and original['source_sha256']!=digest:
             raise ValueError('selected file differs from supplied byte hash: '+original['paper_id'])
         indexed=sections(raw.decode('utf-8'))

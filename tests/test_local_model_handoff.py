@@ -132,6 +132,36 @@ class LocalModelHandoffTests(unittest.TestCase):
         with self.assertRaises(ValueError): target_inventory(changed, bundle)
         with self.assertRaises(ValueError): prepare_revision(changed, bundle, review, '2', 'synthetic-next')
 
+    def test_file_ceiling_applies_without_total_and_keeps_bytes(self):
+        sizes=[(self.root/p['source_file']).stat().st_size for p in self.manifest['papers']]
+        ceiling=max(sizes);before=copy.deepcopy(self.manifest)
+        with patch('corpus_files.MAX_SOURCE_FILE_BYTES',ceiling):
+            result=load_segment_corpus(self.manifest,self.root)
+        self.assertEqual(len(result['papers']),2)
+        self.assertGreater(sum(sizes),ceiling)
+        with patch('corpus_files.MAX_SOURCE_FILE_BYTES',min(sizes)-1):
+            with self.assertRaisesRegex(ValueError,'input limit'):
+                load_segment_corpus(self.manifest,self.root)
+        self.assertEqual(before,self.manifest)
+        for p in self.manifest['papers']:
+            self.assertEqual(hashlib.sha256((self.root/p['source_file']).read_bytes()).hexdigest(),p['source_sha256'])
+
+    def test_file_limit_cannot_be_relaxed_by_larger_total(self):
+        sizes=[(self.root/p['source_file']).stat().st_size for p in self.manifest['papers']]
+        with patch('corpus_files.MAX_SOURCE_FILE_BYTES',min(sizes)-1):
+            with self.assertRaisesRegex(ValueError,'input limit'):
+                load_segment_corpus(self.manifest,self.root,max_total_bytes=sum(sizes)*2)
+        with patch('corpus_files.MAX_SOURCE_FILE_BYTES',max(sizes)):
+            with self.assertRaisesRegex(ValueError,'input limit'):
+                load_segment_corpus(self.manifest,self.root,max_total_bytes=sum(sizes)-1)
+
+    def test_effective_reader_limits_track_remaining_total(self):
+        sizes=[(self.root/p['source_file']).stat().st_size for p in self.manifest['papers']]
+        with patch('corpus_files.MAX_SOURCE_FILE_BYTES',max(sizes)), patch('corpus_files.read_source_bytes',wraps=read_source_bytes) as reader:
+            load_segment_corpus(self.manifest,self.root,max_total_bytes=sum(sizes))
+        self.assertEqual([c.kwargs['max_bytes'] for c in reader.call_args_list],
+                         [max(sizes),min(max(sizes),sizes[1])])
+
     def test_raw_total_byte_bound_and_reader_limit_fail_without_partial_corpus(self):
         total = sum((self.root/p['source_file']).stat().st_size for p in self.manifest['papers'])
         self.assertEqual(len(load_segment_corpus(self.manifest, self.root, max_total_bytes=total)['papers']), 2)
