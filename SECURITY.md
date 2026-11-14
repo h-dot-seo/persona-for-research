@@ -52,3 +52,8 @@ This does not sanitize the preserved original error: existing stderr may contain
 private parser/OS text. No additional files are read to produce the detail, and
 no validation or authorization decision changes. See
 [the exact opt-in contract](docs/MANUAL_REJECTION_DETAILS.md).
+
+The opt-in source-selection diagnostics in [SOURCE_REJECTION_DETAILS](docs/SOURCE_REJECTION_DETAILS.md)
+add only static argument labels, missing allowlisted keys and unsupported-key
+counts. They do not redact the original error line or authenticate source access
+permission. Paths, IDs and unknown key names are never added by the detail line.

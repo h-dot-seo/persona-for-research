@@ -187,10 +187,10 @@ Guide: [Workflows: paper-to-research-plan workflow](WORKFLOWS.md#paper-to-resear
 Prepare hashes and section inventory for explicitly selected local training files.
 
 ```text
-usage: prepare_local_manifest.py [-h] --source-root SOURCE_ROOT [--report-defects] [--output NEW_FILE] selection
+usage: prepare_local_manifest.py [-h] --source-root SOURCE_ROOT [--report-defects] [--explain-rejection] [--output NEW_FILE] selection
 ```
 
-Guide: [Local input preparation](LOCAL_INPUT_PREPARATION.md).
+Guide: [Local input preparation](LOCAL_INPUT_PREPARATION.md). Opt-in [source-input rejection details](SOURCE_REJECTION_DETAILS.md).
 
 ### `corpus_files.py`
 
@@ -251,10 +251,10 @@ Guide: [Revision impact](REVISION_IMPACT.md).
 Recheck every supplied source file and stored quote without changing a package.
 
 ```text
-usage: source_recheck.py [-h] [--template] [--operator-id OPERATOR_ID] [--source-root SOURCE_ROOT] [--format {json,text}] [--output NEW_FILE] package [selection]
+usage: source_recheck.py [-h] [--template] [--operator-id OPERATOR_ID] [--source-root SOURCE_ROOT] [--format {json,text}] [--explain-rejection] [--output NEW_FILE] package [selection]
 ```
 
-Guide: [Source recheck](SOURCE_RECHECK.md).
+Guide: [Source recheck](SOURCE_RECHECK.md). Opt-in [source-input rejection details](SOURCE_REJECTION_DETAILS.md).
 
 ### `topic_inventory.py`
 

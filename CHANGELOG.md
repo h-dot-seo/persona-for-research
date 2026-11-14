@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.118-source-rejection-details — 2026-11-14
+
+`prepare_local_manifest.py` and `source_recheck.py` add opt-in `--explain-rejection` for covered individual loaders and existing closed-field checks. A synthetic repair guide connects preparation, manual build and source recheck. Default errors/results and prior gate/read ordering remain unchanged; extra details do not expose unknown keys or infer cross-input causes.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-local-source-repair-diagnostics-0118-source-rejection-details).
+
 ## 0.117-manual-guide-flow — 2026-11-14
 
 A dedicated test executes four unchanged manual observation/revision guide blocks (nine commands), capturing one trailing redirection as raw stdout bytes. It checks preserved prior results, new revision/workspace bindings and incomplete templates. Two recursive unittest blocks are excluded; product behavior and CI are unchanged.

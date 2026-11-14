@@ -13,20 +13,21 @@ from corpus_files import source_paths, sections, read_source_bytes, MAX_SOURCE_F
 from corpus_projection import runtime_papers
 from research_workflow import build
 from strict_json import load
+from rejection_details import closed_rejection, load_input, exit_rejected
 
 PAPER_SELECTION_FIELDS = ('paper_id','author_id','split','runtime_knowledge_eligible','authorized','locator','kind','year','topic','source_file','observations')
 REQUIRED = set(PAPER_SELECTION_FIELDS)
 
 
-def preflight(selection, root):
+def preflight(selection, root, *, rejection_label=None):
     # Existing full-corpus authorization checks precede filesystem resolution/read.
     runtime_papers(selection)
     if set(selection) != {'author_id','version','build_id','papers'}:
-        raise ValueError('selection uses the existing corpus identity and papers fields only')
+        raise closed_rejection('selection uses the existing corpus identity and papers fields only',selection,'local-selection',rejection_label)
     provisional=copy.deepcopy(selection)
     for paper in provisional['papers']:
         if not REQUIRED <= set(paper) or set(paper)-REQUIRED-{'source_sha256','input_inventory'}:
-            raise ValueError('paper selection has missing or unsupported fields')
+            raise closed_rejection('paper selection has missing or unsupported fields',paper,'paper-selection',rejection_label)
         if paper['observations'] != []:
             raise ValueError('preparation requires empty observations; never rebaseline curated evidence')
         if type(paper['year']) is not int or not 1 <= paper['year'] <= 9999:
@@ -36,8 +37,8 @@ def preflight(selection, root):
     return source_paths(selection,root)
 
 
-def prepare(selection, root):
-    paths=preflight(selection,root)
+def prepare(selection, root, *, rejection_label=None):
+    paths=preflight(selection,root, **({'rejection_label':rejection_label} if rejection_label is not None else {}))
     result={key:copy.deepcopy(selection[key]) for key in ('author_id','version','build_id')}
     result['papers']=[]
     for original,path in zip(selection['papers'],paths):
@@ -134,8 +135,8 @@ def scan_structure(text):
         deeper_heading_lines_in_body=deeper)
 
 
-def report_defects(selection, root):
-    paths = preflight(selection, root)
+def report_defects(selection, root, *, rejection_label=None):
+    paths = preflight(selection, root, **({'rejection_label':rejection_label} if rejection_label is not None else {}))
     papers = []
     for original, path in zip(selection['papers'], paths):
         raw = read_source_bytes(path)
@@ -168,10 +169,14 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('selection',type=Path);parser.add_argument('--source-root',type=Path,required=True)
     parser.add_argument('--report-defects',action='store_true',help='report source structure without preparing a manifest')
+    parser.add_argument('--explain-rejection',action='store_true')
     add_output_argument(parser); args=parser.parse_args()
     preflight_output(parser, getattr(args, 'output', None))
-    try:result=(report_defects if args.report_defects else prepare)(load(args.selection),args.source_root)
-    except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:parser.exit(1,str(exc)+'\n')
+    try:
+        selection=load_input(load,args.selection,'selection',args.explain_rejection)
+        result=(report_defects if args.report_defects else prepare)(selection,args.source_root,
+            **({'rejection_label':'selection'} if args.explain_rejection else {}))
+    except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:exit_rejected(parser,exc,args.explain_rejection)
     emit(parser, (json.dumps(result,indent=2)+'\n').encode('utf-8'), getattr(args, 'output', None))
 
 
