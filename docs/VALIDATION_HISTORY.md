@@ -2588,3 +2588,38 @@ behavior. Eight default raw-output combinations and core AST checks also passed.
 Manifest passed 310 listed entries, audit 311 files; 183 Python files compile and
 parse Python 3.10 grammar. Dispatcher remains 56 CLIs. Exact PR/main CI is checked
 separately, not inferred from this local result.
+
+## 2026-11-14 Private folder byte inventory (0.104-folder-inventory)
+
+Roadmap #94 adjusted declare/verify slice: folder_inventory.py records sorted relative
+paths, raw-byte sizes and SHA-256; it does not parse contents or copy/execute commands.
+Explicit plain ROOT, symlink/reparse/special-file and cache refusal, external exclusive
+outputs, no clock/root identity persisted. Same folder gives the same declaration bytes.
+Verification reports missing/unlisted/changed with valid/errors and mismatch exit 1;
+READY/COMPLETE do not imply completion or approval. No payload or journey change.
+
+Up to 4096 files, 256 MiB aggregate, 1024-code-point relative paths; a documented extra
+4096-directory bound including ROOT limits empty-tree traversal. Declaration input and
+output both use explicit 16 MiB limits, unlike ordinary 8 MiB JSON defaults, permitting
+roundtrip. The existing bounded descriptor reader holds one file in memory (up to
+256 MiB plus overflow probe); it is not streaming. Second enumeration and file checks
+detect some races but do not provide an atomic snapshot or complete hostile-TOCTOU
+protection. Keep the folder quiescent and preserve the inventory/hash separately.
+Private filenames must not be published; differences are not scientific judgments,
+signatures, authenticity or verified content bindings. No HTML index or argv mapping.
+
+Only synthetic trees. Linux cannot execute the actual Windows junction fixture, which
+is skipped locally; a simulated reparse attribute refusal is separately exercised.
+The Windows CI fixture runs when the platform permits creation, otherwise explicitly
+skips; a skip is not a claim of successful live junction rejection.
+Two focused invocations used nonexistent test module names (test_skill_catalog,
+then test_skill); those loader failures were command-selection mistakes, not product
+failures. The corrected test_skill_contract invocation passed 49 tests in 11.595
+seconds with one platform skip. Independent review passed 25 tests (one platform
+skip), a separate 30-file hash oracle, exact missing/changed/unlisted classification
+and inclusive aggregate-byte limits. Its portability-wording nit was corrected:
+the lexical path checks do not promise every Windows naming restriction or cross-OS
+copy compatibility. Full suite passed 1,384 tests in 355.926 seconds with one
+Windows-only skip. Manifest passes 313 listed files and audit 314; all 185 Python
+files compile and parse Python 3.10 grammar. Dispatcher lists 57 root CLIs. Actual
+Windows junction outcomes and exact PR/main CI are verified separately.

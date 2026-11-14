@@ -45,7 +45,7 @@ or intake gate is implied; no canonical payload changes.
 
 ## Route the task
 
-For synthetic intake/selection use docs/TUTORIAL_OWN_FILES.md; never reuse fixture decisions.
+Synthetic intake: docs/TUTORIAL_OWN_FILES.md; never reuse fixture decisions.
 For local intake see docs/LOCAL_INPUT_PREPARATION.md: `prepare_local_manifest.py`
 with `--report-defects`, then prepare, `curate_local.py` template/append and
 `corpus_files.py`. For inline segments use `observation_input.py` and
@@ -60,7 +60,7 @@ respectively docs/JOURNEY_COMPARISON.md, docs/WORKFLOWS.md or
 docs/REVISION_IMPACT.md. Consultation remains a specification, not a dialogue backend.
 Updates are only partly supported by `revise_local.py`, `revision_impact.py` and
 `source_recheck.py`; read docs/MANUAL_EVIDENCE_REVISION.md and docs/SOURCE_RECHECK.md.
-Report missing operations instead of manufacturing a completed lifecycle.
+Report missing operations, never invent completion.
 
 Keep the validation axes separate: `persona.py` checks evidence bindings and
 `source_recheck.py` checks current local bytes; `evaluate_synthetic.py` is synthetic-only
@@ -69,9 +69,11 @@ Runtime validation is not shipped: `safe_canonical_read.py` is only a projection
 When contributing to this repository, `audit_publication.py` and `verify_manifest.py`
 check this repository's own files, not publication readiness of a user's persona.
 
+Folder byte checks: docs/FOLDER_INVENTORY.md, not content approval.
+
 ## Offline proposal families
 
-Read each guide; the loops are not interchangeable.
+Read each guide; loops differ.
 - `answer_proposals.py` (docs/ANSWER_PROPOSALS.md) and `argument_proposals.py`
   (docs/ARGUMENT_PROPOSALS.md): template, prepare, response-template, separately approved
   external execution, import with separate declared-provenance JSON, review-template,

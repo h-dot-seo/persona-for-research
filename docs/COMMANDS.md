@@ -852,3 +852,13 @@ usage: external_evidence.py [-h] {template,review} ...
 usage: external_evidence.py template [-h] --operator-id OPERATOR_ID --output OUTPUT package draft
 usage: external_evidence.py review [-h] [--review REVIEW] [--format {json,text}] [--output NEW_FILE] package draft sidecar
 ```
+
+### `folder_inventory.py`
+
+Private raw-byte declarations and comparisons, not approval. See [FOLDER_INVENTORY.md](FOLDER_INVENTORY.md).
+
+```text
+usage: folder_inventory.py [-h] {declare,verify} ...
+usage: folder_inventory.py declare [-h] --output NEW_FILE root
+usage: folder_inventory.py verify [-h] --root ROOT [--format {json,text}] [--output NEW_FILE] manifest
+```

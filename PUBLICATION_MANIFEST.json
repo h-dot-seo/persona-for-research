@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.103-external-display",
+  "release": "0.104-folder-inventory",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 310,
+  "file_count": 313,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 12276,
-      "sha256": "a4d21d330a3236fdb74e0bc478258926ec04c850e7dd453ac8d0546e6c83cfa8"
+      "bytes": 12706,
+      "sha256": "8846902e58af9c8e5cbcc99076567eb48b93d233edab841a3afb0f1c26817ff2"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 19433,
-      "sha256": "84ee078ce20c007e9e096e62d97cf08a6961cb26f0bfbb64f1c98bd24bf54d05"
+      "bytes": 19775,
+      "sha256": "09ee6b265b11aa9e2543c3666d5d49b741cea082b11f79a52b285e4220c53339"
     },
     {
       "path": "RIGHTS.md",
@@ -50,13 +50,13 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 8179,
-      "sha256": "978cdbe15cac6571c98f479e2a448471a2594aa1521b0cc8e2b2df8aa701896e"
+      "bytes": 8188,
+      "sha256": "eee56fe1db928d4f38cfc82a7a3ce87f54a071dcc66fe81806020d7033c06230"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 8912,
-      "sha256": "024c4fdd73a304788362e366a3b78cd6dd091d202ae68a46cfab5f2918d24d6d"
+      "bytes": 9093,
+      "sha256": "41827b584a3f71425e8f5aec170cb82ba0649a9f3796a7fcffa1fb8e7e32fb6f"
     },
     {
       "path": "answer_context.py",
@@ -215,8 +215,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 44150,
-      "sha256": "6d4e9acf9d077c7582af143e7b345347a8592536451369c817f2b8e91891b8d7"
+      "bytes": 44519,
+      "sha256": "b89626ef36edd284c541a54815e27daf712981effa26c285890ab2f1e657f49b"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -272,6 +272,11 @@
       "path": "docs/EXTRACTION_CONTRACT.md",
       "bytes": 4673,
       "sha256": "6456506a98f519e0ea0d8df9e85e171e352da0b95c4fcea5e6be29ac4baedd70"
+    },
+    {
+      "path": "docs/FOLDER_INVENTORY.md",
+      "bytes": 4683,
+      "sha256": "db31d4736470c83ebad83421be6925656a35fe91a0f97cf15cf890356fcc9b27"
     },
     {
       "path": "docs/HUMAN_VALIDATION.md",
@@ -380,8 +385,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 23639,
-      "sha256": "3c274b33ab641405348001bf85616a00f61a0eb945afedb09648caa376d288a8"
+      "bytes": 23894,
+      "sha256": "323f7dd86b81379b88e236905e271ceb2a0881eeea7fd2d335695ee095b81757"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -465,13 +470,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 181875,
-      "sha256": "8b3e2dc0a55427b4a097014f99fabfb98bc6139f6539df175d5e77aeb0688545"
+      "bytes": 184445,
+      "sha256": "d964d3f8e64f9157a966358f22a749eecbebf2beca7e197c673afaa34bbd893b"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 47754,
-      "sha256": "701701c40d6e0c5bff51cf3342ae5154606c288657b62be7ffa22c60ebba776c"
+      "bytes": 48045,
+      "sha256": "7df674c6f0c44988426ecced5f997ca019b5f2f8c8241c9b07950a057273f1f2"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -769,6 +774,11 @@
       "sha256": "21df072411b23a48d1789799f91a3067b8dd0610f2d0d087fcae0a344177f64c"
     },
     {
+      "path": "folder_inventory.py",
+      "bytes": 9037,
+      "sha256": "bc84d3cb464d8b95fa0ec5c5a15c40bb0bf841a1826521b5cdd9c789294d3f9a"
+    },
+    {
       "path": "handoff_text.py",
       "bytes": 1234,
       "sha256": "b2e8f977b9fccd8249cbe2122a05662b13ad76dc81f4fb35455c1722261c07e4"
@@ -865,8 +875,8 @@
     },
     {
       "path": "persona_cli.py",
-      "bytes": 25342,
-      "sha256": "79009fcbd1a31c7fb49140b2ca27ad4c43afcac0943f47b227c3babd7a824144"
+      "bytes": 25365,
+      "sha256": "d333693bee8d0b0a74f65d0941621140baeac2ff7a80da63fe7587e5b07dffd1"
     },
     {
       "path": "prepare_local_manifest.py",
@@ -1227,6 +1237,11 @@
       "path": "tests/test_extraction_adapter.py",
       "bytes": 6353,
       "sha256": "1a3d9840e6bf66bb565d380a495c8c78922901170f5de4f7df9b7764776e8e03"
+    },
+    {
+      "path": "tests/test_folder_inventory.py",
+      "bytes": 10595,
+      "sha256": "1324d60cea7dcca9854a8d562b92cd1eb414afe04aaee5849646dd23142808e7"
     },
     {
       "path": "tests/test_handoff_text.py",

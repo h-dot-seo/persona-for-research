@@ -97,6 +97,7 @@ Keep real inputs and generated packages outside this public repository.
 
 | Command | Purpose | Reference |
 |---|---|---|
+| `folder_inventory.py` | Declare and compare private folder raw bytes, not content approval | [Folder inventory](docs/FOLDER_INVENTORY.md) |
 | Result CLI `--output NEW_FILE` | Save exact UTF-8 results without overwrite; stdout is a hash receipt | [Exclusive output](docs/EXCLUSIVE_OUTPUT.md) |
 | `synthetic_walkthrough.py` | Run the bundled synthetic fixtures through 15 to 53 real CLI stages into a new external directory | [Quickstart](docs/QUICKSTART.md) |
 | `persona.py`, `safe_canonical_read.py` | Validate persona/knowledge hash bindings; project canonical JSON without holdout identifiers | [Architecture](docs/ARCHITECTURE.md) |
@@ -259,3 +260,7 @@ Default release reports and decisions are unchanged.
 Answer and evidence-scope CLI reports can show explicit local sidecars with
 [`--external`](docs/EXTERNAL_EVIDENCE.md#optional-answer-and-scope-display),
 separately from citations, source groups and unchanged decisions.
+
+## Private folder inventory
+
+[Folder inventory](docs/FOLDER_INVENTORY.md): declare raw file hashes before handover and verify later edits, missing or added files. Not content validation or approval.

@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.104-folder-inventory — 2026-11-14
+
+`folder_inventory.py declare/verify` records deterministic raw-byte file inventories and reports later missing, unlisted and changed files. Explicit private roots, bounded reads and exclusive external outputs; no content binding, commands, completion or approval inference.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-private-folder-byte-inventory-0104-folder-inventory).
+
 ## 0.103-external-display — 2026-11-14
 
 `answer_draft.py` and `evidence_scope.py --external` optionally append freshly checked local context in a separate top-level/text section. Default results, citation support, coverage, source groups and decisions remain unchanged; no transmission or knowledge adoption.
