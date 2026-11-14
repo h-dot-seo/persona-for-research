@@ -103,7 +103,7 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 | `persona.py`, `safe_canonical_read.py` | 페르소나/지식 해시 바인딩 검증, 홀드아웃 식별자를 제거한 투영 | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | `observation_input.py` | 제공된 텍스트 구간에 대해 관찰과 인용문을 검증한 뒤 계획 스캐폴드 생성 | [WORKFLOWS.md](WORKFLOWS.md#verified-intake-and-authorized-local-source-files) |
 | `census_import.py` | CSL-JSON/RIS의 정확 일치 목록과 미승인 선택 골격 생성 | [CENSUS_IMPORT.md](CENSUS_IMPORT.md) |
-| `tabular_export.py` | 검증한 패키지 참조를 비공개 CSV/TSV로 내보내기 | [TABULAR_EXPORT.md](TABULAR_EXPORT.md) |
+| `tabular_export.py` | 검증한 패키지 참조·결합 여정 점검 목록을 비공개 CSV/TSV로 내보내기 | [TABULAR_EXPORT.md](TABULAR_EXPORT.md) |
 | `package_overview.py` | 결합 패키지 전체 기록을 JSON 또는 수동형 비공개 HTML로 조회 | [PACKAGE_HTML.md](PACKAGE_HTML.md) |
 | `prepare_local_manifest.py`, `corpus_files.py` | 명시적으로 허가된 로컬 원문 파일의 해시·섹션 목록 준비와 적재 | [LOCAL_INPUT_PREPARATION.md](LOCAL_INPUT_PREPARATION.md) |
 | `research_workflow.py` | 운영자가 큐레이션한 관찰을 질문별 계획 스캐폴드로 적용 | [WORKFLOW_REVIEW.md](WORKFLOW_REVIEW.md) |
