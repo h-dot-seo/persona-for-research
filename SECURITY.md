@@ -34,3 +34,10 @@ Only the diagnostic display is shortened. Duplicate detection still compares the
 complete decoded keys exactly; distinct long keys are not merged, and valid input
 keys/values or original-byte hashes are not rewritten. Rejection does not grant
 authorization, choose between duplicate values or certify source content.
+
+## Bounded shared JSON reads
+
+Shared file JSON loading defaults to 8 MiB; projection stdin uses the same limit.
+Budget errors display only an ASCII-escaped, length-limited basename (or `<stdin>`),
+not the parent directory. See [WORKFLOWS.md](docs/WORKFLOWS.md#shared-json-input-byte-budget)
+for scope and compatibility: this is not a timeout, decoded-memory limit or source-size policy.

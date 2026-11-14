@@ -236,3 +236,7 @@ See [Machine-readable command discovery](docs/COMMAND_LIST.md) for the bounded J
 See [Selected command descriptions](docs/COMMAND_DESCRIPTION.md) for actual usage capture, source restrictions and invocation-only boundaries.
 
 See [Bounded command catalog](docs/COMMAND_CATALOG.md) for aggregate help discovery and complete versus partial outcomes.
+
+Shared JSON readers now reject files above 8 MiB before parsing; projection stdin is
+also bounded, and existing combined review budgets are preserved. Previously unbounded
+callers now reject oversized inputs. See [input budget scope](docs/WORKFLOWS.md#shared-json-input-byte-budget).

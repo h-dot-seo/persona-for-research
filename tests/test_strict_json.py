@@ -97,7 +97,7 @@ class StrictJsonTests(unittest.TestCase):
     def test_all_cli_boundaries_reject_ambiguous_json(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'ambiguous.json'
-            for raw in ('{"authorized":false,"authorized":true}', '{"value":NaN}'):
+            for raw in ('{"authorized":false,"authorized":true}', '{"value":NaN}', '0' + ' ' * (8 * 1024 * 1024)):
                 path.write_text(raw)
                 commands = [
                     ['research_workflow.py', str(path), '--question', 'Question', '--topic', 'model design'],
@@ -108,13 +108,130 @@ class StrictJsonTests(unittest.TestCase):
                     ['safe_canonical_read.py', str(path)]]
                 for cmd in commands:
                     result = subprocess.run([sys.executable, *cmd], capture_output=True, text=True, timeout=20)
-                    with self.subTest(script=cmd[0], raw=raw):
+                    with self.subTest(script=cmd[0], raw_size=len(raw)):
                         self.assertNotEqual(result.returncode, 0)
                         self.assertNotIn('Traceback', result.stderr)
                         if cmd[0] == 'persona.py':
                             self.assertFalse(json.loads(result.stdout)['mechanically_valid'])
                         else:
                             self.assertEqual(result.stdout, '')
+
+    def test_bounded_file_exact_default_and_plus_one(self):
+        import strict_json
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'bounded.json'
+            path.write_bytes(b'0' + b' ' * (strict_json.MAX_INPUT_BYTES - 1))
+            self.assertEqual(strict_json.load(path), 0)
+            with path.open('ab') as stream:
+                stream.write(b' ')
+            with self.assertRaisesRegex(strict_json.InputLimitError, '8 MiB'):
+                strict_json.load(path)
+            path.write_bytes(b'{} ')
+            with patch.object(strict_json, 'MAX_INPUT_BYTES', 2):
+                with self.assertRaises(strict_json.InputLimitError):
+                    strict_json.load(path)
+                self.assertEqual(strict_json.load(path, max_bytes=3), {})
+            self.assertEqual(strict_json.read_bounded(path, 3), b'{} ')
+
+    def test_bounded_stream_read_limit_short_reads_and_ownership(self):
+        import io
+        from strict_json import InputLimitError, read_bounded_stream
+        class ShortStream(io.BytesIO):
+            def __init__(self, raw):
+                super().__init__(raw)
+                self.requests = []
+            def read(self, count=-1):
+                self.requests.append(count)
+                return super().read(min(count, 2))
+        stream = ShortStream(b'123456789')
+        with self.assertRaises(InputLimitError):
+            read_bounded_stream(stream, 4)
+        self.assertEqual(stream.tell(), 5)
+        self.assertEqual(stream.requests, [5, 3, 1])
+        self.assertFalse(stream.closed)
+        self.assertEqual(read_bounded_stream(ShortStream(b'1234'), 4), b'1234')
+        self.assertEqual(read_bounded_stream(io.BytesIO(b''), 0), b'')
+        for limit in (-1, True, 1.5, None):
+            stream = ShortStream(b'0')
+            with self.assertRaises(ValueError):
+                read_bounded_stream(stream, limit)
+            self.assertEqual(stream.requests, [])
+        with self.assertRaises(TypeError):
+            read_bounded_stream(io.StringIO('0'), 1)
+
+    def test_bounded_diagnostic_escaped_and_no_directory(self):
+        import io
+        from strict_json import InputLimitError, read_bounded_stream
+        label = 'fictional\n\x1b\u202e' + 'x' * 1000
+        with self.assertRaises(InputLimitError) as caught:
+            read_bounded_stream(io.BytesIO(b'123'), 2, label=label)
+        message = str(caught.exception)
+        self.assertIn('[truncated;', message)
+        self.assertTrue(all(32 <= ord(c) <= 126 for c in message))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'fictional.json'
+            path.write_bytes(b'123')
+            from strict_json import read_bounded
+            with self.assertRaises(InputLimitError) as caught:
+                read_bounded(path, 2)
+            self.assertNotIn(directory, str(caught.exception))
+            self.assertIn('fictional.json', str(caught.exception))
+
+    def test_bounded_original_encodings_preserved(self):
+        from strict_json import load
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'encoded.json'
+            for encoding in ('utf-8-sig', 'utf-16', 'utf-32'):
+                raw = '{"fictional": "é"}'.encode(encoding)
+                path.write_bytes(raw)
+                self.assertEqual(load(path, max_bytes=len(raw)), {'fictional': 'é'})
+
+    def test_human_reader_preserves_aggregate_budget_and_message(self):
+        import human_validation
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / 'synthetic.json'
+            path.write_bytes(b'{}')
+            reader = human_validation.bounded_reader(4)
+            self.assertEqual(reader(path), {})
+            self.assertEqual(reader(path), {})
+            with self.assertRaisesRegex(ValueError, '^combined human validation inputs exceed 8 MiB$'):
+                reader(path)
+            with patch.object(human_validation, 'MAX_INPUT_BYTES', 1):
+                with self.assertRaisesRegex(ValueError, 'combined human validation'):
+                    human_validation.bounded_reader()(path)
+            # Verify the reader requests only the remaining budget, not the whole file.
+            with patch.object(human_validation, 'read_bounded', wraps=human_validation.read_bounded) as bounded:
+                reader = human_validation.bounded_reader(4)
+                reader(path); reader(path)
+                self.assertEqual([c.args[1] for c in bounded.call_args_list], [4, 2])
+
+    def test_projection_stdin_exact_budget_original_hash_and_overflow(self):
+        import strict_json
+        raw = b'{"fictional":true}'
+        raw += b' ' * (strict_json.MAX_INPUT_BYTES - len(raw))
+        command = [sys.executable, 'safe_canonical_read.py', '-', '--source-kind',
+                   'original-bytes', '--expected-original-sha256', hashlib.sha256(raw).hexdigest()]
+        result = subprocess.run(command, input=raw, capture_output=True, timeout=20)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout)['original_hash_verification'], 'VERIFIED')
+        result = subprocess.run(command, input=raw + b' ', capture_output=True, timeout=20)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(result.stdout, b'')
+        self.assertIn(b'8 MiB', result.stderr)
+        self.assertNotIn(b'Traceback', result.stderr)
+
+    def test_manifest_shared_reader_size_rejection(self):
+        from verify_manifest import verify
+        import strict_json
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'PUBLICATION_MANIFEST.json').write_bytes(b' ' * (strict_json.MAX_INPUT_BYTES + 1))
+            errors = verify(root)
+            self.assertEqual(len(errors), 1)
+            self.assertIn('manifest unreadable or invalid:', errors[0])
+            self.assertIn('8 MiB', errors[0])
 
     def test_original_byte_hash_behavior_preserved(self):
         with tempfile.TemporaryDirectory() as directory:
