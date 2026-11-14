@@ -1,5 +1,6 @@
 """Verify the exact selected public file inventory and its LF-normalized bytes."""
 import hashlib
+import argparse
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -106,7 +107,17 @@ def verify(root):
     return errors
 
 
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__, epilog='Reads the selected tree as data only; internal consistency or a limited scan is not authenticity, rights clearance or approval.')
+    parser.add_argument('root', nargs='?', type=Path, default=Path(__file__).resolve().parent,
+                        metavar='ROOT', help='Existing directory to inspect with this trusted script; defaults to the script directory')
+    args = parser.parse_args(argv)
+    if not args.root.is_dir():
+        parser.error('ROOT must be an existing directory')
+    result = verify(args.root)
+    print(json.dumps(dict(valid=not result, errors=result)))
+    return bool(result)
+
+
 if __name__ == '__main__':
-    errors = verify(Path(__file__).resolve().parent)
-    print(json.dumps(dict(valid=not errors, errors=errors)))
-    raise SystemExit(bool(errors))
+    raise SystemExit(main())

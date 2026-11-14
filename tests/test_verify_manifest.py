@@ -115,5 +115,84 @@ class ManifestTests(unittest.TestCase):
             self.assertIn('linked/synthetic.txt: symlink path not allowed', errors)
 
 
+class TrustedRootCLITests(unittest.TestCase):
+    ROOT = Path(__file__).resolve().parents[1]
+
+    def run_cli(self, script, *args, cwd=None):
+        import subprocess
+        import sys
+        return subprocess.run([sys.executable, str(self.ROOT/script), *map(str,args)],
+                              cwd=cwd, capture_output=True, timeout=30)
+
+    def target(self, root):
+        root.mkdir()
+        for name in ('verify_manifest.py','audit_publication.py','strict_json.py'):
+            (root/name).write_text('raise RuntimeError("TARGET_CODE_MUST_NOT_RUN")\n')
+        rows=[dict(path=p.name,bytes=len(p.read_bytes()),sha256=hashlib.sha256(p.read_bytes()).hexdigest())
+              for p in sorted(root.iterdir())]
+        (root/'PUBLICATION_MANIFEST.json').write_text(json.dumps(dict(files=rows,file_count=len(rows))))
+
+    def test_other_root_is_data_not_executed_and_read_only(self):
+        from audit_publication import audit
+        with tempfile.TemporaryDirectory() as td:
+            target=Path(td)/'한국어 target with spaces';self.target(target)
+            before={p.name:p.read_bytes() for p in target.iterdir()}
+            verified=self.run_cli('verify_manifest.py',target,cwd=target)
+            scanned=self.run_cli('audit_publication.py',target,cwd=target)
+            self.assertEqual(verified.returncode,0,verified.stderr)
+            self.assertEqual(json.loads(verified.stdout),dict(valid=True,errors=[]))
+            self.assertEqual(scanned.returncode,0,scanned.stderr)
+            self.assertEqual(json.loads(scanned.stdout),audit(target))
+            self.assertEqual(before,{p.name:p.read_bytes() for p in target.iterdir()})
+
+    def test_relative_root_and_invalid_inventory(self):
+        with tempfile.TemporaryDirectory() as td:
+            target=Path(td)/'target';self.target(target)
+            (target/'extra.txt').write_text('synthetic extra')
+            result=self.run_cli('verify_manifest.py','target',cwd=td)
+            self.assertEqual(result.returncode,1)
+            self.assertFalse(json.loads(result.stdout)['valid'])
+            self.assertIn('extra.txt: unlisted release file',json.loads(result.stdout)['errors'])
+
+    def test_audit_existing_prohibited_asset_contract(self):
+        with tempfile.TemporaryDirectory() as td:
+            target=Path(td)/'target';self.target(target)
+            (target/'synthetic.db').write_text('not a real database')
+            result=self.run_cli('audit_publication.py',target)
+            self.assertEqual(result.returncode,1)
+            self.assertIn('synthetic.db: prohibited public asset',json.loads(result.stdout)['errors'])
+
+    def test_invalid_root_is_usage_error_not_empty_scan(self):
+        with tempfile.TemporaryDirectory() as td:
+            file=Path(td)/'file';file.write_text('synthetic')
+            for script in ('verify_manifest.py','audit_publication.py'):
+                for path in (file,Path(td)/'missing'):
+                    with self.subTest(script=script,path=path):
+                        result=self.run_cli(script,path)
+                        self.assertEqual(result.returncode,2)
+                        self.assertEqual(result.stdout,b'')
+                        self.assertIn(b'ROOT must be an existing directory',result.stderr)
+                        self.assertNotIn(b'Traceback',result.stderr)
+
+    def test_help_never_calls_inspection(self):
+        import verify_manifest, audit_publication
+        for module,function in ((verify_manifest,'verify'),(audit_publication,'audit')):
+            with patch.object(module,function,side_effect=AssertionError('inspection during help')):
+                with self.assertRaises(SystemExit) as caught:module.main(['--help'])
+                self.assertEqual(caught.exception.code,0)
+
+    def test_default_output_and_exit_match_existing_api_from_other_cwd(self):
+        from audit_publication import audit
+        import os
+        with tempfile.TemporaryDirectory() as td:
+            for script,obj in (('verify_manifest.py',dict(valid=not verify(self.ROOT),errors=verify(self.ROOT))),
+                               ('audit_publication.py',audit(self.ROOT))):
+                result=self.run_cli(script,cwd=td)
+                expected=json.dumps(obj,ensure_ascii=False,indent=2) if script.startswith('audit') else json.dumps(obj)
+                expected=(expected+'\n').replace('\n',os.linesep).encode('utf-8')
+                self.assertEqual(result.stdout,expected)
+                self.assertEqual(result.returncode,int(not obj.get('pass',obj.get('valid'))))
+                self.assertEqual(result.stderr,b'')
+
 if __name__ == '__main__':
     unittest.main()

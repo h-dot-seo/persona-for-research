@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Check a deliberately selected public file set; not an anonymizer or legal audit."""
+import argparse
 import json
 import re
 from pathlib import Path
@@ -40,7 +41,17 @@ def audit(root):
             'scope': 'limited file/type/pattern checks; manual review still required'}
 
 
-if __name__ == '__main__':
-    result = audit(Path(__file__).resolve().parent)
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__, epilog='Reads the selected tree as data only; internal consistency or a limited scan is not authenticity, rights clearance or approval.')
+    parser.add_argument('root', nargs='?', type=Path, default=Path(__file__).resolve().parent,
+                        metavar='ROOT', help='Existing directory to inspect with this trusted script; defaults to the script directory')
+    args = parser.parse_args(argv)
+    if not args.root.is_dir():
+        parser.error('ROOT must be an existing directory')
+    result = audit(args.root)
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    raise SystemExit(int(not result['pass']))
+    return int(not result['pass'])
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

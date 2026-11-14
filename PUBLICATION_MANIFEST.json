@@ -1,6 +1,6 @@
 {
   "project": "persona-for-research",
-  "release": "0.89-source-file-bound",
+  "release": "0.90-selected-publication-root",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
@@ -25,8 +25,8 @@
     },
     {
       "path": "PUBLICATION.md",
-      "bytes": 1600,
-      "sha256": "90a1fba0481a79195865ecfdeeaad8e6e1653a7f1529c77a61650281228328f6"
+      "bytes": 2878,
+      "sha256": "d5193e7cd085bc4c0f562238feee47827a48020fa70e3ab4bbe075f12925dfa3"
     },
     {
       "path": "README.md",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 5820,
-      "sha256": "a7ce67e3c0f391e9d23ac966febdae768b8d7f5ead3a6c2f459a334c863779df"
+      "bytes": 6005,
+      "sha256": "3ca0ae40681f0cb93f479201f0e5cb262f614fc4f019344422be3eb8ca718550"
     },
     {
       "path": "answer_context.py",
@@ -100,8 +100,8 @@
     },
     {
       "path": "audit_publication.py",
-      "bytes": 1969,
-      "sha256": "349bfe9f189da2beaee4d655ba05b8f080f79b5fe7518097eafb6beea5459d08"
+      "bytes": 2557,
+      "sha256": "6de70131f17724f79125e1acf3b4defad663f17c986f3aa8ddd98ac61db55ff5"
     },
     {
       "path": "candidate_challenge.py",
@@ -200,18 +200,18 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 40932,
-      "sha256": "0ddedd3018a5279fa76122b64bfecb7664f13b45ab1c8b130eee44689420e7c8"
+      "bytes": 40632,
+      "sha256": "7cfd3f289f538adb5c2ef7f7e222ee1528984d1696f2fd1ce9a6643ceeca8266"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
-      "bytes": 3932,
-      "sha256": "6bf5a802315c63cd6c3f3e7bc4c626ee604927e0ff0e77e9366e5a4f3a2bc088"
+      "bytes": 4027,
+      "sha256": "c06db48baf2f07fc5d2cb51ec874fc8fa4ef82685abb24fc9c523c4eceb29907"
     },
     {
       "path": "docs/COMMAND_DESCRIPTION.md",
-      "bytes": 4025,
-      "sha256": "5e7af87492f9cd00281c227a6e4d0a3ac3ccb97a4fa306c77e5198aa9ab79549"
+      "bytes": 4053,
+      "sha256": "49362b3ab381ad964959865983db0e0aefb96425f397abf25d4be4239a786c1f"
     },
     {
       "path": "docs/COMMAND_LIST.md",
@@ -430,8 +430,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 152340,
-      "sha256": "0a60d8a14c93dd7dfd8b2d8326a0de032658f53f9ff9240bd565a415ed572ccf"
+      "bytes": 153674,
+      "sha256": "28c50b2f5dc4a34f973bcadfdee36a8374a411f898f88e80070abab3ea8fd6dd"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1005,13 +1005,13 @@
     },
     {
       "path": "tests/test_command_catalog.py",
-      "bytes": 8112,
-      "sha256": "b46684385c397fc88e517fb7b31a8d2ac3419eae0b88e9c4d2cd30325948ad5c"
+      "bytes": 8262,
+      "sha256": "ddf4e5fb78186d7891f15feb70be3d6354d4b18dab180c568e0ddbdb19e9da51"
     },
     {
       "path": "tests/test_command_description.py",
-      "bytes": 10031,
-      "sha256": "d5d7736afddc1e91d1abc4ac0c4ce10ce51a5c192ee669a5980ff81b6b737cfc"
+      "bytes": 10170,
+      "sha256": "913b0333664e429be355a356cf814991979572630cb5dd6300e2923fa5fb021d"
     },
     {
       "path": "tests/test_command_list_json.py",
@@ -1380,8 +1380,8 @@
     },
     {
       "path": "tests/test_verify_manifest.py",
-      "bytes": 5814,
-      "sha256": "27de5cf31e76d679e8d3cab88cc878d15c86447001416cf5de323c4237820d1c"
+      "bytes": 10417,
+      "sha256": "f1a6598cb7952ba48ccd5fbaf63f7482db305ec8225eb2dfe41e83ff3b4e745b"
     },
     {
       "path": "tests/test_workflow_roundtrip.py",
@@ -1400,8 +1400,8 @@
     },
     {
       "path": "verify_manifest.py",
-      "bytes": 4323,
-      "sha256": "1b3fd802b5db2493a7945aa670867a02eb98a7cc89ce9ad93224848a62490f7c"
+      "bytes": 4911,
+      "sha256": "7671f06243a8c3c8c439cf396cc5b039148ad64dcbc098d4f0df82263391613d"
     }
   ]
 }

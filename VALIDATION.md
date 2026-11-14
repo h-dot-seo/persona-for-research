@@ -1,11 +1,13 @@
 # Validation record
 
-Current release: `0.89-source-file-bound`, 2026-11-14. This file is the current
+Current release: `0.90-selected-publication-root`, 2026-11-14. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
+
+- 2026-11-14 Trusted publication checks on selected ROOT (`0.90-selected-publication-root`): optional target directory without executing target code; default output preserved.
 
 - 2026-11-14 Per-file local source bound (`0.89-source-file-bound`): 8 MiB per selected source, existing aggregate budgets preserved, no new corpus-total default.
 
@@ -54,7 +56,7 @@ external model/search behaviour or scientific meaning.
 
 From the repository root, with Python 3.10 or later and no third-party packages:
 
-- `python -m unittest discover -q` — the current tree runs 1206 synthetic tests
+- `python -m unittest discover -q` — the current tree runs 1212 synthetic tests
   (platform-specific cases may skip on other hosts). The final local verification result is recorded in the release history. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.

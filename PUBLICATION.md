@@ -23,3 +23,27 @@ portable paths are rejected. Ignored metadata must not be included in release pa
 A source hash identifies supplied bytes; it does not authenticate a publication or
 establish scholarly support, personal consent or redistribution rights. Exact inventory
 and pattern scanning do not replace manual selection, rights or sensitive-content review.
+
+
+## Inspect another tree without executing its code
+
+Use the scripts from a checkout you trust and explicitly select an existing directory:
+
+```text
+python /trusted/persona/verify_manifest.py /selected/unpacked-tree
+python /trusted/persona/audit_publication.py /selected/unpacked-tree
+```
+
+The selected tree is read as data; its scripts and modules are not imported or executed.
+Without ROOT, both commands still inspect the directory containing their own script,
+not the working directory. JSON output and normal check exit codes remain unchanged:
+0 for passing, 1 for reported check failures. Missing/non-directory ROOT and malformed
+arguments exit 2 with a usage diagnostic; --help does not inspect any tree. No files are
+written, targets are not repaired, and the two checks remain separate.
+
+A manifest check proves only internal agreement with the selected tree's own declared
+inventory and bytes, not authenticity or a signature. Audit is a limited pattern/type
+scan, not rights clearance, anonymity or publication approval. Existing symlink/path
+checks are unchanged; this is not a hostile-filesystem sandbox or a new resource/time
+bound. Filenames and existing diagnostics may contain private information. No claim
+is made about untested tag/archive byte equivalence.
