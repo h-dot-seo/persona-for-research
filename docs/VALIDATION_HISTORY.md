@@ -2495,3 +2495,28 @@ no blocker remained. A reviewer test-module typo was corrected before the succes
 36-test rerun; it was not a product failure. Manifest passed for 303 listed files, audit
 for 304 text files; all 179 Python files compile and parse Python 3.10 grammar. Dispatcher
 lists 55 root CLIs. Exact remote PR/main CI is checked separately.
+
+## 2026-11-14 Optional release rule view (0.101-release-rule-view)
+
+Roadmap #74 adjusted opt-in release-comparison attachment. compare_releases.py accepts
+--rule-correspondence and only then appends the standalone tool's exact current result at
+a new top-level key. compare() itself, default serialization/status and existing reports are
+unchanged. The attachment does not promote or demote the release decision, authorize a
+release, re-resolve old human records or transfer citations. HV/STALE/attribution/axes and
+revision_impact are untouched. Existing rule_correspondence.py and fixtures remain byte
+identical. No identity inference or model/network action.
+
+The option alone reads both files under one shared 8 MiB budget and bounds the complete
+combined result to 16 MiB before emission. Default input and output behavior stays unchanged.
+It also requires validated_source_rules, so an inconsistent but hash-bound rule/source pair
+that legacy compare accepts may be rejected in the optional view; this is explicitly
+shown in the guide and regression. Existing external exclusive output preflight and no
+partial stdout behavior remain. Guide tokenization precedes native path substitution.
+Only synthetic inputs. All 1,338 tests passed in 334.627 seconds; expanded focused
+suite passed 87 in 20.140 seconds. Independent review passed 46 tests, confirmed prior
+and current same/reordered default CLI exit/stdout/stderr bytes identical, compare()
+and checked_package() ASTs unchanged and standalone rule tool bytes unchanged. Five
+extra malformed duplicate/nonfinite/UTF-8/deep/null inputs rejected with exit 1, empty
+stdout, no output file and no traceback. No blocker remained. Manifest passed for 304
+listed files; audit for 305 text files; 180 Python files compile and parse Python 3.10
+grammar. Exact remote PR/main CI is checked separately.

@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.101-release-rule-view — 2026-11-14
+
+`compare_releases.py --rule-correspondence` optionally attaches fresh exact rule-record correspondence. Default compare() reports/status/stdout are unchanged; the option alone uses stricter source/rule checks, combined input budget and complete combined-output budget.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-optional-release-rule-view-0101-release-rule-view).
+
 ## 0.100-rule-correspondence — 2026-11-14
 
 `rule_correspondence.py inventory/compare` derives exact rule/observation/component hashes from bound packages and shows positional correspondence, ambiguous duplicates and manual locator groups. No stable-ID claim, semantic matching, stale-review rebinding or payload change.

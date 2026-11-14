@@ -58,17 +58,39 @@ def compare(previous, candidate):
                  'does not approve a release or replace either canonical package.')
 
 
+MAX_CORRESPONDENCE_OUTPUT_BYTES = 16 * 1024 * 1024
+
+
+def correspondence_output(previous_path, candidate_path):
+    """Opt-in combined-budget view; never change compare() or its default report."""
+    from rule_correspondence import bounded_reader, compare as rule_compare
+    read = bounded_reader()
+    previous, candidate = read(previous_path), read(candidate_path)
+    result = compare(previous, candidate)
+    result['rule_correspondence'] = rule_compare(previous, candidate)
+    raw = (json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8')
+    if len(raw) > MAX_CORRESPONDENCE_OUTPUT_BYTES:
+        raise ValueError('combined release and rule correspondence output exceeds 16 MiB')
+    return raw
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('previous', type=Path)
     parser.add_argument('candidate', type=Path)
+    parser.add_argument('--rule-correspondence', action='store_true',
+                        help='Append exact rule-record correspondence; stricter source/rule checks and combined budgets')
     add_output_argument(parser); args = parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
     try:
-        result = compare(load(args.previous), load(args.candidate))
+        if args.rule_correspondence:
+            raw = correspondence_output(args.previous, args.candidate)
+        else:
+            result = compare(load(args.previous), load(args.candidate))
+            raw = (json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8')
     except (ValueError, OSError, KeyError, TypeError) as exc:
         parser.exit(1, str(exc) + '\n')
-    emit(parser, (json.dumps(result, ensure_ascii=False, indent=2) + '\n').encode('utf-8'), getattr(args, 'output', None))
+    emit(parser, raw, getattr(args, 'output', None))
 
 
 if __name__ == '__main__':

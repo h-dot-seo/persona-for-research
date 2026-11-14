@@ -283,7 +283,7 @@ Guide: [Evidence details](EVIDENCE_DETAILS.md), [Human validation](HUMAN_VALIDAT
 Read-only comparison of bound evidence packages; never update canonical policy.
 
 ```text
-usage: compare_releases.py [-h] [--output NEW_FILE] previous candidate
+usage: compare_releases.py [-h] [--rule-correspondence] [--output NEW_FILE] previous candidate
 ```
 
 Guide: [Workflows: review a candidate release and a bound package](WORKFLOWS.md#review-a-candidate-release-and-a-bound-package), [Workflow review](WORKFLOW_REVIEW.md).
