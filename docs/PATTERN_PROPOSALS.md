@@ -238,3 +238,5 @@ python pattern_proposals.py prepare OUTPUT/package.json --topic "model design" -
 Keep the JSON handoff for import; `response-template` remains JSON-only. The text
 is not permission to transmit and makes no model call. See the complete format and
 size boundaries in [Model handoff](MODEL_HANDOFF.md#pasteable-local-handoff-view).
+
+For a copied single-message JSON fence, use [literal response extraction](HANDOFF_PACKET.md), then this guide's unchanged importer. Extraction does not authenticate model execution or supply provenance.

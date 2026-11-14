@@ -790,3 +790,7 @@ contamination. No answer/journey/handoff integration or external transmission oc
 ## Preserve a private review folder
 
 Use [folder_inventory.py declare/verify](FOLDER_INVENTORY.md) to compare raw file bytes before and after handover. Keep the declaration outside the folder and repository. This does not interpret READY/COMPLETE, run commands, or verify content bindings.
+
+## Copy a handoff response from one message
+
+[Literal response extraction](HANDOFF_PACKET.md) preserves a selected bound JSON fence for the unchanged importer. Multiple matches require an explicit occurrence. No role detection, provenance filling or approval.

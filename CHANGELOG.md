@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.105-literal-response — 2026-11-14
+
+`handoff_packet.py extract-response` selects literal bound JSON fences from one explicit UTF-8 message, preserving bytes and recording offsets/hashes in a new private output directory. No role, model, provenance, semantic or approval inference; existing prepare/render/import remain unchanged.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-literal-bound-response-extraction-0105-literal-response).
+
 ## 0.104-folder-inventory — 2026-11-14
 
 `folder_inventory.py declare/verify` records deterministic raw-byte file inventories and reports later missing, unlisted and changed files. Explicit private roots, bounded reads and exclusive external outputs; no content binding, commands, completion or approval inference.
