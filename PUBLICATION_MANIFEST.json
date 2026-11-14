@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.106-test-observations",
+  "release": "0.107-capacity-observations",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 320,
+  "file_count": 324,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 13624,
-      "sha256": "321d12e7ea292242349a43be91ad8022cc5e52a483753e275290bdca5c263955"
+      "bytes": 14077,
+      "sha256": "f14da9dad44a55a87ee517bd435a6c2629408a26005db2790ec907c4b6ddc25b"
     },
     {
       "path": "PUBLICATION.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 9597,
-      "sha256": "d05bb66f55c763b67d0b351eb06351d7c096b3b11ef06569e921d67b7e701e17"
+      "bytes": 9872,
+      "sha256": "0f0cb113621ffdfe057a9bf385e27682d637a2f36f1b1b19944cf7143b03da4f"
     },
     {
       "path": "answer_context.py",
@@ -199,6 +199,11 @@
       "sha256": "cf6fc6f772fdc8148a447499f26be959a983bf96a76a59869a6ce2a9cf637532"
     },
     {
+      "path": "docs/CAPACITY.md",
+      "bytes": 5301,
+      "sha256": "e0999912beb2d663a101146d53fc23138263a6c2d8dd7352ddf92cdf8b3d9b9b"
+    },
+    {
       "path": "docs/CENSUS_IMPORT.md",
       "bytes": 8101,
       "sha256": "de8a8a0579f46c5281fb96e30256c1c19f3f11dfb53e78be2ea2e79f4e5ce297"
@@ -215,8 +220,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 45078,
-      "sha256": "e05aa79f3969b45a23ff648bb56df99ad512987258fcacad5ed956e30438ac23"
+      "bytes": 45340,
+      "sha256": "bc89ab54667b677560101c190af760f6b87539ca4702748abc6e28780c4e8524"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -460,8 +465,8 @@
     },
     {
       "path": "docs/TEST_TIMING.md",
-      "bytes": 3158,
-      "sha256": "915103d444b0fdfa4392841dd02a3adf31d67cf1f625731dce5d68ded063064c"
+      "bytes": 3388,
+      "sha256": "1cf852135d7ff6c45cef053545ac76c7f98369d6cf0870ddb30ec63241b92093"
     },
     {
       "path": "docs/TOPIC_DISCOVERY.md",
@@ -480,8 +485,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 190600,
-      "sha256": "d479d1a1749e7303d63255de4e9228000bd1b0ded558a727f44c9c21cc27efac"
+      "bytes": 193692,
+      "sha256": "93af6df6c5c00eb042fd9de77abf990d899fe4971abe4e9b721d4b12db3635d7"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1019,6 +1024,16 @@
       "sha256": "30eab2d899d9a4de692a93453c845ce4271b608adcb51927d07f3210b6c7add5"
     },
     {
+      "path": "tests/capacity.py",
+      "bytes": 7360,
+      "sha256": "1326db6a744effb9e640e9515aa422018f26ca082028b32af7f50604dbb069cc"
+    },
+    {
+      "path": "tests/scale_fixture.py",
+      "bytes": 3961,
+      "sha256": "d86074a692a593dbbcdb81c519735d13850c59e9150e0200aab879197e566dcd"
+    },
+    {
       "path": "tests/test_answer_context.py",
       "bytes": 16305,
       "sha256": "0c1096977903c7cbcf71f0c9c587d6c4266762f095055700817be54341c99668"
@@ -1502,6 +1517,11 @@
       "path": "tests/test_runtime_authorization.py",
       "bytes": 2595,
       "sha256": "424d07f6a638425fc6ff851d65881e1831f7496d321892d1b51b27746605c5f2"
+    },
+    {
+      "path": "tests/test_scale_bounds.py",
+      "bytes": 7579,
+      "sha256": "fcdba5e946410e1059aeb4214990fd50729147b46b8e650806e868800ea4b541"
     },
     {
       "path": "tests/test_skill_contract.py",

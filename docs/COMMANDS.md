@@ -877,3 +877,9 @@ usage: handoff_packet.py extract-response [-h] --output-dir NEW_DIR [--occurrenc
 `python -m tests.timing [tests.test_MODULE ...]` observes published synthetic test
 modules in one fresh worker. It is not a root product CLI; normal unittest and CI
 remain unchanged. See [TEST_TIMING.md](TEST_TIMING.md).
+
+### Optional synthetic capacity grid
+
+`python -m tests.capacity NEW_DIR [--case N,K,C,S ...]` observes the fixed synthetic
+public-API journey workload. This tests-package runner is not a product CLI or a
+new product input limit. See [CAPACITY.md](CAPACITY.md).
