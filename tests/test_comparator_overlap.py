@@ -2,6 +2,7 @@
 import copy
 import io
 import json
+import os
 from pathlib import Path
 import re
 import shlex
@@ -97,7 +98,7 @@ class ComparatorTests(unittest.TestCase):
                 self.assertEqual(ex.exception.code,1);self.assertEqual(out.buffer.getvalue(),b'')
             b.write_bytes(b'{"schema":null,"schema":null}')
             proc=subprocess.run([sys.executable,str(ROOT/'comparator_overlap.py'),str(a),str(b),'--topic',self.topic],capture_output=True)
-            self.assertEqual((proc.returncode,proc.stdout,proc.stderr),(1,b'',b'Comparator inventory failed.\n'))
+            self.assertEqual((proc.returncode,proc.stdout,proc.stderr),(1,b'',('Comparator inventory failed.'+os.linesep).encode('ascii')))
     def test_whole_output_budget_and_exact_aggregate_boundary(self):
         with tempfile.TemporaryDirectory() as d:
             a=Path(d)/'package.json';b=Path(d)/'comparator.json'

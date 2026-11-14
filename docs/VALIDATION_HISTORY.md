@@ -2954,3 +2954,16 @@ Final tree contains1467 tests,200 Python files,343 manifest entries and344 audit
 CLI60 and SKILL8187 bytes. Metadata and manifest are frozen before final independent
 Git-tree and full verification; exact outcomes/timing are recorded externally without
 changing the tree during those runs. Browser UI or real comparator efficacy is not claimed.
+
+
+Windows CI fixture correction: initial PR45 head36053e49cba4a2b68a34c099fc154ed29fa8880e
+run43633475811 failed the new fixed-error assertion on Windows: argparse native
+stderr ended CRLF while the test incorrectly required LF. Product exit1, empty
+stdout and error wording were correct. Both round41 and dependent round42 now
+compare exact native stderr bytes via os.linesep, without stripping or normalizing
+content. All new stdout/stderr checks were inspected: binary stdout.buffer golden
+bytes remain LF by product contract; in-process StringIO and empty stderr tests
+are separate. Focused41 nine tests passed; dependent42 nineteen passed(skip1
+native Windows source-path test). Product files are unchanged by this fix.
+Initial frozen full1467/385.054 seconds is preserved; corrected final full and
+Windows CI must be verified on the newly frozen tree before merging.

@@ -515,8 +515,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 208433,
-      "sha256": "985e2030a3041f939bbdedc2aadb90ec60c68c5f9ec7bfae592d6e0515f687ef"
+      "bytes": 209306,
+      "sha256": "64edd9f816e380620b54769ed9a0ea8c64faa5cc9ddc4a742034793498ecc08b"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1250,8 +1250,8 @@
     },
     {
       "path": "tests/test_comparator_overlap.py",
-      "bytes": 10394,
-      "sha256": "e4124d39e9255e50c6a4ea9ffaa7c3df320a6da0f0412121a4e50d4b3a82b529"
+      "bytes": 10430,
+      "sha256": "601482f7e911504d077693297dd48defb276071515feb307f0df709a0560cbb1"
     },
     {
       "path": "tests/test_compare_releases.py",
