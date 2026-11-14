@@ -63,13 +63,15 @@ manually inspected mappings. Current entries cover three guides:
   is **not** successful manual authoring or real operator review.
 
 Each entry records the exact test method, full/partial/expected-rejection coverage,
-substitution and manual-step description. Test function AST hashes detect changed
-bodies without treating line-number changes as semantic changes. This is a reviewed
+substitution and manual-step description. Test method source hashes use the exact `ast.get_source_segment` definition/body
+after CRLF/CR-to-LF normalization. AST is used only to select the named method;
+Python-version-specific AST fields do not enter the hash. Formatting changes inside
+the selected segment become stale; moving it to another line alone does not. This is a reviewed
 ownership pointer, not proof of runtime behavior: transitively called helper bodies, imports and fixture changes are not bound by the
-method AST hash. These changes and an incorrectly authored registry entry require
+method source hash. These changes and an incorrectly authored registry entry require
 separate review. Existence of the
 method or a Markdown filename in source is not sufficient evidence of execution.
-Changed block body or test AST becomes `STALE_EVIDENCE`; deleted/moved registered
+Changed block body or test method source becomes `STALE_EVIDENCE`; deleted/moved registered
 blocks produce errors. No new block automatically inherits an execution claim.
 Other guides and evolving release/validation metadata remain `NOT_REVIEWED`.
 The report always has `guide_execution_performed: false`.

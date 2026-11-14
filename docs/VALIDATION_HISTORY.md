@@ -3095,3 +3095,21 @@ Final tree contains1498 tests,206 Python files,356 manifest entries and357 audit
 CLI60/SKILL8187 unchanged. Product/root implementations and CI are unchanged. Metadata
 and manifest are frozen before final full/independent Git-tree verification; final
 results and timing are recorded externally without moving the tree during runs.
+
+
+Pre-merge CI correction for this release: initial tree 99d754c31618737c3341ce7b23dd991b787c69e7
+passed 1498 local tests in 362.274 seconds (skip2), but PR run43649774013 failed.
+Ubuntu3.10 reported1 error in426.548 seconds; Windows3.10 reported4 errors
+in418.275 seconds; Windows3.12 reported3 errors in535.697 seconds. Ubuntu3.12 passed.
+The test-owner digest used ast.dump, whose FunctionDef fields differ between
+Python3.10 and3.12. It now selects the named method with AST but hashes its exact
+source segment after CRLF/CR-to-LF normalization, using test_source_sha256.
+Formatting changes in that segment invalidate evidence; line-number moves alone
+do not. This still does not bind transitive helper/import/fixture contents.
+Separately, three synthetic tests patched ROOT with a Windows short-name spelling
+while targets were resolved to long paths. Fixture ROOT is now resolved before
+patching, with a child/../root alias regression. Runtime fixed ROOT was already
+resolved; no product path policy was changed. New regressions cover differing AST
+fields, source formatting and line endings. Corrected tree contains1500 tests;
+other file counts are unchanged. Local Python3.10 and native Windows were unavailable,
+so synthetic regressions do not replace the new CI matrix verification.

@@ -158,6 +158,15 @@ def _files():
     return result
 
 
+def method_source_sha256(source,node):
+    """Hash exact selected method source after universal LF normalization, not AST fields."""
+    import ast
+    source=source.replace('\r\n','\n').replace('\r','\n')
+    segment=ast.get_source_segment(source,node)
+    if segment is None:raise ValueError('selected method source unavailable')
+    return hashlib.sha256(segment.encode('utf-8')).hexdigest()
+
+
 def audit():
     remaining=MAX_INPUT_BYTES;documents={};parsed={}
     for path in _files():
@@ -170,10 +179,10 @@ def audit():
     if not isinstance(registry,list):raise ValueError('invalid block evidence registry')
     indexed={};errors=[];unresolved=[];external=0;checked=0;blocks=[]
     for row in registry:
-        if set(row)!={'path','ordinal','raw_sha256','test','test_ast_sha256','coverage','substitution','manual_steps','note'}:raise ValueError('invalid block evidence row')
+        if set(row)!={'path','ordinal','raw_sha256','test','test_source_sha256','coverage','substitution','manual_steps','note'}:raise ValueError('invalid block evidence row')
         if (type(row['ordinal']) is not int or row['ordinal']<1 or row['coverage'] not in ('FULL_BLOCK','FULL_BLOCK_EXPECTED_REJECTION','PARTIAL_BLOCK')
-                or any(not isinstance(row[k],str) for k in ('path','raw_sha256','test','test_ast_sha256','substitution','manual_steps','note'))
-                or any(re.fullmatch('[0-9a-f]{64}',row[k]) is None for k in ('raw_sha256','test_ast_sha256'))):raise ValueError('invalid block evidence metadata')
+                or any(not isinstance(row[k],str) for k in ('path','raw_sha256','test','test_source_sha256','substitution','manual_steps','note'))
+                or any(re.fullmatch('[0-9a-f]{64}',row[k]) is None for k in ('raw_sha256','test_source_sha256'))):raise ValueError('invalid block evidence metadata')
         key=(row['path'],row['ordinal'])
         if key in indexed:raise ValueError('duplicate block evidence')
         indexed[key]=row
@@ -206,10 +215,11 @@ def audit():
                 path=ROOT/'tests'/(parts[1]+'.py')
                 if path.is_symlink() or path.resolve().parent!=(ROOT/'tests').resolve():raise ValueError('test evidence outside fixed scope')
                 raw=read_bounded(path,remaining);remaining-=len(raw)
-                tree=ast.parse(raw.decode());classes=[n for n in tree.body if isinstance(n,ast.ClassDef) and n.name==parts[2]]
+                source=raw.decode('utf-8').replace('\r\n','\n').replace('\r','\n')
+                tree=ast.parse(source);classes=[n for n in tree.body if isinstance(n,ast.ClassDef) and n.name==parts[2]]
                 functions=[n for cl in classes for n in cl.body if isinstance(n,ast.FunctionDef) and n.name==parts[3]]
                 if len(functions)!=1:errors.append(dict(path=name,code='MISSING_EVIDENCE_TEST'));state='STALE_EVIDENCE'
-                elif hashlib.sha256(ast.dump(functions[0],include_attributes=False).encode()).hexdigest()!=evidence['test_ast_sha256']:
+                elif method_source_sha256(source,functions[0])!=evidence['test_source_sha256']:
                     errors.append(dict(path=name,code='CHANGED_EVIDENCE_TEST'));state='STALE_EVIDENCE'
             blocks.append(dict(path=name,**block,state=state,evidence=evidence))
     for key in indexed.keys()-used:errors.append(dict(path=key[0],ordinal=key[1],code='MISSING_REGISTERED_BLOCK'))

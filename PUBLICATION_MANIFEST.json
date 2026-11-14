@@ -56,7 +56,7 @@
     {
       "path": "VALIDATION.md",
       "bytes": 11488,
-      "sha256": "2a594e1e66b86b15648b33c756d486c2bcd83651ba80c64e9c29109bbbaf6332"
+      "sha256": "2d2011d4a3891d2a245d149d504b606d3107060e06124cea7b8e1a7727be0cc1"
     },
     {
       "path": "answer_context.py",
@@ -280,8 +280,8 @@
     },
     {
       "path": "docs/DOCUMENTATION_AUDIT.md",
-      "bytes": 5904,
-      "sha256": "2aeb77facc780926678ebc0ce8e29e2c883092e88fed6e352e163ad409f25499"
+      "bytes": 6134,
+      "sha256": "2df82ce354ea79934cebd251333706abf3a6832631681d49ba7d78fa8fb09bf7"
     },
     {
       "path": "docs/EDITOR_SCHEMAS.md",
@@ -535,8 +535,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 218092,
-      "sha256": "602aaedd14c57903cb9ee7e426dae76183d4507dbf86d6166be338903e6ad2ee"
+      "bytes": 219385,
+      "sha256": "47d66e9af223bee2c0bcb9015d9a4a0d78e6b187350a9d1490e4a67416f85416"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1135,13 +1135,13 @@
     },
     {
       "path": "tests/doc_block_evidence.json",
-      "bytes": 2076,
-      "sha256": "0939aeab084892e76ac9a3872454429950148cc6eb058a16c0e06307c196aafd"
+      "bytes": 2085,
+      "sha256": "4026becc2aeb2d8b80207895aee1f3c52ed87e78aa81b050001dddbb9a9cbdf9"
     },
     {
       "path": "tests/doc_conformance.py",
-      "bytes": 13854,
-      "sha256": "e59874e3012dbecdb18cadff283821f8e64ecb4d28d9c29e361f17f62bbe7980"
+      "bytes": 14297,
+      "sha256": "76877bc6650bb7bceed34d03bd95168e6f65675f4e533a82a1ed24dd537bee3a"
     },
     {
       "path": "tests/scale_fixture.py",
@@ -1380,8 +1380,8 @@
     },
     {
       "path": "tests/test_doc_conformance.py",
-      "bytes": 8039,
-      "sha256": "6e57eeddff3a2c589cdd3f4c6ada0cc2403cd51a6cb1f9444b9b75136c18e461"
+      "bytes": 9831,
+      "sha256": "e1c729cacb027b01195e880cb9164b70f01d4508ee5e8fdabf96916fdeaa9622"
     },
     {
       "path": "tests/test_editor_schemas.py",

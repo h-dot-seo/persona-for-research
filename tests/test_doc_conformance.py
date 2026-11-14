@@ -44,7 +44,7 @@ python ignored.py
             self.assertEqual(result['headings'],[])
             self.assertIn('UNRESOLVED_COMPLEX_HEADING',[x['code'] for x in result['unresolved']])
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);self.make_root(root)
+            root=Path(td).resolve();self.make_root(root)
             (root/'README.md').write_text('[anchor](docs/a.md#label)\n')
             (root/'docs/a.md').write_text('# [Label][ref]\n[ref]: ../README.md\n')
             with patch.object(d,'ROOT',root):report=d.audit()
@@ -72,7 +72,7 @@ python ignored.py
         (path/'docs/a.md').write_bytes('# 한글\n```sh\npython synthetic.py\n```\n'.encode())
     def test_real_resolution_and_budget_no_external_calls(self):
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);self.make_root(root)
+            root=Path(td).resolve();self.make_root(root)
             with patch.object(d,'ROOT',root),patch('socket.socket',side_effect=AssertionError('network')),patch('subprocess.run',side_effect=AssertionError('execution')):
                 report=d.audit()
                 self.assertEqual(report['status'],'REVIEW_REQUIRED');self.assertEqual(report['checked_local_links'],1)
@@ -84,11 +84,11 @@ python ignored.py
     def test_stale_block_or_test_never_inherits_execution_evidence(self):
         import ast,hashlib
         with tempfile.TemporaryDirectory() as td:
-            root=Path(td);self.make_root(root)
+            root=Path(td).resolve();self.make_root(root)
             test='class Owner:\n    def test_guide(self):\n        pass\n';(root/'tests/test_owner.py').write_text(test)
             node=ast.parse(test).body[0].body[0]
             block=d.parse_markdown((root/'docs/a.md').read_text())['blocks'][0]
-            row=dict(path='docs/a.md',ordinal=1,raw_sha256=block['raw_sha256'],test='tests.test_owner.Owner.test_guide',test_ast_sha256=hashlib.sha256(ast.dump(node,include_attributes=False).encode()).hexdigest(),coverage='PARTIAL_BLOCK',substitution='Synthetic declared partial fixture',manual_steps='Explicit fixture step',note='Test existence alone is not proof; this is a synthetic registry test.')
+            row=dict(path='docs/a.md',ordinal=1,raw_sha256=block['raw_sha256'],test='tests.test_owner.Owner.test_guide',test_source_sha256=d.method_source_sha256(test,node),coverage='PARTIAL_BLOCK',substitution='Synthetic declared partial fixture',manual_steps='Explicit fixture step',note='Test existence alone is not proof; this is a synthetic registry test.')
             reg=root/'tests/doc_block_evidence.json';reg.write_text(json.dumps([row]))
             with patch.object(d,'ROOT',root):
                 self.assertEqual(d.audit()['blocks'][0]['state'],'EXISTING_TEST_RECORD')
@@ -96,6 +96,27 @@ python ignored.py
                 self.assertEqual(d.audit()['blocks'][0]['state'],'STALE_EVIDENCE')
                 (root/'tests/test_owner.py').write_text(test.replace('pass','return 1'))
                 self.assertIn('CHANGED_EVIDENCE_TEST',[e['code'] for e in d.audit()['errors']])
+    def test_method_source_digest_ignores_python_ast_fields_not_formatting(self):
+        import ast
+        source='class Owner:\n    def test_guide(self):\n        return "한글"\n'
+        node=ast.parse(source).body[0].body[0]
+        digest=d.method_source_sha256(source,node)
+        old_fields=node._fields
+        # Simulate Python3.12's extra type_params versus Python3.10 AST layout.
+        node._fields=tuple(k for k in old_fields if k!='type_params')
+        older=ast.dump(node,include_attributes=False)
+        node._fields=node._fields+('type_params',);node.type_params=[]
+        self.assertNotEqual(older,ast.dump(node,include_attributes=False))
+        self.assertEqual(digest,d.method_source_sha256(source,node))
+        for raw in (source.replace('\n','\r\n'),source.replace('\n','\r')):
+            normalized=raw.replace('\r\n','\n').replace('\r','\n')
+            selected=ast.parse(normalized).body[0].body[0]
+            self.assertEqual(digest,d.method_source_sha256(raw,selected))
+        moved='\n'+source
+        self.assertEqual(digest,d.method_source_sha256(moved,ast.parse(moved).body[0].body[0]))
+        changed=source.replace('return "한글"','return  "한글"')
+        self.assertNotEqual(digest,d.method_source_sha256(changed,ast.parse(changed).body[0].body[0]))
+
     def test_fixed_repository_audit_is_deterministic_read_only(self):
         files=[*d._files(),d.ROOT/'tests/doc_block_evidence.json'];before={p:p.read_bytes() for p in files}
         with patch('socket.socket',side_effect=AssertionError('network')),patch('subprocess.run',side_effect=AssertionError('execution')):
@@ -103,6 +124,15 @@ python ignored.py
         self.assertEqual(a,b);self.assertEqual(before,{p:p.read_bytes() for p in files})
         self.assertFalse(a['guide_execution_performed']);self.assertGreater(a['block_counts']['NOT_REVIEWED'],0)
         self.assertEqual(a['block_counts']['EXISTING_TEST_RECORD'],3)
+    def test_fixed_root_and_fixture_alias_are_canonical_before_patch(self):
+        self.assertEqual(d.ROOT,d.ROOT.resolve())
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td).resolve();self.make_root(root);(root/'child').mkdir()
+            alias=(Path(td)/'child'/'..').resolve()
+            self.assertEqual(alias,root)
+            with patch.object(d,'ROOT',root):expected=d.audit()
+            with patch.object(d,'ROOT',alias):self.assertEqual(d.audit(),expected)
+
     def test_maintainer_cli_accepts_no_private_path(self):
         p=subprocess.run([sys.executable,'-m','tests.doc_conformance','private.md'],cwd=d.ROOT,capture_output=True)
         self.assertEqual(p.returncode,2);self.assertEqual(p.stdout,b'')
