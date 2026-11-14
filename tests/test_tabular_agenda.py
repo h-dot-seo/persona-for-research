@@ -113,7 +113,7 @@ class AgendaTests(unittest.TestCase):
 
     def test_guide_argv_native_paths_are_substituted_after_split(self):
         # Same runner rule as reference export: tokenize before host paths enter argv.
-        text=(ROOT/'docs/TABULAR_EXPORT.md').read_text(encoding='utf-8').split('## Fresh journey review agenda',1)[1]
+        text=(ROOT/'docs/TABULAR_EXPORT.md').read_text(encoding='utf-8').split('## Fresh journey review agenda',1)[1].split('## Fresh journey evidence routes',1)[0]
         count=0
         for block in text.split('```sh\n')[1:]:
             for line in block.split('```',1)[0].splitlines():

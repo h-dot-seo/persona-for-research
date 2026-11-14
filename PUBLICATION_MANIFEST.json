@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.98-agenda-tables",
+  "release": "0.99-route-tables",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 298,
+  "file_count": 299,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 10128,
-      "sha256": "18b90aeebe72f672dec0fbb824444d76b58a51d0832415bf7c8c272a4fa89246"
+      "bytes": 10545,
+      "sha256": "172843341102443f0957bacb1d87a81da08c74b3787253561753b23bf01eb6ec"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 18643,
-      "sha256": "db5735e06c2d19875c6d6821573004dd9df39b2a5516527969be55d2960fc6eb"
+      "bytes": 18654,
+      "sha256": "365260548f2be0e23a919defc9523909f1b02cb3dc1451a6efc6886f14bb8d86"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 7982,
-      "sha256": "8bbca83451b871641f7fa187dfafff42682516cbeed0ec31dab66b95c2eb0b32"
+      "bytes": 8157,
+      "sha256": "e709a6c2aac7dcf0ba8bbc0289c7afd1fb3fcb74666761e1fa6381c5d738cb23"
     },
     {
       "path": "answer_context.py",
@@ -215,8 +215,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 42945,
-      "sha256": "84781cccf87301bfb841d92bed075fdf9694bf8bdce421d7f0d94bdf65fee5c3"
+      "bytes": 42976,
+      "sha256": "29881e61dae137341241586b08d01c3efb6bbcebdea5805b588fc1dae84d1ec8"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -375,8 +375,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 22872,
-      "sha256": "29a8d09a11035953bb0145b757c22b187cf56f35b59aea4c449ad94dd1c09dd7"
+      "bytes": 22880,
+      "sha256": "9b9445ed7384d41277d9f4314904bac55d3d61de9f90528fdd69b5604c8333ba"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -435,8 +435,8 @@
     },
     {
       "path": "docs/TABULAR_EXPORT.md",
-      "bytes": 9396,
-      "sha256": "4d7dc5f00ea05950fff3c04c8510e9fe5e3fc5a2b34e6cf7c236dae6efcb66a6"
+      "bytes": 13908,
+      "sha256": "9637e43acf0dd0a81c21044e2b6cbc61e055d6b6cd177ab71e77e63cee31f0f1"
     },
     {
       "path": "docs/TOPIC_DISCOVERY.md",
@@ -455,8 +455,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 169958,
-      "sha256": "28b9af7120ec014b1e1e4e5d6cb7645d2b5393546aef84c4333fe52a89d6f744"
+      "bytes": 172253,
+      "sha256": "6e296dc2fdaaab1de249e7c79df25f2021c6001daaa9ffd3b0ce3d3e96605188"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -945,8 +945,8 @@
     },
     {
       "path": "tabular_export.py",
-      "bytes": 12398,
-      "sha256": "8b6093a7f9713779c02699c6740f06455d1e520cca04b4c1e210856496811e95"
+      "bytes": 18903,
+      "sha256": "95dd41c6f45d23f018fdc4cd2255319b559f2e03007491489f0994616af319cd"
     },
     {
       "path": "tests/__init__.py",
@@ -1445,13 +1445,18 @@
     },
     {
       "path": "tests/test_tabular_agenda.py",
-      "bytes": 7570,
-      "sha256": "69029d2c8ec143afca8e927e0e91a5dc536954b6203ad520c6832f1727f81421"
+      "bytes": 7617,
+      "sha256": "fa2daea0f3009257a0f8350cb8f55b9a7dbc61140406ddab5ca36e0b9ae3e5a2"
     },
     {
       "path": "tests/test_tabular_export.py",
       "bytes": 8413,
       "sha256": "e20925658fd2193f7b864590a0232358b8bb3ef6d068e481c5bad3c1df0d3f61"
+    },
+    {
+      "path": "tests/test_tabular_routes.py",
+      "bytes": 12220,
+      "sha256": "e9218a9e7696fa627b55798ef5aaaac04bc7d24fb985dd959e4937405d1c4e2f"
     },
     {
       "path": "tests/test_topic_inventory.py",
