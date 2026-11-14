@@ -41,3 +41,14 @@ Shared file JSON loading defaults to 8 MiB; projection stdin uses the same limit
 Budget errors display only an ASCII-escaped, length-limited basename (or `<stdin>`),
 not the parent directory. See [WORKFLOWS.md](docs/WORKFLOWS.md#shared-json-input-byte-budget)
 for scope and compatibility: this is not a timeout, decoded-memory limit or source-size policy.
+
+## Opt-in manual rejection details
+
+The manual append/revision CLIs can add a second diagnostic line only when
+`--explain-rejection` is requested. It contains static argument labels and missing
+closed-schema keys, never arbitrary unsupported-key names, input values, IDs or
+paths. Unsupported keys are counted only. The line is bounded to 512 ASCII bytes.
+This does not sanitize the preserved original error: existing stderr may contain
+private parser/OS text. No additional files are read to produce the detail, and
+no validation or authorization decision changes. See
+[the exact opt-in contract](docs/MANUAL_REJECTION_DETAILS.md).

@@ -99,3 +99,5 @@ and retains imported provenance; imported-observation replacement/source migrati
 is not supported by this release.
 
 Optional [manual authoring editor profiles](MANUAL_EDITOR_SCHEMAS.md) support these input cards without replacing Python validation.
+
+Optional `--explain-rejection` adds bounded static-key detail to covered failures; [contract and privacy limits](MANUAL_REJECTION_DETAILS.md).
