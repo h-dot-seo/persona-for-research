@@ -1,0 +1,40 @@
+{
+  "schema": "persona.external-evidence.v1",
+  "persona_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+  "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+  "draft_sha256": "efdbb55e4cb6927f7e4187dcc8598c19fea8a78ab4036b01b6e419ab9819641b",
+  "operator_id": "synthetic-external-operator",
+  "items": [
+    {
+      "external_id": "invented-external-0",
+      "kind": "fresh_literature",
+      "identifier_text": "invented-external-2025-0; not a real publication",
+      "year": 2025,
+      "other_package_identity": null,
+      "relates_to_claim_ids": [
+        "synthetic-external-context-claim"
+      ],
+      "role": "EXTERNAL_CONTEXT_ONLY",
+      "rationale": "Invented association for a synthetic test; not an empirical source.",
+      "uncertainty": "Identity, publication, content and permission are unverified."
+    },
+    {
+      "external_id": "invented-external-1",
+      "kind": "other_persona_consultation",
+      "identifier_text": "invented-external-2025-1; not a real publication",
+      "year": 2025,
+      "other_package_identity": {
+        "author_id": "invented-other-persona",
+        "version": "synthetic",
+        "build_id": "synthetic-other",
+        "persona_payload_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      },
+      "relates_to_claim_ids": [
+        "synthetic-external-context-claim"
+      ],
+      "role": "EXTERNAL_CONTEXT_ONLY",
+      "rationale": "Invented association for a synthetic test; not an empirical source.",
+      "uncertainty": "Identity, publication, content and permission are unverified."
+    }
+  ]
+}

@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.102-external-context — 2026-11-14
+
+`external_evidence.py template/review` keeps explicit external-context declarations in a private package/draft-bound sidecar, never adding persona knowledge or citation support. No lookup, other-agent call, transmission, identity validation or existing answer/journey change.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-declared-external-context-sidecar-0102-external-context).
+
 ## 0.101-release-rule-view — 2026-11-14
 
 `compare_releases.py --rule-correspondence` optionally attaches fresh exact rule-record correspondence. Default compare() reports/status/stdout are unchanged; the option alone uses stricter source/rule checks, combined input budget and complete combined-output budget.
