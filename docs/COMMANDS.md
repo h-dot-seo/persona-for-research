@@ -723,6 +723,8 @@ Guide: [Journey comparison](JOURNEY_COMPARISON.md).
 
 ## Library modules without a command line
 
+`ris_export_parser.py` preserves the strict fixed-column RIS subset, without identity inference.
+
 These modules are imported by the scripts above and have no `__main__` entry point; their first docstring line states their boundary.
 
 - `answer_context.py` — Inspect explicit research context before an answer, without selecting citation sources (used by `answer_proposals.py context` and the v3 preparation route).
@@ -801,15 +803,15 @@ See [Selected command descriptions](COMMAND_DESCRIPTION.md); the [bounded catalo
 
 ### `census_import.py`
 
-Exact-fact CSL-JSON census and an unapproved selection skeleton. See [Census import](CENSUS_IMPORT.md).
+Exact-fact CSL-JSON/RIS census and an unapproved selection skeleton. See [Census import](CENSUS_IMPORT.md).
 
 ```text
 usage: census_import.py [-h] {import,selection} ...
-usage: census_import.py import [-h] --format {csl-json} --output OUTPUT export
+usage: census_import.py import [-h] --format {csl-json,ris} --output OUTPUT export
 usage: census_import.py selection [-h] --census-id CENSUS_ID --output OUTPUT census
 ```
 
-Both outputs are exclusive and external. Repeat `--census-id` to select distinct occurrences. RIS is deferred.
+Both outputs are exclusive and external. Repeat `--census-id` to select distinct occurrences. RIS uses the documented strict fixed-column subset; BibTeX is unsupported.
 
 ### `package_overview.py`
 

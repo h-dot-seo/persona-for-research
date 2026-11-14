@@ -109,7 +109,7 @@ class CensusImportTests(unittest.TestCase):
             with self.assertRaises(ValueError):ci.selection(self.census,ids)
 
     def test_mutation_and_schema_metadata_rejected(self):
-        for key, value in [('format','ris'),('schema','other'),('external_calls',False),('kind','research'),('utf8_bom',0)]:
+        for key, value in [('format','bibtex'),('schema','other'),('external_calls',False),('kind','research'),('utf8_bom',0)]:
             changed=copy.deepcopy(self.census);changed[key]=value;self.rehash(changed)
             with self.assertRaises(ValueError):ci.selection(changed,['census-000001'])
         changed=copy.deepcopy(self.census);changed['entries'][0]['title']='changed'
@@ -189,8 +189,8 @@ class CensusImportTests(unittest.TestCase):
             self.assertEqual(result.returncode,0,result.stderr)
         self.assertTrue((self.root/'selection'/'READY.json').exists())
 
-    def test_ris_rejected_and_help_no_input(self):
-        result=self.run_cli('import',FIXTURE,'--format','ris','--output',self.root/'out')
+    def test_unsupported_format_rejected_and_help_no_input(self):
+        result=self.run_cli('import',FIXTURE,'--format','bibtex','--output',self.root/'out')
         self.assertNotEqual(result.returncode,0);self.assertEqual(result.stdout,b'')
         self.assertFalse((self.root/'out').exists())
         self.assertEqual(self.run_cli('--help').returncode,0)

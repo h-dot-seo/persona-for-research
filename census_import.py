@@ -1,4 +1,4 @@
-"""List exact supplied CSL-JSON facts and prepare an unapproved selection skeleton."""
+"""List exact supplied CSL-JSON or RIS facts and prepare an unapproved selection skeleton."""
 import argparse
 import hashlib
 import json
@@ -102,16 +102,61 @@ def import_csl(path):
     return census
 
 
+def ris_scalar(fields, tags):
+    """Copy one unambiguous logical value across aliases; no preferred-field guess."""
+    values = ['\n'.join(field['value_lines']) for field in fields if field['tag'] in tags]
+    if len(set(values)) > 1:
+        raise ValueError('conflicting RIS scalar fields: ' + '/'.join(tags))
+    return values[0] if values else None
+
+
+def import_ris(path):
+    import ris_export_parser as parser
+    raw = read_bounded(path, MAX_EXPORT_BYTES)
+    parsed = parser.parse_export(raw)
+    if len(parsed['records']) > MAX_RECORDS:
+        raise ValueError('RIS export exceeds 10000 records')
+    entries = []
+    for index, record in enumerate(parsed['records'], 1):
+        fields = record['fields']
+        literal_year = ris_scalar(fields, ('PY',))
+        recorded_year = (int(literal_year[:4]) if isinstance(literal_year, str)
+                         and re.fullmatch(r'[0-9]{4}(?:/[^\r\n]*)?', literal_year) else None)
+        logical = dict(record_type=record['record_type'],
+                       fields=[dict(tag=f['tag'], value_lines=f['value_lines']) for f in fields])
+        entry = dict(census_id='census-%06d' % index, entry_sha256=payload_sha256(logical),
+                     title=ris_scalar(fields, ('TI', 'T1')), year=recorded_year,
+                     item_type=record['record_type'], container_title=ris_scalar(fields, ('JO', 'JF', 'T2')),
+                     doi=ris_scalar(fields, ('DO',)),
+                     other_identifiers={tag: ris_scalar(fields, (tag,)) for tag in ('ID', 'SN', 'UR')
+                                        if any(f['tag'] == tag for f in fields)},
+                     authors=['\n'.join(f['value_lines']) for f in fields if f['tag'] == 'AU'], flags=[])
+        if entry['year'] is None: entry['flags'].append('NO_YEAR')
+        if not entry['doi']: entry['flags'].append('NO_DOI')
+        entries.append(entry)
+    census = dict(schema=SCHEMA, format='ris', export_sha256=hashlib.sha256(raw).hexdigest(),
+                  implementation_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                  ris_parser_sha256=hashlib.sha256(Path(parser.__file__).read_bytes()).hexdigest(),
+                  utf8_bom=parsed['initial_utf8_bom'], entries=entries,
+                  exact_doi_groups=groups(entries, 'doi'),
+                  casefold_title_groups=groups(entries, 'title', True), **POLICY)
+    census['payload_sha256'] = payload_sha256(census)
+    encode(census)
+    return census
+
+
 def verify_census(census):
     expected = {'schema', 'format', 'export_sha256', 'implementation_sha256', 'utf8_bom', 'entries',
                 'exact_doi_groups', 'casefold_title_groups', 'payload_sha256'} | set(POLICY)
+    is_ris = isinstance(census, dict) and census.get('format') == 'ris'
+    if is_ris: expected.add('ris_parser_sha256')
     if not isinstance(census, dict) or set(census) != expected:
         raise ValueError('census fields do not match schema')
-    if (census['schema'] != SCHEMA or census['format'] != 'csl-json' or
+    if (census['schema'] != SCHEMA or census['format'] not in ('csl-json', 'ris') or
             any(type(census[k]) is not type(v) or census[k] != v for k, v in POLICY.items()) or
             type(census['utf8_bom']) is not bool):
         raise ValueError('census schema or boundary metadata mismatch')
-    for key in ('export_sha256', 'implementation_sha256', 'payload_sha256'):
+    for key in ('export_sha256', 'implementation_sha256', 'payload_sha256') + (('ris_parser_sha256',) if is_ris else ()):
         if not isinstance(census[key], str) or not re.fullmatch('[0-9a-f]{64}', census[key]):
             raise ValueError('invalid census hash')
     if payload_sha256({k: v for k, v in census.items() if k != 'payload_sha256'}) != census['payload_sha256']:
@@ -130,13 +175,16 @@ def verify_census(census):
             optional_string(entry, field)
         if entry['year'] is not None and type(entry['year']) is not int:
             raise ValueError('invalid census year')
-        if not isinstance(entry['other_identifiers'], dict) or set(entry['other_identifiers']) - {'PMID','ISBN','URL'}:
+        if not isinstance(entry['other_identifiers'], dict) or set(entry['other_identifiers']) - ({'ID','SN','UR'} if is_ris else {'PMID','ISBN','URL'}):
             raise ValueError('invalid identifiers')
         for key in entry['other_identifiers']:
             optional_string(entry['other_identifiers'], key)
         if not isinstance(entry['authors'], list):
             raise ValueError('invalid authors')
         for author in entry['authors']:
+            if is_ris:
+                if not isinstance(author, str): raise ValueError('RIS authors must be supplied strings')
+                continue
             if not isinstance(author, dict) or set(author) - {'given','family','literal'}:
                 raise ValueError('invalid author parts')
             for key in author:
@@ -194,9 +242,9 @@ def save_selection(census, ids, destination):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
-    imp = sub.add_parser('import', help='Copy supplied CSL-JSON facts; RIS is not supported')
+    imp = sub.add_parser('import', help='Copy supplied CSL-JSON or fixed-column RIS facts')
     imp.add_argument('export', type=Path)
-    imp.add_argument('--format', choices=['csl-json'], required=True)
+    imp.add_argument('--format', choices=['csl-json','ris'], required=True)
     imp.add_argument('--output', type=Path, required=True)
     sel = sub.add_parser('selection', help='Create a new directory of unapproved skeleton files')
     sel.add_argument('census', type=Path)
@@ -206,7 +254,7 @@ def main():
     try:
         check_path(args.output)
         if args.command == 'import':
-            result = import_csl(args.export)
+            result = import_csl(args.export) if args.format == 'csl-json' else import_ris(args.export)
         else:
             census, _, _ = read_json(args.census, MAX_OUTPUT_BYTES)
             result = save_selection(census, args.census_id, args.output)
