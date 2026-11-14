@@ -2623,3 +2623,14 @@ copy compatibility. Full suite passed 1,384 tests in 355.926 seconds with one
 Windows-only skip. Manifest passes 313 listed files and audit 314; all 185 Python
 files compile and parse Python 3.10 grammar. Dispatcher lists 57 root CLIs. Actual
 Windows junction outcomes and exact PR/main CI are verified separately.
+
+Initial PR36 Windows 3.10/3.12 run 43615607830 failed only the simulated reparse
+fixture: it compared the original temp path spelling with the canonical scan path,
+so the injected attribute was not observed. Both real Windows junction and symlink
+fixtures passed in both jobs. The test now resolves its target before mocking and
+asserts the injection was actually invoked; production code and test count are
+unchanged. This matches Windows short-name/canonical path differences; corrected
+Windows CI is required to confirm the diagnosis. Local 16-test rerun passes with
+one Windows-only skip. Independent re-review confirmed injection is not weakened
+and exercised a canonical relative-alias target. Corrected full suite passed
+1,384 tests in 365.198 seconds with one platform skip.

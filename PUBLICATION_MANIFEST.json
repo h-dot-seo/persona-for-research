@@ -470,8 +470,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 184445,
-      "sha256": "d964d3f8e64f9157a966358f22a749eecbebf2beca7e197c673afaa34bbd893b"
+      "bytes": 185229,
+      "sha256": "aa1ac44e7802729fa06fb8689c2fb2eeb2fd967d73b7c048f4ea539dde81f7bb"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1240,8 +1240,8 @@
     },
     {
       "path": "tests/test_folder_inventory.py",
-      "bytes": 10595,
-      "sha256": "1324d60cea7dcca9854a8d562b92cd1eb414afe04aaee5849646dd23142808e7"
+      "bytes": 10931,
+      "sha256": "1af4869b3acf703e5296b457ce9a29341822613183df8dd711a1702952d23ceb"
     },
     {
       "path": "tests/test_handoff_text.py",

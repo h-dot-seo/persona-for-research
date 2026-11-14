@@ -164,12 +164,18 @@ class FolderInventoryTests(unittest.TestCase):
     def test_reparse_attribute_without_symlink_is_rejected(self):
         from types import SimpleNamespace
         real = Path.stat
+        # Resolve before patching: Windows temporary roots may use an 8.3 alias,
+        # whereas root_path() returns the expanded canonical spelling.
+        target = (self.root/'nested').resolve()
+        injected = []
         def mocked(path, *args, **kwargs):
             info = real(path, *args, **kwargs)
-            if path == self.root/'nested':
+            if path == target:
+                injected.append(path)
                 return SimpleNamespace(st_mode=info.st_mode, st_file_attributes=0x400)
             return info
         with patch.object(Path, 'stat', mocked), self.assertRaises(ValueError): f.declare(self.root)
+        self.assertTrue(injected, 'reparse fixture must reach the canonical directory')
 
     def test_detect_enumeration_change(self):
         real = f.read_source_bytes
