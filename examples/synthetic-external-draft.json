@@ -1,0 +1,15 @@
+{
+  "persona_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+  "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+  "question": "What can the invented synthetic record illustrate?",
+  "operator_id": "synthetic-external-operator",
+  "claims": [
+    {
+      "claim_id": "synthetic-external-context-claim",
+      "text": "Invented synthesis for detached context testing only.",
+      "claim_type": "operator_synthesis",
+      "citations": [],
+      "uncertainty": "No external source is validated or cited."
+    }
+  ]
+}

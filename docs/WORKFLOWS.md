@@ -779,3 +779,10 @@ exact content hashes after observation insertion or paper reordering. Position c
 are not stable semantic IDs, priority changes or evidence that old reviews/citations
 remain valid. Duplicate keys are ambiguous, not automatically paired. This separate
 read-only view does not rebind human records or alter release decisions.
+
+## Separately declared external context
+
+[external_evidence.py](EXTERNAL_EVIDENCE.md) creates and checks a private draft-bound
+sidecar only. Operator-supplied literature/consultation labels are not lookups, persona
+knowledge, citation support or permission. It does not detect holdout/comparator
+contamination. No answer/journey/handoff integration or external transmission occurs.

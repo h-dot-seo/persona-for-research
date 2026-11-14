@@ -2520,3 +2520,36 @@ extra malformed duplicate/nonfinite/UTF-8/deep/null inputs rejected with exit 1,
 stdout, no output file and no traceback. No blocker remained. Manifest passed for 304
 listed files; audit for 305 text files; 180 Python files compile and parse Python 3.10
 grammar. Exact remote PR/main CI is checked separately.
+
+## 2026-11-14 Declared external context sidecar (0.102-external-context)
+
+Roadmap #77 first independent slice: external_evidence template/review only. The exact
+schema binds persona, knowledge papers and original draft/envelope hash. Template creates
+empty items only through required exclusive external output; review validates declarations
+without adding knowledge or citations. EXTERNAL_CONTEXT_ONLY is fixed. Identifier duplicates
+are rejected only at exact paper_id/locator equality; near matches are not normalized or
+judged independent. An explicit current identity four-tuple is rejected as not another
+package; other identities are never opened/authenticated. Null identity is undeclared and
+kind never infers identity. Empty claim links mean no links, not applicability to all claims.
+
+Optional declared answer review uses the existing checker and reports its status/hash only.
+No source reread, external lookup/download, provider/other-agent communication, transmission,
+adoption, release approval or axis/citation change. Malicious declaration text remains inert
+data and controls are escaped in text. Holdout/comparator membership is not checked and
+recording external context during predictive evaluation can contaminate evaluation. Existing
+answer/evidence_scope/journey/card/handoff/HV/attribution contracts are untouched; their
+integration is deferred. New draft/sidecar fixtures use unmistakably invented non-DOI labels.
+
+Inputs share 8 MiB; at most 1000 items/claim links, 128-character IDs and 2000-character
+nonempty identifier/rationale/uncertainty fields; year is null or integer1..9999. Exact
+fields and known unique claim links are required. JSON/text output is bounded to 16 MiB,
+no truncation; optional review output uses shared exclusive helper. Guide runners tokenize
+before native path substitution. Only synthetic inputs and no real external data processing.
+All 1,356 synthetic tests passed in 336.635 seconds; expanded focused suite passed
+79 in 19.754 seconds. Independent review passed 27 tests, six kind/identity declaration
+combinations without inference and five malformed input cases with exit1, no stdout/file
+or traceback. Three-hash stale binding, exact/near identity and locator rules, optional
+review boundaries and unchanged answer/freeze/HV modules verified; no blocker remained.
+Manifest passed for 309 listed files, audit for 310 text files; all 182 Python files
+compile and parse Python 3.10 grammar. Dispatcher lists 56 root CLIs. Exact PR/main CI
+is checked separately.
