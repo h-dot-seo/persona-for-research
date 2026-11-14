@@ -101,6 +101,7 @@ Keep real inputs and generated packages outside this public repository.
 | `synthetic_walkthrough.py` | Run the bundled synthetic fixtures through 15 to 53 real CLI stages into a new external directory | [Quickstart](docs/QUICKSTART.md) |
 | `persona.py`, `safe_canonical_read.py` | Validate persona/knowledge hash bindings; project canonical JSON without holdout identifiers | [Architecture](docs/ARCHITECTURE.md) |
 | `observation_input.py` | Verify curated observations and quotes against supplied segments, then build the planning scaffold | [Workflows](docs/WORKFLOWS.md#verified-intake-and-authorized-local-source-files) |
+| `census_import.py` | List supplied CSL-JSON facts and create an unapproved selection skeleton | [Census import](docs/CENSUS_IMPORT.md) |
 | `prepare_local_manifest.py`, `corpus_files.py` | Report structural defects with `--report-defects`, then prepare and load authorized local files with byte hashes | [Local input preparation](docs/LOCAL_INPUT_PREPARATION.md) |
 | `research_workflow.py` | Apply operator-curated observations as a bounded, question-specific planning scaffold | [Workflow review](docs/WORKFLOW_REVIEW.md) |
 | `review_package.py` | Compact read-only review of a bound package (`--evidence-details`, `--human-validation`) | [Evidence details](docs/EVIDENCE_DETAILS.md) |
@@ -242,3 +243,5 @@ See [Bounded command catalog](docs/COMMAND_CATALOG.md) for aggregate help discov
 Shared JSON readers now reject files above 8 MiB before parsing; projection stdin is
 also bounded, and existing combined review budgets are preserved. Previously unbounded
 callers now reject oversized inputs. See [input budget scope](docs/WORKFLOWS.md#shared-json-input-byte-budget).
+
+[CSL-JSON census guide](docs/CENSUS_IMPORT.md): export copies still require operator confirmation.

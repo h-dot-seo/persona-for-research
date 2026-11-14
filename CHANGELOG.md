@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.94-csl-census — 2026-11-14
+
+`census_import.py import/selection` copies supplied CSL-JSON facts to occurrence records and creates an explicitly selected, unapproved local skeleton. No RIS support, identity/kind derivation, lookup, merge or authorization.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-supplied-csl-census-094-csl-census).
+
 ## 0.93-change-index — 2026-11-14
 
 Release change index and static consistency checks added; README entry points link this index. No runtime command, schema or behavior change.

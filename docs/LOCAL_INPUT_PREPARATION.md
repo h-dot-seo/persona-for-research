@@ -8,7 +8,9 @@ collect articles, parse PDFs or call an external metadata/model service.
 Use only local files you are authorized to read and process. The supplied selection
 must explicitly declare author identity, publication kind/year, intended topic,
 training split and permission. These fields are not inferred from filenames or
-headers and are not authenticated by this tool.
+headers and are not authenticated by this tool. The optional [CSL-JSON census](CENSUS_IMPORT.md)
+copies year and locator from an export; the operator must confirm these pre-filled
+values. It does not derive kind, identity, permission, topic or split.
 
 ## Start with the bundled synthetic selection
 
