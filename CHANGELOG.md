@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.108-answer-template-reuse — 2026-11-14
+
+`answer_draft.inspect()` reuses only its current call's freshly checked plain-JSON package to construct template fields, removing one redundant validation. Public template/inspect validation and all fallback/error contracts remain; no cache or new product input limit.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-call-local-answer-template-reuse-0108-answer-template-reuse).
+
 ## 0.107-capacity-observations — 2026-11-14
 
 `python -m tests.capacity NEW_DIR --case N,K,C,S` records representative synthetic imported-argument journey capacity, replay/hash counts and serialized bytes. Experiment bounds and computed CLI thresholds are not product limits; no optimization, cache, judgment or CI change.

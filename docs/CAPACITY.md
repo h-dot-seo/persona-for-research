@@ -80,3 +80,23 @@ current file/marker; an interrupted in-progress stage has no completed receipt. 
 success: require exit 0, strict JSON and matching recorded case hashes. Keep partial
 results for diagnosis and use a new directory on retry. No saved-result verifier
 is added. No general speed guarantee or approval follows from a successful run.
+
+## Call-local answer template construction
+
+For eligible plain JSON, `answer_draft.inspect` retains its fresh source/package
+validation and constructs expected template fields from that checked value in the
+same call. Eligibility is recorded before the first source validation and checked
+again afterwards, so a custom value that normalizes itself during validation
+still takes the original path. Public `template` still performs fresh validation. No cached package,
+receipt, global memoization or caller-supplied verified result is accepted. Reviewed
+answer envelope dispatch is unchanged. The guard permits only exact built-in JSON
+types, finite floats and surrogate-free text, with no container aliases/cycles,
+depth below 64, at most 8192 nodes (keys included), and 65536 total text code points.
+These are optimization-work bounds only: ineligible values use the original
+validation path, never a new rejection. Replaced source/template functions also
+retain the original call path. This is not a concurrent-mutation lock.
+
+For the fixed (8,4,4,2) workload, journey text build replays fall from 79 to 56
+with complete text bytes unchanged. This is a deterministic replay-count result,
+not a general speed promise. Prior capacity receipts remain historical records;
+current small-case count gates reflect the new implementation.
