@@ -1,4 +1,4 @@
-# Private reference-catalog spreadsheet export
+# Private spreadsheet exports
 
 `tabular_export.py reference-catalog PACKAGE.json` rechecks the bound package with
 `_sources`/`validated_source_rules` and recomputes every `_endpoint`. A saved catalog
@@ -27,8 +27,9 @@ a cell over the limit or a result over the limit emits no partial result.
 
 `--describe` takes no package or formatting options and emits the exact ordered
 columns, display markers, limits, omitted fields and boundary as JSON.
-`reference-catalog` and the separate `review-agenda` table below are supported.
-Evidence routes and human-validation items are not folded into either table. No CSV import or write-back exists.
+`reference-catalog`, `review-agenda` and `evidence-routes` are separate tables.
+Evidence routes expose four optional column sets, described below. Human-validation
+items are not exported. No CSV import or write-back exists.
 
 Rows follow supplied paper order, observation order, then the observation itself
 followed by that observation's supplied component order. An observation reference has
@@ -138,3 +139,73 @@ options are taken only from their pinned card slots, not inferred. Neither optio
 approval, model execution or semantic validation. The row boundary combines the export,
 fresh journey and input-file-card limitations. Paths/source quotes/identifiers or other
 private target fields may be present; exporting does not grant permission to share.
+
+## Fresh journey evidence routes
+
+Use the same explicitly preserved CARD and INPUTS as the agenda. This route never
+accepts cached journey reports or selects artifacts. Tokenize these commands with
+shlex before substituting native paths, so Windows backslashes/spaces survive.
+
+```sh
+python tabular_export.py evidence-routes CARD --input-root INPUTS --output OUTPUT/routes.csv
+python tabular_export.py evidence-routes --describe --output OUTPUT/route-columns.json
+```
+
+Each row is one freshly inspected `evidence_routes` item in the journey's order.
+That union is not the complete corpus or literature. Empty routes yield only the
+selected header, never an approval row. All card/combined-artifact/report, cell,
+BOM, formula-guard and exclusive-output limits above apply unchanged.
+
+The base ordered columns are: row_kind, paper_id, observation_index, dimension,
+reference_json, reference_sha256, evidence_json, source_kind, publication_year,
+source_sha256, source_locator, recorded_source_check; observation_topic,
+observation_method, observation_condition, observation_limitation,
+observation_locator, observation_stance, observation_claim_type,
+observation_evidence_quote, observation_quote_check; component_claim_type,
+component_text, component_locator, component_evidence_quote, component_origin,
+component_proposed_claim_type, component_quote_check; has_observation_origin,
+attribution, publication_scope, in_topic_timeline, actively_used_in_answer_or_design,
+pattern_roles_json. Then each of pattern_evidence_uses, context_uses,
+publication_relationship_basis_uses, answer_uses, design_uses, unused_link_uses,
+direct_argument_uses contributes its `_count` followed by `_json` column.
+
+Four fixed contracts are exposed in full by `--describe` without reading inputs:
+
+- Neither optional pinned artifact: base columns, then trailer.
+- Pinned method_applications only: base, method_application_uses_count,
+  method_application_uses_json, then trailer.
+- Pinned source_selection only: base, current_source_recheck_json, then trailer.
+- Both: base, method_application_uses_count, method_application_uses_json,
+  current_source_recheck_json, then trailer.
+
+The trailer is journey_input_sha256, input_card_sha256, status, source_reread,
+boundary. Options mean non-null pinned card slots, never the presence of a first
+row or a nonempty use list. A selected source form requires --source-root and vice
+versa. This explicit pair causes fresh selected source rereads, not discovery or
+standing permission. Recorded source and quote labels remain separate from the
+current_source_recheck_json; a current check does not replace historical labels.
+
+Observation and component scalar labels do not stand in for each other. Missing
+component fields use NOT_APPLICABLE, except a missing recorded quote-check label
+on an existing component uses NOT_PERFORMED, matching the existing catalog. An
+absent component has NOT_APPLICABLE for its quote check; exact evidence_json still
+preserves the original absence of the label. Explicit null uses NOT_SUPPLIED (null), false
+uses false, and empty strings use EMPTY_STRING. Literal marker strings may collide,
+so `evidence_json` retains the exact full node, including field presence and nested
+observation origins; reference_json, pattern_roles_json and every use JSON are
+compact sorted ASCII JSON. JSON escaping precedes display escaping: JSON controls
+and directional Unicode round-trip through json.loads after CSV/TSV parsing.
+These nested JSON cells preserve absent keys versus null/false/empty values. They
+remain authoritative over display markers and formula-prefixed scalar cells.
+Oversized evidence/use cells fail without truncation or partial stdout.
+
+Use lists preserve distinct context, publication-relationship basis, answer,
+design, unused-link and direct-argument roles. Method-application intent is not
+active answer/design use or execution. Declared reject/defer decisions and direct
+citation roles are copied, not promoted to retain or support. No premise citation
+transfer, ranking, decision inference, spreadsheet import or new approval axis.
+Counts are only list lengths, not scores. Full nested journey reports, complete
+corpus metadata, question/topic/reference year and detailed artifact checks are
+omitted; consult the fresh full report. Exact evidence and use cells can contain
+private quotes, file labels and operator/provenance IDs. Row boundary combines
+export, fresh journey and input-card limitations; export is not sharing consent.

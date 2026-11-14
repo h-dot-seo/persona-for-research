@@ -54,6 +54,40 @@ AGENDA_OMITTED = ('all nested reports and evidence routes', 'question, topic and
                   'all fields outside review_agenda except the listed binding/status/source flag columns')
 
 
+ROUTE_USES = ('pattern_evidence_uses', 'context_uses', 'publication_relationship_basis_uses',
+              'answer_uses', 'design_uses', 'unused_link_uses', 'direct_argument_uses')
+ROUTE_COLUMNS = ('row_kind', 'paper_id', 'observation_index', 'dimension', 'reference_json',
+    'reference_sha256', 'evidence_json', 'source_kind', 'publication_year', 'source_sha256',
+    'source_locator', 'recorded_source_check',
+    *('observation_' + key for key in OBS_FIELDS), 'observation_quote_check',
+    *('component_' + key for key in COMP_FIELDS), 'component_quote_check',
+    'has_observation_origin', 'attribution', 'publication_scope', 'in_topic_timeline',
+    'actively_used_in_answer_or_design', 'pattern_roles_json',
+    *(column for name in ROUTE_USES for column in (name + '_count', name + '_json')))
+ROUTE_TRAILER = ('journey_input_sha256', 'input_card_sha256', 'status', 'source_reread', 'boundary')
+ROUTE_BOUNDARY = ('Private route display, not permission to share. Routes are the union of supplied review '
+    'routes, not the complete corpus or literature, a ranking, recommendation or approval. Observation and '
+    'component labels remain separate. Counts, pivots and averages are not scores. Controls are escaped '
+    'and formula-like cells receive a leading apostrophe; exact JSON remains authoritative. CSV/TSV is '
+    'not input to any tool here. No provider call or write-back. Current source reread requires the '
+    'explicit pinned selection and supplied root; recorded labels are not renewed verification.')
+ROUTE_OMITTED = ('nested journey reports, full artifact-file checks, question/topic/reference year',
+    'package metadata and complete corpus outside the supplied route union',
+    'route fields outside the documented columns; evidence and each listed use retain complete JSON')
+
+
+def route_columns(method_applications=False, source_recheck=False):
+    if type(method_applications) is not bool or type(source_recheck) is not bool:
+        raise ValueError('route column options must be boolean')
+    return (ROUTE_COLUMNS +
+            (('method_application_uses_count', 'method_application_uses_json') if method_applications else ()) +
+            (('current_source_recheck_json',) if source_recheck else ()) + ROUTE_TRAILER)
+
+
+def _compact(value):
+    return json.dumps(value, ensure_ascii=True, sort_keys=True, separators=(',', ':'))
+
+
 def cell(value):
     """Display first, guard second; reject rather than truncate a rendered cell."""
     if value is None:
@@ -73,6 +107,20 @@ def cell(value):
 
 
 def describe(table='reference-catalog'):
+    if table == 'evidence-routes':
+        from journey_inputs import MAX_CARD_BYTES, MAX_ARTIFACT_BYTES
+        return dict(schema='persona.tabular-description.v1', table=table,
+            input='explicit bound journey CARD plus input-root, never a saved report',
+            column_sets=[dict(method_applications=method, source_selection=source,
+                             columns=list(route_columns(method, source)))
+                         for method, source in ((False,False),(True,False),(False,True),(True,True))],
+            option_selection='Column sets follow non-null pinned method_applications/source_selection card slots, not row contents.',
+            omitted_fields=list(ROUTE_OMITTED), row_order='fresh journey evidence_routes order; one row per route',
+            empty='header only using the selected option columns; not review completion or approval',
+            markers=dict(null=NOT_SUPPLIED, not_applicable=NOT_APPLICABLE, empty_string=EMPTY_STRING),
+            marker_boundary='Display markers can collide with literal strings; exact evidence/use JSON preserves null, absence and false.',
+            max_card_bytes=MAX_CARD_BYTES, max_combined_artifact_bytes=MAX_ARTIFACT_BYTES,
+            max_output_bytes=MAX_OUTPUT_BYTES, max_cell_chars=MAX_CELL_CHARS, boundary=ROUTE_BOUNDARY)
     if table == 'review-agenda':
         from journey_inputs import MAX_CARD_BYTES, MAX_ARTIFACT_BYTES
         return dict(schema='persona.tabular-description.v1', table=table,
@@ -170,9 +218,46 @@ def render_agenda(card, root, *, source_root=None, format='csv', excel_bom=False
                         format=format, excel_bom=excel_bom)
 
 
+def _route_rows(result):
+    from journey_inputs import BOUNDARY as INPUT_BOUNDARY
+    boundary = ROUTE_BOUNDARY + ' ' + result['boundary'] + ' ' + INPUT_BOUNDARY
+    for route in result['evidence_routes']:
+        node = route['evidence']; ref = node['reference']; obs = node['observation']; comp = node['component']
+        row = dict(row_kind='OBSERVATION' if ref['dimension'] is None else 'COMPONENT',
+            paper_id=ref['paper_id'], observation_index=ref['observation_index'], dimension=ref['dimension'],
+            reference_json=_compact(ref), reference_sha256=route['reference_sha256'], evidence_json=_compact(node),
+            has_observation_origin=OBSERVATION_ORIGIN in obs,
+            observation_quote_check=obs.get('evidence_verification', 'NOT_PERFORMED'),
+            component_quote_check=comp.get('evidence_verification', 'NOT_PERFORMED') if comp is not None else NOT_APPLICABLE,
+            pattern_roles_json=_compact(route['pattern_roles']),
+            journey_input_sha256=result['journey_input_sha256'],
+            input_card_sha256=result['local_input_file_check']['input_card_sha256'], status=result['status'],
+            source_reread=result['source_reread'], boundary=boundary)
+        row.update({key:node[key] for key in ('source_kind','publication_year','source_sha256',
+                                           'source_locator','recorded_source_check','attribution')})
+        row.update({key:route[key] for key in ('publication_scope','in_topic_timeline','actively_used_in_answer_or_design')})
+        row.update({'observation_'+key:obs.get(key,NOT_APPLICABLE) for key in OBS_FIELDS})
+        row.update({'component_'+key:comp.get(key,NOT_APPLICABLE) if comp is not None else NOT_APPLICABLE for key in COMP_FIELDS})
+        for key in ROUTE_USES + (('method_application_uses',) if 'method_application_uses' in route else ()):
+            row[key+'_count']=len(route[key]);row[key+'_json']=_compact(route[key])
+        if 'current_source_recheck' in route:
+            row['current_source_recheck_json']=_compact(route['current_source_recheck'])
+        yield row
+
+
+def render_routes(card, root, *, source_root=None, format='csv', excel_bom=False):
+    from journey_inputs import inspect
+    result = inspect(card, root, source_root=source_root)
+    # Only inspect() validates the card. Choose the header from pinned options even
+    # when the inspected route list is empty; never infer it from the first row.
+    columns = route_columns(card['artifacts']['method_applications'] is not None,
+                            card['artifacts']['source_selection'] is not None)
+    return _render_rows(_route_rows(result), columns, format=format, excel_bom=excel_bom)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('table', choices=('reference-catalog', 'review-agenda'))
+    parser.add_argument('table', choices=('reference-catalog', 'review-agenda', 'evidence-routes'))
     parser.add_argument('package', type=Path, nargs='?')
     parser.add_argument('--format', choices=('csv', 'tsv'), default='csv')
     parser.add_argument('--excel-bom', action='store_true')
@@ -198,9 +283,10 @@ def main():
                              format=args.format, excel_bom=args.excel_bom)
             else:
                 if args.input_root is None:
-                    raise ValueError('review-agenda requires an explicit input-root')
+                    raise ValueError(args.table + ' requires an explicit input-root')
                 from journey_inputs import _load_card
-                raw = render_agenda(_load_card(args.package), args.input_root, source_root=args.source_root,
+                renderer = render_agenda if args.table == 'review-agenda' else render_routes
+                raw = renderer(_load_card(args.package), args.input_root, source_root=args.source_root,
                                     format=args.format, excel_bom=args.excel_bom)
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RuntimeError, RecursionError) as exc:
         parser.exit(1, str(exc) + '\n')

@@ -826,9 +826,9 @@ See [Package overview and HTML](PACKAGE_HTML.md). Saved outputs are exclusive an
 
 ### `tabular_export.py`
 
-Fresh package reference or bound journey agenda tables, never cached report input or spreadsheet write-back.
+Fresh package reference or bound journey agenda/evidence-route tables, never cached report input or spreadsheet write-back.
 See [TABULAR_EXPORT.md](TABULAR_EXPORT.md) for fixed columns, omissions and cell safety.
 
 ```text
-usage: tabular_export.py [-h] [--format {csv,tsv}] [--excel-bom] [--describe] [--input-root INPUT_ROOT] [--source-root SOURCE_ROOT] [--output NEW_FILE] {reference-catalog,review-agenda} [package]
+usage: tabular_export.py [-h] [--format {csv,tsv}] [--excel-bom] [--describe] [--input-root INPUT_ROOT] [--source-root SOURCE_ROOT] [--output NEW_FILE] {reference-catalog,review-agenda,evidence-routes} [package]
 ```

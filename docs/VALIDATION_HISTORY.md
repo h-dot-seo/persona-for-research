@@ -2430,3 +2430,34 @@ three valid package examples in CSV/TSV with BOM on/off against the prior module
 all 12 outputs were byte-identical. No unresolved blocker. Manifest passed for 298
 listed files; audit passed for 299 text files; all 176 Python files compile and parse
 with Python 3.10 grammar. Exact remote PR/main CI remains separately checked.
+
+## 2026-11-14 Bound evidence route tables (0.99-route-tables)
+
+Roadmap #68 third slice: evidence-routes rechecks the explicit bound card/current artifacts
+through journey_inputs.inspect, not cached reports. One row per existing route preserves
+exact evidence/reference/use JSON and observation/component labels in separate columns.
+Publication scope, topic inclusion, active answer/design use, pattern roles and seven
+use-list categories remain distinct. List counts are not scores. Pinned method/source
+options choose one of four documented column sets even on empty route lists; describe
+publishes all four without reading inputs. Optional source selection still requires an
+explicit source root. Historical quote/source labels remain distinct from current checks.
+
+Null/absent/false/empty distinctions survive in exact nested JSON after CSV/TSV parsing;
+display markers are not reversible authority. Missing recorded quote-check labels on an
+existing component use NOT_PERFORMED, matching the old catalog; no component uses
+NOT_APPLICABLE. Review caught and corrected that display fallback before publication,
+with exact evidence key-absence regression. No promotion of reject/defer judgments,
+premise-citation inheritance, new approval, provider call or spreadsheet write-back.
+Existing catalog/agenda outputs and four-axis/payload boundaries remain unchanged.
+
+Card128KiB, combined-artifacts8MiB, separate report/export16MiB and rendered-cell32,767
+code-point limits remain. Synthetic only; no actual spreadsheet import/HTML visual QA
+claim. Guide runners tokenize before native path substitution, preserving Windows paths.
+All 1,311 synthetic tests passed in 349.171 seconds. Expanded focused tests: 71 passed
+in 10.003 seconds. Independent reviewer passed 31 focused tests, confirmed six existing
+catalog/agenda function ASTs unchanged and eight old/new CSV/TSV/BOM output comparisons
+byte-identical, plus 26 formula/control/Unicode/null/false exact JSON roundtrips. Reviewed
+fresh inspection, all four option headers, source pairing, stale hashes and unchanged
+judgment boundaries; no blocker remained. Manifest passed for 299 listed files, audit
+for 300 text files; all 177 Python files compile and parse Python 3.10 grammar. Remote
+PR/main CI is checked separately for exact commits.

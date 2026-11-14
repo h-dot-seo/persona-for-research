@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.99-route-tables — 2026-11-14
+
+`tabular_export.py evidence-routes` exports fresh bound journey routes with exact evidence/use JSON and separate observation/component labels. Four explicit column sets follow pinned method/source options; old catalog/agenda bytes and decision boundaries remain unchanged.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-bound-evidence-route-tables-099-route-tables).
+
 ## 0.98-agenda-tables — 2026-11-14
 
 `tabular_export.py review-agenda` rechecks explicit pinned journey inputs and exports every current agenda target as private CSV/TSV. Source reread requires the existing selected source form/root pair. Existing reference-table bytes and decision boundaries stay unchanged.
