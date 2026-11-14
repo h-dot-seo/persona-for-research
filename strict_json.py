@@ -3,6 +3,7 @@ import json
 import math
 from pathlib import Path
 
+MAX_INPUT_BYTES = 8 * 1024 * 1024
 MAX_CONTAINER_DEPTH = 128
 MAX_DIAGNOSTIC_KEY_CODEPOINTS = 128
 
@@ -52,5 +53,41 @@ def loads(raw):
     return result
 
 
-def load(path):
-    return loads(Path(path).read_bytes())
+class InputLimitError(ValueError):
+    """A bounded reader observed at least one byte beyond its budget."""
+
+
+def read_bounded_stream(stream, max_bytes, *, label='<stream>'):
+    """Read at most limit+1 bytes from a binary stream; never close caller streams.
+
+    This is a byte bound, not a time bound or a regular-file/symlink policy.
+    Short reads are accumulated until EOF or the budget is exceeded.
+    """
+    if type(max_bytes) is not int or max_bytes < 0:
+        raise ValueError('max_bytes must be a non-negative integer')
+    buffer = bytearray()
+    total = 0
+    while total <= max_bytes:
+        raw = stream.read(max_bytes + 1 - total)
+        if not isinstance(raw, bytes):
+            raise TypeError('bounded input must be a binary stream')
+        if not raw:
+            return bytes(buffer)
+        total += len(raw)
+        if total > max_bytes:
+            raise InputLimitError('JSON input exceeds byte budget (default 8 MiB): '
+                                  + _key_diagnostic(label))
+        buffer.extend(raw)
+    raise AssertionError('unreachable input budget state')
+
+
+def read_bounded(path, max_bytes):
+    """Return original bytes, bounding reads without changing path semantics."""
+    with Path(path).open('rb') as stream:
+        return read_bounded_stream(stream, max_bytes, label=Path(path).name)
+
+
+def load(path, *, max_bytes=None):
+    """Parse one file; None uses the current module's 8 MiB default."""
+    limit = MAX_INPUT_BYTES if max_bytes is None else max_bytes
+    return loads(read_bounded(path, limit))

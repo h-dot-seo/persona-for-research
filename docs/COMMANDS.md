@@ -19,6 +19,10 @@ scripts that have a command-line entry point. The unittest suite is the `tests/`
 `python -m unittest discover` from the root runs it, and one module runs as
 `python -m unittest tests.test_<name> -v`.
 
+Shared JSON file reads now reject inputs over 8 MiB, including previously unbounded
+callers; projection stdin is also bounded. Existing aggregate budgets are retained.
+No CLI limit override is added. See [WORKFLOWS.md](WORKFLOWS.md#shared-json-input-byte-budget).
+
 ## Stdout and shell capture
 
 The JSON results of `audit_design_chain.py`, `audit_design_lineage.py`,

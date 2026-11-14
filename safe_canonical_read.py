@@ -84,8 +84,9 @@ def main():
     if args.expected_original_sha256 and args.source_kind != 'original-bytes':
         parser.error('Original-byte hash verification requires original-bytes input, never reconstructed Library text.')
     try:
-        from strict_json import loads
-        raw = sys.stdin.buffer.read() if args.input == '-' else Path(args.input).read_bytes()
+        from strict_json import MAX_INPUT_BYTES, loads, read_bounded, read_bounded_stream
+        raw = (read_bounded_stream(sys.stdin.buffer, MAX_INPUT_BYTES, label='<stdin>')
+               if args.input == '-' else read_bounded(args.input, MAX_INPUT_BYTES))
         result = sanitize(loads(raw))
     except (ValueError, OSError, TypeError, RecursionError) as exc:
         parser.exit(1, str(exc) + '\n')

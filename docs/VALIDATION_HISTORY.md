@@ -2114,3 +2114,27 @@ review/split tests were rechecked. No remote CI outcome is claimed in this recor
   records or external model/API calls. Remote CI is recorded separately for exact commits.
 - Catalog exit 0 alone does not prove completeness. Help is invocation shape only, never
   artifact schema, permission, scientific validity or approval; canonical payload unchanged.
+
+## 2026-11-14 Shared bounded JSON reads (0.87-bounded-json)
+
+- First bounded increment of roadmap #81: strict_json.load defaults to 8 MiB with
+  limit + 1 reads; explicit Python limits and runtime-patchable default are supported.
+  Original-byte and binary-stream helpers handle short reads, preserve encoding bytes,
+  and never close caller streams. ASCII-escaped bounded basename diagnostics omit directories.
+- Human-validation-dependent readers retain their combined budget and existing error
+  message but now enforce it before reading entire files. Projection file and stdin
+  inputs are bounded before original-byte hashing. This deliberately newly rejects
+  oversized inputs in previously unbounded shared-loader callers; no CLI override.
+- Final local full suite: **Ran 1196 tests in 306.120s — OK**. Focused strict JSON,
+  human validation, dispatcher and package review: **52 tests — OK**. Independent review
+  found no blockers, independently ran all 17 strict JSON tests and verified old/new
+  CRLF and UTF-16 original-byte projection exit/stdout/stderr byte equivalence.
+- Seven new tests plus the expanded CLI sweep cover exact limit/+1, patched defaults,
+  invalid limits, short reads, stream ownership, aggregate budgets, escaped diagnostics,
+  original encodings/hash and manifest rejection. Existing guide shell blocks unchanged.
+- Manifest verifies 279 files; limited publication audit passes 280. All 163 Python files
+  compile and parse with Python 3.10 grammar. No real researcher data or external API calls.
+  Remote CI results are recorded separately for exact commits.
+- Private bounded-loader consolidation and raw-source sizing remain future increments.
+  No total corpus/output, decoded-memory or I/O-time bound is claimed. Payload, four axes,
+  acquisition gate and approval behavior are unchanged.

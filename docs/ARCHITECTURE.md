@@ -118,3 +118,9 @@ Local discovery: `persona_cli.py list --json` exposes the existing AST-discovere
 Selected command descriptions capture actual argparse help in bounded child processes after exact-name allowlist and selected-source inventory checks. Argparse-free checks remain static. This is invocation shape, not an artifact-schema, permission or validation contract. See [Command descriptions](COMMAND_DESCRIPTION.md).
 
 The [trusted command catalog](COMMAND_CATALOG.md) aggregates existing help descriptions with a shared deadline/output cap and explicit partial rows. Completeness means descriptions obtained, not workflow validation, runtime schema support or approval. No MCP integration or payload change is introduced.
+
+Shared JSON loading bounds raw reads before parsing: default 8 MiB per file, while
+human-validation-dependent readers retain their shared 8 MiB budget. Projection files
+and stdin are bounded before original-byte hashing. This does not bound decoded memory,
+source corpus totals or outputs, and changes no canonical payload or validation axis.
+See WORKFLOWS.md for the deliberate oversized-input compatibility change.

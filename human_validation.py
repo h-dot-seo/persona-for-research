@@ -9,7 +9,7 @@ from pathlib import Path
 
 from persona import payload_sha256, validate
 from review_package import display
-from strict_json import loads
+from strict_json import InputLimitError, loads, read_bounded
 
 ROOT = Path(__file__).resolve().parent
 SCHEMA = 'human-validation-record.v1'
@@ -353,10 +353,12 @@ def bounded_reader(budget=None):
     remaining = [MAX_INPUT_BYTES if budget is None else budget]
 
     def read(path):
-        raw = Path(path).read_bytes()
+        try:
+            raw = read_bounded(path, remaining[0])
+        except InputLimitError:
+            remaining[0] = 0
+            raise ValueError('combined human validation inputs exceed 8 MiB') from None
         remaining[0] -= len(raw)
-        if remaining[0] < 0:
-            raise ValueError('combined human validation inputs exceed 8 MiB')
         return loads(raw)
     return read
 

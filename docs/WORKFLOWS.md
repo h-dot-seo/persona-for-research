@@ -720,3 +720,27 @@ selection declaration and compare an existing bound package. Reports expose coun
 and hashes rather than withheld lists. Actual split choices and reading assertions
 belong to the operator; no intake gate or holdout evaluation is added. See
 [split declarations](SPLIT_DECLARATION.md).
+
+## Shared JSON input byte budget
+
+`strict_json.load(path, *, max_bytes=None)` now reads at most limit + 1 bytes and
+rejects files above 8 MiB by default. Exactly 8 MiB is accepted if valid JSON.
+This intentionally newly rejects oversized files in previously unbounded callers,
+including persona/package review, comparison and manifest loading. No CLI override
+is added. Python callers may pass an explicit non-negative integer byte limit;
+`None` uses the current `strict_json.MAX_INPUT_BYTES` constant at call time.
+`loads(raw)` still parses already supplied bytes/text and imposes no byte limit itself.
+
+`read_bounded(path, max_bytes)` preserves original bytes; `read_bounded_stream` also
+accepts an already open binary stream, handles short reads and does not close it.
+Neither API changes path/symlink permissions or imposes a time limit on blocking I/O.
+This is an input-byte bound, not a bound on decoded object memory or execution time.
+The projection helper applies the default limit to both files and stdin before hashing
+original bytes. Human validation and its dependent review readers retain their existing
+8 MiB combined budget but no longer read whole files before checking it. Their existing
+aggregate error message is preserved. Existing private loaders retain their own per-file
+or aggregate limits and encoding rules; their consolidation is not part of this increment.
+
+This is not an overall corpus/output size policy. Raw source preparation and output
+writers are unchanged; a produced package may exceed a downstream JSON reader's limit.
+No payload, validation axis, source acquisition gate or approval decision is changed.
