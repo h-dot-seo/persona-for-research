@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.95-package-overview — 2026-11-14
+
+`package_overview.py` presents one bound package as JSON or passive HTML, without a question or multi-artifact journey. Declared axes and supplied human summaries remain separate; no source reread, selection, score or approval is derived.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-bound-package-overview-095-package-overview).
+
 ## 0.94-csl-census — 2026-11-14
 
 `census_import.py import/selection` copies supplied CSL-JSON facts to occurrence records and creates an explicitly selected, unapproved local skeleton. No RIS support, identity/kind derivation, lookup, merge or authorization.
