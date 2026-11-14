@@ -2198,3 +2198,23 @@ pattern scans are explicitly not authenticity, rights clearance, anonymity or ap
   no-inspection tested. Independent checks also covered a dash-prefixed ROOT after --.
 - Manifest279/audit280; compile and Python3.10 grammar163. Remote CI is checked for the
   exact head and merged main separately; local success does not establish remote success.
+
+## 2026-11-14 Main and PR CI (`0.91-main-pr-ci`)
+
+Roadmap #84(e): removed only the retired `codex/core-workflows-20261103`
+push trigger. Main pushes and all pull requests retain four Ubuntu/Windows,
+Python 3.10/3.12 jobs, pinned actions, read-only token, non-persisted checkout
+credentials and the existing test/audit/manifest stages. Working branches use
+PRs for CI; no branch is deleted, no tag trigger or release step is introduced.
+Two explicit checked-in workflow contract tests prevent trigger/matrix drift.
+No production Python or payload, four-axis, approval or input contracts changed.
+
+Validation: full discovery 1,214 tests passed in 326.117 seconds; focused
+manifest/CLI/workflow tests 15 passed in 0.574 seconds. Independent review ran
+15 tests in 0.581 seconds and compared full workflow bytes against the prior
+snapshot: the retired branch token was the only workflow change. All production
+Python files remained byte-identical. Manifest 279 files, publication audit 280
+files, compile and Python 3.10 grammar checks passed after final regeneration.
+Only synthetic tests were used. These results do not claim scientific validity,
+source authenticity, rights, anonymity or release approval. Remote CI is checked
+separately for exact PR and merge commits.
