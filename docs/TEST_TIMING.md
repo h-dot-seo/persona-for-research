@@ -47,3 +47,7 @@ alone fail a completed run. Keyboard interruption can produce a partial report;
 missing modules or failed fixture setup appear as unittest errors. Partial reports
 are never successful. Local wall-clock observations are environment-dependent;
 no duration threshold, performance promise, scientific judgment or approval follows.
+
+For indexed synthetic input dimensions and deterministic replay/hash-byte counts,
+see [capacity observations](CAPACITY.md). This is separate from suite wall timing;
+neither authorizes caching, validator removal or CI reductions.

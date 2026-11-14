@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.107-capacity-observations — 2026-11-14
+
+`python -m tests.capacity NEW_DIR --case N,K,C,S` records representative synthetic imported-argument journey capacity, replay/hash counts and serialized bytes. Experiment bounds and computed CLI thresholds are not product limits; no optimization, cache, judgment or CI change.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-synthetic-journey-capacity-observations-0107-capacity-observations).
+
 ## 0.106-test-observations — 2026-11-14
 
 `python -m tests.timing` observes selected published synthetic-test modules in a fresh worker, reporting fixture-aware module times, indexed test times and fixed-label subprocess call attempts. Privacy-filtered local observations only; no CI, cache, timeout, test-body or performance guarantee change.

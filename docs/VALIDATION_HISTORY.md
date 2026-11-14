@@ -2706,3 +2706,45 @@ Focused 44 tests passed in 11.124 seconds; independent re-review 23 passed and v
 the original overflow reproduction now emits only fixed-error JSON/exit1. Manifest
 passes 320 entries, audit 321; all 189 Python files compile and parse Python 3.10
 grammar. Root CLI count remains 58. Exact PR/main CI is checked separately.
+
+## 2026-11-14 Synthetic journey capacity observations (0.107-capacity-observations)
+
+Roadmap #85 measurement only: tests/scale_fixture.py constructs index-based N-paper,
+K-observation corpora and C imported argument candidates with S explicitly accepted
+steps via existing public APIs. Fixed synthetic decisions are not human/model actions.
+S is adopted step count, not recursive history depth; contextual answer/pattern history
+and other paths remain unmeasured. Runner N/K/C<=32, S<=C and at most 16 cases are
+experiment bounds only, not product limits. Existing fixture/product/CI/cache/timeout
+and scientific decision contracts remain unchanged.
+
+Fixture construction, journey inspect/render and package review are separately observed.
+Counters wrap existing local module aliases by original function identity and restore
+with ExitStack: build/validated_source_rules/apply replay counts first, payload hash
+calls and exact canonical serialized byte totals second. Nested actual invocations count
+separately; dynamically loaded aliases may be missed. The observer adds serialization
+and wall time includes this overhead, so it is not a speed guarantee. Ratios use a
+stated nominal input-file serialization, not a claim that every CLI accepted that input.
+Actual API rejection/stage and calculated CLI combined-8-MiB exceedance are separate.
+The 8192-node renderer fast path budget is not described as product input capacity.
+
+External exclusive NEW_DIR holds bounded case receipts and READY last, or FAILED for
+stage rejection. Partial writes and even partial markers are retained, not auto-deleted;
+marker presence alone does not establish success. No real inputs, provider, external
+transmission or content adoption. Existing raw JSON key order can vary across hash seeds;
+same-process observer/no-observer bytes remain identical, while two-seed checks compare
+canonical semantics, lengths and deterministic counts without changing the renderer.
+
+Small exact-count regressions remain in default discovery; larger grids require explicit
+opt-in. A synthetic (8,4,4,2) execution completed with nominal input 61,050 bytes, journey
+JSON 316,677 and text 136,163 bytes; this one density/path is not a general capacity claim.
+An explicit maximum-grid (32,32,32,32) run also succeeded: nominal inputs
+1,519,154 bytes, journey JSON 7,769,978 / text 3,321,487 and package review 259,817.
+No actual API limit was reached for this particular density/path; this is not an
+upper-bound guarantee. It observed build replay counts 378/229/463/1 across fixture,
+inspect, render and package review, respectively. Generated artifacts remain outside
+the repository; no larger or recursive-history workload is inferred.
+Full suite passed 1,420 tests in 348.856 seconds with one platform skip. Expanded
+focused suite passed 60 in 67.380 seconds, independent review 23; all existing root
+product modules and existing test bodies are byte-unchanged. Manifest passes 324
+files, audit 325; 192 Python files compile and parse Python 3.10 grammar. Root CLI
+count remains 58. Exact PR/main CI is checked separately.
