@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.111-editor-form-documents — 2026-11-14
+
+Three JSON Schema 2020-12 editor profiles help author optional source selections, declared provenance and detached human records. Placeholder acceptance is not import readiness; existing Python validators and all product behavior remain unchanged. No runtime schema checker, instance fields or editor installation.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-optional-declaration-editor-documents-0111-editor-form-documents).
+
 ## 0.110-manual-consultation-reference — 2026-11-14
 
 A WORKFLOWS paragraph explains optional manual citation of an adopted consultation in supporting Sensei installations: exact canonical package/envelope hashes and declared provenance only. No exporter, transmission, challenge, review, authentication or gate change.

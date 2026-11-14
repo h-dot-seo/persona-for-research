@@ -167,3 +167,7 @@ status remain in the JSON/text output rather than duplicating a large second tab
 - `persona.test-timing.v1`
 - `synthetic-answer-holdout-labels.v1`
 - `synthetic-answer-submission.v1`
+
+## Optional editor documentation
+
+Three separate optional authoring profiles now cover source selection, declared provenance and detached human records. See [EDITOR_SCHEMAS.md](EDITOR_SCHEMAS.md). They permit placeholders and are not the completed-input checker discussed above; no index row or existing validator is replaced.

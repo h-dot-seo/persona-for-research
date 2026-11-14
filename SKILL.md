@@ -58,7 +58,7 @@ Review with `review_package.py`; empty answer/design starters:
 docs/REVISION_IMPACT.md. Consultation remains a specification, not a dialogue backend.
 Updates are only partly supported by `revise_local.py`, `revision_impact.py` and
 `source_recheck.py`; read docs/MANUAL_EVIDENCE_REVISION.md and docs/SOURCE_RECHECK.md.
-Report gaps; never invent completion. Contracts: docs/SCHEMAS.md.
+Report gaps; invent no completion. Forms: docs/EDITOR_SCHEMAS.md.
 
 Keep the validation axes separate: `persona.py` checks evidence bindings and
 `source_recheck.py` checks current local bytes; `evaluate_synthetic.py` is synthetic-only
