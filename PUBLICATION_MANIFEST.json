@@ -56,7 +56,7 @@
     {
       "path": "VALIDATION.md",
       "bytes": 7820,
-      "sha256": "ea8f165eea0d56004a4b06a658b5ebb1e66fce6a36776f3c95c6b704023f244e"
+      "sha256": "b0e813f81a29c19e5f6e2b9be70caf325058ffaeae4889fa96c36a5ed096e4b3"
     },
     {
       "path": "answer_context.py",
@@ -455,8 +455,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 166944,
-      "sha256": "d39f8351d5e48627008a4af0a2979b5326ba3729bb0551fcb1324f9cbd6ec453"
+      "bytes": 167775,
+      "sha256": "ea7947be4bb69e343a0682e9f300e3c71f2c18d74e65178384ca2298d3d1c55c"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1445,8 +1445,8 @@
     },
     {
       "path": "tests/test_tabular_export.py",
-      "bytes": 7869,
-      "sha256": "240da8e2cdda4b97c1a499a4413573d0d40c392ce7ddc13cd5b62661c0129df8"
+      "bytes": 8368,
+      "sha256": "15adfd6d06856c158e34464b29757b0705f2bcd098cb3f5e7df048f6bd4ed18a"
     },
     {
       "path": "tests/test_topic_inventory.py",

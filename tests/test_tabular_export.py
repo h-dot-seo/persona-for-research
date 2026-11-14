@@ -22,6 +22,11 @@ from strict_json import load
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def guide_argv(line, output):
+    # Parse the documented POSIX command before substituting native Windows paths.
+    return [part.replace('OUTPUT', str(output)) for part in shlex.split(line)]
+
+
 class TabularTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)
@@ -135,13 +140,19 @@ class TabularTests(unittest.TestCase):
         self.assertEqual(result.returncode,1);self.assertEqual(result.stdout,b'')
         self.assertIn(b'exceeds',result.stderr)
 
+    def test_guide_native_windows_path_survives_tokenization(self):
+        path=r'C:\Users\Synthetic Name\Temp'
+        args=guide_argv('python tabular_export.py reference-catalog package.json --output OUTPUT/references.csv',path)
+        self.assertEqual(args[-1],path+'/references.csv')
+        self.assertEqual(len(args),6)
+
     def test_documented_commands(self):
         text=(ROOT/'docs/TABULAR_EXPORT.md').read_text(encoding='utf-8')
         count=0
         for block in text.split('```sh\n')[1:]:
             for line in block.split('```',1)[0].splitlines():
                 if not line or line.startswith('#'):continue
-                argv=shlex.split(line.replace('OUTPUT',str(self.out)))
+                argv=guide_argv(line,self.out)
                 argv[0]=sys.executable
                 result=subprocess.run(argv,cwd=ROOT,capture_output=True)
                 self.assertEqual(result.returncode,0,result.stderr);count+=1

@@ -2390,3 +2390,14 @@ formula/control escaping, Korean and non-BMP CSV/TSV parsing. No blocker remaine
 Manifest verification passed for 297 listed files; publication audit passed for 298 text
 files; all 175 Python files compile and parse with Python 3.10 grammar. Dispatcher lists
 54 root CLI scripts. Remote PR/main CI is checked separately for exact commits.
+
+Initial PR CI found one Windows documentation-runner failure: substituting a native
+Windows temporary path before POSIX shlex tokenization removed its backslashes. The
+runner now tokenizes documented commands first, then substitutes OUTPUT in each argv
+element. Added a regression with a Windows path containing spaces/backslashes. Production
+code and output policy are unchanged; the failing head was not merged. Corrected full
+suite passed 1,292 tests in 327.023 seconds; new/workspace focused tests passed 35 in
+1.488 seconds. Release checklist: inspect every newly added/changed guide runner for
+shlex-before-native-path substitution, including a spaces/backslashes regression. This
+round added only this one runner; all its documented commands use the corrected helper.
+Existing untouched guide runners were not bulk-edited.
