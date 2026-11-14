@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.110-manual-consultation-reference — 2026-11-14
+
+A WORKFLOWS paragraph explains optional manual citation of an adopted consultation in supporting Sensei installations: exact canonical package/envelope hashes and declared provenance only. No exporter, transmission, challenge, review, authentication or gate change.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-manual-consultation-reference-guidance-0110-manual-consultation-reference).
+
 ## 0.109-artifact-contract-index — 2026-11-14
 
 `artifact_schemas.py` describes public/maintainer identifiers, fixture wrappers and untagged workflow roles with explicit source-reviewed/exercised/unknown relationships. It is not a validator, migration tool or support/retirement policy; existing payloads and validators stay unchanged.

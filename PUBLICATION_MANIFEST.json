@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.109-artifact-contract-index",
+  "release": "0.110-manual-consultation-reference",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 329,
+  "file_count": 330,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 14979,
-      "sha256": "504b950b04fe2eb31e2ee140cd235335bcea5f399f8659c12c00975f6086cef7"
+      "bytes": 15436,
+      "sha256": "1e73ed4ef7dc6ebf26829f5fbdb8ce4d55104b95ab30c576adf7f991aaf606a1"
     },
     {
       "path": "PUBLICATION.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 10246,
-      "sha256": "b13357aa6e3b918396b8cfe0da87e545addb548ece92a37087ecb8774931df3c"
+      "bytes": 10444,
+      "sha256": "1e1151b43762cdf62a8b7fda468a2509531404814737cd1822d2efc776a12e5b"
     },
     {
       "path": "answer_context.py",
@@ -495,13 +495,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 199284,
-      "sha256": "49b44510ece01b93bce6e469489c72d3d69c0c531e6785439c53e0a76d1595b4"
+      "bytes": 201457,
+      "sha256": "7bebe0ce338eec6d86d0e962f39b874da17e4c6f6f7f0d3969ea18550577e85e"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 48610,
-      "sha256": "e952ce1e90a26357fb71a51954dc2913e5599f346de0dace7d216b66d0d70e5d"
+      "bytes": 50152,
+      "sha256": "93ef7ee84bddf3741c1b6ecbd8081734457e75de71adb6d2093989e4ef4f5307"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -1357,6 +1357,11 @@
       "path": "tests/test_local_model_handoff.py",
       "bytes": 16733,
       "sha256": "c3fd520e4f94274fc4bd05e229c499a874a7b138591006401e74c2b848921296"
+    },
+    {
+      "path": "tests/test_manual_consultation_reference.py",
+      "bytes": 3251,
+      "sha256": "b4e921d588caa09eed3b14071e703a417365e57f00f6421825437125284d1528"
     },
     {
       "path": "tests/test_method_application.py",
