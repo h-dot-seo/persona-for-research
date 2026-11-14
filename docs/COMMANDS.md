@@ -208,8 +208,8 @@ Append one explicitly authored observation to a pinned local manifest.
 
 ```text
 usage: curate_local.py [-h] {template,append} ...
-usage: curate_local.py template [-h] [--output NEW_FILE] --paper PAPER manifest
-usage: curate_local.py append [-h] [--output NEW_FILE] --source-root SOURCE_ROOT manifest card
+usage: curate_local.py template [-h] [--output NEW_FILE] --paper PAPER [--explain-rejection] manifest
+usage: curate_local.py append [-h] [--output NEW_FILE] --source-root SOURCE_ROOT [--explain-rejection] manifest card
 ```
 
 Subcommands:
@@ -225,8 +225,8 @@ Revise one manual observation against unchanged local source bytes, with an audi
 
 ```text
 usage: revise_local.py [-h] {template,apply} ...
-usage: revise_local.py template [-h] [--output NEW_FILE] --paper PAPER --observation-index OBSERVATION_INDEX manifest
-usage: revise_local.py apply [-h] --source-root SOURCE_ROOT manifest card destination
+usage: revise_local.py template [-h] [--output NEW_FILE] --paper PAPER --observation-index OBSERVATION_INDEX [--explain-rejection] manifest
+usage: revise_local.py apply [-h] --source-root SOURCE_ROOT [--explain-rejection] manifest card destination
 ```
 
 Subcommands:
@@ -903,3 +903,5 @@ usage: comparator_overlap.py [-h] --topic TOPIC [--format {json,text}] [--source
 ### Comparator source-check supporting library
 
 Library only: optional comparator source selection/recheck for `comparator_overlap.py`; no standalone CLI. See [source guide](COMPARATOR_SOURCES.md).
+
+Manual input rejection detail library: `rejection_details.py` has no CLI. See [opt-in contract](MANUAL_REJECTION_DETAILS.md).

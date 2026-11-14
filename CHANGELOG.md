@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.115-manual-rejection-details — 2026-11-14
+
+Manual append/revision CLIs accept `--explain-rejection` to add bounded static input labels and known missing keys/unsupported-key counts to covered failures. Default outputs and exception strings remain unchanged; no dynamic key names, source paths or IDs are added. No broad CLI conversion or validation change.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-opt-in-manual-rejection-details-0115-manual-rejection-details).
+
 ## 0.114-comparator-source-check — 2026-11-14
 
 `comparator_overlap.py --source-selection MAP --source-root ROOT` optionally rechecks only explicitly selected comparator bytes and stored quotes. Target sources remain unread; default structure-only outputs and v1 corpus fields stay unchanged. Hash/quote results are not authenticity, rights, independence or approval.

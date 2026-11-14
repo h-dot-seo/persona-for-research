@@ -3015,3 +3015,42 @@ comparator_sources.py despite the accompanying prose correctly saying no standal
 CLI. Independent review detected the same issue. The heading is now descriptive
 library prose; no product registration or implementation changed. Full-run and
 independent final-tree verification are repeated after this metadata/manifest freeze.
+
+
+## 2026-11-14 Opt-in manual rejection details (0.115-manual-rejection-details)
+
+Roadmap #82 bounded opt-in implementation for manual append and revision only:
+--explain-rejection adds a second stderr line to covered local loader/exact-schema
+failures. Default stderr/exit/stdout and str(exc)/args stay unchanged; API exceptions
+with metadata remain ValueError subclasses. Direct shared observation validation
+without a label keeps plain ValueError. The old observation is explicitly manifest,
+proposed observation card; no inferred attribution of cross-input binding/quote/hash,
+authorization, OSError or downstream validation failures is introduced.
+
+New details contain static manifest/card labels, at most8 known schema missing keys
+plus remaining count, and unsupported-key count capped9999+. Unknown key names or
+values, private paths/IDs, array positions and dynamic dimensions are not copied.
+Additional line is bounded512 printable ASCII bytes using existing key escaping.
+Empty objects can show known missing keys; non-objects or a wrong enum/schema value
+with correct keys do not manufacture a key mismatch. Original stderr can already
+contain legacy path or duplicate-key previews: only the new line avoids additional
+input disclosure, not a promise that all historical stderr is private.
+
+No extra file read, validation replay, source check, payload, judgment, approval,
+exit-code or successful-output change. JSON errors/other CLIs and argparse usage
+error semantics remain outside broad conversion; help usage adds the explicit flag.
+Existing tests compare native stderr CRLF/LF correctly and binary stdout separately.
+Shared validator callers were checked, including old-manifest and new-card routing.
+
+Focused89 tests passed in2.953 seconds; actual previous/current default7 CLI paths
+and3 revision output files were byte-identical. Independent55 passed in3.481 seconds
+and compared7 API error str/args pairs against the previous implementation, plus
+static-contract labels, hostile keys, length/privacy and no additional reads.
+Independent review found misleading guide prose claiming empty objects produce no
+missing-key details; corrected to distinguish empty objects from non-object values.
+No product change was needed for that documentation correction.
+
+Final tree contains1486 tests,204 Python files,352 manifest entries and353 audit files;
+CLI60/SKILL8187 unchanged. Metadata/manifest are frozen before final full/independent
+verification; exact final-tree results and timing are recorded externally without
+modifying files during validation. This is not a generalized JSON-pointer diagnostic API.

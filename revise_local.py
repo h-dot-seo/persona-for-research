@@ -10,6 +10,7 @@ from research_workflow import build
 from corpus_files import load_sources
 from persona import payload_sha256
 from strict_json import load
+from rejection_details import closed_rejection, load_input, exit_rejected
 
 SCHEMA='persona.manual-observation-revision.v1'
 ROOT=Path(__file__).resolve().parent
@@ -20,7 +21,7 @@ def _target(manifest,paper_id,index):
     if type(index) is not int or not 0<=index<len(paper['observations']):
         raise ValueError('observation index must identify one existing observation')
     old=paper['observations'][index]
-    validate_manual_observation(old)
+    validate_manual_observation(old,rejection_label='manifest')
     return old
 
 
@@ -35,7 +36,7 @@ def revise(manifest,card,root):
     fields={'schema','manifest_sha256','paper_id','observation_index','previous_observation_sha256',
             'observation','operator_id','revision_reason','new_version','new_build_id'}
     if not isinstance(card,dict) or set(card)!=fields or card['schema']!=SCHEMA:
-        raise ValueError('revision card has missing or unsupported fields')
+        raise closed_rejection('revision card has missing or unsupported fields',card,'revision-card','card')
     old=_target(manifest,card['paper_id'],card['observation_index'])
     if card['manifest_sha256']!=payload_sha256(manifest) or card['previous_observation_sha256']!=payload_sha256(old):
         raise ValueError('stale revision binding; inspect the current manifest and observation')
@@ -44,7 +45,7 @@ def revise(manifest,card,root):
             raise ValueError('revision requires an explicit bounded '+field)
     if card['new_version']==manifest['version'] or card['new_build_id']==manifest['build_id']:
         raise ValueError('choose a new version and build ID explicitly')
-    validate_manual_observation(card['observation'])
+    validate_manual_observation(card['observation'],rejection_label='card')
     if payload_sha256(card['observation'])==payload_sha256(old):
         raise ValueError('no observation change supplied')
     result=json.loads(json.dumps(manifest,ensure_ascii=False,allow_nan=False))
@@ -86,15 +87,16 @@ def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True)
     t=sub.add_parser('template'); add_output_argument(t);t.add_argument('manifest',type=Path);t.add_argument('--paper',required=True);t.add_argument('--observation-index',type=int,required=True)
     a=sub.add_parser('apply');a.add_argument('manifest',type=Path);a.add_argument('card',type=Path);a.add_argument('destination',type=Path);a.add_argument('--source-root',type=Path,required=True)
+    for command in (t,a):command.add_argument('--explain-rejection',action='store_true')
     args=p.parse_args()
     preflight(p, getattr(args, 'output', None))
     try:
-        manifest=load(args.manifest)
+        manifest=load_input(load,args.manifest,'manifest',args.explain_rejection)
         if args.command=='template':result=template(manifest,args.paper,args.observation_index)
         else:
-            audit=save_revision(manifest,load(args.card),args.source_root,args.destination)
+            audit=save_revision(manifest,load_input(load,args.card,'card',args.explain_rejection),args.source_root,args.destination)
             result={k:audit[k] for k in ('status','previous_manifest_sha256','revised_manifest_sha256')}
-    except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:p.exit(1,str(exc)+'\n')
+    except (ValueError,OSError,KeyError,TypeError,AttributeError) as exc:exit_rejected(p,exc,args.explain_rejection)
     emit(p, (json.dumps(result,ensure_ascii=True,indent=2) + '\n').encode('utf-8'), getattr(args, 'output', None))
 
 
