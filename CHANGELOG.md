@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.116-documentation-audit — 2026-11-14
+
+`python -m tests.doc_conformance` audits a bounded Markdown subset in fixed repository documents and reports block-level reviewed test records. Unsupported syntax stays UNRESOLVED, external links unchecked and unreviewed blocks explicit. It does not execute guides or establish complete coverage; existing product/CI behavior is unchanged.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-partial-local-documentation-conformance-audit-0116-documentation-audit).
+
 ## 0.115-manual-rejection-details — 2026-11-14
 
 Manual append/revision CLIs accept `--explain-rejection` to add bounded static input labels and known missing keys/unsupported-key counts to covered failures. Default outputs and exception strings remain unchanged; no dynamic key names, source paths or IDs are added. No broad CLI conversion or validation change.

@@ -1,0 +1,35 @@
+[
+  {
+    "path": "docs/COMPARATOR_OVERLAP.md",
+    "ordinal": 1,
+    "raw_sha256": "1c045f5b4ac680413cd6b201bf54fe5d1f783806c37a38ddcdb350a62aba3a3d",
+    "test": "tests.test_comparator_overlap.ComparatorTests.test_actual_guide_and_deterministic_hashseeds",
+    "test_ast_sha256": "c8c599a8464747073d67e8551d1dc3b4ca81f2e2eb0894388dd7ec937f304f75",
+    "coverage": "FULL_BLOCK",
+    "substitution": "Native repository paths after shlex; shipped fictional package and comparator",
+    "manual_steps": "None; explicitly authored fixture declarations already present",
+    "note": "All three documented commands require rc0, including the empty-topic report. Also runs two hash seeds."
+  },
+  {
+    "path": "docs/COMPARATOR_SOURCES.md",
+    "ordinal": 1,
+    "raw_sha256": "bd03b906b165032d9f1be0cb6fafbaa6c00ccf16cf3a0be71b8de80c1410d8fc",
+    "test": "tests.test_comparator_sources.ComparatorSourceTests.test_guide",
+    "test_ast_sha256": "9ec23c9516f226a3b99ff14d3985e7e3db30966c6828224e772e7d465e31c1aa",
+    "coverage": "FULL_BLOCK",
+    "substitution": "Native repository paths after shlex; separate fictional comparator sources and explicit mapping",
+    "manual_steps": "None; mapping is pre-authored synthetic data, not user permission",
+    "note": "The one command executes with rc0 and verifies comparator-only source-check status."
+  },
+  {
+    "path": "docs/MANUAL_REJECTION_DETAILS.md",
+    "ordinal": 1,
+    "raw_sha256": "f448b5adc31a6af61c834285fc0894114d072b2170033b2bbcf19a1dab547e7d",
+    "test": "tests.test_rejection_details.RejectionDetailTests.test_actual_documented_rejection_examples",
+    "test_ast_sha256": "f7e5329b4695d4709509978a3a0e1a18b0e64b7327f02444c05de7a4d4d5a424",
+    "coverage": "FULL_BLOCK_EXPECTED_REJECTION",
+    "substitution": "OUTPUT becomes a new path with spaces under TemporaryDirectory; native paths after shlex",
+    "manual_steps": "None; intentionally wrong corpus-as-card shape",
+    "note": "Both documented commands require rc1, empty stdout, two stderr lines and no revision directory. Not successful authoring."
+  }
+]

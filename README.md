@@ -270,3 +270,5 @@ separately from citations, source groups and unchanged decisions.
 [Optional editor schemas](docs/EDITOR_SCHEMAS.md) document three declaration forms, including incomplete editing placeholders. Existing Python checks remain authoritative.
 
 [Comparator exact-string inventory](docs/COMPARATOR_OVERLAP.md): separately declared observations, never author specificity or persona knowledge.
+
+Maintainers: [read-only documentation subset audit](docs/DOCUMENTATION_AUDIT.md), with explicit unresolved syntax and reviewed test-ownership limits.

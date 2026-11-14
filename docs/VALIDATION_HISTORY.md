@@ -3054,3 +3054,44 @@ Final tree contains1486 tests,204 Python files,352 manifest entries and353 audit
 CLI60/SKILL8187 unchanged. Metadata/manifest are frozen before final full/independent
 verification; exact final-tree results and timing are recorded externally without
 modifying files during validation. This is not a generalized JSON-pointer diagnostic API.
+
+
+## 2026-11-14 Partial local documentation conformance audit (0.116-documentation-audit)
+
+Roadmap #102 fixed-repository, read-only stdlib maintainer audit fills the relative
+Markdown link/anchor and block-evidence inventory gap. Existing dispatcher CLI-heading,
+whole usage, SKILL and CHANGELOG checks remain separate rather than reimplemented.
+Only root Markdown, immediate docs Markdown, registry and explicitly named test files
+are read; no network, shell, guide execution or output-file write. Aggregate input8MiB
+and output16MiB limits apply. This is a supported subset, not full CommonMark/GitHub
+rendering, external URL validation, security audit or complete documentation coverage.
+
+Relative links and supported headings include escape/reference/Unicode/duplicate/
+percent-fragment cases; unsupported structures remain explicit UNRESOLVED. Block
+identity uses path/ordinal/raw body SHA256; manually reviewed records bind exact test
+method AST, coverage scope, substitutions, human steps and expected outcomes. A changed
+block/test cannot silently inherit its previous record. Method AST does not bind
+transitively called helpers, imports or fixture contents. Test record existence is
+not a test run. Current records cover two successful synthetic guides and one expected
+rejection guide; all other blocks are NOT_REVIEWED. Existing guide blocks are preserved.
+
+Self/independent review found three parser overclaims before freeze: reference/autolink
+blockquote lines could be counted as supported, reference/entity headings could invent
+slugs, and reference definitions inside multiline code/comments could be registered.
+Corrected with conservative UNRESOLVED classification, masking before definition
+collection, code-heading exclusion, and UNRESOLVED_ANCHOR_TARGET when the target parse
+is incomplete. No claim that every missing-looking anchor is actually absent.
+
+Corrected focused48 tests passed in4.598 seconds(skip1 existing Windows path test).
+Independent45 passed in10.318 seconds, including7 extra original-failure probes and
+network/subprocess prohibition. Candidate scan observed83 documents,746 checked local
+links,45 external exclusions,0 supported-link errors,46 unresolved cases,176 sh blocks:
+3 reviewed test records and173 NOT_REVIEWED. Status remains REVIEW_REQUIRED, coverage
+PARTIAL_SUPPORTED_MARKDOWN_SUBSET, guide_execution_performed false. Counts can change
+with documentation metadata; final scan outcomes are recorded externally, not overstated
+as all-links-valid or all-guides-executed. No existing broken-link repair was required.
+
+Final tree contains1498 tests,206 Python files,356 manifest entries and357 audit files;
+CLI60/SKILL8187 unchanged. Product/root implementations and CI are unchanged. Metadata
+and manifest are frozen before final full/independent Git-tree verification; final
+results and timing are recorded externally without moving the tree during runs.
