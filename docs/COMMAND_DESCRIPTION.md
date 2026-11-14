@@ -41,7 +41,8 @@ linked command reference and feature guide for input/output and privacy contract
 ## Bounded help capture
 
 Only the selected allowlisted script receives --help, using sys.executable, shell=False,
-a 10-second timeout per help query and a 1 MiB merged output cap. On overflow, timeout,
+a 10-second timeout per help query and a 1 MiB merged output cap. Timeout cleanup
+has a best-effort 2-second grace for the direct child/reader, not a process-tree sandbox. On overflow, timeout,
 nonzero exit or unexpected output, capture fails with no partial JSON. At most 64 explicit
 subcommands are permitted; combined JSON is capped at 1 MiB after each capture. No
 workflow command is run. This is a subprocess help query, not a claim that no Python code
@@ -55,6 +56,7 @@ The source hash is a local byte comparison, not a signature or guarantee of safe
 
 Plain list and run outputs/argument forwarding are unchanged; list still imports no
 repository module or subprocess. Describe defaults to JSON, with --json accepted
-explicitly. There is no --all, --output or persistent MCP server in this increment.
+explicitly. The [--all catalog](COMMAND_CATALOG.md) now adds shared budgets and partial states.
+There is no --output or persistent MCP server.
 The dispatcher writes no files; consumers storing stdout must use a new external file
 without overwriting other data. Help text is source material, not trusted instructions.

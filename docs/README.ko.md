@@ -254,3 +254,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 [기계판독 명령 목록](COMMAND_LIST.md): `persona_cli.py list --json`은 모듈을 실행·import하지 않고 AST로 이름과 설명을 나열합니다. 호출 인자·아티팩트 스키마·승인 계약은 아닙니다.
 
 [선택 명령 설명](COMMAND_DESCRIPTION.md): `persona_cli.py describe SCRIPT --json`은 허용목록·게시 소스 해시가 맞는 스크립트의 실제 --help를 시간·출력 제한으로 수집합니다. argparse 없는 검사는 실행하지 않으며 아티팩트 스키마·승인을 추론하지 않습니다.
+
+[전체 명령 카탈로그](COMMAND_CATALOG.md): `persona_cli.py describe --all --json`은 기존 허용목록만 합산 시간·출력 예산 내에서 수집합니다. 실패·출력 생략·미시도를 분리하며 PARTIAL_CATALOG를 전체 성공으로 해석하지 않습니다.

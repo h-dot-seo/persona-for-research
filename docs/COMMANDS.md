@@ -61,7 +61,7 @@ Discover and run the root command-line scripts from any directory, without chang
 ```text
 usage: persona_cli.py [-h] [--version] {list,describe,run} ...
 usage: persona_cli.py list [-h] [--json]
-usage: persona_cli.py describe [-h] [--json] script
+usage: persona_cli.py describe [-h] [--all] [--json] [script]
 usage: persona_cli.py run [-h] script ...
 ```
 
@@ -777,4 +777,4 @@ importing or executing discovered scripts. See [Machine-readable command list](C
 
 `persona_cli.py describe SCRIPT --json` captures actual root/subcommand help for an
 explicitly allowlisted, inventory-matched source. Argparse-free scripts are never executed.
-See [Selected command descriptions](COMMAND_DESCRIPTION.md); full catalog remains deferred.
+See [Selected command descriptions](COMMAND_DESCRIPTION.md); the [bounded catalog](COMMAND_CATALOG.md) adds --all with explicit partial states.

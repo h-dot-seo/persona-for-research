@@ -22,6 +22,7 @@ source corpora, real persona packages and real validation results are kept out.
 
 - Generalized construction lifecycle and separate evidence/predictive/human/runtime validation axes.
 - Logical JSON binding validator (`persona.py`) and a holdout-redacting projection helper (`safe_canonical_read.py`).
+- Full trusted command catalog (`persona_cli.py describe --all --json`) with shared budgets and explicit partial-result states.
 - Selected trusted command descriptions (`persona_cli.py describe SCRIPT --json`) capture bounded actual help and usage; argparse-free checks are never run.
 - Machine-readable local command discovery (`persona_cli.py list --json`), without importing or executing discovered scripts.
 - Supplied release decisions (`release_record.py template decision`): human-record hash references and explicit missing-axis reports, never tool approval.
@@ -112,7 +113,7 @@ Keep real inputs and generated packages outside this public repository.
 | `operator_review.py` | Record explicit operator decisions into a separate revision candidate | [Operator review](docs/OPERATOR_REVIEW.md) |
 | `answer_proposals.py`, `argument_proposals.py` | Offline, evidence-scoped answer and argument proposals with explicit adoption | [Answer proposals](docs/ANSWER_PROPOSALS.md) |
 | `research_journey.py`, `journey_inputs.py` | Integrated source-to-method-to-argument report (JSON/text/HTML) and pinned input cards | [Research journey](docs/RESEARCH_JOURNEY.md) |
-| `persona_cli.py` | Show labels (`--version`), discover root scripts (`list`/`list --json`), inspect selected trusted help (`describe SCRIPT --json`) and run one in-process from any directory (`run <script> [args...]`); the `python <script>.py` form stays primary | [Commands](docs/COMMANDS.md#persona_clipy) |
+| `persona_cli.py` | Show labels (`--version`), discover root scripts (`list`/`list --json`), inspect selected trusted help (`describe SCRIPT --json` or `describe --all --json`) and run one in-process from any directory (`run <script> [args...]`); the `python <script>.py` form stays primary | [Commands](docs/COMMANDS.md#persona_clipy) |
 
 Every script and subcommand, with its exact usage line, is listed in
 [docs/COMMANDS.md](docs/COMMANDS.md); the per-feature narrative with its limits and
@@ -233,3 +234,5 @@ See [Supplied release decisions](docs/RELEASE_DECISION.md) for optional read-onl
 See [Machine-readable command discovery](docs/COMMAND_LIST.md) for the bounded JSON name/description list and its limits.
 
 See [Selected command descriptions](docs/COMMAND_DESCRIPTION.md) for actual usage capture, source restrictions and invocation-only boundaries.
+
+See [Bounded command catalog](docs/COMMAND_CATALOG.md) for aggregate help discovery and complete versus partial outcomes.
