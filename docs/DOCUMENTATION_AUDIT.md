@@ -51,7 +51,7 @@ test source may be read more than once and each read counts toward the budget.
 Each sh block is identified by document path, one-based sh-block ordinal and SHA256
 of its exact UTF-8 body bytes, including original line endings. Fences themselves
 are not in that hash. The registry `tests/doc_block_evidence.json` contains only
-manually inspected mappings. Current entries cover three guides:
+manually inspected mappings. Current entries cover five guides:
 
 - COMPARATOR_OVERLAP: all three commands, repository paths after shlex parsing,
   supplied fictional declarations; expected successful reports, including no-topic.
@@ -62,12 +62,22 @@ manually inspected mappings. Current entries cover three guides:
   outcome is exit 1, empty stdout, two stderr lines and no output directory. This
   is **not** successful manual authoring or real operator review.
 
+- MANUAL_LOCAL_OBSERVATIONS and MANUAL_EVIDENCE_REVISION: the first two sh
+  blocks in each guide execute as one four-block/nine-command chain through a new
+  review workspace. Fixed scratch-path tokens are replaced only after shlex. A
+  single trailing `>` is captured as unchanged stdout bytes, not shell emulation.
+  Success stdout uses LF even on Windows; native stderr is checked separately.
+  The two third blocks invoking unittest are explicitly excluded to avoid nested
+  test execution; they remain NOT_REVIEWED in the block registry. Prewritten
+  synthetic operator cards are not actual review. Blank templates are generated
+  but remain incomplete and are checked to reject without extra source reads.
+
 Each entry records the exact test method, full/partial/expected-rejection coverage,
 substitution and manual-step description. Test method source hashes use the exact `ast.get_source_segment` definition/body
 after CRLF/CR-to-LF normalization. AST is used only to select the named method;
 Python-version-specific AST fields do not enter the hash. Formatting changes inside
 the selected segment become stale; moving it to another line alone does not. This is a reviewed
-ownership pointer, not proof of runtime behavior: transitively called helper bodies, imports and fixture changes are not bound by the
+ownership pointer, not proof of runtime behavior: decorators, transitively called helper bodies, imports and fixture changes are not bound by the
 method source hash. These changes and an incorrectly authored registry entry require
 separate review. Existence of the
 method or a Markdown filename in source is not sufficient evidence of execution.
@@ -84,5 +94,5 @@ those reserved headings. `tests.test_command_catalog` executes trusted help and
 compares usage lines. `tests.test_skill_contract` checks SKILL paths/size, while
 `tests.test_changelog` binds release-index anchors. Run these separately when the
 corresponding contract changes. This audit does not run them or claim their result.
-No CI timeout, guide runner, redirection emulation, README coverage mandate, language
+No CI timeout, generic guide runner, shell redirection emulation, README coverage mandate, language
 heading policy, or cross-repository shared implementation is introduced.

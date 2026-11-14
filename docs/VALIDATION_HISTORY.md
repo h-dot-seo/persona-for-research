@@ -3113,3 +3113,30 @@ resolved; no product path policy was changed. New regressions cover differing AS
 fields, source formatting and line endings. Corrected tree contains1500 tests;
 other file counts are unchanged. Local Python3.10 and native Windows were unavailable,
 so synthetic regressions do not replace the new CI matrix verification.
+
+
+## 2026-11-14 Connected manual guide flow (0.117-manual-guide-flow)
+
+Roadmap #102 follow-on executes the first two sh blocks of each existing
+MANUAL_LOCAL_OBSERVATIONS and MANUAL_EVIDENCE_REVISION guide: four blocks and nine
+commands. Existing API/handwritten-CLI tests did not execute this exact document
+connection. Original guide bytes, product modules, source fixtures and CI remain
+unchanged. The two final unittest blocks are explicitly excluded to avoid recursive
+suite execution; this is not every guide or every block.
+
+The dedicated test splits tokens before mapping only registered paths into an
+external temporary directory containing spaces. One registered trailing > captures
+raw stdout bytes with exclusive creation; no shell, PowerShell emulation, arbitrary
+redirection or dynamic argparse monkeypatch is used. It checks append stance and
+claim type, preserved source hash, new revision identity, old output bytes at every
+step, revision audit and new review workspace bindings, and actual rejection of
+incomplete templates. Four new registry records bind the original blocks and exact
+test source; transitive helper/fixture changes remain outside the digest boundary.
+
+Initial focused62 tests passed in2.147 seconds. The corrected round44 source-digest
+and canonical temporary ROOT fixtures were propagated before final validation;
+focused24 passed in4.155 seconds. Recorded blocks increase from3 to7, NOT_REVIEWED
+from173 to169; unresolved syntax remains46 and the audit still does not execute
+guides. Final tree contains1502 tests,207 Python files,357 manifest entries and358
+audit files; CLI60 and SKILL8187 remain unchanged. Final full, independent, and
+remote CI results are tracked externally after freezing this tree.
