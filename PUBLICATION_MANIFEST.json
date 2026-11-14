@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.113-comparator-inventory",
+  "release": "0.114-comparator-source-check",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 343,
+  "file_count": 349,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 16886,
-      "sha256": "8976df160bd1d9f03908f6c57dbf316ba3de00a69021929bb0e97267d666cfe5"
+      "bytes": 17396,
+      "sha256": "e84e55093b9de00d64b95d98787756f895a70f54d005f9aae27ecf56f9aef1b4"
     },
     {
       "path": "PUBLICATION.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 10957,
-      "sha256": "4e9fabad5899ba64c0c6bd76e79f86608a9e7f32486fabe026cdf8f6ce1a4e92"
+      "bytes": 11123,
+      "sha256": "64e1bacb9c1ba038241fd48b0a1ea153dde6fbc4b9bea188dc3fe480bd4ec0c5"
     },
     {
       "path": "answer_context.py",
@@ -130,8 +130,13 @@
     },
     {
       "path": "comparator_overlap.py",
-      "bytes": 8843,
-      "sha256": "449720ae6099e70f5a1caa3b4978d57cfa173139372a77e048ef4c371c527b87"
+      "bytes": 9390,
+      "sha256": "a599dc93b72bb0cccef7ed9c5968d8160605d8c67bf07992ea1a0eb11a114c86"
+    },
+    {
+      "path": "comparator_sources.py",
+      "bytes": 6174,
+      "sha256": "8dcab42342c53570a948a87a4c11c735def4c5dddc4289b0fa354222b44b0ad3"
     },
     {
       "path": "compare_releases.py",
@@ -230,8 +235,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 45794,
-      "sha256": "25d2bb7ef3e6e6b75b23de2889d79d021e9416b0152bbbbb96ccee872efe7368"
+      "bytes": 46059,
+      "sha256": "374bd5f531388f36a8028f612ede3ab96a23a2d7efa2f4a54b5224efec98a95d"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -250,8 +255,13 @@
     },
     {
       "path": "docs/COMPARATOR_OVERLAP.md",
-      "bytes": 5323,
-      "sha256": "e521e5e3b041eec677b73e6c8c7003bd67699ffac8d70a4e88247cd5b584e3d1"
+      "bytes": 5445,
+      "sha256": "6fa6f18d1ace98c499ac2f839ed510d541f920665e37ead60e4845cababd404d"
+    },
+    {
+      "path": "docs/COMPARATOR_SOURCES.md",
+      "bytes": 4967,
+      "sha256": "d578abbbe1582c142e433e8e8671c9f184bf938ebf351fa816e13a950bfb4d5f"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -470,8 +480,8 @@
     },
     {
       "path": "docs/SCHEMAS.md",
-      "bytes": 8769,
-      "sha256": "6d5caa4db5de87b0dbbc73ef68ef5e0b27ec2be9f49b24d7603b6995fe723f81"
+      "bytes": 8941,
+      "sha256": "e7d93fe9f11be62766576d2f55b58da0cf4ff83ffbbb14378dfa42462b341e65"
     },
     {
       "path": "docs/SOURCE_RECHECK.md",
@@ -515,8 +525,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 209306,
-      "sha256": "64edd9f816e380620b54769ed9a0ea8c64faa5cc9ddc4a742034793498ecc08b"
+      "bytes": 212561,
+      "sha256": "3684f5912b5f4b473c48eb956f78e1e37f73ab98d264024ae2d9ff88be1309a5"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -530,8 +540,8 @@
     },
     {
       "path": "docs/artifact-schema-index.json",
-      "bytes": 79461,
-      "sha256": "162601a490cae2476e3e942a4a4291c0fdb8f82a3077fc4dbeebd6eed7f7d45d"
+      "bytes": 81031,
+      "sha256": "c7368617fb2909e787f9cd8b56ebfefbd495053559585654b901c2da6ad943cd"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -682,6 +692,21 @@
       "path": "examples/synthetic-comparator-corpus.json",
       "bytes": 1683,
       "sha256": "68124fbd5f6a2c25b55a79016e91165061f81fed33478e50f6fa2d8aa20f94c7"
+    },
+    {
+      "path": "examples/synthetic-comparator-source-corpus.json",
+      "bytes": 1627,
+      "sha256": "e0274eab70746288e2eae658ca405c5cf7b6fae3f1a3c2afccc2df1b18218595"
+    },
+    {
+      "path": "examples/synthetic-comparator-source-selection.json",
+      "bytes": 306,
+      "sha256": "2cb60973ebc042257a32770a64c5a5fa8eabd71c1aca14f078b6365e31af5705"
+    },
+    {
+      "path": "examples/synthetic-comparator-sources/paper.md",
+      "bytes": 51,
+      "sha256": "ec323fc59390094c8cdaeca4cc36d1b70702f9fe1958e761e60d31c9015465d3"
     },
     {
       "path": "examples/synthetic-external-draft.json",
@@ -1252,6 +1277,11 @@
       "path": "tests/test_comparator_overlap.py",
       "bytes": 10430,
       "sha256": "601482f7e911504d077693297dd48defb276071515feb307f0df709a0560cbb1"
+    },
+    {
+      "path": "tests/test_comparator_sources.py",
+      "bytes": 10378,
+      "sha256": "ef2772e8aa550bc01bb25e17e9c10a403f3ee1224b1fbe3711921968d5427d60"
     },
     {
       "path": "tests/test_compare_releases.py",

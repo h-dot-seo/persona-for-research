@@ -1045,6 +1045,56 @@
       "note": "Declared structural comparator input or exact-string report, not specificity. Operator input has no automated producer; report has no downstream approval consumer."
     },
     {
+      "schema_id": "persona.comparator-source-recheck.v1",
+      "workflow": "comparator-overlap",
+      "role": "source-recheck",
+      "variant": "v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--source-selection",
+        "--source-root"
+      ],
+      "producer": {
+        "module": "comparator_sources.py",
+        "api": "inspect_sources",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/COMPARATOR_SOURCES.md",
+      "source_mentions": [
+        "comparator_sources.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit comparator-only local source check. Mapping is operator authored; no authenticated receipt or approval consumer."
+    },
+    {
+      "schema_id": "persona.comparator-source-selection.v1",
+      "workflow": "comparator-overlap",
+      "role": "source-selection",
+      "variant": "v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--source-selection",
+        "--source-root"
+      ],
+      "producer": null,
+      "consumer": {
+        "module": "comparator_sources.py",
+        "api": "inspect_sources",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/COMPARATOR_SOURCES.md",
+      "source_mentions": [
+        "comparator_sources.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit comparator-only local source check. Mapping is operator authored; no authenticated receipt or approval consumer."
+    },
+    {
       "schema_id": "human-validation-record.v1",
       "workflow": "human-validation-record",
       "role": "artifact",

@@ -52,7 +52,9 @@ coauthorship verification, human-validation change or canonical update occurs.
 The repository now has `split_declaration.py`; the original proposal's claim
 that no frozen split record exists is obsolete. This version does not join that
 record to comparator source hashes or test holdout overlap. `holdout_overlap` is
-`NOT_CHECKED`. Multi-author sets, `--split` and `--source-root` are not supported.
+`NOT_CHECKED`. Multi-author sets and `--split` are not supported. Optional comparator-only source
+reading uses a separate [explicit source mapping](COMPARATOR_SOURCES.md); the v1
+corpus remains unchanged.
 Existing training-only source readers, package builders and freeze paths remain
 unchanged. This report is not a canonical artifact; no safe_canonical_read pattern
 change is made. An operator may separately document a judgment using existing

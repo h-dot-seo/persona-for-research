@@ -1,0 +1,11 @@
+{
+  "schema": "persona.comparator-source-selection.v1",
+  "comparator_corpus_sha256": "27aaca355d1d8a6bef6a1e3308cd12266e41e182d810494c2255c0269cdb6998",
+  "operator_id": "synthetic-operator",
+  "sources": [
+    {
+      "paper_id": "synthetic-comparator-paper",
+      "source_file": "paper.md"
+    }
+  ]
+}
