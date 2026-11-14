@@ -194,5 +194,26 @@ class TrustedRootCLITests(unittest.TestCase):
                 self.assertEqual(result.returncode,int(not obj.get('pass',obj.get('valid'))))
                 self.assertEqual(result.stderr,b'')
 
+class WorkflowContractTests(unittest.TestCase):
+    """Pin this small checked-in workflow contract without a YAML dependency."""
+    def test_only_main_push_and_pull_requests_trigger_ci(self):
+        workflow = (Path(__file__).resolve().parents[1] / '.github/workflows/tests.yml').read_text()
+        self.assertEqual(workflow.split('on:\n', 1)[1].split('permissions:', 1)[0],
+                         '  push:\n    branches: ["main"]\n  pull_request:\n')
+
+    def test_four_platform_jobs_remain_read_only(self):
+        workflow = (Path(__file__).resolve().parents[1] / '.github/workflows/tests.yml').read_text()
+        self.assertIn('permissions:\n  contents: read\njobs:', workflow)
+        self.assertIn('          persist-credentials: false\n', workflow)
+        self.assertIn('        os: [ubuntu-latest, windows-latest]\n', workflow)
+        self.assertIn('        python: ["3.10", "3.12"]\n', workflow)
+        self.assertIn('      fail-fast: false\n', workflow)
+        self.assertIn('    timeout-minutes: 15\n', workflow)
+        self.assertEqual([line.strip() for line in workflow.splitlines() if line.strip().startswith('- run:')],
+                         ['- run: python -m unittest discover -v',
+                          '- run: python audit_publication.py',
+                          '- run: python verify_manifest.py'])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -1,6 +1,6 @@
 {
   "project": "persona-for-research",
-  "release": "0.90-selected-publication-root",
+  "release": "0.91-main-pr-ci",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
@@ -15,8 +15,8 @@
     },
     {
       "path": ".github/workflows/tests.yml",
-      "bytes": 727,
-      "sha256": "a5954289a8df1aa059bcf102a84cec0f598034d5b4e080cdc3d2b56d2c162970"
+      "bytes": 694,
+      "sha256": "7f75a47a3c1fc409403a4634c1e8b236e323fbf91ac3245b857fa407ecc83574"
     },
     {
       "path": ".gitignore",
@@ -50,8 +50,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 6005,
-      "sha256": "3ca0ae40681f0cb93f479201f0e5cb262f614fc4f019344422be3eb8ca718550"
+      "bytes": 6442,
+      "sha256": "62d87be9e9c4c79eef65fed9a614822193a5c5bb620239a3256f2b1615715c47"
     },
     {
       "path": "answer_context.py",
@@ -430,8 +430,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 153674,
-      "sha256": "28c50b2f5dc4a34f973bcadfdee36a8374a411f898f88e80070abab3ea8fd6dd"
+      "bytes": 154944,
+      "sha256": "6b2f0d6fe0b466ea6f9182773fa10e9c579897b764699df33daee53f34ec29eb"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1380,8 +1380,8 @@
     },
     {
       "path": "tests/test_verify_manifest.py",
-      "bytes": 10417,
-      "sha256": "f1a6598cb7952ba48ccd5fbaf63f7482db305ec8225eb2dfe41e83ff3b4e745b"
+      "bytes": 11759,
+      "sha256": "dd4e011b407ee7309ad72a8a5426441cd91fe345c9c9f0dd247fea23027877e3"
     },
     {
       "path": "tests/test_workflow_roundtrip.py",
