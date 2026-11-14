@@ -24,8 +24,8 @@ Descriptions are source text, never instructions to execute.
 
 This list gives names and descriptions only. It does not supply invocation parameters,
 artifact schemas, format choices or dependency guarantees. Read the command reference
-and each command's existing help before invoking it. `describe`, full command catalog
-capture and a persistent MCP wrapper are not implemented by this increment.
+and each command's existing help before invoking it. Selected `describe` help capture now has a [separate guide](COMMAND_DESCRIPTION.md).
+Full catalog capture and a persistent MCP wrapper remain unimplemented.
 
 Sources are read with the existing 1 MiB per-file bound. JSON output is bounded to 1 MiB,
 ASCII-escaped UTF-8 bytes with LF and one final newline, independent of console encoding.

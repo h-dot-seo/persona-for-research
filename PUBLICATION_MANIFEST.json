@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.84-command-list",
+  "release": "0.85-command-description",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 275,
+  "file_count": 277,
   "files": [
     {
       "path": ".gitattributes",
@@ -30,8 +30,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 16995,
-      "sha256": "e500828574849cb6fd3ee23778105264b0ee362b51768d48e8cbbb00f9c62f29"
+      "bytes": 17347,
+      "sha256": "4bffd524a6273fa81d7c69dc597ecf00044a6229bd6a2e72beb394b123c349a4"
     },
     {
       "path": "RIGHTS.md",
@@ -45,13 +45,13 @@
     },
     {
       "path": "SKILL.md",
-      "bytes": 8180,
-      "sha256": "013ceecdace263ca5b357aee737a7756464aae133b4b71cb654ba03901ac958d"
+      "bytes": 8177,
+      "sha256": "f50d6aef45ff50d59e47eab8c99595fe2fe8603ca975cb8cbb2ed5fe0b71ce07"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 4990,
-      "sha256": "25f29aee8508ce0a5f37a5c7e464ffa2f40e4b42c7bdfbb4af19d8807c7c530c"
+      "bytes": 5155,
+      "sha256": "ed59b23ee873a4311f3c265d8170df99ba9fe5731b970172eb2c24ee6ebf3e23"
     },
     {
       "path": "answer_context.py",
@@ -170,8 +170,8 @@
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "bytes": 8368,
-      "sha256": "940369fafcf30f5fff7e01d2445bd6ab4d38769f171ea1221c53e38860a23eb1"
+      "bytes": 8693,
+      "sha256": "d47d5705652a21acd8005cdef2b8a953a6f8ee6db8f85f154c6a8c1af981bc36"
     },
     {
       "path": "docs/ARGUMENT_MAP.md",
@@ -200,13 +200,18 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 39944,
-      "sha256": "be2e3cbae4e8b80ebe07d766271411173c146c39d01c5f808accb08d9fa87c07"
+      "bytes": 40274,
+      "sha256": "3b115286fa693ac78e2b579d367a0f530850531fa207a788b099179309284853"
+    },
+    {
+      "path": "docs/COMMAND_DESCRIPTION.md",
+      "bytes": 3860,
+      "sha256": "b1242bf81f34cb14f5d7c186df7099b00479bb2d4a121d20fe705ce743996580"
     },
     {
       "path": "docs/COMMAND_LIST.md",
-      "bytes": 2262,
-      "sha256": "a43e30a623efdd83c76c645d453073bff6dc65a1e72e0f2ae517991da6a11d6d"
+      "bytes": 2310,
+      "sha256": "941196793303bae277f11556555a8bd80823dbee67c0fb2e527e97d8bcc52f28"
     },
     {
       "path": "docs/DESIGN_CHAIN.md",
@@ -340,13 +345,13 @@
     },
     {
       "path": "docs/QUICKSTART.md",
-      "bytes": 16064,
-      "sha256": "0b16ec3b4b692b1e6df4b7807bea147c53411a357e30be3fee48beee1cc2b398"
+      "bytes": 16166,
+      "sha256": "8787ee398f97939db977aaa0408604ef79fcd2705fc09b14f79061203c38e49d"
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 21375,
-      "sha256": "85758bc21a6580b16e5437d4c2e3faba41e6de4edd8a32a6deb0f3e6dc1df864"
+      "bytes": 21700,
+      "sha256": "98f5e06746f91ef581c589a9d48595046e05f7084e2561d1d78dcaa50e0c0e09"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -420,8 +425,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 143876,
-      "sha256": "3a0653772b8f1c6bab2e9080d51654fd5e31313f7a5630fe30c972e67a5ee9b0"
+      "bytes": 145931,
+      "sha256": "c7a7296802b720e0ad92b307b7e967a4a23bf0f09daefecbd4b4a87bfc413b69"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -780,8 +785,8 @@
     },
     {
       "path": "persona_cli.py",
-      "bytes": 10863,
-      "sha256": "8d6f26bb8518fba23471df574338e77ddaf18d5b6062e71580df1748dde8ea04"
+      "bytes": 20376,
+      "sha256": "e35e9c348768cab91d47ca06835a16020d9e79acb634709ea3baed7335ff26f5"
     },
     {
       "path": "prepare_local_manifest.py",
@@ -994,6 +999,11 @@
       "sha256": "2874223bf17e819a0ff1e2bef9d1b9ab11ab24af6eb3f9a0fce45e1aeb1c89c9"
     },
     {
+      "path": "tests/test_command_description.py",
+      "bytes": 10018,
+      "sha256": "b50a4b1eea672566edb4db421f85c52f5c63713b5a2784f740b72fcef25fc974"
+    },
+    {
       "path": "tests/test_command_list_json.py",
       "bytes": 7258,
       "sha256": "cd2fb27e7de3261896655459bbea0318cf6da5e4d2c7496c32996fe779301aee"
@@ -1060,8 +1070,8 @@
     },
     {
       "path": "tests/test_dispatcher.py",
-      "bytes": 11742,
-      "sha256": "6122d18ee047d3d66f5c69c504710866db86acd444e59cccaace995427f23909"
+      "bytes": 11751,
+      "sha256": "5faf5597a02dafcb896694232fc3a9cb10736d9576561402a909952afbf81da5"
     },
     {
       "path": "tests/test_dispatcher_version.py",

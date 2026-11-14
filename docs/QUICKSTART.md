@@ -270,3 +270,5 @@ For a supplied update trigger, see [controlled reopening declarations](RELEASE_R
 For an operator-supplied release choice, see [decision records](RELEASE_DECISION.md), not an automatic approval path.
 
 For agent-friendly command discovery without executing scripts, see [JSON command list](COMMAND_LIST.md).
+
+Before invoking one trusted command, inspect [its bounded help description](COMMAND_DESCRIPTION.md).

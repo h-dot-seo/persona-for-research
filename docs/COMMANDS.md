@@ -59,8 +59,9 @@ Guide: [Quickstart](QUICKSTART.md), [Workflows: synthetic walkthrough routes](WO
 Discover and run the root command-line scripts from any directory, without changing what any script does.
 
 ```text
-usage: persona_cli.py [-h] [--version] {list,run} ...
+usage: persona_cli.py [-h] [--version] {list,describe,run} ...
 usage: persona_cli.py list [-h] [--json]
+usage: persona_cli.py describe [-h] [--json] script
 usage: persona_cli.py run [-h] script ...
 ```
 
@@ -773,3 +774,7 @@ Subcommands: `template {reopening,decision}`, `check`, `status`. Guides: [Reopen
 
 `persona_cli.py list --json` provides bounded schema/scripts/boundary discovery without
 importing or executing discovered scripts. See [Machine-readable command list](COMMAND_LIST.md).
+
+`persona_cli.py describe SCRIPT --json` captures actual root/subcommand help for an
+explicitly allowlisted, inventory-matched source. Argparse-free scripts are never executed.
+See [Selected command descriptions](COMMAND_DESCRIPTION.md); full catalog remains deferred.
