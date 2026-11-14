@@ -5,8 +5,7 @@ description: Plan, build, review or consult an evidence-bounded scholarly simula
 
 # Research persona workflow
 
-Read README.md and docs/ARCHITECTURE.md. Identify build, profile, consultation,
-comparison or update tasks. Do not collect a corpus from an ambiguous name.
+Read README.md and docs/ARCHITECTURE.md. Identify the task; never collect a corpus from an ambiguous name.
 
 For building: resolve identity and scope; establish source permissions; freeze split;
 parse/QC; extract per-paper evidence; synthesize bounded cross-paper rules; challenge
@@ -24,10 +23,8 @@ write the assessment with `python human_validation.py template PERSONA.json KNOW
 --output RECORD.json` (or one bound package file), fill raters, date, method, scope topics,
 per-rule judgements, limitations and the independence declaration, set `status` to
 `RECORDED`, then run `check`; report the axis with `status` or `review_package.py
---human-validation`. The record is a detached document bound by both package hashes. It
-establishes a documented assertion by named labels about listed items only: not
-generalization to other topics, not fidelity to the real researcher, not a score, and label
-distinctness is not verified independence. Never edit `validation.human_validation` inside
+--human-validation`. The detached record binds both package hashes; it records named-label assertions only, not
+generalization, researcher fidelity, scores or verified independence. Never edit `validation.human_validation` inside
 a persona payload or rebind knowledge to carry a status; a changed status needs a new
 persona version through the normal lifecycle. See docs/HUMAN_VALIDATION.md.
 
@@ -127,4 +124,6 @@ a run with `FAILED.txt` are diagnostic only; choose a new destination before ret
 For pasteable handoffs use `prepare --format text`; see docs/MODEL_HANDOFF.md.
 Keep JSON for import. Text grants no transmission permission.
 
-Step 11: `candidate_challenge.py template/check/status` records supplied findings, not approval; see docs/CANDIDATE_CHALLENGE.md.
+Step 11: `candidate_challenge.py template/check/status` (docs/CANDIDATE_CHALLENGE.md).
+
+Updates: `release_record.py template reopening/check/status` records supplied prior-release triggers and impact plans, not approval; see docs/RELEASE_RECORD.md.

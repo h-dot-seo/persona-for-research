@@ -2001,3 +2001,26 @@ review/split tests were rechecked. No remote CI outcome is claimed in this recor
 - These checks establish mechanical record/binding/output behavior only, not scholarly
   validity, authenticated independence, unseen holdout, chronological ordering, or
   approval of any actual candidate. Remote CI is recorded separately for exact commits.
+
+## 2026-11-14 Controlled reopening declarations (0.82-reopening-record)
+
+- Added roadmap #79's first increment: `release_record.py template reopening/check/status`.
+  Detached strict records capture supplied trigger, exact prior bindings, affected prior
+  paper/rule IDs, incoming IDs and required revalidation axes. Existing comparison code
+  supplies read-only candidate changes; undeclared changes prompt review without approval.
+- Prior IDs never resolve against candidate positions. Human records are checked even
+  without reopening records; duplicate/invalid inputs are rejected. Supplied audit hashes
+  remain explicitly unverified references. No release decision, payload rewrite, fifth
+  validation axis, actual source notice verification or canonical change is introduced.
+- Synthetic reopened fixture is exactly rebuilt from the declared fictional limitation
+  correction. Executable guide tests include paths with spaces and exclusive outputs.
+- Final local full suite: **Ran 1120 tests in 288.596s — OK**. Focused reopening/candidate/
+  dispatcher suite: **53 tests — OK**. Independent review identified a no-record human
+  input validation gap; it was fixed and regression tested. Final review found no blocker.
+- Manifest 270 files verifies; limited publication audit passes 271 files. All 159 Python
+  files compile and parse with Python 3.10 grammar; SKILL.md is 8089 bytes. Existing guide
+  shell blocks and review_package code remain unchanged. No actual researcher data or
+  external model/API calls were used. Remote CI is tracked separately for exact commits.
+- Mechanical consistency is not scientific validation, authentic correction/retraction,
+  preserved archive proof, candidate revalidation or approval. IDs/bindings may be private;
+  omission of notice prose and operator labels is not sanitization or rights clearance.

@@ -1,0 +1,28 @@
+{
+  "schema_version": "persona.reopening-record.v1",
+  "author_id": "synthetic-scholar",
+  "version": "1",
+  "build_id": "synthetic-trajectory-conditions",
+  "persona_payload_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+  "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+  "operator_id": "synthetic-reopening-operator",
+  "trigger": {
+    "kind": "correction",
+    "declared_source_text": "Fictional correction supplied by a synthetic operator, not a verified publication notice.",
+    "declared_at": "2026-11-14"
+  },
+  "affected_paper_ids": [
+    "synthetic-2024-a-challenge"
+  ],
+  "incoming_paper_ids": [],
+  "affected_rule_ids": [
+    "rule-5"
+  ],
+  "operation": "knowledge_ingestion",
+  "revalidation_axes_required": [
+    "evidence_integrity",
+    "human"
+  ],
+  "revision_audit_sha256": null,
+  "status": "RECORDED"
+}

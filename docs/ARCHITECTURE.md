@@ -108,3 +108,5 @@ selection; empty downstream forms and deferred context judgments remain visible.
 It adds no payload fields, inference, validation axis or automated research approval.
 
 Lifecycle step 11 uses [detached candidate findings](CANDIDATE_CHALLENGE.md): `candidate_challenge.py` records supplied kinds bound to candidate hashes. It is a stage, not an additional validation axis; no payload, split binding or operator disposition is changed.
+
+Updates: [reopening declarations](RELEASE_RECORD.md) bind supplied triggers, prior-paper/rule impact and required revalidation axes to the exact previous package. Candidate comparisons use prior rules only. No release decision, canonical update or candidate approval is derived.

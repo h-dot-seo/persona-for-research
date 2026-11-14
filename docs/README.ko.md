@@ -246,3 +246,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 자세한 한도와 동작은 [버전 레이블](COMMANDS.md#version-labels)을 보세요.
 
 후보의 사전 홀드아웃 발견 기록은 [candidate_challenge.py](CANDIDATE_CHALLENGE.md)의 template/check/status를 사용합니다. 판정·점수·승인이 아닌 분리형 기록이며 검증 축을 추가하지 않습니다.
+
+[재개 기록](RELEASE_RECORD.md): `release_record.py template reopening/check/status`는 공급된 갱신 사유와 이전 패키지 영향·재검증 계획을 기록합니다. 후보 변경은 읽기 전용으로 비교하며 릴리스를 승인하지 않습니다.
