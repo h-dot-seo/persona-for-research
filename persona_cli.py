@@ -185,6 +185,7 @@ def render_json(rows):
 DESCRIBE_SCHEMA = 'persona.command-description.v1'
 MAX_HELP_BYTES = 1_048_576
 HELP_TIMEOUT_SECONDS = 10
+HELP_CLEANUP_SECONDS = 2
 DESCRIBE_BOUNDARY = ('Invocation shape from the running interpreter argparse help, not artifact schemas, '
     'input permission, scientific validation or approval. Only explicitly selected, allowlisted root scripts '
     'whose source matches the local publication inventory may be queried. Source hashes are not signatures; '
@@ -241,11 +242,16 @@ def _help_source(name):
     return path, ast.parse(raw, filename=path.name), digest
 
 
-def _capture_help(path, arguments):
+def _capture_help(path, arguments, *, timeout=None):
     """Read a bounded merged help stream; kill on timeout/overflow, with no shell or temporary files."""
     import os
     import subprocess
     import threading
+    import time
+    timeout = HELP_TIMEOUT_SECONDS if timeout is None else min(HELP_TIMEOUT_SECONDS, timeout)
+    if timeout <= 0:
+        raise ValueError('help time budget exhausted')
+    deadline = time.monotonic() + timeout
     environment = dict(os.environ, PYTHONIOENCODING='utf-8', PYTHONDONTWRITEBYTECODE='1',
                        COLUMNS='10000', NO_COLOR='1', PYTHON_COLORS='0')
     environment.pop('FORCE_COLOR', None)
@@ -272,15 +278,20 @@ def _capture_help(path, arguments):
                 chunks.append(chunk)
         except (OSError, ValueError):
             failed.append('read')
-    worker = threading.Thread(target=read, daemon=True)
+    worker = threading.Thread(target=read, daemon=True, name="persona-help-reader")
     worker.start()
     try:
-        process.wait(timeout=HELP_TIMEOUT_SECONDS)
+        process.wait(timeout=max(0, deadline - time.monotonic()))
     except subprocess.TimeoutExpired:
         failed.append('timeout')
         process.kill()
-        process.wait()
-    worker.join(timeout=HELP_TIMEOUT_SECONDS)
+        cleanup_deadline = time.monotonic() + HELP_CLEANUP_SECONDS
+        try:
+            process.wait(timeout=HELP_CLEANUP_SECONDS)
+        except subprocess.TimeoutExpired:
+            failed.append('child cleanup timeout')
+        deadline = cleanup_deadline
+    worker.join(timeout=max(0, deadline - time.monotonic()))
     if worker.is_alive():
         failed.append('reader timeout')
     if not worker.is_alive():
@@ -297,7 +308,7 @@ def _usage(help_text):
     return ' '.join(help_text.split('\n\n', 1)[0].split())
 
 
-def describe_script(name):
+def describe_script(name, *, deadline=None):
     """Capture selected trusted help, or statically describe argparse-free scripts without running them."""
     import re
     path, tree, digest = _help_source(name)
@@ -312,7 +323,15 @@ def describe_script(name):
     if not argparse_found:
         result['generated_from'] = 'STATIC_SOURCE_ONLY_NOT_EXECUTED'
         return result
-    root_help = _capture_help(path, [])
+    def capture(arguments):
+        if deadline is None:
+            return _capture_help(path, arguments)
+        import time
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise ValueError('catalog time budget exhausted')
+        return _capture_help(path, arguments, timeout=remaining)
+    root_help = capture([])
     result.update(generated_from='argparse --help', help=root_help, usage=[_usage(root_help)])
     render_description(result)
     has_subparsers = any(isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
@@ -325,7 +344,7 @@ def describe_script(name):
         if len(names) > 64 or len(set(names)) != len(names):
             raise ValueError('invalid subcommand list')
         for command in names:
-            help_text = _capture_help(path, [command])
+            help_text = capture([command])
             usage = _usage(help_text)
             result['subcommands'].append(dict(name=command, usage=usage, help=help_text))
             result['usage'].append(usage)
@@ -342,6 +361,74 @@ def render_description(value):
     return output
 
 
+CATALOG_SCHEMA = 'persona.command-catalog.v1'
+MAX_CATALOG_BYTES = 1_048_576
+CATALOG_RESERVE_BYTES = 16_384
+MAX_CATALOG_SCRIPTS = 128
+CATALOG_TIMEOUT_SECONDS = 120
+CATALOG_BOUNDARY = ('Catalog of the explicit trusted help allowlist, not all possible scripts or artifact '
+    'schemas. COMPLETE_CATALOG means every selected help description was obtained, not that any workflow '
+    'was validated or approved. PARTIAL_CATALOG preserves failures, omitted results and unattempted rows; '
+    'never treat it as a complete command contract. A shared best-effort time budget and output cap apply to the entire operation. '
+    'Each description retains source-match and help-only boundaries. No workflow, model/network call, '
+    'publication or dispatcher file write is performed. Source inventories are unsigned, not a sandbox.')
+
+
+def _catalog_result(rows):
+    counts = {name: sum(row['status'] == name for row in rows) for name in (
+        'DESCRIBED', 'FAILED', 'FAILED_TIME_BUDGET', 'OMITTED_OUTPUT_BUDGET',
+        'NOT_ATTEMPTED', 'NOT_ATTEMPTED_TIME_BUDGET', 'NOT_ATTEMPTED_OUTPUT_BUDGET')}
+    return dict(schema=CATALOG_SCHEMA, generated_from='selected trusted argparse --help; static argparse-free entries',
+        status='COMPLETE_CATALOG' if counts['DESCRIBED'] == len(rows) else 'PARTIAL_CATALOG',
+        selection='EXPLICIT_TRUSTED_HELP_ALLOWLIST', script_count=len(rows), counts=counts, scripts=rows,
+        input_artifact_schema='NOT_DERIVED', output_artifact_schema='NOT_DERIVED', boundary=CATALOG_BOUNDARY)
+
+
+def render_catalog(value):
+    import json
+    output = json.dumps(value, ensure_ascii=True, indent=2, allow_nan=False) + '\n'
+    if len(output.encode('utf-8')) > MAX_CATALOG_BYTES:
+        raise ValueError('catalog exceeds its 1048576-byte output bound')
+    return output
+
+
+def describe_all():
+    """Best-effort bounded catalog; keep stable redacted failure states instead of implying completeness."""
+    import time
+    names = sorted(TRUSTED_HELP_SCRIPTS)
+    if len(names) > MAX_CATALOG_SCRIPTS or len(set(names)) != len(names):
+        raise ValueError('invalid trusted catalog selection')
+    rows = [dict(script=name, status='NOT_ATTEMPTED', description=None) for name in names]
+    if len(render_catalog(_catalog_result(rows)).encode('utf-8')) > MAX_CATALOG_BYTES - CATALOG_RESERVE_BYTES:
+        raise ValueError('catalog budget cannot hold the bounded status inventory')
+    deadline = time.monotonic() + CATALOG_TIMEOUT_SECONDS
+    for index, name in enumerate(names):
+        if time.monotonic() >= deadline:
+            for row in rows[index:]:
+                row['status'] = 'NOT_ATTEMPTED_TIME_BUDGET'
+            break
+        try:
+            description = describe_script(name, deadline=deadline)
+        except (OSError, ValueError, SyntaxError, RecursionError, TypeError, AttributeError):
+            rows[index]['status'] = 'FAILED_TIME_BUDGET' if time.monotonic() >= deadline else 'FAILED'
+            rows[index]['error'] = 'HELP_DESCRIPTION_UNAVAILABLE'
+            continue
+        rows[index] = dict(script=name, status='DESCRIBED', description=description)
+        try:
+            output = render_catalog(_catalog_result(rows))
+            fits = len(output.encode('utf-8')) <= MAX_CATALOG_BYTES - CATALOG_RESERVE_BYTES
+        except ValueError:
+            fits = False
+        if not fits:
+            rows[index] = dict(script=name, status='OMITTED_OUTPUT_BUDGET', description=None)
+            for row in rows[index + 1:]:
+                row['status'] = 'NOT_ATTEMPTED_OUTPUT_BUDGET'
+            break
+    result = _catalog_result(rows)
+    render_catalog(result)
+    return result
+
+
 def build_parser():
     parser = argparse.ArgumentParser(description=__doc__, epilog=BOUNDARY + "\n\n" + VERSION_BOUNDARY,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -352,7 +439,9 @@ def build_parser():
                                      'one line each, with the first sentence of its docstring')
     listing.add_argument('--json', action='store_true', help='emit bounded schema/scripts/boundary JSON, not executable contracts')
     describing = commands.add_parser('describe', help='capture one trusted script help; never run its workflow')
-    describing.add_argument('script', help='exact allowlisted root script filename')
+    selection = describing.add_mutually_exclusive_group(required=True)
+    selection.add_argument('script', nargs='?', help='exact allowlisted root script filename')
+    selection.add_argument('--all', dest='all_scripts', action='store_true', help='bounded full trusted catalog with explicit partial states')
     describing.add_argument('--json', action='store_true', help='explicit JSON request (the only description format)')
     runner = commands.add_parser('run', help='run one root script in-process: '
                                              'python persona_cli.py run <script> [args...]')
@@ -376,7 +465,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.command == 'describe':
         try:
-            output = render_description(describe_script(args.script))
+            output = render_catalog(describe_all()) if args.all_scripts else render_description(describe_script(args.script))
         except (OSError, ValueError, SyntaxError, RecursionError, TypeError, AttributeError):
             parser.exit(1, SELF + ': error: cannot capture bounded trusted command help\n')
         sys.stdout.buffer.write(output.encode('utf-8'))

@@ -272,3 +272,5 @@ For an operator-supplied release choice, see [decision records](RELEASE_DECISION
 For agent-friendly command discovery without executing scripts, see [JSON command list](COMMAND_LIST.md).
 
 Before invoking one trusted command, inspect [its bounded help description](COMMAND_DESCRIPTION.md).
+
+For one bounded JSON view of the trusted command surface, use the [complete/partial command catalog](COMMAND_CATALOG.md).

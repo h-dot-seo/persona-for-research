@@ -116,3 +116,5 @@ Lifecycle step 14 decision record: [supplied release choices](RELEASE_DECISION.m
 Local discovery: `persona_cli.py list --json` exposes the existing AST-discovered command names and first docstring sentences. This inventory is not an invocation/schema contract, package validation, authentication or approval; discovered scripts are not imported or executed. See [Command list](COMMAND_LIST.md).
 
 Selected command descriptions capture actual argparse help in bounded child processes after exact-name allowlist and selected-source inventory checks. Argparse-free checks remain static. This is invocation shape, not an artifact-schema, permission or validation contract. See [Command descriptions](COMMAND_DESCRIPTION.md).
+
+The [trusted command catalog](COMMAND_CATALOG.md) aggregates existing help descriptions with a shared deadline/output cap and explicit partial rows. Completeness means descriptions obtained, not workflow validation, runtime schema support or approval. No MCP integration or payload change is introduced.

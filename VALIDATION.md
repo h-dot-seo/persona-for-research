@@ -1,11 +1,13 @@
 # Validation record
 
-Current release: `0.85-command-description`, 2026-11-14. This file is the current
+Current release: `0.86-command-catalog`, 2026-11-14. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
+
+- 2026-11-14 Bounded trusted command catalog (`0.86-command-catalog`): aggregate actual help with shared time/output budgets and explicit partial states.
 
 - 2026-11-14 Selected command descriptions (`0.85-command-description`): actual bounded help for trusted explicit sources; no argparse-free check execution.
 
@@ -46,16 +48,16 @@ external model/search behaviour or scientific meaning.
 
 From the repository root, with Python 3.10 or later and no third-party packages:
 
-- `python -m unittest discover -q` — the current tree runs 1173 synthetic tests
+- `python -m unittest discover -q` — the current tree runs 1189 synthetic tests
   (platform-specific cases may skip on other hosts). The final local verification result is recorded in the release history. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.
-- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 277
+- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 279
   listed files. Regenerate the manifest after every other edit of a release.
-- `python audit_publication.py` — expects `"pass": true`; the current tree has 278 text
+- `python audit_publication.py` — expects `"pass": true`; the current tree has 280 text
   files including the manifest. A pass is a limited file-type and secret-pattern scan, not
   proof of anonymity or rights clearance.
-- `python -m compileall -q .` — 162 Python files compile cleanly and parse with
+- `python -m compileall -q .` — 163 Python files compile cleanly and parse with
   Python 3.10 grammar.
 - `python synthetic_walkthrough.py ../persona-synthetic-demo` — the 15-stage demo must exit 0
   and write `COMPLETE.json` into a new directory outside the repository.

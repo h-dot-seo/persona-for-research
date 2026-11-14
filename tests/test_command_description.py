@@ -142,7 +142,7 @@ sys.stderr.write(json.dumps(dict(code=code,added=sorted(set(sys.modules)-before)
                 self.assertEqual(run.returncode,0,(line,run.stderr));self.assertEqual(json.loads(run.stdout)['schema'],c.DESCRIBE_SCHEMA)
 
     def test_no_all_or_output_flag(self):
-        for args in (['describe','--all'],['describe','persona.py','--output','out']):
+        for args in (['describe','persona.py','--all'],['describe','persona.py','--output','out']):
             run=subprocess.run([sys.executable,str(ROOT/'persona_cli.py'),*args],capture_output=True)
             self.assertEqual(run.returncode,2);self.assertEqual(run.stdout,b'')
 

@@ -2092,3 +2092,25 @@ review/split tests were rechecked. No remote CI outcome is claimed in this recor
 - Help describes invocation shape, not data validity, permission, output safety, scientific
   truth or approval. Trusted script imports/parser setup execute before help exits; the
   selected source hash does not authenticate imported dependencies or interpreter state.
+
+## 2026-11-14 Bounded trusted command catalog (0.86-command-catalog)
+
+- Added roadmap #87 aggregate `persona_cli.py describe --all --json`, reusing the explicit
+  trust allowlist/source matching and actual help capture. COMPLETE_CATALOG means every
+  description was obtained, not workflow validation or approval. PARTIAL_CATALOG preserves
+  redacted failures, omitted output and unattempted rows instead of claiming completeness.
+- Shared best-effort 120-second deadline and 1 MiB JSON cap, 16 KiB status reserve, at most
+  128 selected scripts. Remaining time limits each child query. Timeout cleanup has a bounded
+  2-second grace; direct child/reader cleanup is regression tested. Filesystem/serialization
+  and descendant-held pipes are not a hard real-time sandbox. No MCP or new trust rules.
+- Final local full suite: **Ran 1189 tests in 300.405s — OK**. Focused catalog/description/
+  list/dispatcher suite: **58 tests — OK**. Independent review found no blocking issue and
+  verified round13 plain/JSON list, selected describe and run exit/stdout/stderr equivalence.
+- New 16 tests cover partial/error states, shared deadline, cumulative output exhaustion,
+  redaction, selection exclusivity, direct child cleanup and actual full-catalog guide/usage
+  conformance. Existing guide shell blocks are unchanged; new guide executes as written.
+- Manifest verifies 279 files; limited publication audit passes 280. All 163 Python files
+  compile and parse with Python 3.10 grammar; SKILL.md is 8179 bytes. No actual researcher
+  records or external model/API calls. Remote CI is recorded separately for exact commits.
+- Catalog exit 0 alone does not prove completeness. Help is invocation shape only, never
+  artifact schema, permission, scientific validity or approval; canonical payload unchanged.

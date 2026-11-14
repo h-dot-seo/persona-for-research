@@ -36,7 +36,7 @@ public repository.
 
 Use only authorized inputs; examples are synthetic.
 
-`persona_cli.py list [--json]` discovers; `describe SCRIPT --json` captures trusted help (docs/COMMAND_DESCRIPTION.md); `run SCRIPT` forwards arguments.
+`persona_cli.py list [--json]` discovers; `describe SCRIPT|--all --json` captures trusted help (docs/COMMAND_CATALOG.md); `run SCRIPT` forwards arguments.
 `--version` shows unauthenticated labels/Python; check hashes with `verify_manifest.py`.
 
 Declared splits: `split_declaration.py template/freeze/check/status`;
