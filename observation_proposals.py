@@ -11,7 +11,7 @@ from extraction_adapter import (prepare_request, validate_declared_provenance,
     MAX_HANDOFF_BYTES, MAX_IMPORTED_CANDIDATES, MAX_QUOTE_CHARS, MAX_CANDIDATE_CHARS)
 from persona import payload_sha256
 from review_package import display
-from strict_json import loads
+from strict_json import read_bounded, InputLimitError, loads
 
 FIELDS = ('method', 'condition', 'limitation', 'topic', 'locator', 'evidence_quote')
 NULLABLE = ('condition', 'limitation', 'topic')
@@ -214,8 +214,10 @@ def render(packet):
 
 
 def _load(path):
-    with Path(path).open('rb') as stream: raw = stream.read(8 * 1024 * 1024 + 1)
-    if len(raw) > 8 * 1024 * 1024: raise ValueError('input JSON exceeds the 8 MiB file limit')
+    try:
+        raw = read_bounded(path, 8 * 1024 * 1024)
+    except InputLimitError as exc:
+        raise ValueError('input JSON exceeds the 8 MiB file limit') from exc
     return loads(raw)
 
 

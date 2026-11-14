@@ -15,7 +15,7 @@ from pattern_hypotheses import template as pattern_template, inspect as inspect_
 from design_scenario import _text
 from review_package import display
 from reasoning_cards import DIMENSIONS
-from strict_json import loads
+from strict_json import read_bounded, InputLimitError, loads
 
 MAX_PROPOSALS = 32
 MAX_REFERENCES = 32
@@ -343,8 +343,10 @@ def render_review(packet):
 
 
 def _load(path):
-    with Path(path).open('rb') as stream: raw = stream.read(8 * 1024 * 1024 + 1)
-    if len(raw) > 8 * 1024 * 1024: raise ValueError('input JSON exceeds the 8 MiB file limit')
+    try:
+        raw = read_bounded(path, 8 * 1024 * 1024)
+    except InputLimitError as exc:
+        raise ValueError('input JSON exceeds the 8 MiB file limit') from exc
     return loads(raw)
 
 

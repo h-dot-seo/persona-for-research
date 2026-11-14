@@ -10,7 +10,7 @@ import answer_draft
 from persona import payload_sha256
 from reasoning_links import _sources
 from review_package import display
-from strict_json import loads, MAX_CONTAINER_DEPTH
+from strict_json import read_bounded, InputLimitError, loads, MAX_CONTAINER_DEPTH
 
 SCHEMA = 'persona.citation-reasoning-audit.v1'
 MAX_INPUT_BYTES = 8 * 1024 * 1024
@@ -188,10 +188,10 @@ def render(result):
 
 
 def _load(path, budget):
-    with Path(path).open('rb') as stream:
-        raw = stream.read(budget + 1)
-    if len(raw) > budget:
-        raise ValueError('combined citation audit input files exceed 8 MiB')
+    try:
+        raw = read_bounded(path, budget)
+    except InputLimitError as exc:
+        raise ValueError('combined citation audit input files exceed 8 MiB') from exc
     return loads(raw), len(raw)
 
 
