@@ -2301,3 +2301,35 @@ Manifest 287 entries, audit 288 files, compilation and Python 3.10 grammar for 1
 Python files passed after final regeneration. Original package/four-axis/approval
 semantics are unchanged. Census hashes are not source authenticity or scholarly
 identity, and no source rights or completeness assertion is inferred.
+
+
+## 2026-11-14 Bound package overview (`0.95-package-overview`)
+
+Roadmap #67: package_overview.py inspects a whole bound package independently of
+question/topic or multi-artifact journey. package_html.py reuses existing passive
+journey style/CSP and tree helpers without editing journey code. Papers, observations
+and components retain supplied order, topics are casefold-sorted and references have
+exact hash anchors. JSON snapshot is exact sorted JSON, not a separate data source.
+Declared axes default to NOT_DECLARED; mechanical prerequisites do not create axis
+success. Detached human records contribute only hashes/binding/judgement counts.
+All stored quotes/source/provenance labels remain private and non-anonymized.
+
+Current-environment Playwright with installed Chromium was actually attempted. Launch
+failed before page creation with process_singleton_posix socket() Operation not
+permitted (SIGABRT), plus a read-only crashpad settings error. No permission bypass
+was attempted. Therefore real screenshot, keyboard and print QA remain BLOCKED;
+static parser/CSP/escaping/anchor tests are distinct from rendered visual QA.
+
+Validation: full discovery 1,269 tests passed in 331.529 seconds. Implementation
+focus 30 tests / 2.766s passed. Expanded 62 tests initially found the COMMANDS usage
+continuations were not joined into the documented single-line contract; corrected
+formatting yielded 62 passing tests / 16.298s. Initial description/catalog checks
+before manifest registration also reported the expected unbound-source failures.
+Independent checks verified exact JSON snapshot, actual CSS CSP hash, internal unique
+anchors, human-review label omission, XSS escaping, long Korean IDs, empty observations
+and byte-identical existing journey/human-validation/review/topic modules. Multi-record
+and hash-seed tests passed. These parser checks do not claim rendered accessibility.
+Manifest 291 entries, audit 292 files and compilation/Python 3.10 grammar for 171
+Python files passed after final regeneration. All fixtures remain synthetic and LF
+bytes are explicit where needed. Original payload/four-axis/approval semantics remain
+unchanged; no runtime validity or source recheck is inferred from the view.
