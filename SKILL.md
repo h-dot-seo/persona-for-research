@@ -36,7 +36,7 @@ public repository.
 
 Use only authorized inputs; examples are synthetic.
 
-`python persona_cli.py list` lists CLIs; `run <script>` preserves direct invocation.
+`python persona_cli.py list [--json]` lists CLIs (docs/COMMAND_LIST.md); `run <script>` preserves direct invocation.
 `--version` shows unauthenticated labels/Python; check hashes with `verify_manifest.py`.
 
 Declared splits: `split_declaration.py template/freeze/check/status`;

@@ -60,7 +60,7 @@ Discover and run the root command-line scripts from any directory, without chang
 
 ```text
 usage: persona_cli.py [-h] [--version] {list,run} ...
-usage: persona_cli.py list [-h]
+usage: persona_cli.py list [-h] [--json]
 usage: persona_cli.py run [-h] script ...
 ```
 
@@ -770,3 +770,6 @@ usage: release_record.py status [-h] [--release-decision RELEASE_DECISION] [--re
 ```
 
 Subcommands: `template {reopening,decision}`, `check`, `status`. Guides: [Reopening records](RELEASE_RECORD.md), [Supplied decisions](RELEASE_DECISION.md).
+
+`persona_cli.py list --json` provides bounded schema/scripts/boundary discovery without
+importing or executing discovered scripts. See [Machine-readable command list](COMMAND_LIST.md).

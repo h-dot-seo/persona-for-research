@@ -250,3 +250,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 [재개 기록](RELEASE_RECORD.md): `release_record.py template reopening/check/status`는 공급된 갱신 사유와 이전 패키지 영향·재검증 계획을 기록합니다. 후보 변경은 읽기 전용으로 비교하며 릴리스를 승인하지 않습니다.
 
 [공급된 릴리스 결정](RELEASE_DECISION.md): 사람이 적은 결정을 기록하며 human 기록 해시만 대조합니다. 미수행 축은 명시하고 자동 승인·게이트·새 검증 축을 만들지 않습니다.
+
+[기계판독 명령 목록](COMMAND_LIST.md): `persona_cli.py list --json`은 모듈을 실행·import하지 않고 AST로 이름과 설명을 나열합니다. 호출 인자·아티팩트 스키마·승인 계약은 아닙니다.
