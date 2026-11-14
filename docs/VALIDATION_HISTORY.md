@@ -2179,3 +2179,22 @@ JSON readers. Documents state this asymmetry and the lack of time/object-memory 
   the test selection and reran the 45 applicable tests; this was not a product failure.
 - Manifest279/audit280; compile and Python 3.10 grammar163. Exact-head remote PR/main
   CI is checked separately; local tests alone do not establish remote success.
+
+## 2026-11-14 Trusted checks on selected ROOT (`0.90-selected-publication-root`)
+
+Both publication-check CLIs accept an optional ROOT using the trusted checkout's code,
+never the selected tree's modules. No-argument JSON/exit behavior stays identical.
+The existing verify/audit function ASTs are unchanged. Missing/non-directory targets
+are usage errors (exit2), and --help performs no inspection. Safe argparse help is now
+captured by describe/catalog instead of these two entries' former static-only form;
+synthetic argparse-free regression coverage remains. No tags, license, branch policy,
+CI trigger or manifest writer is changed. Internal manifest agreement and limited
+pattern scans are explicitly not authenticity, rights clearance, anonymity or approval.
+
+- Full synthetic suite: 1212 tests, 328.483 seconds, OK.
+- Focused: 58 tests, 20.155s, OK. Independent: 49 tests, 15.275s, OK.
+- Target-script/strict_json sentinel non-execution, unchanged target bytes, relative and
+  Unicode/space roots, invalid roots, normal failure JSON, default bytes/exit and help
+  no-inspection tested. Independent checks also covered a dash-prefixed ROOT after --.
+- Manifest279/audit280; compile and Python3.10 grammar163. Remote CI is checked for the
+  exact head and merged main separately; local success does not establish remote success.

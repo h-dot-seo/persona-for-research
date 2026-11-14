@@ -56,5 +56,6 @@ are inserted into complete output; partial results can vary when available time 
 JSON is ASCII-escaped UTF-8 with LF. The dispatcher writes no output files, calls no model
 or network and executes no workflow. Trusted script imports/parser setup still execute
 inside help subprocesses; the local unsigned inventory is not a sandbox or signature.
-Argparse-free verification/audit scripts are never launched. There is no --output flag,
+Argparse-free scripts are never launched. The publication checks now expose safe argparse
+help, so their ROOT usage is captured without running the checks. There is no --output flag,
 MCP server, new validation axis, canonical payload update or approval mechanism.

@@ -34,7 +34,8 @@ class CommandDescriptionTests(unittest.TestCase):
         self.assertEqual(out['output_artifact_schema'],'NOT_DERIVED')
 
     def test_argparse_free_checks_never_spawn(self):
-        with patch.object(c,'_capture_help',side_effect=AssertionError('must not spawn')):
+        with patch.object(c,'_capture_help',side_effect=AssertionError('must not spawn')), \
+             patch.object(c,'_help_source',side_effect=lambda name:(ROOT/name,ast.parse('\"Synthetic argparse-free check.\"'), '0'*64)):
             for name in ('verify_manifest.py','audit_publication.py'):
                 out=c.describe_script(name)
                 self.assertFalse(out['argparse']);self.assertEqual(out['usage'],[])

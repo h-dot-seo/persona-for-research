@@ -28,10 +28,11 @@ subparsers; dynamic parser-building loops therefore use actual help, not invente
 metadata. Unknown/ambiguous shapes fail rather than guessing. Usage whitespace is joined
 for comparison with docs/COMMANDS.md. Subcommand help can contain no per-command prose.
 
-For scripts without argparse import syntax, including verify_manifest.py and
-audit_publication.py, no process runs: usage/subcommands are empty and generated_from is
-STATIC_SOURCE_ONLY_NOT_EXECUTED. Their invocation is described, not executed with --help
-(which would run their checks). The dispatcher itself and libraries cannot be selected.
+For scripts without argparse import syntax, no process runs: usage/subcommands are
+empty and generated_from is STATIC_SOURCE_ONLY_NOT_EXECUTED. The two publication checks
+now use argparse and expose safe --help without running inspection, so their actual
+optional ROOT usage is captured like other trusted scripts. The dispatcher itself and
+libraries cannot be selected.
 
 The description is CATALOG_DESCRIBES_INVOCATION_SHAPE_ONLY. It does not prove accepted
 artifact schemas, input permissions, model behavior, output-file safety or scientific

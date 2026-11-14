@@ -3,9 +3,8 @@
 Every command-line script of this repository, grouped by task. Each entry gives the exact
 `usage:` line printed by `python <script>.py --help` (argparse continuation lines joined
 with single spaces), the one-line purpose from the script's own description, every
-subcommand, and the guide that documents the behaviour. The two publication checks,
-`audit_publication.py` and `verify_manifest.py`, use no argparse and print no usage line;
-their entries state how they are run instead. Run commands from the repository
+subcommand, and the guide that documents the behaviour. Publication checks accept an
+optional ROOT while defaulting to their own script directory. Run commands from the repository
 root with Python 3.10 or later; only the standard library is used, and no command calls a
 model, reads the network or modifies a canonical package. Results go to stdout or to an
 explicitly named new path outside the repository (the guides write `OUTPUT` for such a
@@ -134,7 +133,7 @@ Guide: [Architecture](ARCHITECTURE.md), [Workflows: build and validate a bound p
 Verify the exact selected public file inventory and its LF-normalized bytes against PUBLICATION_MANIFEST.json.
 
 ```text
-python verify_manifest.py    (no argparse and no usage line: takes no arguments, verifies the repository that contains the script, prints a JSON result)
+usage: verify_manifest.py [-h] [ROOT]
 ```
 
 Guide: [Public extraction record](../PUBLICATION.md), [Validation record](../VALIDATION.md).
@@ -144,7 +143,7 @@ Guide: [Public extraction record](../PUBLICATION.md), [Validation record](../VAL
 Check a deliberately selected public file set for prohibited file types and common secret patterns; not an anonymizer or legal audit.
 
 ```text
-python audit_publication.py    (no argparse and no usage line: takes no arguments, scans the repository that contains the script, prints a JSON result)
+usage: audit_publication.py [-h] [ROOT]
 ```
 
 Guide: [Security and publication boundary](../SECURITY.md), [Validation record](../VALIDATION.md).

@@ -1,3 +1,4 @@
+import ast
 """Bounded complete-or-explicitly-partial trusted command help catalogs."""
 import copy
 import io
@@ -91,7 +92,8 @@ class CommandCatalogTests(unittest.TestCase):
 
     def test_all_selection_never_runs_argparse_free_checks(self):
         with patch.object(c,'TRUSTED_HELP_SCRIPTS',('verify_manifest.py','audit_publication.py')),\
-             patch.object(c,'_capture_help',side_effect=AssertionError('must not run')):out=c.describe_all()
+             patch.object(c,'_capture_help',side_effect=AssertionError('must not run')), \
+             patch.object(c,'_help_source',side_effect=lambda name:(ROOT/name,ast.parse('\"Synthetic argparse-free check.\"'), '0'*64)):out=c.describe_all()
         self.assertEqual(out['status'],'COMPLETE_CATALOG')
         self.assertTrue(all(not row['description']['argparse'] for row in out['scripts']))
 
