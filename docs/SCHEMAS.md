@@ -171,3 +171,5 @@ status remain in the JSON/text output rather than duplicating a large second tab
 ## Optional editor documentation
 
 Three separate optional authoring profiles now cover source selection, declared provenance and detached human records. See [EDITOR_SCHEMAS.md](EDITOR_SCHEMAS.md). They permit placeholders and are not the completed-input checker discussed above; no index row or existing validator is replaced.
+
+Comparator structural inventory: `persona.comparator-corpus.v1` is operator-authored input; `persona.comparator-overlap.v1` is a detached report. See [guide](COMPARATOR_OVERLAP.md); no specificity or independence assessment is produced.

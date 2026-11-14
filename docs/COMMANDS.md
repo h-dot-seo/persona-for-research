@@ -891,3 +891,11 @@ Descriptive artifact identifiers and evidence-qualified workflow links, not vali
 ```text
 usage: artifact_schemas.py [-h] [--format {json,text}] [--workflow WORKFLOW]
 ```
+
+### `comparator_overlap.py`
+
+Read-only comparator exact-string inventory; stdout only. See [guide](COMPARATOR_OVERLAP.md).
+
+```text
+usage: comparator_overlap.py [-h] --topic TOPIC [--format {json,text}] package comparator
+```

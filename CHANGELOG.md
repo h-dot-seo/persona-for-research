@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.113-comparator-inventory — 2026-11-14
+
+`comparator_overlap.py` compares exact method/condition strings in separately supplied single-author comparator observations. Structural declarations only, not source checks, independence, specificity, scoring or knowledge incorporation. Topic absence is explicit; existing product judgments and payloads are unchanged.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-declared-comparator-exact-string-inventory-0113-comparator-inventory).
+
 ## 0.112-manual-editor-documents — 2026-11-14
 
 Two editing-only profiles support manual observation append then explicit same-source revision. Input roles differ from identically tagged output audits. Existing Python checks, quotes, hashes, judgments and fixtures are unchanged; no runtime checker or imported-candidate flow is added.
