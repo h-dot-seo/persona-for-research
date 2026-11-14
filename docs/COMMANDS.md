@@ -883,3 +883,11 @@ remain unchanged. See [TEST_TIMING.md](TEST_TIMING.md).
 `python -m tests.capacity NEW_DIR [--case N,K,C,S ...]` observes the fixed synthetic
 public-API journey workload. This tests-package runner is not a product CLI or a
 new product input limit. See [CAPACITY.md](CAPACITY.md).
+
+### `artifact_schemas.py`
+
+Descriptive artifact identifiers and evidence-qualified workflow links, not validation. [Guide](SCHEMAS.md).
+
+```text
+usage: artifact_schemas.py [-h] [--format {json,text}] [--workflow WORKFLOW]
+```

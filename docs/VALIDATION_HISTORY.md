@@ -2782,3 +2782,44 @@ passed 23 including the self-normalizing string and non-invoking exact-type guar
 Manifest passes 325 entries, audit 326; 193 Python files compile and parse Python
 3.10 grammar. Root CLI count remains 58. No wall-time claim follows from these
 separate test runs. Exact PR/main CI is checked separately.
+
+## 2026-11-14 Descriptive artifact contract index (0.109-artifact-contract-index)
+
+Roadmap #83 descriptive index only. artifact_schemas.py returns fixed public JSON/text
+with exact-workflow filtering, no private input path, validation/check/migration action
+or network call. Its 110 workflow/role/variant rows cover84 public/maintainer identifiers,
+2 fixture-only wrappers and24 untagged roles. Nullable schema_id does not introduce a
+schema field into existing responses/adoption/provenance. Source mentions are occurrence
+inventory only, never guessed producer/consumer attribution. Unknown relations are null;
+source-reviewed relationships and synthetic-exercised evidence are explicitly different.
+
+Literal discovery plus actual dynamic SCHEMAS cover identifiers that AST literals alone
+miss. Actual maintainer timing/capacity outputs are separate from fixture-only identifiers.
+Mode versions coexist; no legacy retirement, first-release inference, support-period
+promise or acceptance based on a label. Existing authoritative consumers still perform
+all structural/binding/current-input checks. This index does not perform them and does
+not establish authentication, semantic validation or approval. Fixed data uses the shared
+bounded JSON reader and complete JSON/text output is bounded16MiB.
+
+Ten existing handoff versions are produced through actual prepare/response-template CLIs,
+checking bound untagged response shape; existing nonempty attribution-v3 import and replay
+are exercised separately. Static inventory, mode/guide/command/data linkage and drift checks
+cover declared sources, not all conceivable artifacts or all end-to-end consumer paths.
+Only synthetic fixtures; no existing validator/artifact/payload change. SKILL stays within
+its8192-byte contract. Independent review found answer-v3 mode rows omitted the
+required --include-citation-explanations flag. Before publication all six affected
+rows were corrected, with actual API missing-flag rejection and enabled-v3 success
+regression. Selection flags are mode-selection references, not a universally valid
+argv recipe for every workflow stage. Existing product APIs are untouched.
+Corrected candidate full suite passed 1,440 tests in 388.646 seconds with one
+platform skip. Expanded focused60 passed in 19.082 seconds; independent final20
+passed in5.612 seconds. One independent dispatcher comparison overlapped manifest
+regeneration and observed two different inventory states; after freeze its rerun
+passed. This was moving validation state, not a product assertion failure. Earlier
+independent command-name loader mistakes were also corrected without product changes.
+Manifest passes329 entries, audit330; all195 Python files compile and parse Python
+3.10 grammar. Dispatcher lists59 root CLIs. This recorded candidate result is not a
+claim that every relationship was exercised. After final documentation/manifest freeze,
+the exact final tree is independently rechecked and its full-run result retained in
+the external publication record, avoiding further edits during verification. Exact
+PR/main CI is checked separately.

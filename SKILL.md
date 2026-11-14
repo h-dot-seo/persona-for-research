@@ -45,7 +45,7 @@ or intake gate is implied; no canonical payload changes.
 
 ## Route the task
 
-Synthetic intake: docs/TUTORIAL_OWN_FILES.md; never reuse fixture decisions.
+Intake: docs/TUTORIAL_OWN_FILES.md; never reuse fixture decisions.
 For local intake see docs/LOCAL_INPUT_PREPARATION.md: `prepare_local_manifest.py`
 with `--report-defects`, then prepare, `curate_local.py` template/append and
 `corpus_files.py`. For inline segments use `observation_input.py` and
@@ -58,7 +58,7 @@ Review with `review_package.py`; empty answer/design starters:
 docs/REVISION_IMPACT.md. Consultation remains a specification, not a dialogue backend.
 Updates are only partly supported by `revise_local.py`, `revision_impact.py` and
 `source_recheck.py`; read docs/MANUAL_EVIDENCE_REVISION.md and docs/SOURCE_RECHECK.md.
-Report gaps; never invent completion.
+Report gaps; never invent completion. Contracts: docs/SCHEMAS.md.
 
 Keep the validation axes separate: `persona.py` checks evidence bindings and
 `source_recheck.py` checks current local bytes; `evaluate_synthetic.py` is synthetic-only
@@ -71,7 +71,7 @@ Bytes: docs/FOLDER_INVENTORY.md. Response extraction: docs/HANDOFF_PACKET.md. Ne
 
 ## Offline proposal families
 
-Read each guide; loops differ.
+Read guides; loops differ.
 - `answer_proposals.py` (docs/ANSWER_PROPOSALS.md) and `argument_proposals.py`
   (docs/ARGUMENT_PROPOSALS.md): template, prepare, response-template, separately approved
   external execution, import with separate declared-provenance JSON, review-template,

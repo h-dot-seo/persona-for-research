@@ -794,3 +794,7 @@ Use [folder_inventory.py declare/verify](FOLDER_INVENTORY.md) to compare raw fil
 ## Copy a handoff response from one message
 
 [Literal response extraction](HANDOFF_PACKET.md) preserves a selected bound JSON fence for the unchanged importer. Multiple matches require an explicit occurrence. No role detection, provenance filling or approval.
+
+## Locate an artifact contract
+
+Use the [descriptive artifact index](SCHEMAS.md) to find identifiers, evidenced producer links and parallel modes. Untagged responses/reviews/provenance stay untagged. Follow the existing consumer and generated response_contract, not the index, for authoritative checks.

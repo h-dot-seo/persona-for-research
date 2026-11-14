@@ -1,0 +1,2330 @@
+{
+  "records": [
+    {
+      "schema_id": null,
+      "workflow": "answer",
+      "role": "adoption-review",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Mode-specific operator-authored review. Inspect the existing review-template and authoritative consumer; no universal field set is asserted here. Observation review additionally binds input corpus. No schema field is introduced."
+    },
+    {
+      "schema_id": "persona.answer-proposals.v1",
+      "workflow": "answer",
+      "role": "bundle",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.answer-proposals.v2",
+      "workflow": "answer",
+      "role": "bundle",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.answer-proposals.v3",
+      "workflow": "answer",
+      "role": "bundle",
+      "variant": "v3",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations",
+        "--patterns",
+        "--context",
+        "--publication-relations",
+        "--pattern-id"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": null,
+      "workflow": "answer",
+      "role": "declared-provenance",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": {
+        "module": "declared_provenance.py",
+        "api": "validate_declared_provenance",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Operator-authored provider_id, model_id, run_id, operator_id, execution_location. Recorded declarations are not authenticated execution; no default judgments or inferred run IDs. No schema field."
+    },
+    {
+      "schema_id": "persona.reviewed-answer-proposals.v1",
+      "workflow": "answer",
+      "role": "envelope",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "export_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "inspect_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_draft.py",
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.reviewed-answer-proposals.v2",
+      "workflow": "answer",
+      "role": "envelope",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "export_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "inspect_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_draft.py",
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.reviewed-answer-proposals.v3",
+      "workflow": "answer",
+      "role": "envelope",
+      "variant": "v3",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations",
+        "--patterns",
+        "--context",
+        "--publication-relations",
+        "--pattern-id"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "export_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "inspect_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_draft.py",
+        "answer_proposals.py",
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.answer-handoff.v1",
+      "workflow": "answer",
+      "role": "handoff",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index."
+    },
+    {
+      "schema_id": "persona.answer-handoff.v2",
+      "workflow": "answer",
+      "role": "handoff",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index."
+    },
+    {
+      "schema_id": "persona.answer-handoff.v3",
+      "workflow": "answer",
+      "role": "handoff",
+      "variant": "v3",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations",
+        "--patterns",
+        "--context",
+        "--publication-relations",
+        "--pattern-id"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index."
+    },
+    {
+      "schema_id": "persona.answer-proposal-review.v1",
+      "workflow": "answer",
+      "role": "packet",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.answer-proposal-review.v2",
+      "workflow": "answer",
+      "role": "packet",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.answer-proposal-review.v3",
+      "workflow": "answer",
+      "role": "packet",
+      "variant": "v3",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations",
+        "--patterns",
+        "--context",
+        "--publication-relations",
+        "--pattern-id"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py",
+        "argument_proposals.py",
+        "research_journey.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": null,
+      "workflow": "answer",
+      "role": "response",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": null,
+      "workflow": "answer",
+      "role": "response",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": null,
+      "workflow": "answer",
+      "role": "response",
+      "variant": "v3",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations",
+        "--patterns",
+        "--context",
+        "--publication-relations",
+        "--pattern-id"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": "persona.answer-proposal-scope.v1",
+      "workflow": "answer",
+      "role": "scope",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "template",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.answer-proposal-scope.v2",
+      "workflow": "answer",
+      "role": "scope",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "template",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.answer-proposal-scope.v3",
+      "workflow": "answer",
+      "role": "scope",
+      "variant": "v3",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-citation-explanations",
+        "--patterns",
+        "--context",
+        "--publication-relations",
+        "--pattern-id"
+      ],
+      "producer": {
+        "module": "answer_proposals.py",
+        "api": "template",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "answer_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ANSWER_PROPOSALS.md",
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": null,
+      "workflow": "application",
+      "role": "adoption-review",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": "docs/APPLICATION_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Mode-specific operator-authored review. Inspect the existing review-template and authoritative consumer; no universal field set is asserted here. Observation review additionally binds input corpus. No schema field is introduced."
+    },
+    {
+      "schema_id": null,
+      "workflow": "application",
+      "role": "declared-provenance",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": {
+        "module": "declared_provenance.py",
+        "api": "validate_declared_provenance",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/APPLICATION_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Operator-authored provider_id, model_id, run_id, operator_id, execution_location. Recorded declarations are not authenticated execution; no default judgments or inferred run IDs. No schema field."
+    },
+    {
+      "schema_id": "persona.application-handoff.v1",
+      "workflow": "application",
+      "role": "handoff",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "application_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "application_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/APPLICATION_PROPOSALS.md",
+      "source_mentions": [
+        "application_proposals.py"
+      ],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index."
+    },
+    {
+      "schema_id": null,
+      "workflow": "application",
+      "role": "response",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "application_proposals.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "application_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/APPLICATION_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": null,
+      "workflow": "argument",
+      "role": "adoption-review",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Mode-specific operator-authored review. Inspect the existing review-template and authoritative consumer; no universal field set is asserted here. Observation review additionally binds input corpus. No schema field is introduced."
+    },
+    {
+      "schema_id": "persona.argument-proposals.v1",
+      "workflow": "argument",
+      "role": "bundle",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.argument-proposals.v2",
+      "workflow": "argument",
+      "role": "bundle",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-recorded-answer-context"
+      ],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": null,
+      "workflow": "argument",
+      "role": "declared-provenance",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": {
+        "module": "declared_provenance.py",
+        "api": "validate_declared_provenance",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Operator-authored provider_id, model_id, run_id, operator_id, execution_location. Recorded declarations are not authenticated execution; no default judgments or inferred run IDs. No schema field."
+    },
+    {
+      "schema_id": "persona.reviewed-argument-proposals.v1",
+      "workflow": "argument",
+      "role": "envelope",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "export_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "inspect_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_map.py",
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.reviewed-argument-proposals.v2",
+      "workflow": "argument",
+      "role": "envelope",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-recorded-answer-context"
+      ],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "export_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "inspect_reviewed",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_map.py",
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.argument-handoff.v1",
+      "workflow": "argument",
+      "role": "handoff",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_proposals.py"
+      ],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index."
+    },
+    {
+      "schema_id": "persona.argument-handoff.v2",
+      "workflow": "argument",
+      "role": "handoff",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-recorded-answer-context"
+      ],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_proposals.py"
+      ],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index."
+    },
+    {
+      "schema_id": "persona.argument-proposal-review.v1",
+      "workflow": "argument",
+      "role": "packet",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.argument-proposal-review.v2",
+      "workflow": "argument",
+      "role": "packet",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-recorded-answer-context"
+      ],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "review_proposals",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": null,
+      "workflow": "argument",
+      "role": "response",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": null,
+      "workflow": "argument",
+      "role": "response",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-recorded-answer-context"
+      ],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": "persona.argument-proposal-scope.v1",
+      "workflow": "argument",
+      "role": "scope",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "template",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "persona.argument-proposal-scope.v2",
+      "workflow": "argument",
+      "role": "scope",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-recorded-answer-context"
+      ],
+      "producer": {
+        "module": "argument_proposals.py",
+        "api": "template",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "argument_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/ARGUMENT_PROPOSALS.md",
+      "source_mentions": [
+        "argument_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Parallel mode selected by existing inputs/flags, not a retired generation. Acceptance requires the existing matching-input replay, not a schema label."
+    },
+    {
+      "schema_id": "human-validation-record.v1",
+      "workflow": "human-validation-record",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "human_validation.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": null,
+      "workflow": "observations",
+      "role": "adoption-review",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": "docs/OBSERVATION_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Mode-specific operator-authored review. Inspect the existing review-template and authoritative consumer; no universal field set is asserted here. Observation review additionally binds input corpus. No schema field is introduced."
+    },
+    {
+      "schema_id": null,
+      "workflow": "observations",
+      "role": "declared-provenance",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": {
+        "module": "declared_provenance.py",
+        "api": "validate_declared_provenance",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/OBSERVATION_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Operator-authored provider_id, model_id, run_id, operator_id, execution_location. Recorded declarations are not authenticated execution; no default judgments or inferred run IDs. No schema field."
+    },
+    {
+      "schema_id": null,
+      "workflow": "observations",
+      "role": "handoff",
+      "variant": "v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--task observations"
+      ],
+      "producer": {
+        "module": "observation_proposals.py",
+        "api": "prepare_observation_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "observation_proposals.py",
+        "api": "import_observation_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/OBSERVATION_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index. contract_version=1 is a request/handoff contract marker, not a schema ID."
+    },
+    {
+      "schema_id": null,
+      "workflow": "observations",
+      "role": "response",
+      "variant": "v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--task observations"
+      ],
+      "producer": {
+        "module": "model_handoff.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "observation_proposals.py",
+        "api": "import_observation_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/OBSERVATION_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": null,
+      "workflow": "pattern",
+      "role": "adoption-review",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": "docs/PATTERN_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Mode-specific operator-authored review. Inspect the existing review-template and authoritative consumer; no universal field set is asserted here. Observation review additionally binds input corpus. No schema field is introduced."
+    },
+    {
+      "schema_id": null,
+      "workflow": "pattern",
+      "role": "declared-provenance",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": {
+        "module": "declared_provenance.py",
+        "api": "validate_declared_provenance",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/PATTERN_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Operator-authored provider_id, model_id, run_id, operator_id, execution_location. Recorded declarations are not authenticated execution; no default judgments or inferred run IDs. No schema field."
+    },
+    {
+      "schema_id": "persona.pattern-handoff.v1",
+      "workflow": "pattern",
+      "role": "handoff",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "pattern_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "pattern_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/PATTERN_PROPOSALS.md",
+      "source_mentions": [
+        "pattern_proposals.py"
+      ],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index."
+    },
+    {
+      "schema_id": "persona.pattern-handoff.v2",
+      "workflow": "pattern",
+      "role": "handoff",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-evidence-reasons"
+      ],
+      "producer": {
+        "module": "pattern_proposals.py",
+        "api": "prepare_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "pattern_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/PATTERN_PROPOSALS.md",
+      "source_mentions": [
+        "pattern_proposals.py"
+      ],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index."
+    },
+    {
+      "schema_id": null,
+      "workflow": "pattern",
+      "role": "response",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "pattern_proposals.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "pattern_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/PATTERN_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": null,
+      "workflow": "pattern",
+      "role": "response",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-evidence-reasons"
+      ],
+      "producer": {
+        "module": "pattern_proposals.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "pattern_proposals.py",
+        "api": "import_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/PATTERN_PROPOSALS.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": "persona.answer-context-preview.v1",
+      "workflow": "persona.answer-context-preview",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "answer_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.answer-research-context.v1",
+      "workflow": "persona.answer-research-context",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "answer_context.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.application-proposal-review.v1",
+      "workflow": "persona.application-proposal-review",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "application_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.application-proposals.v1",
+      "workflow": "persona.application-proposals",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "application_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.argument-step-view.v1",
+      "workflow": "persona.argument-step-view",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "argument_map.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.artifact-schema-index.v1",
+      "workflow": "persona.artifact-schema-index",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "artifact_schemas.py",
+        "api": "catalog",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/SCHEMAS.md",
+      "source_mentions": [
+        "artifact_schemas.py"
+      ],
+      "response_contract": null,
+      "note": "Descriptive index output, not artifact validation."
+    },
+    {
+      "schema_id": "persona.bibliographic-census.v1",
+      "workflow": "persona.bibliographic-census",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "census_import.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.candidate-challenge.v1",
+      "workflow": "persona.candidate-challenge",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "candidate_challenge.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.capacity-observation.v1",
+      "workflow": "persona.capacity-observation",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "maintainer",
+      "mode": "explicit-maintainer-run",
+      "selection_flags": [],
+      "producer": {
+        "module": "tests/capacity.py",
+        "api": "observe",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/CAPACITY.md",
+      "source_mentions": [
+        "tests/capacity.py"
+      ],
+      "response_contract": null,
+      "note": "Maintainer observation output, not a product input schema or performance guarantee. Existing runner tests exercise its production; this index does not rerun the full suite/grid."
+    },
+    {
+      "schema_id": "persona.capacity-run.v1",
+      "workflow": "persona.capacity-run",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "maintainer",
+      "mode": "explicit-maintainer-run",
+      "selection_flags": [],
+      "producer": {
+        "module": "tests/capacity.py",
+        "api": "run",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/CAPACITY.md",
+      "source_mentions": [
+        "tests/capacity.py"
+      ],
+      "response_contract": null,
+      "note": "Maintainer observation output, not a product input schema or performance guarantee. Existing runner tests exercise its production; this index does not rerun the full suite/grid."
+    },
+    {
+      "schema_id": "persona.citation-reasoning-audit.v1",
+      "workflow": "persona.citation-reasoning-audit",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "citation_reasoning.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.command-catalog.v1",
+      "workflow": "persona.command-catalog",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "persona_cli.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.command-description.v1",
+      "workflow": "persona.command-description",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "persona_cli.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.command-list.v1",
+      "workflow": "persona.command-list",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "persona_cli.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.external-evidence.v1",
+      "workflow": "persona.external-evidence",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "external_evidence.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.external-evidence-review.v1",
+      "workflow": "persona.external-evidence-review",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "external_evidence.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.folder-inventory.v1",
+      "workflow": "persona.folder-inventory",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "folder_inventory.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.folder-inventory-verification.v1",
+      "workflow": "persona.folder-inventory-verification",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "folder_inventory.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.journey-comparison.v1",
+      "workflow": "persona.journey-comparison",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "journey_compare.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.journey-file-selection.v1",
+      "workflow": "persona.journey-file-selection",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "journey_inputs.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.journey-input-card.v1",
+      "workflow": "persona.journey-input-card",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "journey_inputs.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.journey-input-file-check.v1",
+      "workflow": "persona.journey-input-file-check",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "journey_inputs.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.manifest-regeneration.v1",
+      "workflow": "persona.manifest-regeneration",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "regenerate_manifest.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.manual-observation.v1",
+      "workflow": "persona.manual-observation",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "curate_local.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.manual-observation-revision.v1",
+      "workflow": "persona.manual-observation-revision",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "revise_local.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.method-application.v1",
+      "workflow": "persona.method-application",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "method_application.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.method-application-review.v1",
+      "workflow": "persona.method-application-review",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "method_application.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.observation-append-candidate.v1",
+      "workflow": "persona.observation-append-candidate",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "observation_revision.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.observation-append-card.v1",
+      "workflow": "persona.observation-append-card",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "observation_revision.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.observation-origin.v1",
+      "workflow": "persona.observation-origin",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "observation_provenance.py",
+        "observation_revision.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.observation-proposal-review-packet.v1",
+      "workflow": "persona.observation-proposal-review-packet",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "observation_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.observation-proposals.v1",
+      "workflow": "persona.observation-proposals",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "observation_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.package-overview.v1",
+      "workflow": "persona.package-overview",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "package_overview.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.pattern-proposal-review.v1",
+      "workflow": "persona.pattern-proposal-review",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "pattern_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.pattern-proposals.v1",
+      "workflow": "persona.pattern-proposals",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "pattern_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.pattern-proposals.v2",
+      "workflow": "persona.pattern-proposals",
+      "role": "artifact",
+      "variant": "v2",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "pattern_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.release-decision-record.v1",
+      "workflow": "persona.release-decision-record",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "release_record.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.reopening-record.v1",
+      "workflow": "persona.reopening-record",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "release_record.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.research-journey.v1",
+      "workflow": "persona.research-journey",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "research_journey.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.response-extraction.v1",
+      "workflow": "persona.response-extraction",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "handoff_packet.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.reviewed-application-proposals.v1",
+      "workflow": "persona.reviewed-application-proposals",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "application_proposals.py",
+        "method_application.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.reviewed-pattern-proposals.v1",
+      "workflow": "persona.reviewed-pattern-proposals",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "pattern_hypotheses.py",
+        "pattern_proposals.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.rule-correspondence.v1",
+      "workflow": "persona.rule-correspondence",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "rule_correspondence.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.rule-inventory.v1",
+      "workflow": "persona.rule-inventory",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "rule_correspondence.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.saved-output.v1",
+      "workflow": "persona.saved-output",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "exclusive_output.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.selection-census-map.v1",
+      "workflow": "persona.selection-census-map",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "census_import.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.source-recheck.v1",
+      "workflow": "persona.source-recheck",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "source_recheck.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.source-recheck-selection.v1",
+      "workflow": "persona.source-recheck-selection",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "source_recheck.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.source-structure-report.v1",
+      "workflow": "persona.source-structure-report",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "prepare_local_manifest.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.split-check.v1",
+      "workflow": "persona.split-check",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "split_declaration.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.split-declaration.v1",
+      "workflow": "persona.split-declaration",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "split_declaration.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.synthetic-legacy-replay-fixture.v1",
+      "workflow": "persona.synthetic-legacy-replay-fixture",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "fixture-only",
+      "mode": "synthetic-regression",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "examples/legacy-answer-argument-v055.json"
+      ],
+      "response_contract": null,
+      "note": "Synthetic regression wrapper only, not a public production/acceptance contract."
+    },
+    {
+      "schema_id": "persona.synthetic-reasoned-legacy-replay.v1",
+      "workflow": "persona.synthetic-reasoned-legacy-replay",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "fixture-only",
+      "mode": "synthetic-regression",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "examples/legacy-reasoned-answer-v056.json"
+      ],
+      "response_contract": null,
+      "note": "Synthetic regression wrapper only, not a public production/acceptance contract."
+    },
+    {
+      "schema_id": "persona.tabular-description.v1",
+      "workflow": "persona.tabular-description",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "tabular_export.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.test-timing.v1",
+      "workflow": "persona.test-timing",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "maintainer",
+      "mode": "explicit-maintainer-run",
+      "selection_flags": [],
+      "producer": {
+        "module": "tests/timing.py",
+        "api": "observe",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/TEST_TIMING.md",
+      "source_mentions": [
+        "tests/timing.py"
+      ],
+      "response_contract": null,
+      "note": "Maintainer observation output, not a product input schema or performance guarantee. Existing runner tests exercise its production; this index does not rerun the full suite/grid."
+    },
+    {
+      "schema_id": null,
+      "workflow": "reasoning",
+      "role": "adoption-review",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": "docs/MODEL_HANDOFF.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Mode-specific operator-authored review. Inspect the existing review-template and authoritative consumer; no universal field set is asserted here. Observation review additionally binds input corpus. No schema field is introduced."
+    },
+    {
+      "schema_id": null,
+      "workflow": "reasoning",
+      "role": "declared-provenance",
+      "variant": "bound-mode",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": {
+        "module": "declared_provenance.py",
+        "api": "validate_declared_provenance",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/MODEL_HANDOFF.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Operator-authored provider_id, model_id, run_id, operator_id, execution_location. Recorded declarations are not authenticated execution; no default judgments or inferred run IDs. No schema field."
+    },
+    {
+      "schema_id": null,
+      "workflow": "reasoning",
+      "role": "handoff",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "extraction_adapter.py",
+        "api": "prepare_model_handoff",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "extraction_adapter.py",
+        "api": "import_model_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/MODEL_HANDOFF.md",
+      "source_mentions": [],
+      "response_contract": "handoff.response_contract (inspect the actual generated contract)",
+      "note": "Actual synthetic production checked. No current-input validation is performed by this index. contract_version=1 is a request/handoff contract marker, not a schema ID."
+    },
+    {
+      "schema_id": null,
+      "workflow": "reasoning",
+      "role": "response",
+      "variant": "v1",
+      "category": "public",
+      "mode": "default",
+      "selection_flags": [],
+      "producer": {
+        "module": "model_handoff.py",
+        "api": "response-template CLI / existing response_template API",
+        "evidence": "SYNTHETIC_EXERCISED",
+        "test": "tests/test_artifact_schemas.py"
+      },
+      "consumer": {
+        "module": "extraction_adapter.py",
+        "api": "import_model_response",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/MODEL_HANDOFF.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": "synthetic-answer-holdout-labels.v1",
+      "workflow": "synthetic-answer-holdout-labels",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "evaluate_synthetic.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "synthetic-answer-submission.v1",
+      "workflow": "synthetic-answer-submission",
+      "role": "artifact",
+      "variant": "v1",
+      "category": "public",
+      "mode": "UNCLASSIFIED",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": null,
+      "guide": null,
+      "source_mentions": [
+        "evaluate_synthetic.py"
+      ],
+      "response_contract": null,
+      "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    }
+  ]
+}
