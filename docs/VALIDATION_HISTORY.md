@@ -2218,3 +2218,40 @@ files, compile and Python 3.10 grammar checks passed after final regeneration.
 Only synthetic tests were used. These results do not claim scientific validity,
 source authenticity, rights, anonymity or release approval. Remote CI is checked
 separately for exact PR and merge commits.
+
+## 2026-11-14 Explicit public inventory regeneration (`0.92-manifest-regeneration`)
+
+Roadmap #84(a), reader-adjusted: regenerate_manifest.py produces a separately reviewed
+external candidate, never overwriting the original manifest. Required release/date,
+explicit add/remove, original raw-byte hashing, CR rejection, declaration/key-order
+preservation and exclusive external output keep selection explicit. Existing verify
+inventory and digest logic is shared with its diagnostic ordering preserved. Candidate
+JSON (including inherited metadata) and the selected tree are pattern-scanned; source
+manifest, inventory and bytes are rechecked before creation. These are detected-change
+checks, not a hostile-filesystem snapshot. Partial new output may remain after I/O failure.
+No tags, license decision, target-code execution, permissions or publication occur.
+
+Synthetic generator tests cover deterministic bytes, declarations, explicit inventory,
+CR, unsafe metadata, symlinks, output collision, stale inputs and target-code isolation.
+Focused implementation tests: 36 passed, then 27 after final helper refactoring.
+Independent combined tests: 72 passed in 17.895 seconds; separate 12 boundary/equivalence
+cases passed. Seven additional old/new verifier diagnostic comparisons also matched.
+The initial 72-test combination and initial full discovery (1,226 / 345.535s) each
+reported two failures and two errors because the intentionally old manifest had not yet
+bound the new generator/refactored verifier for trusted help. After explicit regeneration,
+the final full discovery passed all 1,226 tests in 325.703 seconds. No contract was weakened.
+
+The generator itself regenerated the selected checkout with two explicitly added paths.
+A second run with the same release/date reproduced the committed candidate byte-for-byte.
+After the final history edit, manifest 281 files, audit 282 files and compilation/Python
+3.10 grammar for 165 Python files passed. Production payload, four axes and approval
+semantics are unchanged. Synthetic mechanical checks do not establish authenticity,
+rights, anonymity or scientific validity. Exact PR/main CI is verified separately.
+
+Windows PR CI follow-up: initial run 43580733662 rejected the synthetic target-code
+fixture because Path.write_text translated its LF to CRLF. The generator correctly
+rejected CR. The fixture now uses explicit write_bytes(LF), without relaxing production
+checks or the separate intentional CRLF rejection test. Focused 12 tests passed in
+0.100s; independent 12 passed in 0.094s; full 1,226 passed in 322.191s. Manifest/audit
+were regenerated and rechecked before publishing the correction. Windows verification
+is delegated to the subsequent exact-head CI, not inferred from the Linux local pass.
