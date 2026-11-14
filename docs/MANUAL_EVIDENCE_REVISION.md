@@ -97,3 +97,5 @@ Do not remove their origin to make a manual card. The separate
 [reviewed observation append](OBSERVATION_REVISION.md) route creates a new candidate
 and retains imported provenance; imported-observation replacement/source migration
 is not supported by this release.
+
+Optional [manual authoring editor profiles](MANUAL_EDITOR_SCHEMAS.md) support these input cards without replacing Python validation.

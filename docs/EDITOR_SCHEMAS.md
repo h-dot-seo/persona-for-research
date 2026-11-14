@@ -121,3 +121,5 @@ paths, hashes, dates and supported cross-record relations remain mechanical Pyth
 checks. Neither these documents nor the Python checks authenticate user consent,
 source rights, human authority or scientific approval.
 This is #70 editor documentation, not #88's completed-import subset checker.
+
+Manual append → explicit revision is a separate [two-card editor workflow](MANUAL_EDITOR_SCHEMAS.md), not imported-candidate provenance.

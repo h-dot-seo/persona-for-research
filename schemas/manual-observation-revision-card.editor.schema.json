@@ -1,0 +1,267 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:persona-for-research:editor-profile:manual-observation-revision-card:v1",
+  "title": "Manual observation revision INPUT CARD editor profile, NOT audit (null/empty placeholders allowed)",
+  "description": "Optional editor documentation for manually authored input, not import-ready validation, approval, provenance or authenticated review. Empty strings and template null choices require explicit completion. Never add $schema to the instance.",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "persona.manual-observation-revision.v1"
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true,
+      "description": "Copied binding; freshness is checked by Python, not by this annotation."
+    },
+    "paper_id": {
+      "type": "string",
+      "readOnly": true
+    },
+    "observation": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "condition": {
+          "type": "string"
+        },
+        "limitation": {
+          "type": "string"
+        },
+        "locator": {
+          "type": "string"
+        },
+        "topic": {
+          "type": "string"
+        },
+        "evidence_quote": {
+          "type": "string"
+        },
+        "claim_type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "explicit_statement",
+            "operator_interpretation"
+          ],
+          "description": "Null is an editing placeholder, never an executable declaration."
+        },
+        "stance": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "support",
+            "challenge"
+          ]
+        },
+        "reasoning": {
+          "type": "object",
+          "properties": {
+            "question_framing": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "string"
+                },
+                "evidence_quote": {
+                  "type": "string"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            },
+            "alternative_explanation": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "string"
+                },
+                "evidence_quote": {
+                  "type": "string"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_standard": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "string"
+                },
+                "evidence_quote": {
+                  "type": "string"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            },
+            "falsification_check": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "string"
+                },
+                "evidence_quote": {
+                  "type": "string"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            },
+            "uncertainty": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "locator": {
+                  "type": "string"
+                },
+                "evidence_quote": {
+                  "type": "string"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "method",
+        "condition",
+        "limitation",
+        "locator",
+        "topic",
+        "evidence_quote",
+        "claim_type",
+        "stance"
+      ],
+      "additionalProperties": false
+    },
+    "observation_index": {
+      "type": "integer",
+      "minimum": 0,
+      "readOnly": true,
+      "description": "Zero-based index. JSON Schema integer can accept 1.0; Python requires exact int, rejecting float values and checking current membership."
+    },
+    "previous_observation_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true,
+      "description": "Copied binding; freshness is checked by Python, not by this annotation."
+    },
+    "operator_id": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "revision_reason": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "new_version": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "new_build_id": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "schema",
+    "manifest_sha256",
+    "paper_id",
+    "observation",
+    "observation_index",
+    "previous_observation_sha256",
+    "operator_id",
+    "revision_reason",
+    "new_version",
+    "new_build_id"
+  ],
+  "additionalProperties": false
+}

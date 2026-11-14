@@ -2885,3 +2885,34 @@ Final tree contains1451 tests,197 Python files,335 manifest entries and336 audit
 files; rootCLI59 and SKILL8189 bytes remain unchanged. Metadata/manifest are frozen
 before final full/independent verification; exact tree results and timings are recorded
 in the external publication record and roadmap logs without modifying files mid-run.
+
+
+## 2026-11-14 Manual observation editor documents (0.112-manual-editor-documents)
+
+Roadmap #70 adds two input-card editor profiles for one synthetic manual authoring
+flow: template, explicit observation, append, revision template, explicit change, revise.
+Existing curated/revision APIs, root production modules and examples remain byte-identical.
+No runtime schema checker, payload fields, imported provenance/verification, inferred
+judgments, external transmission or imported observation_revision workflow is added.
+Explicit role URNs distinguish a revision input from its output audit despite their
+shared schema string; output audits fail the input-card shape.
+
+Null/empty observation placeholders remain editing aids, not executable choices.
+Reasoning is optional and exact existing dimensions/components are documented. No
+observation text bound is invented; only actual revision text bounds are represented.
+Python retains source/hash/index/no-op/new-identity/quote authority and permits correction
+of superseded wrong quotes. Source reading requires independently authorized access;
+readOnly is an annotation and neither schema nor Python authenticates people or consent.
+
+Self-review found that JSON Schema integer accepts integral floats while the first
+test-only walker required Python int. Corrected the walker to finite integral number
+semantics excluding bool, and documented/tested 0.0/1.0 editor acceptance versus unchanged
+Python exact-int rejection. Negative/bool/fractional/nonfinite and large-number cases
+are explicit. No product validation was relaxed. Focused46 passed in0.535 seconds.
+Independent38 passed in0.570 seconds; actual Draft202012Validator metaschema checks and
+756 nested/type mutations agreed with the test-only walker. No dependency was added.
+
+Final tree contains1458 tests,198 Python files,339 manifest entries and340 audit text
+files; CLI59/SKILL8189 unchanged. Metadata/manifest are frozen before final full and
+independent tree validation. Exact results and timing are recorded externally in the
+publication record and roadmap logs without modifying the tree during validation.

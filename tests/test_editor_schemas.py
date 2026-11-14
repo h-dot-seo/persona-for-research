@@ -1,6 +1,7 @@
 """Test-only editor documentation drift checks, not a product JSON Schema validator."""
 import copy
 import json
+import math
 from pathlib import Path
 import re
 import unittest
@@ -11,16 +12,17 @@ from declared_provenance import PROVENANCE_FIELDS, validate_declared_provenance
 from tests import test_source_recheck as source_fixture
 
 ROOT=Path(__file__).resolve().parents[1]
-SUPPORTED={'$schema','$id','title','description','type','properties','required','additionalProperties','maxLength','maxItems','enum','const','pattern','anyOf','items','uniqueItems','readOnly'}
+SUPPORTED={'$schema','$id','title','description','type','properties','required','additionalProperties','maxLength','maxItems','enum','const','pattern','anyOf','items','uniqueItems','readOnly','minimum'}
 
 
 def conforms(schema,value):
-    """Small assertion walker for these three documents only; no URI resolution."""
+    """Small assertion walker for the documented editor profiles only; no URI resolution."""
     assert not set(schema)-SUPPORTED, 'unsupported test keyword'
     kind=schema.get('type')
     types=kind if isinstance(kind,list) else [kind] if kind else []
-    matches={'object':type(value) is dict,'array':type(value) is list,'string':type(value) is str,'null':value is None}
+    matches={'object':type(value) is dict,'array':type(value) is list,'string':type(value) is str,'null':value is None,'integer':type(value) is int or (type(value) is float and math.isfinite(value) and value.is_integer())}
     if types:assert any(matches[t] for t in types),'type'
+    if type(value) in (int,float) and 'minimum' in schema:assert value>=schema['minimum'],'minimum'
     if 'const' in schema:assert value==schema['const'],'const'
     if 'enum' in schema:assert value in schema['enum'],'enum'
     if 'anyOf' in schema:

@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.112-manual-editor-documents — 2026-11-14
+
+Two editing-only profiles support manual observation append then explicit same-source revision. Input roles differ from identically tagged output audits. Existing Python checks, quotes, hashes, judgments and fixtures are unchanged; no runtime checker or imported-candidate flow is added.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-manual-observation-editor-documents-0112-manual-editor-documents).
+
 ## 0.111-editor-form-documents — 2026-11-14
 
 Three JSON Schema 2020-12 editor profiles help author optional source selections, declared provenance and detached human records. Placeholder acceptance is not import readiness; existing Python validators and all product behavior remain unchanged. No runtime schema checker, instance fields or editor installation.
