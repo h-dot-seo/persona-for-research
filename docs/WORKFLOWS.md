@@ -738,8 +738,12 @@ This is an input-byte bound, not a bound on decoded object memory or execution t
 The projection helper applies the default limit to both files and stdin before hashing
 original bytes. Human validation and its dependent review readers retain their existing
 8 MiB combined budget but no longer read whole files before checking it. Their existing
-aggregate error message is preserved. Existing private loaders retain their own per-file
-or aggregate limits and encoding rules; their consolidation is not part of this increment.
+aggregate error message is preserved. The eleven proposal/journey/handoff/audit wrappers
+now share `read_bounded` while retaining their per-file or aggregate limits, exact size
+errors and encoding rules. Citation audit still accounts for the original byte length;
+research journey still decodes UTF-8 first, rejecting UTF-16 and UTF-8 BOM. Module-local
+limit constants remain patchable. Short reads are accumulated to EOF or limit + 1,
+rather than parsing an incomplete first read. Candidate/split readers remain separate.
 
 This is not an overall corpus/output size policy. Raw source preparation and output
 writers are unchanged; a produced package may exceed a downstream JSON reader's limit.

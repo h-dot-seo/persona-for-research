@@ -17,7 +17,7 @@ from pattern_transfer_review import inspect as inspect_transfer, render as rende
 from argument_map import inspect as inspect_argument, render as render_argument, _render_inspected as _render_argument_inspected
 from evidence_scope import disclose, render as render_scope
 from review_package import display
-from strict_json import loads
+from strict_json import read_bounded, InputLimitError, loads
 
 INPUT_NAMES = ('package', 'patterns', 'context', 'links', 'proposal', 'draft', 'argument', 'publication_relations')
 MAX_INPUT_BYTES = 8 * 1024 * 1024
@@ -333,8 +333,10 @@ def render(package, patterns, context, links, proposal, draft, argument, publica
 
 
 def _load(path):
-    with Path(path).open('rb') as stream: raw = stream.read(MAX_INPUT_BYTES + 1)
-    if len(raw) > MAX_INPUT_BYTES: raise ValueError('journey input file exceeds 8 MiB')
+    try:
+        raw = read_bounded(path, MAX_INPUT_BYTES)
+    except InputLimitError as exc:
+        raise ValueError('journey input file exceeds 8 MiB') from exc
     return loads(raw.decode('utf-8'))
 
 

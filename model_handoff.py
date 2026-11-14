@@ -10,16 +10,16 @@ from pathlib import Path
 from extraction_adapter import prepare_model_handoff, import_model_response, MAX_HANDOFF_BYTES
 from corpus_files import load_segment_corpus
 from persona import payload_sha256
-from strict_json import loads
+from strict_json import read_bounded, InputLimitError, loads
 
 MAX_INPUT_BYTES = 8 * 1024 * 1024
 
 
 def load(path):
-    with Path(path).open("rb") as stream:
-        raw = stream.read(MAX_INPUT_BYTES + 1)
-    if len(raw) > MAX_INPUT_BYTES:
-        raise ValueError("input JSON exceeds the 8 MiB file limit")
+    try:
+        raw = read_bounded(path, MAX_INPUT_BYTES)
+    except InputLimitError as exc:
+        raise ValueError("input JSON exceeds the 8 MiB file limit") from exc
     return loads(raw)
 
 

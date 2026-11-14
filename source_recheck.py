@@ -13,7 +13,7 @@ from reasoning_cards import DIMENSIONS
 from design_scenario import _text
 from persona import payload_sha256
 from review_package import display
-from strict_json import loads
+from strict_json import read_bounded, InputLimitError, loads
 
 SCHEMA = 'persona.source-recheck-selection.v1'
 MAX_JSON_BYTES = 8 * 1024 * 1024
@@ -140,8 +140,10 @@ def render(result):
 
 
 def _load(path):
-    with Path(path).open('rb') as stream: raw=stream.read(MAX_JSON_BYTES+1)
-    if len(raw)>MAX_JSON_BYTES: raise ValueError('source recheck JSON file exceeds 8 MiB')
+    try:
+        raw = read_bounded(path, MAX_JSON_BYTES)
+    except InputLimitError as exc:
+        raise ValueError('source recheck JSON file exceeds 8 MiB') from exc
     return loads(raw)
 
 

@@ -11,7 +11,7 @@ from design_scenario import _text
 from persona import payload_sha256
 from answer_draft import _render_endpoint
 from review_package import display
-from strict_json import loads
+from strict_json import read_bounded, InputLimitError, loads
 
 TYPES = ('review_summary_of', 'method_extension_of', 'reanalysis_of', 'shares_material_with', 'version_of', 'challenges')
 SYMMETRIC = {'shares_material_with'}
@@ -181,8 +181,10 @@ def render(result):
 
 
 def _load(path):
-    with Path(path).open('rb') as stream:raw=stream.read(8*1024*1024+1)
-    if len(raw)>8*1024*1024:raise ValueError('input JSON exceeds the 8 MiB file limit')
+    try:
+        raw = read_bounded(path, 8 * 1024 * 1024)
+    except InputLimitError as exc:
+        raise ValueError('input JSON exceeds the 8 MiB file limit') from exc
     return loads(raw)
 
 

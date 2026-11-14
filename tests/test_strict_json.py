@@ -248,5 +248,83 @@ class StrictJsonTests(unittest.TestCase):
             self.assertFalse(json.loads(failed.stdout)['projection_emitted'])
 
 
+class PrivateReaderConsolidationTests(unittest.TestCase):
+    MODULES = ('answer_proposals', 'application_proposals', 'argument_proposals',
+               'citation_reasoning', 'method_application', 'observation_proposals',
+               'pattern_proposals', 'publication_context', 'research_journey',
+               'source_recheck', 'model_handoff')
+
+    def call(self, module, path, budget=8 * 1024 * 1024):
+        if module.__name__ == 'citation_reasoning':
+            return module._load(path, budget)[0]
+        return (module.load if module.__name__ == 'model_handoff' else module._load)(path)
+
+    def test_all_wrappers_use_shared_reader_and_keep_errors(self):
+        import importlib
+        from unittest.mock import patch
+        from strict_json import InputLimitError
+        for name in self.MODULES:
+            module = importlib.import_module(name)
+            with self.subTest(name=name), patch.object(module, 'read_bounded', return_value=b'{"ok":true}') as reader:
+                self.assertEqual(self.call(module, 'input.json'), {'ok': True})
+                self.assertEqual(reader.call_args.args, ('input.json', 8 * 1024 * 1024))
+            with self.subTest(name=name), patch.object(module, 'read_bounded', side_effect=InputLimitError('private diagnostic')):
+                with self.assertRaises(ValueError) as caught:
+                    self.call(module, 'input.json')
+                self.assertIn('8 MiB', str(caught.exception))
+                self.assertNotIn('private diagnostic', str(caught.exception))
+
+    def test_patchable_module_bounds_and_citation_byte_accounting(self):
+        import importlib
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'input.json'
+            raw = b'{"x":1}'
+            path.write_bytes(raw)
+            for name in self.MODULES:
+                module = importlib.import_module(name)
+                constant = 'MAX_JSON_BYTES' if name == 'source_recheck' else 'MAX_INPUT_BYTES'
+                if hasattr(module, constant) and name != 'citation_reasoning':
+                    with self.subTest(name=name), patch.object(module, constant, len(raw)):
+                        self.assertEqual(self.call(module, path), {'x': 1})
+                    with self.subTest(name=name), patch.object(module, constant, len(raw)-1):
+                        with self.assertRaisesRegex(ValueError, '8 MiB'):
+                            self.call(module, path)
+            import citation_reasoning
+            self.assertEqual(citation_reasoning._load(path, len(raw)), ({'x': 1}, len(raw)))
+            with self.assertRaisesRegex(ValueError, 'combined citation audit'):
+                citation_reasoning._load(path, len(raw)-1)
+
+    def test_encoding_and_strict_parser_contracts(self):
+        import importlib
+        with tempfile.TemporaryDirectory() as td:
+            path = Path(td) / 'input.json'
+            for raw in ('{"x":"한글"}'.encode('utf-16'), b'\xef\xbb\xbf{"x":"ok"}'):
+                path.write_bytes(raw)
+                for name in self.MODULES:
+                    module = importlib.import_module(name)
+                    with self.subTest(name=name, raw=raw):
+                        if name == 'research_journey':
+                            with self.assertRaises((ValueError, UnicodeError)):
+                                self.call(module, path)
+                        else:
+                            self.assertIn('x', self.call(module, path))
+            for raw in (b'{"x":1,"x":2}', b'{"x":NaN}', b'{"x":1e999}'):
+                path.write_bytes(raw)
+                for name in self.MODULES:
+                    with self.subTest(name=name, raw=raw), self.assertRaises(ValueError):
+                        self.call(importlib.import_module(name), path)
+
+    def test_short_reads_are_accumulated_by_each_wrapper(self):
+        import importlib
+        import io
+        from unittest.mock import patch
+        class ShortStream(io.BytesIO):
+            def read(self, size=-1):
+                return super().read(min(size, 2))
+        for name in self.MODULES:
+            with self.subTest(name=name), patch('pathlib.Path.open', return_value=ShortStream(b'{"x":1}')):
+                self.assertEqual(self.call(importlib.import_module(name), 'input.json'), {'x': 1})
+
 if __name__ == '__main__':
     unittest.main()

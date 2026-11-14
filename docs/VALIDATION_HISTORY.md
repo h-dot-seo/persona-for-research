@@ -2138,3 +2138,25 @@ review/split tests were rechecked. No remote CI outcome is claimed in this recor
 - Private bounded-loader consolidation and raw-source sizing remain future increments.
   No total corpus/output, decoded-memory or I/O-time bound is claimed. Payload, four axes,
   acquisition gate and approval behavior are unchanged.
+
+
+## 2026-11-14 Shared private bounded readers (`0.88-shared-private-readers`)
+
+Eleven existing JSON wrappers now reuse `strict_json.read_bounded` without introducing
+new path policy, module, command or input ceiling. Thin wrappers preserve exact size
+errors, patchable module constants, citation audit's original-byte combined budget and
+research journey's UTF-8-first rejection of UTF-16/BOM. Shared short-read accumulation
+now applies to these wrappers too. Candidate/split readers and raw source policy are
+not part of this change. Canonical payloads, four validation axes and approval rules
+are unchanged; fixtures remain synthetic.
+
+- Full local suite: 1200 tests, 331.361 seconds, OK.
+- Focused strict JSON: 21 tests, OK; independent focused suite: 71 tests, OK.
+- Independent old/new differential: 132 result/error/type comparisons identical,
+  including exact and over-budget, UTF-16/BOM, strict malformed JSON, symlink/missing paths.
+- Manifest: 279 selected files; audit: 280 files; compile and Python 3.10 grammar: 163.
+- Local results do not establish remote CI; exact-head PR and main runs are checked
+  separately before completion. No browser, model, external data or scientific validation.
+- Final focused invocation initially named the nonexistent `tests.test_checkout_smoke`;
+  this was a selection error, not a product test failure. Corrected invocation below
+  uses strict JSON, manifest, dispatcher and model-handoff modules.

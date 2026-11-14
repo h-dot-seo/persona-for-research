@@ -1,11 +1,13 @@
 # Validation record
 
-Current release: `0.87-bounded-json`, 2026-11-14. This file is the current
+Current release: `0.88-shared-private-readers`, 2026-11-14. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
+
+- 2026-11-14 Shared private readers (`0.88-shared-private-readers`): eleven thin wrappers reuse bounded bytes, preserving limits, exact size errors, collective accounting and UTF-8-first journey parsing.
 
 - 2026-11-14 Shared bounded JSON reads (`0.87-bounded-json`): limit reads before parsing, preserve combined budgets and original-byte hashes.
 
@@ -50,7 +52,7 @@ external model/search behaviour or scientific meaning.
 
 From the repository root, with Python 3.10 or later and no third-party packages:
 
-- `python -m unittest discover -q` — the current tree runs 1196 synthetic tests
+- `python -m unittest discover -q` — the current tree runs 1200 synthetic tests
   (platform-specific cases may skip on other hosts). The final local verification result is recorded in the release history. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.

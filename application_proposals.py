@@ -14,7 +14,7 @@ from persona import payload_sha256
 from design_scenario import _text
 from review_package import display
 from answer_draft import _render_endpoint
-from strict_json import loads
+from strict_json import read_bounded, InputLimitError, loads
 
 ENVELOPE_SCHEMA = 'persona.reviewed-application-proposals.v1'
 PROPOSAL_FIELDS = methods.FIELDS - {'decision'}
@@ -292,8 +292,10 @@ def render_review(packet):
 
 
 def _load(path):
-    with Path(path).open('rb') as stream: raw = stream.read(MAX_INPUT_BYTES+1)
-    if len(raw) > MAX_INPUT_BYTES: raise ValueError('application proposal JSON file exceeds 8 MiB')
+    try:
+        raw = read_bounded(path, MAX_INPUT_BYTES)
+    except InputLimitError as exc:
+        raise ValueError('application proposal JSON file exceeds 8 MiB') from exc
     return loads(raw)
 
 
