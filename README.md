@@ -202,6 +202,8 @@ No intake gate or holdout evaluation is implied.
 - [Review attribution example](docs/REVIEW_ATTRIBUTION_EXAMPLE.md) — reported method versus own recommendation.
 - [Trajectory and conditions example](docs/TRAJECTORY_CONDITIONS_EXAMPLE.md) — publication change versus changed conditions.
 
+See the [release change index](CHANGELOG.md) for command and behavior changes.
+
 ## Design and boundaries
 
 See [lifecycle](docs/ARCHITECTURE.md), [workflow](SKILL.md),

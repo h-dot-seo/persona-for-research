@@ -256,3 +256,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 [선택 명령 설명](COMMAND_DESCRIPTION.md): `persona_cli.py describe SCRIPT --json`은 허용목록·게시 소스 해시가 맞는 스크립트의 실제 --help를 시간·출력 제한으로 수집합니다. argparse 없는 검사는 실행하지 않으며 아티팩트 스키마·승인을 추론하지 않습니다.
 
 [전체 명령 카탈로그](COMMAND_CATALOG.md): `persona_cli.py describe --all --json`은 기존 허용목록만 합산 시간·출력 예산 내에서 수집합니다. 실패·출력 생략·미시도를 분리하며 PARTIAL_CATALOG를 전체 성공으로 해석하지 않습니다.
+
+[릴리스 변경 색인](../CHANGELOG.md)에서 명령과 동작 변경을 확인하세요. 상세 검증·실패·한계 기록은 기존 검증 이력에 보존됩니다.
