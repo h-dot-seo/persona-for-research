@@ -2363,3 +2363,41 @@ rehashed malformed format metadata and output collisions were tested.
 Manifest 294 entries, audit 295 files, compile/Python 3.10 grammar for 173 Python
 files passed after regeneration. No real exports, network or paid API was used;
 package payload, four axes, approval, rights and identity boundaries are unchanged.
+
+## 2026-11-14 Reference catalog tables (0.97-reference-tables)
+
+Roadmap #68 first independent reference-catalog slice. New tabular_export.py recomputes
+references from checked_package/validated_source_rules through _sources/_endpoint.
+Cached catalogs/reports are rejected. Existing review_workspace.py and its catalog golden,
+payloads, four validation axes, fixture bindings and old outputs are unchanged. Observation
+and component labels have separate columns; empty-observation papers remain explicit.
+Rows carry exact reference JSON, position-binding hashes and private non-authoritative
+boundary text. No source reread, identity/rights/authorization inference, model call,
+external transmission, spreadsheet write-back or canonical update occurs.
+
+Display escaping precedes formula-prefix guarding. Null/empty/inapplicable markers are
+explicit but not reversible; ordinary Unicode remains UTF-8. LF and optional BOM are
+explicit. Cell size is 32,767 Unicode code points, input 8 MiB and output 16 MiB including
+BOM; oversized results fail before emission. Existing exclusive --output behavior is used.
+Agenda/routes/human-validation tables are not included. No actual spreadsheet application's
+import behavior is claimed. Only synthetic fixtures were used.
+
+Verification: all 1,291 synthetic tests passed in 329.491 seconds. Focused new/workspace/
+dispatcher/changelog tests: 48 passed in 3.631 seconds; catalog/description/exclusive-output:
+52 passed in 16.827 seconds. Independent review passed 34 new and existing workspace tests,
+including unchanged catalog golden, and separately exercised inclusive BOM byte bounds,
+formula/control escaping, Korean and non-BMP CSV/TSV parsing. No blocker remained.
+Manifest verification passed for 297 listed files; publication audit passed for 298 text
+files; all 175 Python files compile and parse with Python 3.10 grammar. Dispatcher lists
+54 root CLI scripts. Remote PR/main CI is checked separately for exact commits.
+
+Initial PR CI found one Windows documentation-runner failure: substituting a native
+Windows temporary path before POSIX shlex tokenization removed its backslashes. The
+runner now tokenizes documented commands first, then substitutes OUTPUT in each argv
+element. Added a regression with a Windows path containing spaces/backslashes. Production
+code and output policy are unchanged; the failing head was not merged. Corrected full
+suite passed 1,292 tests in 327.023 seconds; new/workspace focused tests passed 35 in
+1.488 seconds. Release checklist: inspect every newly added/changed guide runner for
+shlex-before-native-path substitution, including a spaces/backslashes regression. This
+round added only this one runner; all its documented commands use the corrected helper.
+Existing untouched guide runners were not bulk-edited.

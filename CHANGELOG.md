@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.97-reference-tables — 2026-11-14
+
+`tabular_export.py reference-catalog` exports fresh checked package references as private CSV/TSV, with separated observation/component columns, exact reference objects, explicit markers and bounded escaped cells. No spreadsheet write-back or existing output change.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-reference-catalog-tables-097-reference-tables).
+
 ## 0.96-ris-census — 2026-11-14
 
 `census_import.py import --format ris` accepts the strict fixed-column subset with literal authors/types/identifier tags, occurrence hashes and unchanged unapproved selection output. Existing CSL census records remain accepted; newly imported records carry the changed implementation hash.
