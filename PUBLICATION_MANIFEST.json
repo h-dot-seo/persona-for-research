@@ -430,8 +430,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 157114,
-      "sha256": "30bd5280e53be3fa0b4ee6d187ac72967c3642d60077aeae7bc279fcc129e500"
+      "bytes": 157712,
+      "sha256": "8817519cabcf6f74832247e33752844776a6096a9b814ecc48c5b1a952bdbddb"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1260,8 +1260,8 @@
     },
     {
       "path": "tests/test_regenerate_manifest.py",
-      "bytes": 9346,
-      "sha256": "15e18c66383f6e8d36575ce3a22fb81fad72b4ee20092a5779d04d14bb807415"
+      "bytes": 9348,
+      "sha256": "4e92e97c8cd6b0b16c5f2e6111e53faaca9559e1a2fab6ae93d4345937f5680a"
     },
     {
       "path": "tests/test_release_decision.py",

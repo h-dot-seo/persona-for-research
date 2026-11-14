@@ -151,7 +151,7 @@ class RegenerationTests(unittest.TestCase):
             (self.root/'extra.txt').unlink(missing_ok=True)
 
     def test_target_code_is_data_and_summary_has_no_absolute_paths(self):
-        script=self.root/'regenerate_manifest.py';script.write_text('raise RuntimeError("MUST_NOT_EXECUTE")\n')
+        script=self.root/'regenerate_manifest.py';script.write_bytes(b'raise RuntimeError("MUST_NOT_EXECUTE")\n')
         command=[sys.executable,str(generator.ROOT/'regenerate_manifest.py'),str(self.root),
                  '--release','0.2-new','--date','2026-11-14','--add',script.name,'--output',str(self.output)]
         result=subprocess.run(command,cwd=self.root,capture_output=True,timeout=30)
