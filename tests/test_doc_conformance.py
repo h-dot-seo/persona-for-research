@@ -123,7 +123,7 @@ python ignored.py
             a=d.audit();b=d.audit()
         self.assertEqual(a,b);self.assertEqual(before,{p:p.read_bytes() for p in files})
         self.assertFalse(a['guide_execution_performed']);self.assertGreater(a['block_counts']['NOT_REVIEWED'],0)
-        self.assertEqual(a['block_counts']['EXISTING_TEST_RECORD'],3)
+        self.assertEqual(a['block_counts']['EXISTING_TEST_RECORD'],7)
     def test_fixed_root_and_fixture_alias_are_canonical_before_patch(self):
         self.assertEqual(d.ROOT,d.ROOT.resolve())
         with tempfile.TemporaryDirectory() as td:

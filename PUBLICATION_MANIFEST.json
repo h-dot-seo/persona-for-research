@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.116-documentation-audit",
+  "release": "0.117-manual-guide-flow",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 356,
+  "file_count": 357,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 18402,
-      "sha256": "bf497bf4426433279e79f73747d92ca4bca0883390183b8b7c07c43cc9069f8f"
+      "bytes": 18889,
+      "sha256": "3f82f8b80a67a2bf18b9dfee8b24839b74714d99fe2ebb878b3a03e70b0e41e3"
     },
     {
       "path": "PUBLICATION.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 11488,
-      "sha256": "2d2011d4a3891d2a245d149d504b606d3107060e06124cea7b8e1a7727be0cc1"
+      "bytes": 11666,
+      "sha256": "59972e042f6f516465fb38b742a0079a58897da5968f2f9a2f92691ca5893259"
     },
     {
       "path": "answer_context.py",
@@ -280,8 +280,8 @@
     },
     {
       "path": "docs/DOCUMENTATION_AUDIT.md",
-      "bytes": 6134,
-      "sha256": "2df82ce354ea79934cebd251333706abf3a6832631681d49ba7d78fa8fb09bf7"
+      "bytes": 6873,
+      "sha256": "32283b1d0aa969c163d62f6278eff9362bb5b716393b13100da6222fc83924cf"
     },
     {
       "path": "docs/EDITOR_SCHEMAS.md",
@@ -535,8 +535,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 219385,
-      "sha256": "47d66e9af223bee2c0bcb9015d9a4a0d78e6b187350a9d1490e4a67416f85416"
+      "bytes": 221129,
+      "sha256": "443589b86f3f5e73a738a536e1b8573bfdb3521ca1b8e870438daefdf76f75dd"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1135,8 +1135,8 @@
     },
     {
       "path": "tests/doc_block_evidence.json",
-      "bytes": 2085,
-      "sha256": "4026becc2aeb2d8b80207895aee1f3c52ed87e78aa81b050001dddbb9a9cbdf9"
+      "bytes": 6159,
+      "sha256": "daaab5475622a71e0de86f92eac07cad0b09a21b2cbd3d3e3ef8db3bbd7f7aa1"
     },
     {
       "path": "tests/doc_conformance.py",
@@ -1381,7 +1381,7 @@
     {
       "path": "tests/test_doc_conformance.py",
       "bytes": 9831,
-      "sha256": "e1c729cacb027b01195e880cb9164b70f01d4508ee5e8fdabf96916fdeaa9622"
+      "sha256": "1ba5584bb13497ceda83a363928bbe0c95fa5e89a65845fc3b07a3b004feff49"
     },
     {
       "path": "tests/test_editor_schemas.py",
@@ -1487,6 +1487,11 @@
       "path": "tests/test_manual_editor_schemas.py",
       "bytes": 9762,
       "sha256": "7478142e93a77244d740657ee94957d520b363421fdaaeb84afa8c3bda463584"
+    },
+    {
+      "path": "tests/test_manual_guide_flow.py",
+      "bytes": 9033,
+      "sha256": "c87a72866d6941201769517ba09093bd46c27c27102fe30e870f524d607629d6"
     },
     {
       "path": "tests/test_method_application.py",

@@ -31,5 +31,49 @@
     "manual_steps": "None; intentionally wrong corpus-as-card shape",
     "note": "Both documented commands require rc1, empty stdout, two stderr lines and no revision directory. Not successful authoring.",
     "test_source_sha256": "35c288791037b0a89f84cf0af5c71bfaf70b8b05965df7599c0d58dee1d56337"
+  },
+  {
+    "path": "docs/MANUAL_LOCAL_OBSERVATIONS.md",
+    "ordinal": 1,
+    "raw_sha256": "ba04da7020f9ed0d0d00818fa8639a6cf9b1e82b26e56a7e60794cd30bbeadf0",
+    "test": "tests.test_manual_guide_flow.ManualGuideFlowTests.test_four_blocks_nine_commands_form_one_manual_flow",
+    "coverage": "FULL_BLOCK",
+    "substitution": "Only declared ../manual-* scratch tokens and repository fixture tokens after shlex; one trailing > captures original stdout bytes in a temporary directory with spaces.",
+    "manual_steps": "Pre-authored fictional research/review/revision cards; blank templates are generated but never filled or treated as approved.",
+    "note": "One connected two-guide flow executes four blocks/nine commands; third unittest block in each guide is explicitly excluded. Expected success, source/prior output preservation, new binding/workspace and incomplete template checks. Not shell/PowerShell emulation.",
+    "test_source_sha256": "7b444490b2efc7e08bc8965cf21e387ff277ef45503f2c6dc0c2241370dd0b5d"
+  },
+  {
+    "path": "docs/MANUAL_LOCAL_OBSERVATIONS.md",
+    "ordinal": 2,
+    "raw_sha256": "e43236e75d1e51d27ff757eb5a0336b2c55d20d2eede983c75c497c171c109ff",
+    "test": "tests.test_manual_guide_flow.ManualGuideFlowTests.test_four_blocks_nine_commands_form_one_manual_flow",
+    "coverage": "FULL_BLOCK",
+    "substitution": "Only declared ../manual-* scratch tokens and repository fixture tokens after shlex; one trailing > captures original stdout bytes in a temporary directory with spaces.",
+    "manual_steps": "Pre-authored fictional research/review/revision cards; blank templates are generated but never filled or treated as approved.",
+    "note": "One connected two-guide flow executes four blocks/nine commands; third unittest block in each guide is explicitly excluded. Expected success, source/prior output preservation, new binding/workspace and incomplete template checks. Not shell/PowerShell emulation.",
+    "test_source_sha256": "7b444490b2efc7e08bc8965cf21e387ff277ef45503f2c6dc0c2241370dd0b5d"
+  },
+  {
+    "path": "docs/MANUAL_EVIDENCE_REVISION.md",
+    "ordinal": 1,
+    "raw_sha256": "b984ee5dbbed7bd8e99face2ded78e8c4251d68682be8562c63c6a9dce29b8c8",
+    "test": "tests.test_manual_guide_flow.ManualGuideFlowTests.test_four_blocks_nine_commands_form_one_manual_flow",
+    "coverage": "FULL_BLOCK",
+    "substitution": "Only declared ../manual-* scratch tokens and repository fixture tokens after shlex; one trailing > captures original stdout bytes in a temporary directory with spaces.",
+    "manual_steps": "Pre-authored fictional research/review/revision cards; blank templates are generated but never filled or treated as approved.",
+    "note": "One connected two-guide flow executes four blocks/nine commands; third unittest block in each guide is explicitly excluded. Expected success, source/prior output preservation, new binding/workspace and incomplete template checks. Not shell/PowerShell emulation.",
+    "test_source_sha256": "7b444490b2efc7e08bc8965cf21e387ff277ef45503f2c6dc0c2241370dd0b5d"
+  },
+  {
+    "path": "docs/MANUAL_EVIDENCE_REVISION.md",
+    "ordinal": 2,
+    "raw_sha256": "e8ab5e4288a60ece22d2cde02b28e4a81f46af39149513843ea525ea89a334dc",
+    "test": "tests.test_manual_guide_flow.ManualGuideFlowTests.test_four_blocks_nine_commands_form_one_manual_flow",
+    "coverage": "FULL_BLOCK",
+    "substitution": "Only declared ../manual-* scratch tokens and repository fixture tokens after shlex; one trailing > captures original stdout bytes in a temporary directory with spaces.",
+    "manual_steps": "Pre-authored fictional research/review/revision cards; blank templates are generated but never filled or treated as approved.",
+    "note": "One connected two-guide flow executes four blocks/nine commands; third unittest block in each guide is explicitly excluded. Expected success, source/prior output preservation, new binding/workspace and incomplete template checks. Not shell/PowerShell emulation.",
+    "test_source_sha256": "7b444490b2efc7e08bc8965cf21e387ff277ef45503f2c6dc0c2241370dd0b5d"
   }
 ]
