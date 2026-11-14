@@ -2853,3 +2853,35 @@ and331 audit text files; root CLI count remains59. Final metadata and manifest a
 before independent/full verification. Exact final-tree test/CI outcomes and timing are
 recorded in the external publication record and roadmap logs, not by editing files during
 those runs. This avoids the preceding round's moving-manifest comparison failure.
+
+
+## 2026-11-14 Optional declaration editor documents (0.111-editor-form-documents)
+
+Roadmap #70 editor documentation publishes three optional, independent writing profiles:
+source recheck selection, five-field declared provenance and detached human validation
+record. These are not a mandatory serial workflow or #88 completed-import checker.
+Explicit editor-profile URNs and titles distinguish empty text/collections and template
+nulls from completed inputs. No instance fields, runtime checker, product CLI, validation
+logic, payload, judgement, binding or existing fixture changes. ReadOnly is annotation,
+not a permission or security control. No human judgement or identity is invented.
+
+Three synthetic API examples exercise actual source template/read, existing provenance
+validation and blank/filled human records. Exact keys, enums, bounds and each nested
+required-key removal/extra-key mutation are checked against existing Python consumers.
+A test-only limited keyword walker is not a full JSON Schema validator or product tool.
+Python remains authoritative for dates, current/stale binding, package membership and
+source paths/bytes; it does not authenticate permissions, people or real-world rights.
+Stale human IDs are retained without reassignment. Existing corpus contracts untouched.
+
+Self-review corrected language that could imply Python authenticates reading permission
+and broadened missing-key tests from one key to every required key. Focused55 passed in
+2.008 seconds. Independent52 passed in2.026 seconds; independently installed Draft202012
+validator accepted all three schema documents and filled examples, and483 nested
+mutations agreed with the test-only walker. This extra independent tool is not a new
+runtime dependency, required test package or guarantee of every editor's integration.
+Existing root production files are byte-identical to the prior release.
+
+Final tree contains1451 tests,197 Python files,335 manifest entries and336 audit text
+files; rootCLI59 and SKILL8189 bytes remain unchanged. Metadata/manifest are frozen
+before final full/independent verification; exact tree results and timings are recorded
+in the external publication record and roadmap logs without modifying files mid-run.

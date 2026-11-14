@@ -818,3 +818,7 @@ Use [folder_inventory.py declare/verify](FOLDER_INVENTORY.md) to compare raw fil
 ## Locate an artifact contract
 
 Use the [descriptive artifact index](SCHEMAS.md) to find identifiers, evidenced producer links and parallel modes. Untagged responses/reviews/provenance stay untagged. Follow the existing consumer and generated response_contract, not the index, for authoritative checks.
+
+## Edit optional declaration forms
+
+[Editor schema documentation](EDITOR_SCHEMAS.md) supports source-recheck selections, declared provenance and human records as separate optional workflows. No schema checker, payload fields, judgment defaults or editor settings are installed.

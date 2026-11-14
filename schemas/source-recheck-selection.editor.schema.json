@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:persona-for-research:editor-profile:source-recheck-selection:v1",
+  "title": "Source recheck selection (editor documentation; placeholders allowed)",
+  "description": "Authoritative consumer: source_recheck.audit. Null source_file and empty text remain editable. Documentation only, not import readiness, binding validation, permission or approval. No fields are added to instance JSON.",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "persona.source-recheck-selection.v1",
+      "readOnly": true
+    },
+    "package_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true,
+      "description": "Copy the generated binding unchanged; schema matching does not check freshness."
+    },
+    "operator_id": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "paper_id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "Keep each package paper exactly once; dynamic membership is checked by Python."
+          },
+          "source_file": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 1024,
+            "description": "Null/empty is an editing placeholder, rejected by audit. Filled paths must meet source_recheck._relative and actual root checks; no file is selected by this document."
+          }
+        },
+        "required": [
+          "paper_id",
+          "source_file"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema",
+    "package_sha256",
+    "operator_id",
+    "sources"
+  ],
+  "additionalProperties": false
+}

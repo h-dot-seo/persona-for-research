@@ -266,3 +266,5 @@ separately from citations, source groups and unchanged decisions.
 ## Private folder inventory
 
 [Folder inventory](docs/FOLDER_INVENTORY.md): declare raw file hashes before handover and verify later edits, missing or added files. Not content validation or approval.
+
+[Optional editor schemas](docs/EDITOR_SCHEMAS.md) document three declaration forms, including incomplete editing placeholders. Existing Python checks remain authoritative.

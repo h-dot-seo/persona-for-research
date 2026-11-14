@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:persona-for-research:editor-profile:declared-provenance:v1",
+  "title": "Declared provenance (editor documentation; placeholders allowed)",
+  "description": "Authoritative consumer: validate_declared_provenance. There is no standalone template or CLI. Empty strings are editor placeholders rejected by Python. Documentation only, not import readiness, binding validation, permission or approval. No fields are added to instance JSON.",
+  "type": "object",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])"
+    },
+    "model_id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])"
+    },
+    "run_id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])"
+    },
+    "operator_id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])"
+    },
+    "execution_location": {
+      "type": "string",
+      "enum": [
+        "",
+        "local",
+        "remote",
+        "unknown"
+      ],
+      "description": "Empty is an editor placeholder only. Record the operator declaration, never infer location."
+    }
+  },
+  "required": [
+    "provider_id",
+    "model_id",
+    "run_id",
+    "operator_id",
+    "execution_location"
+  ],
+  "additionalProperties": false
+}

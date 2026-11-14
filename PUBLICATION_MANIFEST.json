@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.110-manual-consultation-reference",
+  "release": "0.111-editor-form-documents",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 330,
+  "file_count": 335,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 15436,
-      "sha256": "1e73ed4ef7dc6ebf26829f5fbdb8ce4d55104b95ab30c576adf7f991aaf606a1"
+      "bytes": 15925,
+      "sha256": "afa69e509e2afab977f001bc3cec6391ae03ccbdcd4fa1793cf1e75c59be5526"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 20074,
-      "sha256": "9ea6e5819719266fc7450480cb79fb086374cf11433db6ffac591b4660464b3e"
+      "bytes": 20247,
+      "sha256": "b01785a9626a0d1fd94cbd8ba595f9db632a8d0fd66979eae6e12814010716fe"
     },
     {
       "path": "RIGHTS.md",
@@ -51,12 +51,12 @@
     {
       "path": "SKILL.md",
       "bytes": 8189,
-      "sha256": "4ce5334546caf7e8d97878f120c0a116856d7e6bee69b883839a71273f889d2a"
+      "sha256": "01a5ece9217ebca44b86cec4844f0d0d8d55c4e27bb9a771333e5bd3d78411c3"
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 10444,
-      "sha256": "1e1151b43762cdf62a8b7fda468a2509531404814737cd1822d2efc776a12e5b"
+      "bytes": 10593,
+      "sha256": "506f448a91006d8e9290d5974d31140610e21657c20cb54726b9f9ac9a6943e1"
     },
     {
       "path": "answer_context.py",
@@ -259,6 +259,11 @@
       "sha256": "2618f346c2df327c5af50a466639bd1f8a8ffe7daa6068474bcabc7facb82859"
     },
     {
+      "path": "docs/EDITOR_SCHEMAS.md",
+      "bytes": 6820,
+      "sha256": "ad8e3f12e53fcd6b3bf01381b711d5f9c9892bf2619a9aaf565c5c9304f5ba3c"
+    },
+    {
       "path": "docs/EVIDENCE_DETAILS.md",
       "bytes": 4059,
       "sha256": "5c7c995c7a423cb0c2ce6e05108deb9c8a80dae15ff09094ce32b7d7b7d8dee2"
@@ -400,8 +405,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 24302,
-      "sha256": "f9b4169e2d0a44825460199a1177d24e4dcc493864d6f22af2fc4a4aa82e3dd0"
+      "bytes": 24519,
+      "sha256": "b54687b0f2dd5634bd458f4fb23ee01a55d06e6f066b1405f352a13104c76a35"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -450,8 +455,8 @@
     },
     {
       "path": "docs/SCHEMAS.md",
-      "bytes": 8203,
-      "sha256": "cd6e217985fd62c5be52fef0b679b73d18a7de0d385404770c5fd85e8a3883c2"
+      "bytes": 8531,
+      "sha256": "d811ebe996f35fafb5513b2f24faa217fafc8d3a83b2fd93182977729f3af2b6"
     },
     {
       "path": "docs/SOURCE_RECHECK.md",
@@ -495,13 +500,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 201457,
-      "sha256": "7bebe0ce338eec6d86d0e962f39b874da17e4c6f6f7f0d3969ea18550577e85e"
+      "bytes": 203692,
+      "sha256": "7db56e126595733c49f790c5fda0a7cd2de258787a5a00f0b4d39614f7008726"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 50152,
-      "sha256": "93ef7ee84bddf3741c1b6ecbd8081734457e75de71adb6d2093989e4ef4f5307"
+      "bytes": 50431,
+      "sha256": "ffb0165f353df00dca343b4993818f5849ae680c5e209d6acba6d14079d84831"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -1009,6 +1014,21 @@
       "sha256": "0c13b9b108a49777769e476aef7b2ec34fcf95849a8f54c2d75bbd8c6b670157"
     },
     {
+      "path": "schemas/declared-provenance.editor.schema.json",
+      "bytes": 1499,
+      "sha256": "fa7851003b67b5fa791b878d15bbc15ba0be8d11ae6d290239e3531db5fffc3f"
+    },
+    {
+      "path": "schemas/human-validation-record.editor.schema.json",
+      "bytes": 4561,
+      "sha256": "5aa3b0ba786faa899deefc1cf2e6f962ff6f056c93d1b226da91c70f2ac9e99f"
+    },
+    {
+      "path": "schemas/source-recheck-selection.editor.schema.json",
+      "bytes": 1838,
+      "sha256": "223398aa261b96f5702d7c15b74e416630a2fb80d3bdab0e6e55c5399fcece94"
+    },
+    {
       "path": "source_recheck.py",
       "bytes": 11673,
       "sha256": "66104c4eb896382ed39745a5f30c22fa0a9e8dd0276a2533643e5f784ee58708"
@@ -1267,6 +1287,11 @@
       "path": "tests/test_dispatcher_version.py",
       "bytes": 7424,
       "sha256": "d5000432a727c1956f8afa57330f6b86683d9bec19d3418a65bc265ace2e045f"
+    },
+    {
+      "path": "tests/test_editor_schemas.py",
+      "bytes": 10515,
+      "sha256": "c93919abfecc1e601c6e857ae049dc9304e9027b69271abb10e2c9a5b46f8420"
     },
     {
       "path": "tests/test_evidence_coverage.py",
