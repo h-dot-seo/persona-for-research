@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.109-artifact-contract-index — 2026-11-14
+
+`artifact_schemas.py` describes public/maintainer identifiers, fixture wrappers and untagged workflow roles with explicit source-reviewed/exercised/unknown relationships. It is not a validator, migration tool or support/retirement policy; existing payloads and validators stay unchanged.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-descriptive-artifact-contract-index-0109-artifact-contract-index).
+
 ## 0.108-answer-template-reuse — 2026-11-14
 
 `answer_draft.inspect()` reuses only its current call's freshly checked plain-JSON package to construct template fields, removing one redundant validation. Public template/inspect validation and all fallback/error contracts remain; no cache or new product input limit.

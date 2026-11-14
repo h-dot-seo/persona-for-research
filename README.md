@@ -97,6 +97,7 @@ Keep real inputs and generated packages outside this public repository.
 
 | Command | Purpose | Reference |
 |---|---|---|
+| `artifact_schemas.py` | Browse artifact identifiers and evidence-qualified mode/producer links, not validation | [Artifact index](docs/SCHEMAS.md) |
 | `handoff_packet.py` | Extract an explicitly selected bound JSON fence without model attestation | [Response extraction](docs/HANDOFF_PACKET.md) |
 | `folder_inventory.py` | Declare and compare private folder raw bytes, not content approval | [Folder inventory](docs/FOLDER_INVENTORY.md) |
 | Result CLI `--output NEW_FILE` | Save exact UTF-8 results without overwrite; stdout is a hash receipt | [Exclusive output](docs/EXCLUSIVE_OUTPUT.md) |
