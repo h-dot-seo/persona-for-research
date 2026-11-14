@@ -253,7 +253,7 @@ Guide: [Topic discovery](TOPIC_DISCOVERY.md).
 Render a compact read-only review from a validated bound scholarly package.
 
 ```text
-usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--split SPLIT] [--challenge-record CHALLENGE_RECORD] [--output NEW_FILE] package
+usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--split SPLIT] [--challenge-record CHALLENGE_RECORD] [--release-decision RELEASE_DECISION] [--output NEW_FILE] package
 ```
 
 Guide: [Evidence details](EVIDENCE_DETAILS.md), [Human validation](HUMAN_VALIDATION.md), [Workflows: review a candidate release and a bound package](WORKFLOWS.md#review-a-candidate-release-and-a-bound-package).
@@ -760,13 +760,13 @@ Subcommands: `template`, `check`, `status`. Guide: [Candidate findings](CANDIDAT
 
 ### `release_record.py`
 
-Record supplied prior-release reopening triggers and impact plans, not release decisions.
+Record supplied prior-release reopening triggers and impact plans, or supplied release choices, never tool approval.
 
 ```text
 usage: release_record.py [-h] {template,check,status} ...
-usage: release_record.py template [-h] --output OUTPUT {reopening} package
+usage: release_record.py template [-h] --output OUTPUT {reopening,decision} package
 usage: release_record.py check [-h] [--human-validation HUMAN_VALIDATION] [--text] [--output NEW_FILE] record package [candidate]
-usage: release_record.py status [-h] [--reopening REOPENING] [--human-validation HUMAN_VALIDATION] [--text] [--output NEW_FILE] package
+usage: release_record.py status [-h] [--release-decision RELEASE_DECISION] [--reopening REOPENING] [--human-validation HUMAN_VALIDATION] [--text] [--output NEW_FILE] package
 ```
 
-Subcommands: `template reopening`, `check`, `status`. Guide: [Reopening records](RELEASE_RECORD.md).
+Subcommands: `template {reopening,decision}`, `check`, `status`. Guides: [Reopening records](RELEASE_RECORD.md), [Supplied decisions](RELEASE_DECISION.md).

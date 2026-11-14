@@ -248,3 +248,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 후보의 사전 홀드아웃 발견 기록은 [candidate_challenge.py](CANDIDATE_CHALLENGE.md)의 template/check/status를 사용합니다. 판정·점수·승인이 아닌 분리형 기록이며 검증 축을 추가하지 않습니다.
 
 [재개 기록](RELEASE_RECORD.md): `release_record.py template reopening/check/status`는 공급된 갱신 사유와 이전 패키지 영향·재검증 계획을 기록합니다. 후보 변경은 읽기 전용으로 비교하며 릴리스를 승인하지 않습니다.
+
+[공급된 릴리스 결정](RELEASE_DECISION.md): 사람이 적은 결정을 기록하며 human 기록 해시만 대조합니다. 미수행 축은 명시하고 자동 승인·게이트·새 검증 축을 만들지 않습니다.

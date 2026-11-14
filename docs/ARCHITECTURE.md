@@ -110,3 +110,5 @@ It adds no payload fields, inference, validation axis or automated research appr
 Lifecycle step 11 uses [detached candidate findings](CANDIDATE_CHALLENGE.md): `candidate_challenge.py` records supplied kinds bound to candidate hashes. It is a stage, not an additional validation axis; no payload, split binding or operator disposition is changed.
 
 Updates: [reopening declarations](RELEASE_RECORD.md) bind supplied triggers, prior-paper/rule impact and required revalidation axes to the exact previous package. Candidate comparisons use prior rules only. No release decision, canonical update or candidate approval is derived.
+
+Lifecycle step 14 decision record: [supplied release choices](RELEASE_DECISION.md) are distinct from reopening plans and tool approval. Only existing human records can be referenced; evidence is recomputed mechanically, predictive/runtime remain NO_RECORD_TYPE. No canonical validation field is changed.
