@@ -101,3 +101,5 @@ For an existing manually authored observation that needs correction, use
 new version/build, full local checks and a separate before/after audit artifact.
 
 For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.
+
+Optional [manual authoring editor profiles](MANUAL_EDITOR_SCHEMAS.md) support these input cards without replacing Python validation.

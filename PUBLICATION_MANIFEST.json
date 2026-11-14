@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.111-editor-form-documents",
+  "release": "0.112-manual-editor-documents",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 335,
+  "file_count": 339,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 15925,
-      "sha256": "afa69e509e2afab977f001bc3cec6391ae03ccbdcd4fa1793cf1e75c59be5526"
+      "bytes": 16389,
+      "sha256": "032a86f680ee1a78972e96b16be35df2db9a6a6c9be1aacfbfdf719dbd50f605"
     },
     {
       "path": "PUBLICATION.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 10593,
-      "sha256": "506f448a91006d8e9290d5974d31140610e21657c20cb54726b9f9ac9a6943e1"
+      "bytes": 10776,
+      "sha256": "6fffa8ca937e133133b180feed23b2f165260bfbb9f2bab6499c65e462ed26e5"
     },
     {
       "path": "answer_context.py",
@@ -260,8 +260,8 @@
     },
     {
       "path": "docs/EDITOR_SCHEMAS.md",
-      "bytes": 6820,
-      "sha256": "ad8e3f12e53fcd6b3bf01381b711d5f9c9892bf2619a9aaf565c5c9304f5ba3c"
+      "bytes": 6960,
+      "sha256": "b2685475f05b76afcdde4bda7ba403842ff26fe84105199628247e62dae6323a"
     },
     {
       "path": "docs/EVIDENCE_DETAILS.md",
@@ -329,14 +329,19 @@
       "sha256": "9561057d950be3221bb52d5b7f7e2669139d8bc45f7b5ef8cbd5f10862d43dd1"
     },
     {
+      "path": "docs/MANUAL_EDITOR_SCHEMAS.md",
+      "bytes": 4596,
+      "sha256": "0ae3851eedbadfcf2021bd457e4536fa62317f464d6fe5dbe003f8d8e34839d4"
+    },
+    {
       "path": "docs/MANUAL_EVIDENCE_REVISION.md",
-      "bytes": 5927,
-      "sha256": "80a9a2c1cc551fa3b7bfd2521acbc206de6765982a9b514d691e477beabeebd0"
+      "bytes": 6061,
+      "sha256": "bbe2180a095aaf66425cbfd06eeb850dd913618f11c479b7496f39ce6549ce71"
     },
     {
       "path": "docs/MANUAL_LOCAL_OBSERVATIONS.md",
-      "bytes": 6338,
-      "sha256": "71c8b27bd5b76693ee5e91e3fa3dcbafff62e77095df12481d277bdfed1f0af2"
+      "bytes": 6472,
+      "sha256": "78c3ce4f16fc1d131806103ffa5272b8ca541f6892cc32b8df322c33efda0751"
     },
     {
       "path": "docs/METHOD_APPLICATION.md",
@@ -500,8 +505,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 203692,
-      "sha256": "7db56e126595733c49f790c5fda0a7cd2de258787a5a00f0b4d39614f7008726"
+      "bytes": 205816,
+      "sha256": "b8d33a8e6237f3d294863bb336c3957c6341b18e205def6382be2c585aadcc65"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1024,6 +1029,16 @@
       "sha256": "5aa3b0ba786faa899deefc1cf2e6f962ff6f056c93d1b226da91c70f2ac9e99f"
     },
     {
+      "path": "schemas/manual-observation-card.editor.schema.json",
+      "bytes": 6431,
+      "sha256": "c6e5463b17c462f36597c477ad57953e862bead1669e753a2cf46242050d450e"
+    },
+    {
+      "path": "schemas/manual-observation-revision-card.editor.schema.json",
+      "bytes": 7408,
+      "sha256": "ead5fa14559733df4100c2782470cc98ea29fbc140b4b1f213e8509af3401a43"
+    },
+    {
       "path": "schemas/source-recheck-selection.editor.schema.json",
       "bytes": 1838,
       "sha256": "223398aa261b96f5702d7c15b74e416630a2fb80d3bdab0e6e55c5399fcece94"
@@ -1290,8 +1305,8 @@
     },
     {
       "path": "tests/test_editor_schemas.py",
-      "bytes": 10515,
-      "sha256": "c93919abfecc1e601c6e857ae049dc9304e9027b69271abb10e2c9a5b46f8420"
+      "bytes": 10749,
+      "sha256": "e737d8563e9768889d574db01b34ddfec96cedfbd65c29cbab626c97b607c8ac"
     },
     {
       "path": "tests/test_evidence_coverage.py",
@@ -1387,6 +1402,11 @@
       "path": "tests/test_manual_consultation_reference.py",
       "bytes": 3251,
       "sha256": "b4e921d588caa09eed3b14071e703a417365e57f00f6421825437125284d1528"
+    },
+    {
+      "path": "tests/test_manual_editor_schemas.py",
+      "bytes": 9762,
+      "sha256": "7478142e93a77244d740657ee94957d520b363421fdaaeb84afa8c3bda463584"
     },
     {
       "path": "tests/test_method_application.py",
