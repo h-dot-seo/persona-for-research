@@ -897,5 +897,9 @@ usage: artifact_schemas.py [-h] [--format {json,text}] [--workflow WORKFLOW]
 Read-only comparator exact-string inventory; stdout only. See [guide](COMPARATOR_OVERLAP.md).
 
 ```text
-usage: comparator_overlap.py [-h] --topic TOPIC [--format {json,text}] package comparator
+usage: comparator_overlap.py [-h] --topic TOPIC [--format {json,text}] [--source-selection SOURCE_SELECTION] [--source-root SOURCE_ROOT] package comparator
 ```
+
+### Comparator source-check supporting library
+
+Library only: optional comparator source selection/recheck for `comparator_overlap.py`; no standalone CLI. See [source guide](COMPARATOR_SOURCES.md).

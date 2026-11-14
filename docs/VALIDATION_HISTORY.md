@@ -2967,3 +2967,51 @@ are separate. Focused41 nine tests passed; dependent42 nineteen passed(skip1
 native Windows source-path test). Product files are unchanged by this fix.
 Initial frozen full1467/385.054 seconds is preserved; corrected final full and
 Windows CI must be verified on the newly frozen tree before merging.
+
+
+## 2026-11-14 Explicit comparator source byte and quote recheck (0.114-comparator-source-check)
+
+Roadmap #78 second-stage source check adds paired MAP/ROOT options only. The exact
+comparator corpus v1 contract and default inspect/encode functions remain unchanged.
+A separate hash-bound selection names every comparator paper exactly once; stale,
+missing, duplicate, unknown and explicit-null mappings fail before paths/bytes.
+All paths preflight before any source read using existing canonical-relative and
+plain-path/identity helpers. corpus_files, source_recheck and journey_inputs bytes
+and training authorization gates are unchanged; no new path policy is copied.
+
+Only comparator source files are read, including off-topic/empty papers. Raw SHA256
+mismatch rejects; four existing quote states report exact normalized-section substring
+checks or gaps without emitting quote/source bodies. Target source check remains
+NOT_PERFORMED; default inventories, specificity, holdout and HV remain unchanged.
+Source-check fields and opt-in boundary wording identify comparator-only checking,
+not authenticity, rights, consent, independence, semantic support or approval.
+
+Raw JSON inputs share8MiB and direct API finite-JSON detachment also shares8MiB;
+wrapper/escaping overhead can make the latter stricter, explicitly documented.
+Source reads share8MiB including repeated paths; whole output16MiB. Reads are bounded
+whole-file buffers, not streaming. Identity/descriptor checks detect some races, not
+all TOCTOU attacks. Filenames/locators/operator labels can remain private; no network,
+provider call, source transmission or automatic permission occurs.
+
+Focused59 passed in4.288 seconds(skip1 native Windows junction/8.3 test). Independent71
+passed in6.801 seconds with the same skip; actual default CLI json/text raw bytes and
+exit/stderr were equal against round41, inspect/encode AST and shared helper files
+unchanged. Independent invalid-target pre-path rejection, off-topic comparator-only
+read and no source-body/quote disclosure passed. A reviewer's initial extra probe
+assumed one fixture observation; corrected to actual two and passed, not a product
+failure. Linux symlink/FIFO/mock reparse checks passed; native Windows remains CI work.
+The inherited Windows stderr fixture correction is preserved above and included here.
+
+Final tree contains1477 tests,202 Python files,349 manifest entries and350 audit files;
+CLI60/SKILL8187 unchanged. Final metadata/manifest are frozen before whole-suite and
+independent tree verification; final timings and CI are recorded externally without
+changing that tree. Source-check output is not an authenticated verification receipt.
+
+
+Final documentation gate correction: the first frozen round42 full run executed1477
+tests in393.432 seconds and failed exactly one dispatcher/reference equality test
+(skip2). A supporting-library heading used the reserved CLI heading syntax for
+comparator_sources.py despite the accompanying prose correctly saying no standalone
+CLI. Independent review detected the same issue. The heading is now descriptive
+library prose; no product registration or implementation changed. Full-run and
+independent final-tree verification are repeated after this metadata/manifest freeze.

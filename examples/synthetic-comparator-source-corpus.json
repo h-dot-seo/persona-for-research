@@ -1,0 +1,42 @@
+{
+  "schema": "persona.comparator-corpus.v1",
+  "author_id": "synthetic-comparator-author",
+  "curator_id": "synthetic-curator",
+  "handling_declaration": "Fictional separately supplied records; independence not verified.",
+  "papers": [
+    {
+      "paper_id": "synthetic-comparator-paper",
+      "author_id": "synthetic-comparator-author",
+      "split": "comparator",
+      "runtime_knowledge_eligible": false,
+      "authorized": true,
+      "source_sha256": "ec323fc59390094c8cdaeca4cc36d1b70702f9fe1958e761e60d31c9015465d3",
+      "locator": "synthetic source",
+      "kind": "research",
+      "year": 2022,
+      "topic": "synthetic method conditions",
+      "observations": [
+        {
+          "method": "Method M",
+          "condition": "Condition A: separated synthetic signals",
+          "limitation": "Only the invented 2020 A setting; not evidence for B or personal beliefs.",
+          "locator": "synthetic section",
+          "topic": "synthetic method conditions",
+          "stance": "support",
+          "claim_type": "explicit_statement",
+          "evidence_quote": "Synthetic comparator passage."
+        },
+        {
+          "method": "Synthetic comparator-only method",
+          "condition": "Condition A: separated synthetic signals",
+          "limitation": "Only the invented 2020 A setting; not evidence for B or personal beliefs.",
+          "locator": "synthetic section",
+          "topic": "synthetic method conditions",
+          "stance": "support",
+          "claim_type": "explicit_statement",
+          "evidence_quote": "Synthetic comparator passage."
+        }
+      ]
+    }
+  ]
+}

@@ -126,11 +126,19 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('package',type=Path);p.add_argument('comparator',type=Path)
     p.add_argument('--topic',required=True);p.add_argument('--format',choices=('json','text'),default='json')
+    p.add_argument('--source-selection',type=Path);p.add_argument('--source-root',type=Path)
     args=p.parse_args()
+    if (args.source_selection is None)!=(args.source_root is None):p.error('source selection and root are required together')
     try:
         a=read_bounded(args.package,MAX_INPUT_BYTES)
         b=read_bounded(args.comparator,MAX_INPUT_BYTES-len(a))
-        raw=encode(inspect(loads(a),loads(b),args.topic),args.format)
+        if args.source_selection is not None:
+            mapping=read_bounded(args.source_selection,MAX_INPUT_BYTES-len(a)-len(b))
+            from comparator_sources import inspect_sources
+            result=inspect_sources(loads(a),loads(b),args.topic,loads(mapping),args.source_root)
+        else:
+            result=inspect(loads(a),loads(b),args.topic)
+        raw=encode(result,args.format)
     except (ValueError,OSError,TypeError,KeyError,AttributeError,RecursionError):p.exit(1,'Comparator inventory failed.\n')
     sys.stdout.buffer.write(raw)
 

@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.114-comparator-source-check — 2026-11-14
+
+`comparator_overlap.py --source-selection MAP --source-root ROOT` optionally rechecks only explicitly selected comparator bytes and stored quotes. Target sources remain unread; default structure-only outputs and v1 corpus fields stay unchanged. Hash/quote results are not authenticity, rights, independence or approval.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-explicit-comparator-source-byte-and-quote-recheck-0114-comparator-source-check).
+
 ## 0.113-comparator-inventory — 2026-11-14
 
 `comparator_overlap.py` compares exact method/condition strings in separately supplied single-author comparator observations. Structural declarations only, not source checks, independence, specificity, scoring or knowledge incorporation. Topic absence is explicit; existing product judgments and payloads are unchanged.
