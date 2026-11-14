@@ -2671,3 +2671,38 @@ does not ignore later malformed JSON. Manifest passes 317 files, audit 318; all
 187 Python files compile and parse Python 3.10 grammar; dispatcher lists 58 CLIs.
 The inherited round32 Windows mock fixture correction is retained above. Exact
 PR/main CI is verified separately.
+
+## 2026-11-14 Local synthetic test observations (0.106-test-observations)
+
+Roadmap #80 adjusted PR1 measurement only. tests/timing.py is a non-discovered helper,
+not a root product CLI. Published test-module allowlist, one fresh worker and one
+module suite at a time preserve module/class fixture lifetime. Module seconds include
+import/fixtures; indexed individual test seconds include setup/teardown. Fixed-label
+subprocess.run attempts/completions/time are observations, not proof of child execution:
+prebound aliases, replacement mocks and nested child calls can bypass the observer.
+Overlapping stage/test/module durations must not be added. No time thresholds, caching,
+timeout changes, coverage reduction or modifications of existing test bodies/CI.
+
+Binary-backed quiet streams preserve stdout.buffer behavior while discarding Python/fd
+output. Monkeypatches/streams restore in finally. The parent captures worker output and
+accepts only a strict receipt: fixed module/stage labels, counts/durations, OS family and
+Python minor. No argv, paths, environment values, test identities, diagnostics or tracebacks
+are emitted. Failure, unexpected success or partial interruption is non-success; partial
+module counts remain visible when a valid receipt can be produced. No receipt file is saved.
+
+Independent review found that a valid JSON integer duration 10**400 caused math.isfinite
+to raise uncaught OverflowError in parent validation. Before publication, finite checking
+was made overflow-safe; total/module/test-time/stage duration regressions require rejection
+and fixed-error JSON/exit1 without traceback. This is a measurement helper, not scientific
+approval or a general speed guarantee. Only existing synthetic tests are executed.
+Regular full suite passed 1,409 tests in 356.180 seconds with one platform skip.
+The fresh observed full suite completed 114 modules and the same 1,409 tests, zero
+failures/errors/expected failures/unexpected successes and one skip. Its worker wall
+time was 355.156 seconds (Linux/Python 3.12), a dated environment-dependent observation,
+not a speed guarantee. It observed 1,528 subprocess.run attempts and returns; this is
+not a census of calls bypassing the observer. The strict receipt was 163,343 bytes and
+parent stderr was empty. The receipt itself stays outside the repository.
+Focused 44 tests passed in 11.124 seconds; independent re-review 23 passed and verified
+the original overflow reproduction now emits only fixed-error JSON/exit1. Manifest
+passes 320 entries, audit 321; all 189 Python files compile and parse Python 3.10
+grammar. Root CLI count remains 58. Exact PR/main CI is checked separately.

@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.106-test-observations — 2026-11-14
+
+`python -m tests.timing` observes selected published synthetic-test modules in a fresh worker, reporting fixture-aware module times, indexed test times and fixed-label subprocess call attempts. Privacy-filtered local observations only; no CI, cache, timeout, test-body or performance guarantee change.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-local-synthetic-test-observations-0106-test-observations).
+
 ## 0.105-literal-response — 2026-11-14
 
 `handoff_packet.py extract-response` selects literal bound JSON fences from one explicit UTF-8 message, preserving bytes and recording offsets/hashes in a new private output directory. No role, model, provenance, semantic or approval inference; existing prepare/render/import remain unchanged.

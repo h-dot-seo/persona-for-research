@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.105-literal-response",
+  "release": "0.106-test-observations",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 317,
+  "file_count": 320,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 13160,
-      "sha256": "d81435e2c0f12668c0e6b100f80de6b5ec2aef50bc42eddb80dfe431ef41fecd"
+      "bytes": 13624,
+      "sha256": "321d12e7ea292242349a43be91ad8022cc5e52a483753e275290bdca5c263955"
     },
     {
       "path": "PUBLICATION.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 9271,
-      "sha256": "e1d3b1232e6250fd73ab1e7d34c0711c874f980e84890f8edca5f80962de8e1f"
+      "bytes": 9597,
+      "sha256": "d05bb66f55c763b67d0b351eb06351d7c096b3b11ef06569e921d67b7e701e17"
     },
     {
       "path": "answer_context.py",
@@ -215,8 +215,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 44819,
-      "sha256": "13716019e21e7fc01f69c7f25c3cdfb8c0c577308f9e4b564a8bd65677abea36"
+      "bytes": 45078,
+      "sha256": "e05aa79f3969b45a23ff648bb56df99ad512987258fcacad5ed956e30438ac23"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -459,6 +459,11 @@
       "sha256": "9637e43acf0dd0a81c21044e2b6cbc61e055d6b6cd177ab71e77e63cee31f0f1"
     },
     {
+      "path": "docs/TEST_TIMING.md",
+      "bytes": 3158,
+      "sha256": "915103d444b0fdfa4392841dd02a3adf31d67cf1f625731dce5d68ded063064c"
+    },
+    {
       "path": "docs/TOPIC_DISCOVERY.md",
       "bytes": 3219,
       "sha256": "55be2375ee461f4995fcd8a6bb95590fa51815d93977d6a37ca447098867f63b"
@@ -475,8 +480,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 187941,
-      "sha256": "8fe1066749fab5415f6fdc7a198bdc6712189354654e7efef1c3f25fb8863aea"
+      "bytes": 190600,
+      "sha256": "d479d1a1749e7303d63255de4e9228000bd1b0ded558a727f44c9c21cc27efac"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1549,6 +1554,11 @@
       "sha256": "e9218a9e7696fa627b55798ef5aaaac04bc7d24fb985dd959e4937405d1c4e2f"
     },
     {
+      "path": "tests/test_timing.py",
+      "bytes": 8847,
+      "sha256": "f2d67235ef0db324ce12f19d5a7e392fbfc915a9645bb34f4ccb58300ce7f89e"
+    },
+    {
       "path": "tests/test_topic_inventory.py",
       "bytes": 8937,
       "sha256": "b7235408b30d9939374a3d2f0795ea9d4180f9136834e7863ec39fab70e93254"
@@ -1577,6 +1587,11 @@
       "path": "tests/test_workflow_roundtrip.py",
       "bytes": 4210,
       "sha256": "787eba3e16f63231cb3f22a2fd6bed25060fe9e4be1ff82318edab9b6bde69b1"
+    },
+    {
+      "path": "tests/timing.py",
+      "bytes": 9279,
+      "sha256": "275c835c55114b721cc31351b88f17187058f348bbc948fe14ec91f74250c565"
     },
     {
       "path": "topic_inventory.py",
