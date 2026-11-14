@@ -42,6 +42,17 @@ OMITTED = ('persona metadata, rules and validation-axis declarations',
            'component review fields beyond origin/proposed_claim_type',
            'all fields not explicitly named by the fixed columns')
 
+AGENDA_COLUMNS = ('domain', 'code', 'target_json', 'journey_input_sha256', 'status',
+                  'input_card_sha256', 'source_reread', 'boundary')
+AGENDA_BOUNDARY = ('Private local display, not permission to share. This agenda is neither exhaustive '
+                   'nor a score or approval. Controls are escaped and formula-like cells receive a '
+                   'leading apostrophe; JSON remains authoritative. CSV/TSV is not input to any tool '
+                   'here; pivots and averages are not scores. No provider call or write-back occurs. '
+                   'Source reread requires both an explicitly selected source form and source root.')
+AGENDA_OMITTED = ('all nested reports and evidence routes', 'question, topic and reference year',
+                  'full artifact-file verification records (card hash retained)',
+                  'all fields outside review_agenda except the listed binding/status/source flag columns')
+
 
 def cell(value):
     """Display first, guard second; reject rather than truncate a rendered cell."""
@@ -61,7 +72,21 @@ def cell(value):
     return text
 
 
-def describe():
+def describe(table='reference-catalog'):
+    if table == 'review-agenda':
+        from journey_inputs import MAX_CARD_BYTES, MAX_ARTIFACT_BYTES
+        return dict(schema='persona.tabular-description.v1', table=table,
+                    input='explicit bound journey CARD plus input-root, never a saved report',
+                    columns=list(AGENDA_COLUMNS), omitted_fields=list(AGENDA_OMITTED),
+                    row_order='fresh journey review_agenda order; no sort, deduplication or ranking',
+                    empty='header only; no rows is not review completion or approval',
+                    markers=dict(null=NOT_SUPPLIED, not_applicable=NOT_APPLICABLE, empty_string=EMPTY_STRING),
+                    marker_boundary='Display markers are not a reversible encoding; literal strings may collide.',
+                    max_card_bytes=MAX_CARD_BYTES, max_combined_artifact_bytes=MAX_ARTIFACT_BYTES,
+                    max_output_bytes=MAX_OUTPUT_BYTES, max_cell_chars=MAX_CELL_CHARS,
+                    boundary=AGENDA_BOUNDARY)
+    if table != 'reference-catalog':
+        raise ValueError('unsupported table')
     return dict(schema='persona.tabular-description.v1', table='reference-catalog',
                 input='freshly checked bound PACKAGE, not a saved reference catalog or report',
                 columns=list(COLUMNS), omitted_fields=list(OMITTED),
@@ -104,7 +129,7 @@ def reference_rows(value):
                 yield row
 
 
-def render(value, *, format='csv', excel_bom=False):
+def _render_rows(rows, columns, *, format='csv', excel_bom=False):
     if format not in ('csv', 'tsv') or type(excel_bom) is not bool:
         raise ValueError('choose csv or tsv and a boolean BOM option')
     output = bytearray(b'\xef\xbb\xbf' if excel_bom else b'')
@@ -117,32 +142,66 @@ def render(value, *, format='csv', excel_bom=False):
         if len(output) + len(raw) > MAX_OUTPUT_BYTES:
             raise ValueError('tabular output exceeds 16 MiB; narrow supplied artifacts explicitly')
         output.extend(raw)
-    append(COLUMNS)
-    for row in reference_rows(value):
-        append([row[key] for key in COLUMNS])
+    append(columns)
+    for row in rows:
+        append([row[key] for key in columns])
     return bytes(output)
+
+
+def render(value, *, format='csv', excel_bom=False):
+    return _render_rows(reference_rows(value), COLUMNS, format=format, excel_bom=excel_bom)
+
+
+def agenda_rows(card, root, *, source_root=None):
+    from journey_inputs import inspect, BOUNDARY as INPUT_BOUNDARY
+    result = inspect(card, root, source_root=source_root)
+    boundary = AGENDA_BOUNDARY + ' ' + result['boundary'] + ' ' + INPUT_BOUNDARY
+    for item in result['review_agenda']:
+        yield dict(domain=item['domain'], code=item['code'],
+                   target_json=json.dumps({k:v for k,v in item.items() if k not in ('domain','code')},
+                                          ensure_ascii=True, sort_keys=True, separators=(',', ':')),
+                   journey_input_sha256=result['journey_input_sha256'], status=result['status'],
+                   input_card_sha256=result['local_input_file_check']['input_card_sha256'],
+                   source_reread=result['source_reread'], boundary=boundary)
+
+
+def render_agenda(card, root, *, source_root=None, format='csv', excel_bom=False):
+    return _render_rows(agenda_rows(card, root, source_root=source_root), AGENDA_COLUMNS,
+                        format=format, excel_bom=excel_bom)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('table', choices=('reference-catalog',))
+    parser.add_argument('table', choices=('reference-catalog', 'review-agenda'))
     parser.add_argument('package', type=Path, nargs='?')
     parser.add_argument('--format', choices=('csv', 'tsv'), default='csv')
     parser.add_argument('--excel-bom', action='store_true')
     parser.add_argument('--describe', action='store_true')
+    parser.add_argument('--input-root', type=Path)
+    parser.add_argument('--source-root', type=Path)
     add_output_argument(parser)
     args = parser.parse_args()
     preflight(parser, args.output)
     try:
         if args.describe:
-            if args.package is not None or args.excel_bom or args.format != 'csv':
+            if (args.package is not None or args.excel_bom or args.format != 'csv'
+                    or args.input_root is not None or args.source_root is not None):
                 raise ValueError('describe takes no package, BOM or nondefault format')
-            raw = (json.dumps(describe(), ensure_ascii=True, sort_keys=True, indent=2) + '\n').encode('utf-8')
+            raw = (json.dumps(describe(args.table), ensure_ascii=True, sort_keys=True, indent=2) + '\n').encode('utf-8')
         else:
             if args.package is None:
                 raise ValueError('supply a bound package or request --describe')
-            raw = render(load(args.package, max_bytes=MAX_INPUT_BYTES),
-                         format=args.format, excel_bom=args.excel_bom)
+            if args.table == 'reference-catalog':
+                if args.input_root is not None or args.source_root is not None:
+                    raise ValueError('reference-catalog takes no input-root or source-root')
+                raw = render(load(args.package, max_bytes=MAX_INPUT_BYTES),
+                             format=args.format, excel_bom=args.excel_bom)
+            else:
+                if args.input_root is None:
+                    raise ValueError('review-agenda requires an explicit input-root')
+                from journey_inputs import _load_card
+                raw = render_agenda(_load_card(args.package), args.input_root, source_root=args.source_root,
+                                    format=args.format, excel_bom=args.excel_bom)
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RuntimeError, RecursionError) as exc:
         parser.exit(1, str(exc) + '\n')
     emit(parser, raw, args.output)

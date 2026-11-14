@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.98-agenda-tables — 2026-11-14
+
+`tabular_export.py review-agenda` rechecks explicit pinned journey inputs and exports every current agenda target as private CSV/TSV. Source reread requires the existing selected source form/root pair. Existing reference-table bytes and decision boundaries stay unchanged.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-bound-journey-agenda-tables-098-agenda-tables).
+
 ## 0.97-reference-tables — 2026-11-14
 
 `tabular_export.py reference-catalog` exports fresh checked package references as private CSV/TSV, with separated observation/component columns, exact reference objects, explicit markers and bounded escaped cells. No spreadsheet write-back or existing output change.

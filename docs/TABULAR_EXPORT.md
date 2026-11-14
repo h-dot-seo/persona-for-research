@@ -26,9 +26,9 @@ a cell over the limit or a result over the limit emits no partial result.
 ## Fixed columns and rows
 
 `--describe` takes no package or formatting options and emits the exact ordered
-columns, display markers, limits, omitted fields and boundary as JSON. Only
-`reference-catalog` is supported in this release. Agenda/routes and human-validation
-items are not silently folded into this table. No CSV import or write-back exists.
+columns, display markers, limits, omitted fields and boundary as JSON.
+`reference-catalog` and the separate `review-agenda` table below are supported.
+Evidence routes and human-validation items are not folded into either table. No CSV import or write-back exists.
 
 Rows follow supplied paper order, observation order, then the observation itself
 followed by that observation's supplied component order. An observation reference has
@@ -88,3 +88,53 @@ fail rather than truncate. Narrow supplied artifacts explicitly and regenerate a
 package; do not edit package bindings to evade checks. Counts, pivots and averages are
 not confidence scores, semantic validity or human approval. Recorded source/quote checks
 are historical declarations, not renewed checks. No decisions are read back from sheets.
+
+## Fresh journey review agenda
+
+`tabular_export.py review-agenda CARD --input-root INPUTS` accepts an existing explicit
+`persona.journey-input-card.v1`, not a selection template or saved JSON/HTML report.
+Prepare the card with [journey_inputs.py](JOURNEY_INPUTS.md) after reviewing the selected
+files; this command does not discover files, refresh hashes or choose a pattern.
+Substitute the preserved card file for `CARD`, its explicit artifact directory for
+`INPUTS`, and a pre-existing external output directory for `OUTPUT`:
+
+```sh
+python tabular_export.py review-agenda CARD --input-root INPUTS --output OUTPUT/agenda.csv
+python tabular_export.py review-agenda --describe --output OUTPUT/agenda-columns.json
+```
+
+The command reruns `journey_inputs.inspect` over the exact byte/hash-pinned current
+artifacts before rendering. Stale/edited files, incomplete selection cards, symlinks,
+reparse paths and unsupported roots fail through the existing card contract. Card files
+are limited to **128 KiB**, a tighter limit than reference packages, and the selected
+JSON artifacts share an **8 MiB combined budget**. The existing fresh journey report
+and this CSV/TSV result each have their own 16 MiB output cap, not a combined budget.
+Cell safety, LF, optional BOM and exclusive output semantics are the same as above.
+
+The fixed ordered columns are `domain`, `code`, `target_json`,
+`journey_input_sha256`, `status`, `input_card_sha256`, `source_reread`, `boundary`.
+There is one row per freshly generated `review_agenda` entry, in original order.
+`target_json` is compact sorted ASCII JSON containing **every remaining key** of that
+entry, excluding only domain/code. This retains heterogeneous target fields without
+assuming a fixed target schema. The two hashes distinguish logical journey inputs and
+the preserved file-binding card; neither authenticates a person, source or permission.
+The current journey status is copied literally, never promoted to research approval.
+`HUMAN_REVIEW_REQUIRED_NOT_RESEARCH_APPROVAL` is a review requirement, not readiness.
+
+No rows yields **header only**, not a fabricated success row or proof that the review
+is complete. Consult this guide or `--describe` for boundaries on an empty table.
+The agenda is not exhaustive; sorting or counting prompts in a spreadsheet cannot
+establish validity, approval, source quality or a score. Nested reports, evidence routes,
+question/topic/year and detailed artifact verification records are omitted; use the
+fresh full journey report for them. No sheet edits are imported.
+
+Optional `--source-root DIR` is accepted **only together with** a source-selection form
+already explicitly pinned in the card. Such a selected form also requires the explicit
+source root. The command inherits the existing current source reread, without discovery
+or standing authorization; its `source_reread` column is `true` and the row boundary
+includes the fresh report's corresponding reread explanation. Without that pair the
+column is `false` and source bytes are not reread. Method-application and declared-review
+options are taken only from their pinned card slots, not inferred. Neither option grants
+approval, model execution or semantic validation. The row boundary combines the export,
+fresh journey and input-file-card limitations. Paths/source quotes/identifiers or other
+private target fields may be present; exporting does not grant permission to share.

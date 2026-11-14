@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.97-reference-tables",
+  "release": "0.98-agenda-tables",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 297,
+  "file_count": 298,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 9709,
-      "sha256": "19f756e5d7a6a832dc93b04801f3616baf1b549b69aab5d088a5631317598f2e"
+      "bytes": 10128,
+      "sha256": "18b90aeebe72f672dec0fbb824444d76b58a51d0832415bf7c8c272a4fa89246"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 18628,
-      "sha256": "cdc0bc9dc50799a85b5a1ea40da1d7476e601287a95283503c6e48e41be16d97"
+      "bytes": 18643,
+      "sha256": "db5735e06c2d19875c6d6821573004dd9df39b2a5516527969be55d2960fc6eb"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 7820,
-      "sha256": "b0e813f81a29c19e5f6e2b9be70caf325058ffaeae4889fa96c36a5ed096e4b3"
+      "bytes": 7982,
+      "sha256": "8bbca83451b871641f7fa187dfafff42682516cbeed0ec31dab66b95c2eb0b32"
     },
     {
       "path": "answer_context.py",
@@ -215,8 +215,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 42855,
-      "sha256": "102d812650c59bc12504f806dc5eec5a75929f4a58076b9a8ec494d0d58bca18"
+      "bytes": 42945,
+      "sha256": "84781cccf87301bfb841d92bed075fdf9694bf8bdce421d7f0d94bdf65fee5c3"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -375,8 +375,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 22843,
-      "sha256": "6f2a31ba73cf3075e09e7ecddf406bcae49fe3cc687a4911a1e90fc1f502efe9"
+      "bytes": 22872,
+      "sha256": "29a8d09a11035953bb0145b757c22b187cf56f35b59aea4c449ad94dd1c09dd7"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -435,8 +435,8 @@
     },
     {
       "path": "docs/TABULAR_EXPORT.md",
-      "bytes": 5954,
-      "sha256": "b65598847213d2dbc7fdab47c2e86c59aa990a4c6966c57047f9b07d8b62e69e"
+      "bytes": 9396,
+      "sha256": "4d7dc5f00ea05950fff3c04c8510e9fe5e3fc5a2b34e6cf7c236dae6efcb66a6"
     },
     {
       "path": "docs/TOPIC_DISCOVERY.md",
@@ -455,8 +455,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 167775,
-      "sha256": "ea7947be4bb69e343a0682e9f300e3c71f2c18d74e65178384ca2298d3d1c55c"
+      "bytes": 169958,
+      "sha256": "28b9af7120ec014b1e1e4e5d6cb7645d2b5393546aef84c4333fe52a89d6f744"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -945,8 +945,8 @@
     },
     {
       "path": "tabular_export.py",
-      "bytes": 8284,
-      "sha256": "ea293efd97d43fdb3a4541b5b8084304ebff2a5e3f5772a3c15b5a0162ac0ee8"
+      "bytes": 12398,
+      "sha256": "8b6093a7f9713779c02699c6740f06455d1e520cca04b4c1e210856496811e95"
     },
     {
       "path": "tests/__init__.py",
@@ -1444,9 +1444,14 @@
       "sha256": "c868003fcc68c96299f84e0fae5d715f8ca01cc46b105219504ce906974e3e9c"
     },
     {
+      "path": "tests/test_tabular_agenda.py",
+      "bytes": 7570,
+      "sha256": "69029d2c8ec143afca8e927e0e91a5dc536954b6203ad520c6832f1727f81421"
+    },
+    {
       "path": "tests/test_tabular_export.py",
-      "bytes": 8368,
-      "sha256": "15adfd6d06856c158e34464b29757b0705f2bcd098cb3f5e7df048f6bd4ed18a"
+      "bytes": 8413,
+      "sha256": "e20925658fd2193f7b864590a0232358b8bb3ef6d068e481c5bad3c1df0d3f61"
     },
     {
       "path": "tests/test_topic_inventory.py",

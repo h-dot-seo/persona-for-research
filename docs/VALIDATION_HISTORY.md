@@ -2401,3 +2401,32 @@ suite passed 1,292 tests in 327.023 seconds; new/workspace focused tests passed 
 shlex-before-native-path substitution, including a spaces/backslashes regression. This
 round added only this one runner; all its documented commands use the corrected helper.
 Existing untouched guide runners were not bulk-edited.
+
+## 2026-11-14 Bound journey agenda tables (0.98-agenda-tables)
+
+Roadmap #68 second slice: review-agenda accepts only an explicit bound journey card,
+its input root and (only if already selected) source root. journey_inputs.inspect reruns
+current artifact byte/logical binding checks and ordinary review before flattening. Cached
+reports and incomplete selection forms are rejected. Every row retains domain/code, all
+remaining target keys as exact JSON, journey-input/card hashes, unchanged review-required
+status, source-reread flag and combined export/fresh-report/input-card boundary. No rows
+means header only, never approval. Existing source-selection/root pairing is enforced,
+not discovery or standing source permission. Explicit source rereads use fresh report
+boundary wording rather than falsely claiming no read. Method/review choices stay pinned.
+
+The shared table encoder preserves reference-catalog bytes, UTF-8 LF, opt-in BOM, escaped
+cells and exclusive output. Card limit is 128 KiB and artifacts share 8 MiB; the fresh report
+and table each independently retain 16 MiB output caps. Evidence routes/HV tables are not
+included; no sheet write-back, identity/rights/authorization inference or payload change.
+Only synthetic fixtures. No actual spreadsheet compatibility or HTML visual QA is claimed.
+
+Initial focused test expected a source-recheck agenda entry merely because files were reread;
+the valid synthetic source selection produced no gap. Corrected the assertion to compare
+fresh report entries exactly, without inventing a warning/success row. Guide tests tokenize
+before substituting native paths, retain spaces/backslashes and use a bound synthetic card.
+All 1,301 synthetic tests passed in 335.533 seconds. Expanded focused tests: 61 passed
+in 9.281 seconds. Independent review passed 21 agenda/reference tests and compared
+three valid package examples in CSV/TSV with BOM on/off against the prior module:
+all 12 outputs were byte-identical. No unresolved blocker. Manifest passed for 298
+listed files; audit passed for 299 text files; all 176 Python files compile and parse
+with Python 3.10 grammar. Exact remote PR/main CI remains separately checked.

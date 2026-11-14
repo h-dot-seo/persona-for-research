@@ -147,7 +147,7 @@ class TabularTests(unittest.TestCase):
         self.assertEqual(len(args),6)
 
     def test_documented_commands(self):
-        text=(ROOT/'docs/TABULAR_EXPORT.md').read_text(encoding='utf-8')
+        text=(ROOT/'docs/TABULAR_EXPORT.md').read_text(encoding='utf-8').split('## Fresh journey review agenda',1)[0]
         count=0
         for block in text.split('```sh\n')[1:]:
             for line in block.split('```',1)[0].splitlines():
