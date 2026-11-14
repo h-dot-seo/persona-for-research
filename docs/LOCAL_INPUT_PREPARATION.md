@@ -153,3 +153,22 @@ normal preparation. No files are modified, no manifest is written, and conversio
 fidelity and scholarly quality remain `NOT_ASSESSED`. No model or network is used.
 
 For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.
+
+
+## Per-file local source byte bound
+
+`prepare_local_manifest.prepare` and `corpus_files.load_segment_corpus` now read at
+most 8 MiB + 1 bytes from each selected source and reject any file over 8 MiB. This
+intentionally rejects previously accepted larger Markdown/text sources. Exactly
+8 MiB can pass when encoding, headings, supplied hashes and authorization are valid.
+No new corpus-total ceiling is added: several individually valid files can exceed
+8 MiB together. Callers that already supply `max_total_bytes` retain that stricter
+aggregate budget; each read is bounded by the smaller of the per-file ceiling and
+remaining total. No CLI override is added. The low-level `read_source_bytes` API is
+unchanged; its regular-descriptor, identity, mutation and hash callers' checks remain.
+
+The whole selection is still preflighted before reading source bytes; files, supplied
+manifests, canonical payloads and validation axes are not modified. Output size is not
+newly capped: a multi-file producer can still create a package over a downstream
+JSON reader's 8 MiB limit. The bound is bytes read, not a wall-clock, memory-allocation
+or scientific-validation guarantee. No source authentication or approval is implied.

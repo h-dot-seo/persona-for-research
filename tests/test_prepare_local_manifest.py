@@ -23,6 +23,33 @@ class PrepareLocalManifestTests(unittest.TestCase):
             authorized=True,locator='synthetic supplied local file',kind='research',year=2020,topic='model design',
             source_file='paper.md',observations=[])])
 
+    def test_source_file_exact_bound_and_overage_preserve_original(self):
+        before=copy.deepcopy(self.selection)
+        with patch('prepare_local_manifest.MAX_SOURCE_FILE_BYTES',len(self.raw)):
+            result=prepare(self.selection,self.root)
+            self.assertEqual(result['papers'][0]['source_sha256'],hashlib.sha256(self.raw).hexdigest())
+        with patch('prepare_local_manifest.MAX_SOURCE_FILE_BYTES',len(self.raw)-1):
+            with self.assertRaisesRegex(ValueError,'input limit'):prepare(self.selection,self.root)
+        self.assertEqual(self.selection,before)
+        self.assertEqual((self.root/'paper.md').read_bytes(),self.raw)
+
+    def test_multiple_files_do_not_share_a_new_total_budget(self):
+        other=copy.deepcopy(self.selection['papers'][0]);other['paper_id']='synthetic-second';other['source_file']='second.md'
+        self.selection['papers'].append(other);(self.root/'second.md').write_bytes(self.raw)
+        with patch('prepare_local_manifest.MAX_SOURCE_FILE_BYTES',len(self.raw)):
+            result=prepare(self.selection,self.root)
+        self.assertEqual(len(result['papers']),2)
+        self.assertEqual(sum(p['input_inventory']['source_bytes'] for p in result['papers']),2*len(self.raw))
+
+    def test_default_eight_mib_boundary(self):
+        import prepare_local_manifest as module
+        self.assertEqual(module.MAX_SOURCE_FILE_BYTES,8*1024*1024)
+        raw=b'## Method\n'+b'x'*(module.MAX_SOURCE_FILE_BYTES-len(b'## Method\n'))
+        (self.root/'paper.md').write_bytes(raw)
+        self.assertEqual(prepare(self.selection,self.root)['papers'][0]['input_inventory']['source_bytes'],len(raw))
+        (self.root/'paper.md').write_bytes(raw+b'x')
+        with self.assertRaisesRegex(ValueError,'input limit'):prepare(self.selection,self.root)
+
     def test_hash_and_section_inventory_no_body_or_inferred_observations(self):
         result=prepare(self.selection,self.root);paper=result['papers'][0]
         self.assertEqual(paper['source_sha256'],hashlib.sha256(self.raw).hexdigest())
@@ -81,7 +108,7 @@ class PrepareLocalManifestTests(unittest.TestCase):
 
     def test_source_read_once_and_annotation_aliases_not_shared(self):
         original=read_source_bytes;calls=[]
-        def read(path):calls.append(path);return original(path)
+        def read(path, **kwargs):calls.append(path);return original(path, **kwargs)
         with patch('prepare_local_manifest.read_source_bytes',read):result=prepare(self.selection,self.root)
         self.assertEqual(calls,[(self.root/'paper.md').resolve()])
         result['papers'][0]['observations'].append('changed output')
