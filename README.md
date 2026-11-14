@@ -250,3 +250,7 @@ callers now reject oversized inputs. See [input budget scope](docs/WORKFLOWS.md#
 [CSL-JSON/RIS census guide](docs/CENSUS_IMPORT.md): export copies still require operator confirmation.
 
 [Bound package HTML guide](docs/PACKAGE_HTML.md): all stored quotations and provenance labels are private, not anonymized.
+
+For opt-in exact rule-content correspondence beside a release comparison, see
+[the rule correspondence guide](docs/RULE_CORRESPONDENCE.md#optional-release-comparison-attachment).
+Default release reports and decisions are unchanged.

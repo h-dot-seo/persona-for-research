@@ -266,3 +266,7 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 [CSL-JSON/RIS 목록 안내](CENSUS_IMPORT.md): 내보내기에서 복사한 값도 운영자가 확인해야 합니다.
 
 [패키지 HTML 안내](PACKAGE_HTML.md): 저장된 인용과 출처 표시는 익명화되지 않으며 공유 승인을 뜻하지 않습니다.
+
+릴리스 비교에 정확 규칙 내용 대응표를 선택적으로 붙이려면
+[규칙 대응 안내](RULE_CORRESPONDENCE.md#optional-release-comparison-attachment)를 참조하세요.
+기본 보고서와 릴리스 판정은 그대로입니다.

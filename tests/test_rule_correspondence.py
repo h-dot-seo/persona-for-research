@@ -190,7 +190,7 @@ class RuleCorrespondenceTests(unittest.TestCase):
         result=self.cli('inventory',target);self.assertEqual(result.returncode,1);self.assertEqual(result.stdout,b'')
 
     def test_documented_commands_native_paths(self):
-        text=(ROOT/'docs/RULE_CORRESPONDENCE.md').read_text(encoding='utf-8');count=0
+        text=(ROOT/'docs/RULE_CORRESPONDENCE.md').read_text(encoding='utf-8').split('## Optional release-comparison attachment',1)[0];count=0
         for block in text.split('```sh\n')[1:]:
             for line in block.split('```',1)[0].splitlines():
                 if not line.strip():continue

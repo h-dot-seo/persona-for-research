@@ -5,7 +5,7 @@ shows exact supplied content hashes and positions after reordering/insertion.
 It does not solve stable IDs across edits or infer semantic equivalence, withdrawal,
 literature additions or changes of mind. Human judgments, links and answer citations
 are not rebound, transferred or declared valid. No human-record integration is
-included, and compare_releases/revision_impact outputs are unchanged.
+included, and default compare_releases/revision_impact outputs are unchanged.
 
 ## Synthetic commands
 
@@ -92,3 +92,33 @@ emit no partial stdout; filesystem write failures may retain a partial new file.
 Original files, payloads, validation axes, citations and human records are unchanged.
 No sharing permission is implied: stored quotations and operator/provenance labels
 may appear in this private view. Export is not approval or a release decision.
+
+## Optional release-comparison attachment
+
+The existing release comparison can explicitly attach this view:
+
+```sh
+python compare_releases.py examples/trajectory-conditions-package.json examples/synthetic-rule-reordered-package.json --rule-correspondence --output OUTPUT/release-with-correspondence.json
+```
+
+Only this flag adds top-level `rule_correspondence`, exactly the independent
+rule_correspondence.compare result. Existing release fields, status, booleans and
+boundary meanings are unchanged. The nested report is not release approval,
+automatic reassignment, proof of human-judgment validity, citation transfer or an
+updated validation axis. revision_impact and human-validation/STALE behavior remain
+unchanged. The Python compare() API never adds this attachment.
+
+The optional path shares an 8 MiB input budget across both package files and checks
+the entire combined serialized output against 16 MiB before emission. It supports
+the existing bound package/wrapper inputs, not saved inventory/comparison reports.
+The nested inspector applies stricter validated_source_rules checks: a package with
+valid outer hashes but rules inconsistent with its bound observations may still be
+accepted by the legacy comparison and will be rejected when this flag is selected.
+This is deliberate fail-closed validation, not repair or rebinding.
+
+Without the flag, existing default output bytes and the per-file 8 MiB read policy
+remain unchanged; no new combined input/output limit is imposed on that path.
+The shared --output behavior is unchanged, including its existing saved-file size
+limit. With the flag, invalid inputs or oversize combined results emit no partial
+stdout and create no output. Exclusive output preflight still precedes input reads.
+The nested boundary/privacy warnings remain attached; no sharing is authorized.
