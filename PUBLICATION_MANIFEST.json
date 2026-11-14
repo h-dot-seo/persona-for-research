@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.92-manifest-regeneration",
+  "release": "0.93-change-index",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 281,
+  "file_count": 283,
   "files": [
     {
       "path": ".gitattributes",
@@ -24,14 +24,19 @@
       "sha256": "9582424c530015ffed444c118b0a8f46e9b4a4f64989775c4d534e1049ffdd32"
     },
     {
+      "path": "CHANGELOG.md",
+      "bytes": 8123,
+      "sha256": "e656cdbcb199226dca5c52ecabae3933ed1740a2359617e3db2b4f0c609055ad"
+    },
+    {
       "path": "PUBLICATION.md",
       "bytes": 5406,
       "sha256": "e17483a026e7fbf503bc1d5c361b484c300a7e3d4509201b3a8c74c1fb641b4f"
     },
     {
       "path": "README.md",
-      "bytes": 17910,
-      "sha256": "b6ca26aeeac25782a9e2f0f30e383975e2c74e0cc81580f0b860888b306a9d73"
+      "bytes": 17990,
+      "sha256": "5a7e8681e42ef949a3436bbb365a3d20c24b4e4b31c394c1b624e26620192494"
     },
     {
       "path": "RIGHTS.md",
@@ -50,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 6925,
-      "sha256": "e5f83171dff0f954513cc98141809f8a1407f32e96888e5dae8af9e23d8e655f"
+      "bytes": 7086,
+      "sha256": "f4abf2e56c44b8e00b588ec7e277ce54198d6d13290014c988c56cbe15b9a206"
     },
     {
       "path": "answer_context.py",
@@ -355,8 +360,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 21987,
-      "sha256": "253a8e1cc25fd84c521f8ff18f8f7f22d071fe529bb3ee5427bea46a0c954289"
+      "bytes": 22162,
+      "sha256": "6481d4630e77df10d195401d08a7e62b778be538833932caab2473c5d2b4eb36"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -430,8 +435,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 157712,
-      "sha256": "8817519cabcf6f74832247e33752844776a6096a9b814ecc48c5b1a952bdbddb"
+      "bytes": 158917,
+      "sha256": "67cc209f8775a92e707f33ae21a54a135a3e3075f8c8057628b1050a2763523d"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -977,6 +982,11 @@
       "path": "tests/test_candidate_challenge.py",
       "bytes": 9745,
       "sha256": "1b795ccac581f858ecaa7f53e5fbb3f3742512d83cf8d5ec89ff1b31ff95a4a0"
+    },
+    {
+      "path": "tests/test_changelog.py",
+      "bytes": 3506,
+      "sha256": "8bdca45a50a5ba44435ddddb99d58af2d5628c477a430d477e0b6f7749837623"
     },
     {
       "path": "tests/test_citation_explanation_integration.py",

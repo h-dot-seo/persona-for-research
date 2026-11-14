@@ -2255,3 +2255,22 @@ checks or the separate intentional CRLF rejection test. Focused 12 tests passed 
 0.100s; independent 12 passed in 0.094s; full 1,226 passed in 322.191s. Manifest/audit
 were regenerated and rechecked before publishing the correction. Windows verification
 is delegated to the subsequent exact-head CI, not inferred from the Linux local pass.
+
+
+## 2026-11-14 Release change index (`0.93-change-index`)
+
+Roadmap #84(d): CHANGELOG.md indexes release labels 0.69 through 0.93 by date,
+changed commands/behavior and exact validation-history anchors. English and Korean
+README entry points link the index. Prior verification entries remain unchanged.
+Five static tests cover latest manifest label/date, one descending entry per dated
+release, exact history anchor/date agreement, script/link existence and heading slugs.
+No production Python, payload, approval, tag or license changes are made.
+
+Validation: full discovery 1,231 tests passed in 320.418 seconds; focused changelog,
+skill and dispatcher tests 17 passed in 2.188 seconds. Independent verification
+confirmed 25 exact anchors, rejected mutated release/anchor expectations, preserved
+the complete prior history prefix and byte-identical production Python/SKILL files.
+Manifest 283 entries, publication audit 284 files, compile/Python 3.10 grammar for
+166 Python files passed after regeneration. All test fixtures remain synthetic;
+no source, user data, provider or external permission change occurred. This index
+is not an authenticity, rights, scientific-validity or release-approval claim.
