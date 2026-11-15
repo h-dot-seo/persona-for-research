@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.127-observation-import-preflight — 2026-11-15
+
+Two fixed completed-structure profiles support correcting multiple static errors in a first observation response and declared provenance before import. Quote, source, binding and freshness checks remain with the unchanged importer; structural conformance is not import acceptance or approval.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-15-first-observation-import-preflight-0127-observation-import-preflight).
+
 ## 0.126-repository-rights-consistency — 2026-11-15
 
 A test-only rights-state consistency check and a short maintainer coordination checklist detect drift across existing statements, metadata and license-file inventory. No license, tag, branch policy or legal conclusion is selected; product behavior remains unchanged.

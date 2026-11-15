@@ -1098,7 +1098,7 @@
       "schema_id": null,
       "workflow": "completed-structure",
       "role": "catalog",
-      "variant": "manual-cards",
+      "variant": "fixed-inputs",
       "category": "public",
       "mode": "opt-in",
       "selection_flags": [],
@@ -1112,13 +1112,13 @@
       "guide": "docs/SCHEMA_CATALOG.md",
       "source_mentions": [],
       "response_contract": null,
-      "note": "Untagged list subcommand output containing the two fixed catalog choices and their schema-document URNs. URNs identify completed-structure documents, not artifact instance schema IDs. The show subcommand emits the selected schema document itself. No private input is checked by list/show; no downstream report consumer is established."
+      "note": "Untagged list subcommand output containing the four fixed catalog choices (manual append/revision, observation response and declared provenance) and their schema-document URNs. URNs identify completed-structure documents, not artifact instance schema IDs. The show subcommand emits the selected schema document itself. No private input is checked by list/show; no downstream report consumer is established."
     },
     {
       "schema_id": null,
       "workflow": "completed-structure",
       "role": "check-report",
-      "variant": "manual-cards",
+      "variant": "fixed-inputs",
       "category": "public",
       "mode": "opt-in",
       "selection_flags": [],
@@ -1132,7 +1132,7 @@
       "guide": "docs/SCHEMA_CATALOG.md",
       "source_mentions": [],
       "response_contract": null,
-      "note": "Untagged completed-structure check result for explicitly selected manual append/revision input cards. Reports static errors only; no manifest/source reads, import validation, hash binding, semantic check or approval. Python consumers of the cards are authoritative but do not consume this report. Existing editor profiles accept placeholders and describe a different acceptance set."
+      "note": "Untagged completed-structure check result for explicitly selected manual append/revision cards, observation response or declared provenance inputs. Reports static errors only; no manifest/source reads, import validation, hash binding, semantic check or approval. Python consumers of the cards are authoritative but do not consume this report. Existing editor profiles accept placeholders and describe a different acceptance set."
     },
     {
       "schema_id": null,

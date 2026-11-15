@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:persona-for-research:completed-profile:observation-response:v1",
+  "title": "observation-response completed structure only, not import acceptance",
+  "description": "Fixed structural preflight. No instance fields added. Null optional observation values and empty candidates are valid. Binding, source, quote and freshness checks remain with existing Python consumers. Provenance is not authenticated.",
+  "type": "object",
+  "properties": {
+    "handoff_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true
+    },
+    "candidates": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "properties": {
+          "paper_id": {
+            "type": "string",
+            "maxLength": 2000,
+            "pattern": "\\S"
+          },
+          "method": {
+            "type": "string",
+            "maxLength": 2000,
+            "pattern": "\\S"
+          },
+          "condition": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "pattern": "\\S"
+          },
+          "limitation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "pattern": "\\S"
+          },
+          "topic": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "pattern": "\\S"
+          },
+          "locator": {
+            "type": "string",
+            "maxLength": 2000,
+            "pattern": "\\S"
+          },
+          "evidence_quote": {
+            "type": "string",
+            "maxLength": 500,
+            "pattern": "\\S"
+          },
+          "proposed_claim_type": {
+            "type": "string",
+            "enum": [
+              "explicit_statement",
+              "operator_interpretation"
+            ]
+          },
+          "proposed_stance": {
+            "type": "string",
+            "enum": [
+              "support",
+              "challenge"
+            ]
+          }
+        },
+        "required": [
+          "paper_id",
+          "method",
+          "condition",
+          "limitation",
+          "topic",
+          "locator",
+          "evidence_quote",
+          "proposed_claim_type",
+          "proposed_stance"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "handoff_sha256",
+    "candidates"
+  ],
+  "additionalProperties": false
+}

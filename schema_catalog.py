@@ -1,4 +1,4 @@
-"""Fixed manual-card completed-structure preflight, never import acceptance."""
+"""Fixed completed-structure preflight, never import acceptance."""
 import argparse
 import json
 import math
@@ -13,18 +13,20 @@ MAX_OUTPUT_BYTES = 16 * 1024 * 1024
 CATALOG = {
     'manual-append': ('manual-observation-card.completed.schema.json', 'curate_local.append_observation'),
     'manual-revision': ('manual-observation-revision-card.completed.schema.json', 'revise_local.revise'),
+    'observation-response': ('observation-response.completed.schema.json', 'observation_proposals.import_observation_response'),
+    'declared-provenance': ('declared-provenance.completed.schema.json', 'declared_provenance.validate_declared_provenance'),
 }
 BOUNDARY = ('Completed structure only, not import acceptance or permission. No manifest, source bytes, '
     'freshness, quote, identity, no-op or cross-field relationship is checked. '
     'Existing Python consumers remain authoritative. Integer-valued JSON 0.0 may pass this subset '
     'while the revision API requires an exact integer. No inference, source access or external call occurs.')
 KEYWORDS = {'$schema', '$id', 'title', 'description', 'type', 'properties', 'required',
-    'additionalProperties', 'maxLength', 'enum', 'const', 'pattern', 'readOnly', 'minimum'}
+    'additionalProperties', 'maxLength', 'enum', 'const', 'pattern', 'readOnly', 'minimum', 'items', 'maxItems'}
 FIELDS = set(('schema manifest_sha256 paper_id observation method condition limitation locator topic '
     'evidence_quote claim_type stance reasoning question_framing alternative_explanation evidence_standard '
     'falsification_check uncertainty text observation_index previous_observation_sha256 operator_id '
-    'revision_reason new_version new_build_id').split())
-PATTERNS = {r'\S', r'^[0-9a-f]{64}(?![\s\S])'}
+    'revision_reason new_version new_build_id handoff_sha256 candidates proposed_claim_type proposed_stance provider_id model_id run_id execution_location').split())
+PATTERNS = {r'^(?=[\s\S]*\S)[^\u0000-\u001f\u007f]*(?![\s\S])', r'\S', r'^[0-9a-f]{64}(?![\s\S])'}
 
 class SchemaError(ValueError):
     """Invalid fixed deployed schema, not invalid private input."""
@@ -41,13 +43,18 @@ def validate_schema(schema):
         if '$schema' in n and n['$schema'] != 'https://json-schema.org/draft/2020-12/schema': raise SchemaError('Unsupported dialect')
         if 'readOnly' in n and type(n['readOnly']) is not bool: raise SchemaError('Invalid annotation')
         kind = n.get('type')
-        if kind not in ('object', 'string', 'integer'): raise SchemaError('Unsupported type')
+        if kind == ['string', 'null']: kind = 'string'
+        if kind not in ('object', 'string', 'integer', 'array'): raise SchemaError('Unsupported type')
         if 'enum' in n and (type(n['enum']) is not list or not n['enum'] or any(type(v) is not str for v in n['enum']) or len(set(n['enum'])) != len(n['enum'])): raise SchemaError('Unsupported enum')
         if 'const' in n and type(n['const']) is not str: raise SchemaError('Unsupported const')
         if ('enum' in n or 'const' in n) and kind != 'string': raise SchemaError('Unsupported constraint')
         if 'pattern' in n and (kind != 'string' or type(n['pattern']) is not str or n['pattern'] not in PATTERNS): raise SchemaError('Unsupported regex')
         if 'maxLength' in n and (kind != 'string' or type(n['maxLength']) is not int or n['maxLength'] < 0): raise SchemaError('Invalid maximum')
         if 'minimum' in n and (kind != 'integer' or type(n['minimum']) is not int): raise SchemaError('Invalid minimum')
+        if kind == 'array':
+            if type(n.get('maxItems')) is not int or n['maxItems'] < 0 or 'items' not in n: raise SchemaError('Invalid array')
+            visit(n['items'], depth+1)
+        elif 'items' in n or 'maxItems' in n: raise SchemaError('Invalid array keywords')
         if kind == 'object':
             props = n.get('properties'); required = n.get('required')
             if type(props) is not dict or set(props)-FIELDS or type(required) is not list or any(type(k) is not str for k in required) or len(set(required)) != len(required) or not set(required)<=set(props) or n.get('additionalProperties') is not False: raise SchemaError('Invalid closed object')
@@ -75,7 +82,10 @@ def _check(name, value, schema):
     def error(path, code): errors.append(dict(path=list(path), code=code))
     def visit(n, v, path=()):
         kind = n['type']
-        matches = (type(v) is dict if kind=='object' else type(v) is str if kind=='string' else
+        if kind == ['string', 'null']:
+            if v is None: return
+            kind = 'string'
+        matches = (type(v) is dict if kind=='object' else type(v) is str if kind=='string' else type(v) is list if kind=='array' else
             type(v) is int or (type(v) is float and math.isfinite(v) and v.is_integer()))
         if not matches: error(path, 'TYPE'); return
         if 'const' in n and v != n['const']: error(path, 'CONST')
@@ -86,6 +96,9 @@ def _check(name, value, schema):
             if set(v)-set(props): error(path,'UNSUPPORTED_FIELDS')
             for k in sorted(props):
                 if k in v: visit(props[k],v[k],(*path,k))
+        elif kind == 'array':
+            if len(v)>n['maxItems']: error(path,'MAX_ITEMS'); return
+            for i, item in enumerate(v): visit(n['items'],item,(*path,str(i)))
         elif kind == 'string':
             if 'maxLength' in n and len(v)>n['maxLength']: error(path,'MAX_LENGTH')
             if 'pattern' in n and re.search(n['pattern'],v) is None: error(path,'PATTERN')

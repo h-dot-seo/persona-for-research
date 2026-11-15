@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:persona-for-research:completed-profile:declared-provenance:v1",
+  "title": "declared-provenance completed structure only, not import acceptance",
+  "description": "Fixed structural preflight. No instance fields added. Null optional observation values and empty candidates are valid. Binding, source, quote and freshness checks remain with existing Python consumers. Provenance is not authenticated.",
+  "type": "object",
+  "properties": {
+    "provider_id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^(?=[\\s\\S]*\\S)[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])"
+    },
+    "model_id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^(?=[\\s\\S]*\\S)[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])"
+    },
+    "run_id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^(?=[\\s\\S]*\\S)[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])"
+    },
+    "operator_id": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^(?=[\\s\\S]*\\S)[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])"
+    },
+    "execution_location": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^(?=[\\s\\S]*\\S)[^\\u0000-\\u001f\\u007f]*(?![\\s\\S])",
+      "enum": [
+        "local",
+        "remote",
+        "unknown"
+      ]
+    }
+  },
+  "required": [
+    "provider_id",
+    "model_id",
+    "run_id",
+    "operator_id",
+    "execution_location"
+  ],
+  "additionalProperties": false
+}

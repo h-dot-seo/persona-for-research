@@ -72,7 +72,7 @@ provenance is inferred by the index. Empty templates are not completed assessmen
 
 An editor-oriented document permitting empty template placeholders and a
 completed-structure preflight describe different acceptance sets. This descriptive
-index implements neither; it now links the separate [manual-card preflight](SCHEMA_CATALOG.md).
+index implements neither; it now links the separate [fixed completed-structure preflight](SCHEMA_CATALOG.md).
 That limited checker does not guarantee import acceptance and leaves existing
 Python consumers authoritative. Open corpus forms and the seven editor profiles
 remain unchanged; no editor configuration or hidden integration is installed.
@@ -81,7 +81,7 @@ The completed-structure workflow has two untagged output rows: the list catalog
 (produced by schema_catalog.main in its list branch) and the check report (produced
 by schema_catalog.check). Their producer relationships are SOURCE_REVIEWED; no
 downstream report consumer is asserted. The show command returns a fixed JSON
-Schema document. The two completed-structure URNs identify those documents, not
+Schema document. The four completed-structure URNs identify those documents, not
 instance schema IDs, and are not added to the identifier inventory below. An
 instance must never gain a catalog label or $schema field. The check report
 performs neither binding validation nor source reading, and is not an approval.
@@ -196,3 +196,5 @@ Detached bibliography identifiers (see [contract](PAPER_IDENTITY.md)):
 - `persona.paper-identity-ris-declaration.v1`
 - `persona.paper-identity-check.v1`
 - `persona.paper-identity-replay.v1`
+
+The completed-structure catalog also covers the explicit first observation response and declared provenance correction flow. See [OBSERVATION_PREFLIGHT.md](OBSERVATION_PREFLIGHT.md). These schema documents add no instance schema IDs; quote, source and binding checks remain with the existing importer.
