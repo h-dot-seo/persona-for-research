@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.119-link-design-editor — 2026-11-14
+
+Optional reasoning-link and design-scenario input editor profiles accompany one connected synthetic authoring guide. Valid null/empty declarations differ from unfinished strings; Python still checks freshness, endpoints, duplicate edges and role references. No new analysis, runtime checker or payload fields.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-14-connected-linkdesign-editor-profiles-0119-link-design-editor).
+
 ## 0.118-source-rejection-details — 2026-11-14
 
 `prepare_local_manifest.py` and `source_recheck.py` add opt-in `--explain-rejection` for covered individual loaders and existing closed-field checks. A synthetic repair guide connects preparation, manual build and source recheck. Default errors/results and prior gate/read ordering remain unchanged; extra details do not expose unknown keys or infer cross-input causes.

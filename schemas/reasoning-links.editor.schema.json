@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:persona-for-research:editor-profile:reasoning-links:v1",
+  "title": "Reasoning links INPUT editor profile (empty text allowed; null dimension is a valid observation reference)",
+  "description": "Optional editor documentation, not an import-ready checker or a generated review report. No discriminator exists in this input: choose by editor file association; never insert $schema or version. Empty arrays are valid no-declaration states; empty or whitespace-only strings are unfinished where Python requires nonblank text. No relation, role, action or judgement is inferred: transcribe only explicitly supplied choices. Shape is not binding freshness, semantic support, scientific validation, authenticated review or permission. See docs/LINK_DESIGN_EDITOR_SCHEMAS.md.",
+  "type": "object",
+  "properties": {
+    "persona_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true,
+      "description": "Copy from the template; readOnly is an editor annotation, not enforcement. Python checks binding freshness. Never repair stale hashes to force acceptance."
+    },
+    "knowledge_papers_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true,
+      "description": "Copy from the template; readOnly is an editor annotation, not enforcement. Python checks binding freshness. Never repair stale hashes to force acceptance."
+    },
+    "operator_id": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "link_id": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "relation": {
+            "type": "string",
+            "enum": [
+              "supports",
+              "challenges",
+              "qualifies",
+              "contrasts"
+            ]
+          },
+          "from_ref": {
+            "type": "object",
+            "properties": {
+              "paper_id": {
+                "type": "string",
+                "description": "Exact package-relative paper ID; existence and observation/component membership are Python checks."
+              },
+              "observation_index": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "JSON Schema integer accepts integral numbers such as 0.0; Python requires an exact int, not bool or float, and an existing index. Not a stable cross-build identity."
+              },
+              "dimension": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  null,
+                  "question_framing",
+                  "alternative_explanation",
+                  "evidence_standard",
+                  "falsification_check",
+                  "uncertainty"
+                ],
+                "description": "Null validly selects the observation itself, not an unfinished choice. A named component must exist on that exact observation; Python checks this."
+              }
+            },
+            "required": [
+              "paper_id",
+              "observation_index",
+              "dimension"
+            ],
+            "additionalProperties": false
+          },
+          "to_ref": {
+            "type": "object",
+            "properties": {
+              "paper_id": {
+                "type": "string",
+                "description": "Exact package-relative paper ID; existence and observation/component membership are Python checks."
+              },
+              "observation_index": {
+                "type": "integer",
+                "minimum": 0,
+                "description": "JSON Schema integer accepts integral numbers such as 0.0; Python requires an exact int, not bool or float, and an existing index. Not a stable cross-build identity."
+              },
+              "dimension": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "enum": [
+                  null,
+                  "question_framing",
+                  "alternative_explanation",
+                  "evidence_standard",
+                  "falsification_check",
+                  "uncertainty"
+                ],
+                "description": "Null validly selects the observation itself, not an unfinished choice. A named component must exist on that exact observation; Python checks this."
+              }
+            },
+            "required": [
+              "paper_id",
+              "observation_index",
+              "dimension"
+            ],
+            "additionalProperties": false
+          },
+          "rationale": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "claim_type": {
+            "type": "string",
+            "const": "operator_interpretation"
+          }
+        },
+        "required": [
+          "link_id",
+          "relation",
+          "from_ref",
+          "to_ref",
+          "rationale",
+          "claim_type"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "persona_sha256",
+    "knowledge_papers_sha256",
+    "operator_id",
+    "links"
+  ],
+  "additionalProperties": false
+}
