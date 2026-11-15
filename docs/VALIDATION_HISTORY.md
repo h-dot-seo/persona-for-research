@@ -3409,3 +3409,47 @@ files; CLI62 and SKILL8187. Prior validation history is preserved.
 Pre-freeze parent metadata check ran 25 tests with one changelog mismatch because
 the candidate manifest still carried the prior release. The manifest was then
 regenerated; this intermediate failure is not a product or final-tree pass.
+
+## 2026-11-15 Explicit external journey cards (0.124-external-journey-cards)
+
+Roadmap #77 adjustments 5/6/9 now connect an explicit local external sidecar to a
+separate journey review/agenda and a versioned pin-move-reinspect-compare flow.
+Existing external_evidence.review remains the checker. External rows never enter
+routes, source-hash groups, coverage, active references, citations, freeze, model
+handoffs or scientific judgments. Holdout/comparator membership and independence
+are not checked; external context can contaminate evaluation if supplied then.
+No retrieval, external service/agent communication or automatic knowledge transfer
+is added. This does not add the separate #92 ledger/adapter.
+
+The default template and exact eleven-slot v1 cards remain unchanged. Only explicit
+template --include-external or template(include_external=True) selects v2's external
+slot. v1 external:null still rejects. A null v2 slot is absent; a selected file with
+JSON null rejects, as does an explicitly selected null answer review when external
+context is used. No automatic migration or digest repair occurs. Paths, byte/logical
+hash checks and shared input budgets remain active across folder movement. Mixed
+comparisons distinguish unsupported v1 from v2's absent or supplied slot and compare
+external_id declarations exactly, never semantic identity. Existing v1/v1 output
+has no new version-support key. Direct CLI opt-in shares the raw input budget, while
+default loading behavior is unchanged. Current source audits remain separate.
+
+Sixteen synthetic regressions exercise the full writing-to-sidecar-to-v2-to-moved
+Korean/space directory flow, v1/v2 mixed comparisons, changes/removal, stale/invalid
+bindings, raw/logical tampering, exact slot and null rules, paths and input/output
+limits. Explicit source and method-application options are also combined; invalid
+external data rejects before the source audit. Focused 156 tests passed in24.239s.
+Baseline51 API and actual CLI JSON/text/HTML outputs (eighteen fingerprints under
+two hash seeds) were identical for default v1 flows; existing fixtures are unchanged.
+
+HTML presents external context in separate escaped areas, preserving passive CSP
+and complete current-report snapshots. Browser QA was attempted against the new
+synthetic comparison using installed Chromium headless with a writable temporary
+profile. It exited134 before producing a PNG: process_singleton socket Operation
+not permitted, crashpad settings read-only and ptrace denied. No security flags or
+permission bypass were used. Visual/keyboard/print behavior remains unverified;
+DOM/escaping/snapshot checks are a separate kind of evidence.
+
+Final independent/full/new-head CI outcomes follow the frozen tree separately.
+Expected counts:1585 tests,217 Python files,383 manifest entries and384 audit files;
+CLI62 and SKILL8187. New text reads explicitly use UTF-8; subprocess comparisons
+preserve native newlines, not trimming or normalizing away failures. Prior entries
+and public provenance/approval boundaries are preserved.

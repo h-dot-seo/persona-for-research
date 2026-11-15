@@ -832,3 +832,5 @@ See [CSL bibliography](PAPER_IDENTITY.md) for explicit occurrence mapping, repla
 Manual append/revision completed-structure preflight: [SCHEMA_CATALOG.md](SCHEMA_CATALOG.md). Static shape only; existing Python consumers remain authoritative.
 
 RIS occurrence mapping and separate timeline bibliography: [RIS_PAPER_IDENTITY.md](RIS_PAPER_IDENTITY.md). No automatic identity matching or source access.
+
+A later opt-in increment now supports external context through explicit v2 cards and fresh mixed-version comparison: [EXTERNAL_JOURNEY.md](EXTERNAL_JOURNEY.md). The original v1/default path above remains unchanged.

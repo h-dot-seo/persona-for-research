@@ -144,3 +144,5 @@ null review is rejected in the new display paths. Omitting --review is supported
 journey/card-v2, model adapter, external-file import, human-validation integration,
 other-agent contact, source acquisition or attribution policy is added. Keeping
 external declarations visible is not knowledge admission or transmission approval.
+
+A later opt-in increment now supports external context through explicit v2 cards and fresh mixed-version comparison: [EXTERNAL_JOURNEY.md](EXTERNAL_JOURNEY.md). The original v1/default path above remains unchanged.

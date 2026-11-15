@@ -292,3 +292,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 Manual append/revision completed-structure preflight: [SCHEMA_CATALOG.md](SCHEMA_CATALOG.md). Static shape only; existing Python consumers remain authoritative.
 
 RIS occurrence mapping and separate timeline bibliography: [RIS_PAPER_IDENTITY.md](RIS_PAPER_IDENTITY.md). No automatic identity matching or source access.
+
+A later opt-in increment now supports external context through explicit v2 cards and fresh mixed-version comparison: [EXTERNAL_JOURNEY.md](EXTERNAL_JOURNEY.md). The original v1/default path above remains unchanged.

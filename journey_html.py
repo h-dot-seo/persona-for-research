@@ -168,6 +168,8 @@ def _format(result):
         ('active_publication_context','Publication context for supplied active uses'),
         ('source_recheck','Current local source recheck, including unused sources'),
         ('local_input_file_check','Pinned JSON input files and per-file consistency')]
+    if 'external_evidence_review' in result:
+        sections.append(('external_evidence_review','External evidence (not persona knowledge)'))
     for key, label in sections:
         if key not in result: continue
         out.add('<details><summary>'+label+'</summary>'); out.data(result[key],known_refs); out.add('</details>')
@@ -180,9 +182,9 @@ def _format(result):
 
 
 def render(package, patterns, context, links, proposal, draft, argument, publication_relations,
-           pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None):
+           pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None, external=None):
     """Inspect original inputs exactly once, then render a passive detached snapshot."""
     result = inspect_journey(package, patterns, context, links, proposal, draft, argument, publication_relations,
         pattern_id, declared_review, source_selection=source_selection, source_root=source_root,
-        method_applications=method_applications)
+        method_applications=method_applications, **({'external':external} if external is not None else {}))
     return _format(result)

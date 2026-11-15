@@ -693,20 +693,26 @@ Guide: [Application proposals](APPLICATION_PROPOSALS.md).
 Inspect a source-to-method-to-argument journey without generating or approving research.
 
 ```text
-usage: research_journey.py [-h] --pattern-id PATTERN_ID [--review REVIEW] [--source-selection SOURCE_SELECTION] [--source-root SOURCE_ROOT] [--method-applications METHOD_APPLICATIONS] [--format {json,text,html}] [--output NEW_FILE] package patterns context links proposal draft argument publication_relations
+
 ```
 
 Guide: [Research journey](RESEARCH_JOURNEY.md), [Local HTML review](LOCAL_HTML_REVIEW.md).
+
+Explicit external journey/card v2: [EXTERNAL_JOURNEY.md](EXTERNAL_JOURNEY.md).
+
+```text
+usage: research_journey.py [-h] --pattern-id PATTERN_ID [--review REVIEW] [--source-selection SOURCE_SELECTION] [--source-root SOURCE_ROOT] [--method-applications METHOD_APPLICATIONS] [--external EXTERNAL] [--format {json,text,html}] [--output NEW_FILE] package patterns context links proposal draft argument publication_relations
+```
 
 ### `journey_inputs.py`
 
 Bind explicit local JSON inputs, then rerun a research journey without rebinding changes.
 
 ```text
-usage: journey_inputs.py [-h] {template,prepare,inspect} ...
-usage: journey_inputs.py template [-h] [--output NEW_FILE]
-usage: journey_inputs.py prepare [-h] [--output NEW_FILE] --input-root INPUT_ROOT [--source-root SOURCE_ROOT] input
-usage: journey_inputs.py inspect [-h] [--output NEW_FILE] --input-root INPUT_ROOT [--source-root SOURCE_ROOT] [--format {json,text,html}] input
+
+
+
+
 ```
 
 Subcommands:
@@ -716,6 +722,15 @@ Subcommands:
 - `inspect` — Reopen the complete journey from a card and an explicit input root (JSON, text or HTML).
 
 Guide: [Journey inputs](JOURNEY_INPUTS.md).
+
+Explicit external journey/card v2: [EXTERNAL_JOURNEY.md](EXTERNAL_JOURNEY.md).
+
+```text
+usage: journey_inputs.py [-h] {template,prepare,inspect} ...
+usage: journey_inputs.py template [-h] [--output NEW_FILE] [--include-external]
+usage: journey_inputs.py prepare [-h] [--output NEW_FILE] --input-root INPUT_ROOT [--source-root SOURCE_ROOT] input
+usage: journey_inputs.py inspect [-h] [--output NEW_FILE] --input-root INPUT_ROOT [--source-root SOURCE_ROOT] [--format {json,text,html}] input
+```
 
 ### `journey_compare.py`
 
