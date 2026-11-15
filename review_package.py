@@ -2,6 +2,7 @@
 from exclusive_output import add_output_argument, emit, preflight
 import argparse
 import json
+import math
 import sys
 import unicodedata
 from pathlib import Path
@@ -69,10 +70,67 @@ def _details(package, topic):
     return lines
 
 
+def _plain_json_tree(value):
+    """Optimization eligibility only: never normalize, reject, or invoke user hooks."""
+    pending = [value]
+    seen = set()
+    visited = 0
+    while pending:
+        item = pending.pop()
+        visited += 1
+        if visited > 100_000:
+            return False
+        kind = type(item)
+        if kind is dict or kind is list:
+            identity = id(item)
+            if identity in seen:
+                return False  # Alias as well as cycle: uncertain mutation behavior.
+            seen.add(identity)
+            if len(item) + len(pending) + visited > 100_000:
+                return False
+            if kind is dict:
+                for key, child in item.items():
+                    if type(key) is not str:
+                        return False
+                    pending.append(child)
+            else:
+                pending.extend(item)
+        elif kind is float:
+            if not math.isfinite(item):
+                return False
+        elif not (kind is str or kind is int or kind is bool or kind is type(None)):
+            return False
+    return True
+
+
+def _ordered_rule_groups(rules, patterns):
+    # Called only after both eligibility guards. Invalid/nonstandard keys retain
+    # the original comparison path rather than acquiring new hashing errors.
+    if type(rules) is not list or type(patterns) is not list:
+        return None
+    if len(rules) + len(patterns) > 100_000:
+        return None
+    if any(type(row) is not dict or
+           any(type(row.get(key)) is not str for key in ('method', 'condition'))
+           for rows in (rules, patterns) for row in rows):
+        return None
+    groups = {}
+    for rule in rules:
+        groups.setdefault((rule['method'], rule['condition']), []).append(rule)
+    return groups
+
+
 def render(value, question, topic, *, evidence_details=False, human_validation=None, split_declaration=None, challenge_records=None, release_decision=None):
+    plain_input = _plain_json_tree([value, question, topic, evidence_details,
+                                    human_validation, split_declaration,
+                                    challenge_records, release_decision])
     package = checked_package(value)
     application = apply(package, question, topic)  # Ignore any saved application summary.
     rules = [r for r in package['persona']['rules'] if r['topic'].casefold() == topic.casefold()]
+    groups = None
+    if (plain_input and type(application) is dict and
+            _plain_json_tree(package) and _plain_json_tree(application)):
+        groups = _ordered_rule_groups(rules, application.get('patterns'))
     paper_ids = {r['paper_id'] for r in rules}
     papers = [p for p in package['knowledge']['papers'] if p['paper_id'] in paper_ids]
     kinds = {kind: sum(p['kind'] == kind for p in papers) for kind in ('research', 'review')}
@@ -85,7 +143,8 @@ def render(value, question, topic, *, evidence_details=False, human_validation=N
     for pattern in application['patterns']:
         lines.append(f"{pattern['classification']}: {display(pattern['method'])}")
         lines.append('  Condition: ' + display(pattern['condition']))
-        for rule in rules:
+        candidates = rules if groups is None else groups.get((pattern['method'], pattern['condition']), ())
+        for rule in candidates:
             if (rule['method'], rule['condition']) != (pattern['method'], pattern['condition']):
                 continue
             lines.append(f"  [{display(rule['stance'])}] {display(rule['rule_id'])} | {display(rule['paper_id'])} | "

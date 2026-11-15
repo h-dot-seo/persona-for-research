@@ -3453,3 +3453,50 @@ Expected counts:1585 tests,217 Python files,383 manifest entries and384 audit fi
 CLI62 and SKILL8187. New text reads explicitly use UTF-8; subprocess comparisons
 preserve native newlines, not trimming or normalizing away failures. Prior entries
 and public provenance/approval boundaries are preserved.
+
+## 2026-11-15 Call-local review grouping (0.125-call-local-review-grouping)
+
+Roadmap #85 adjustment9 identifies review_package.render's repeated pattern-by-rule
+scan. Eligible calls now construct one local ordered (method,condition) bucket
+index. Pattern order, within-bucket rule order and duplicates remain unchanged.
+checked_package and apply execute freshly in their original order; source checks,
+optional detached records, errors and judgments are not bypassed or cached. No CI,
+timeout, input policy or persistent state changes occur.
+
+Eligibility is frozen before any original validation can invoke custom behavior.
+Exact built-in JSON trees only qualify; aliases/cycles, subclasses, non-string keys,
+nonfinite floats and custom values fall back without conversion or custom hooks.
+Package/application are checked again after validation. Guard node and row budgets
+only choose the old path; they never reject inputs or establish a new product limit.
+This does not guarantee defense against concurrent arbitrary memory mutation.
+
+An initial parent code review identified that plain JSON alone does not ensure
+pattern rows are dictionaries: a replaced apply with malformed results could cause
+new .get errors before the original rendering error. Before final freeze, exact
+application/list/row guards and safe lookup were added. Twenty malformed substitute
+results, including missing status and malformed patterns together, now preserve the
+original exception type/message and fresh call count. Custom container len/iteration
+hooks are not invoked by these eligibility checks. No published failing revision
+was made. Initial independent31 checks preceded this correction; final independent
+verification is recorded separately.
+
+Thirteen new tests cover guarded/fallback errors, mutation/custom hooks, alias/cycle,
+key types, stale/tampered input, duplicate groups, topic/detail/imported provenance,
+detached options, two hash seeds and small exact work counts. Final focused153 tests
+passed in4.734 seconds. Actual baseline52/new CLI64 option combinations under two
+hash seeds preserved all128 stdout/stderr/exit results (64 success and64 existing
+rejections). Existing examples and previous guides are unchanged.
+
+The explicit richer synthetic N32/128/512 experiment observed candidate rule visits
+1024/16384/262144 versus32/128/512; index construction adds32/128/512 rule visits.
+All-guard node visits8064/31872/127104, key visits7083/28011/111723 and shape/type
+checks are reported as distinct units in docs/REVIEW_GROUPING.md. They are not summed
+into a speed claim. These fixtures differ from the earlier minimal investigation;
+its figures are not rewritten. Complete outputs match, and only N4 runs in automatic
+regression. Extra guards can outweigh savings on small inputs. This is not a general
+linear-runtime or elapsed-time guarantee, nor a claim that all bottlenecks are fixed.
+
+Expected frozen counts:1598 tests,218 Python files,385 manifest entries and386 audit
+files; CLI62/SKILL8187. New test text reads explicitly use UTF-8 and raw subprocess
+comparisons preserve platform-native bytes. Full/independent/remote CI results are
+recorded after final freezing, without changing this tree during validation.
