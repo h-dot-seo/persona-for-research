@@ -1,11 +1,13 @@
 # Validation record
 
-Current release: `0.119-link-design-editor`, 2026-11-14. This file is the current
+Current release: `0.120-journey-comparison-html`, 2026-11-15. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
+
+- 2026-11-15 Passive journey comparison HTML (`0.120-journey-comparison-html`): one fresh comparison with side-specific navigation and complete reports/snapshot; browser visual QA remains unverified.
 
 - 2026-11-14 Link/design editor flow (`0.119-link-design-editor`): optional input-shape profiles for an existing connected authoring flow, with dynamic Python checks unchanged.
 
@@ -125,19 +127,19 @@ Optional synthetic capacity grids: see [capacity observations](docs/CAPACITY.md)
 Optional maintainer timing: `python -m tests.timing tests.test_skill_contract`; see
 [local timing observations](docs/TEST_TIMING.md). The default/CI commands below are unchanged.
 
-- `python -m unittest discover -q` — the current tree runs 1517 synthetic tests
+- `python -m unittest discover -q` — the current tree runs 1526 synthetic tests
   (platform-specific cases may skip on other hosts). The final local verification result is recorded in the release history. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.
-- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 363
+- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 366
   listed files. Regenerate the manifest after every other edit of a release using
   `python regenerate_manifest.py --release REL --date YYYY-MM-DD --output ../NEW.json`,
   explicitly naming new/deleted paths with --add/--remove. Review the external candidate
   before manually replacing the original manifest; see PUBLICATION.md.
-- `python audit_publication.py` — expects `"pass": true`; the current tree has 364 text
+- `python audit_publication.py` — expects `"pass": true`; the current tree has 367 text
   files including the manifest. A pass is a limited file-type and secret-pattern scan, not
   proof of anonymity or rights clearance.
-- `python -m compileall -q .` — 209 Python files compile cleanly and parse with
+- `python -m compileall -q .` — 211 Python files compile cleanly and parse with
   Python 3.10 grammar.
 - `python synthetic_walkthrough.py ../persona-synthetic-demo` — the 15-stage demo must exit 0
   and write `COMPLETE.json` into a new directory outside the repository.

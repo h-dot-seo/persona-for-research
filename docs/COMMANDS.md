@@ -716,7 +716,7 @@ Guide: [Journey inputs](JOURNEY_INPUTS.md).
 Compare two freshly reopened input cards without inferring research progress or approval.
 
 ```text
-usage: journey_compare.py [-h] --previous-root PREVIOUS_ROOT --current-root CURRENT_ROOT [--previous-source-root PREVIOUS_SOURCE_ROOT] [--current-source-root CURRENT_SOURCE_ROOT] [--format {json,text}] [--output NEW_FILE] previous current
+usage: journey_compare.py [-h] --previous-root PREVIOUS_ROOT --current-root CURRENT_ROOT [--previous-source-root PREVIOUS_SOURCE_ROOT] [--current-source-root CURRENT_SOURCE_ROOT] [--format {json,text,html}] [--output NEW_FILE] previous current
 ```
 
 Guide: [Journey comparison](JOURNEY_COMPARISON.md).
@@ -907,3 +907,6 @@ Library only: optional comparator source selection/recheck for `comparator_overl
 Manual input rejection detail library: `rejection_details.py` has no CLI. See [opt-in contract](MANUAL_REJECTION_DETAILS.md).
 
 Maintainer-only documentation audit: `python -m tests.doc_conformance` (no private inputs, no command execution). See [scope and unresolved results](DOCUMENTATION_AUDIT.md). This is not a root product CLI.
+
+Comparison HTML formatting uses the internal library `journey_compare_html.py` (no CLI).
+See [passive comparison HTML](JOURNEY_COMPARISON_HTML.md).

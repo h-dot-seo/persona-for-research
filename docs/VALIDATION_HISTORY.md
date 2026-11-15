@@ -3209,3 +3209,46 @@ product dependency. Final frozen results are recorded externally.
 Final counts:1517 tests,209 Python files,363 manifest entries and364 audit files;
 CLI60 and SKILL8187 unchanged. This connected flow completes the chosen editor
 increment; adding more profiles without reassessing practical value is not assumed.
+
+
+## 2026-11-15 Passive journey comparison HTML (0.120-journey-comparison-html)
+
+Roadmap #91 addresses a concrete final review gap, not missing transport/replay:
+existing journey cards can already be moved and reread with an explicit root.
+A small synthetic comparison produced304267 JSON bytes and315059 text bytes;
+HTML now provides sections and separate previous/current evidence targets while
+retaining both complete fresh reports and a fully sorted comparison JSON snapshot.
+The formatter receives one compare() result and does not reread inputs. Existing
+root/input/source budgets, calculation, judgments and exclusive output stay intact.
+HTML markup may reach the existing16MiB output limit before JSON; nothing is
+silently dropped. Rendering failures emit no partial output, while existing later
+I/O failure semantics are not upgraded to atomic or hostile-filesystem guarantees.
+
+The existing passive STYLE/CSP/escape machinery is reused. A prefix option on
+journey_html._tree defaults to the old byte behavior; comparison sides use separate
+prefixes. Side-neutral summaries use escaped JSON rather than falsely assigning
+references to a side or marking them outside the displayed index. This correction
+was made during self-review before freeze. Previous/current are supplied labels,
+not authenticated chronology, and source checks are two current reads rather than
+historical snapshots. Private input content is not cleared for external sharing.
+
+Nine new tests cover one compare call, complete snapshot equality, unique internal
+anchors/CSP, malicious text and inert URLs, Korean/long strings, empty groups,
+imported/rejected history, one-sided source reread, two hash seeds, exclusive
+output and output-limit rejection. Combined105 tests passed in19.320 seconds.
+Actual round47/48 JSON/text raw stdout/stderr/exit matched across two seeds and
+two formats; existing journey HTML reports on both sides were byte-identical.
+The previous test rejecting HTML now rejects an unsupported format instead.
+Existing guide blocks remain unchanged; the new guide runs three actual commands.
+
+Current-environment browser QA was attempted with installed Chromium and the
+synthetic comparison fixture. Launch exited134 before producing a screenshot:
+process_singleton socket() failed with Operation not permitted, crash-report
+settings were read-only, and ptrace was denied. No permission or sandbox bypass
+was attempted. Visual layout, interactive keyboard behavior and print rendering
+remain UNVERIFIED, separate from successful DOM/anchor/CSP/escaping tests.
+The synthetic browser fixture and failure log are retained outside publication.
+
+Final counts:1526 tests,211 Python files,366 manifest entries and367 audit files;
+CLI60 and SKILL8187 unchanged. Final full/independent/remote results are recorded
+externally after freeze; this entry does not turn browser-launch failure into UI QA.

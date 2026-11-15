@@ -305,7 +305,7 @@ class JourneyComparisonTests(unittest.TestCase):
         self.assertEqual([old,new],before);self.assertEqual(files,{name:Path(name).read_bytes() for name in files})
         with patch.object(comparison,'MAX_OUTPUT_BYTES',10):
             with self.assertRaisesRegex(ValueError,'16 MiB'):comparison.compare(old,self.roots[0],new,self.roots[1])
-        with self.assertRaises(ValueError):comparison.render(old,self.roots[0],new,self.roots[1],format='html')
+        with self.assertRaises(ValueError):comparison.render(old,self.roots[0],new,self.roots[1],format='unsupported')
 
     def test_text_escapes_control_characters_and_keeps_complete_json(self):
         draft=self.read(1,'draft');draft['claims'][0]['text']='Synthetic <script> text\u202e';self.write(1,'draft',draft);self.rebind_answer(1)
