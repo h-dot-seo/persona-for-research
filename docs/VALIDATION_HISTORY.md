@@ -3326,3 +3326,41 @@ includes explicit UTF-8 for repository text, alongside native stderr newlines,
 canonical path fixtures and Python-version-independent source hashes. Corrected
 local identity18 tests passed in0.811 seconds. Corrected suite size is1544; final
 full/independent/new-head matrix checks follow without merging the failed head.
+
+
+## 2026-11-15 Manual-card completed-structure preflight (0.122-manual-structure-preflight)
+
+Roadmap #88 adds actual preflight behavior for the existing manual append/revision
+authoring flow, not another permissive editor document. A fixed catalog selects
+two separately named completed-structure profiles. No arbitrary user schema,
+external reference, network, source file or manifest is read. The stdlib subset
+only implements the object/string/integer constraints and allowlisted regexes
+used by these two profiles; unsupported schema keywords/types/regexes fail closed.
+Schema deployment errors and malformed/private-input failures have separate fixed
+stderr outcomes, while structural results list deterministic static field paths
+and error codes. Unknown keys/values are not echoed; no downstream key guesses
+are made after wrong container types. Input8MiB/output16MiB budgets are explicit.
+
+Existing seven editor profiles, product API errors, payload and judgments remain
+unchanged. Unfilled editor-valid templates may fail these completed-structure
+checks. A structure pass still does not check hash freshness, paper/index/quote
+validity, no-op or version/build relationships. JSON Schema integer0.0 may pass
+while the existing Python API requires exact int. This is not full JSON Schema
+support or import-ready acceptance. Valid empty declarations in other workflows
+are not generalized into invalid templates.
+
+Thirteen new tests exercise fixed schema list/show/check, unsupported schema
+semantics, privacy/malformed inputs, deterministic multiple errors and bounds.
+A synthetic actual writing flow fills an append card, preflights it, appends,
+fills a revision, preflights and revises; four CLI guide commands are executed.
+Initial focused45 tests passed in6.650 seconds. An initial combined run had one
+expected trusted-help failure because the new command was not yet in the pending
+manifest; this is resolved only by final manifest/complete-tree verification.
+Independent actual Draft202012Validator metaschema checks and1428 nested/type/
+Unicode/hashnewline mutations matched the subset, with no runtime dependency
+added. Final independent/full/new-head CI outcomes are recorded externally.
+
+The corrected prior-round UTF-8 guide fixture and explicit-encoding regression
+are included; the new schema guide already used UTF-8. No private data/real source
+was used. Final counts:1557 tests,215 Python files,377 manifest entries and378 audit
+files; CLI62 and SKILL8187. Existing guides and examples are preserved.

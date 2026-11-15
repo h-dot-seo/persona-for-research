@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.122-manual-structure-preflight — 2026-11-15
+
+`schema_catalog.py list/show/check` provides a bounded fixed-subset completed-structure preflight for manual append/revision cards, distinct from permissive editor profiles. It reports multiple static-field/code errors without reading a manifest or source. Existing consumers still decide freshness, quotes, no-op and cross-field validity; structural pass is not import acceptance.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-15-manual-card-completed-structure-preflight-0122-manual-structure-preflight).
+
 ## 0.121-paper-identity-declaration — 2026-11-15
 
 `paper_identity.py` supplies template/from-csl/check/verify and `review_package.py --paper-identities` adds a separate declared-bibliography section. Exact export occurrences and operator mappings are not publication identity. Package currentness, row source matching and export-copy replay are distinct; default review and canonical payload remain unchanged.
