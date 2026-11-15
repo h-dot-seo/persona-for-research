@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.124-external-journey-cards",
+  "release": "0.125-call-local-review-grouping",
   "date": "2026-11-15",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 383,
+  "file_count": 385,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 22527,
-      "sha256": "c7afb4e5b7f23ac7fd9b9fe29910c4f75aa9481d23d9ab392c9cf15864a58cba"
+      "bytes": 23003,
+      "sha256": "950bc16ba4ccbe62499ac230af245025c9dcad09cedaab1092970dbb5b09bfdd"
     },
     {
       "path": "PUBLICATION.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 13013,
-      "sha256": "0084d62eb33d40631c07d3b4792bf9d9c32359bbc7eac4b1eed3199306e33b71"
+      "bytes": 13248,
+      "sha256": "e2dbca376c4b62d0016790ff16fb5e98178100981a1e989ada811b1c11deaad9"
     },
     {
       "path": "answer_context.py",
@@ -489,6 +489,11 @@
       "sha256": "d41b40ddf0b8c87061e03bf2a9a77e8bc1c69a4504ce5608626627e7b124aa8a"
     },
     {
+      "path": "docs/REVIEW_GROUPING.md",
+      "bytes": 4369,
+      "sha256": "4bc1a9b5c466ba4b1608aba1cb82070d47172b2d0fee9637fa2e7a2e95b757f1"
+    },
+    {
       "path": "docs/REVIEW_JOURNEY.md",
       "bytes": 3403,
       "sha256": "841aa61e9bd4779fbe807177911859351be75dc34c33cce64d627df34f542dec"
@@ -570,8 +575,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 242149,
-      "sha256": "f3b76550e70e62226e44867e2dfa74ab66d86d526745396212fd04fea561f0a8"
+      "bytes": 245375,
+      "sha256": "158242b066abd9261dfa1a4e2e12aa6903b6e9f65c6fc04b20794ac2fa8482ad"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1110,8 +1115,8 @@
     },
     {
       "path": "review_package.py",
-      "bytes": 13488,
-      "sha256": "d94284e07d181b4b8a4524a489a9bbcf590db96a7b246af867e945fe20b6f9d9"
+      "bytes": 15856,
+      "sha256": "7b0e6e32c7b484f33d86966975c31e0d48ee76b63238f13e89b8e5299687cbcd"
     },
     {
       "path": "review_workspace.py",
@@ -1757,6 +1762,11 @@
       "path": "tests/test_review_details.py",
       "bytes": 7815,
       "sha256": "6fb3d895698c2b31c62595ff8d7c2967275ccd8f35fb058da41b3ca7189ed36e"
+    },
+    {
+      "path": "tests/test_review_grouping.py",
+      "bytes": 15875,
+      "sha256": "9be7d8d25c2ef0fd8d226fbbdbb02aa72c4926677d3acb7ceb9509fb2482b887"
     },
     {
       "path": "tests/test_review_journey.py",
