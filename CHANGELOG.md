@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.123-ris-bibliography-timeline — 2026-11-15
+
+`paper_identity.py from-ris` copies a narrow explicit RIS bibliography using census occurrence mappings and separate copy replay. `publication_timeline.py --paper-identities` displays supplied declarations separately without changing the existing timeline or CSL results. Neither establishes identity, source rights or approval.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-15-ris-bibliography-and-timeline-0123-ris-bibliography-timeline).
+
 ## 0.122-manual-structure-preflight — 2026-11-15
 
 `schema_catalog.py list/show/check` provides a bounded fixed-subset completed-structure preflight for manual append/revision cards, distinct from permissive editor profiles. It reports multiple static-field/code errors without reading a manifest or source. Existing consumers still decide freshness, quotes, no-op and cross-field validity; structural pass is not import acceptance.

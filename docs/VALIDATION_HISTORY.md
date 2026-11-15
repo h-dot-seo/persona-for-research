@@ -3364,3 +3364,48 @@ The corrected prior-round UTF-8 guide fixture and explicit-encoding regression
 are included; the new schema guide already used UTF-8. No private data/real source
 was used. Final counts:1557 tests,215 Python files,377 manifest entries and378 audit
 files; CLI62 and SKILL8187. Existing guides and examples are preserved.
+
+## 2026-11-15 RIS bibliography and timeline (0.123-ris-bibliography-timeline)
+
+Roadmap #89's second explicit flow adds from-ris and optional publication timeline
+bibliography display. The existing fixed-column parser and census ordered logical
+entry hashes are reused without editing either implementation. Explicit occurrence
+mapping plus raw export hash binds selection; RIS ID/AN, title and DOI never choose
+package membership. DO, TI/T1 and PY/Y1 alone are copied. Conflicting alias strings
+reject, even when they begin with the same year. The exact census-style year syntax
+copies four explicit ASCII digits (1..9999); slash suffixes are not calendar validation
+and other formats produce null, not inferred years. AB/N1/AU/ID/AN and all omitted
+fields affect the entry hash but their values are not copied.
+
+A separate persona.paper-identity-ris-declaration.v1 and DECLARED_RIS_NOT_RESOLVED
+row state leave existing CSL v1 results unchanged. verify dispatches the matching
+copy replay and emits RIS_COPY_REPLAY_MATCH_NOT_AUTHENTICATED, not authentication.
+check/display do not replay exports. Recomputed self-digests do not prevent malicious
+editing. Package STALE and row MATCH are independent; values from DIFFERS/ABSENT rows
+stay hidden. The timeline's existing calculation/render functions are unchanged;
+opt-in adds a separate full declaration review and digest, not bibliography-derived
+years, ordering, observations, relations or decisions. Null sidecars reject while
+legacy explicit-null publication relations retain their existing no-form meaning.
+
+Twelve new synthetic tests cover BOM and LF/CRLF/CR, continuation/alias rules,
+ordered hashes and private-field omission, stale mappings, copy tampering, current
+source-row visibility, bounds, fixed private-input errors and exclusive output.
+The actual five-command guide connects census, explicit mapping, copy, replay and
+JSON/text timeline. Focused 66 tests passed in 3.986 seconds. Separate baseline50
+comparison checked raw default timeline stdout/stderr/exit for twelve combinations
+and CSL API bytes under two hash seeds; timeline/render AST remained identical.
+The first parent metadata inspection used an incorrect index key 'artifacts'; it
+failed before changes and was corrected to the actual 'records' structure.
+
+Existing 4096-row/field-length limits, aggregate 8 MiB CLI inputs and 16 MiB outputs
+remain explicit. Larger produced outputs need not fit a later combined input budget.
+No real sources, paid services, external transfer or canonical policy changes occur.
+All new guide text is explicitly UTF-8, fixture bytes are LF, and subprocess error
+expectations use native os.linesep without trimming content. Final independent,
+full-suite and exact remote CI results are recorded separately after freezing.
+Expected final counts:1569 tests,216 Python files,381 manifest entries and382 audit
+files; CLI62 and SKILL8187. Prior validation history is preserved.
+
+Pre-freeze parent metadata check ran 25 tests with one changelog mismatch because
+the candidate manifest still carried the prior release. The manifest was then
+regenerated; this intermediate failure is not a product or final-tree pass.

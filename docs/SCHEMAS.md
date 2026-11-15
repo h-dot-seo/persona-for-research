@@ -191,5 +191,6 @@ Detached bibliography identifiers (see [contract](PAPER_IDENTITY.md)):
 
 - `persona.paper-identity-mapping.v1`
 - `persona.paper-identity-declaration.v1`
+- `persona.paper-identity-ris-declaration.v1`
 - `persona.paper-identity-check.v1`
 - `persona.paper-identity-replay.v1`

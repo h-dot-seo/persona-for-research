@@ -14,6 +14,7 @@ from strict_json import read_bounded, loads
 from exclusive_output import add_output_argument, preflight, emit
 
 SCHEMA='persona.paper-identity-declaration.v1'
+RIS_SCHEMA='persona.paper-identity-ris-declaration.v1'
 MAP_SCHEMA='persona.paper-identity-mapping.v1'
 CHECK_SCHEMA='persona.paper-identity-check.v1'
 VERIFY_SCHEMA='persona.paper-identity-replay.v1'
@@ -124,9 +125,57 @@ def from_csl(value,raw,mapping,operator_id,declared_at):
     return _seal(record)
 
 
+def _ris_export(raw):
+    from ris_export_parser import parse_export
+    if type(raw) is not bytes or len(raw)>MAX_INPUT_BYTES:raise ValueError('RIS export exceeds byte limit')
+    parsed=parse_export(raw)
+    if not 1<=len(parsed['records'])<=MAX_ROWS:raise ValueError('RIS export requires 1 to 4096 occurrences')
+    records=[dict(record_type=row['record_type'],fields=[dict(tag=f['tag'],value_lines=f['value_lines']) for f in row['fields']]) for row in parsed['records']]
+    return records,hashlib.sha256(raw).hexdigest()
+
+
+def _ris_copy(entry,mapping_row):
+    from census_import import ris_scalar
+    fields=entry['fields'];doi=ris_scalar(fields,('DO',));title=ris_scalar(fields,('TI','T1'))
+    literal=ris_scalar(fields,('PY','Y1'))
+    supplied_year=int(literal[:4]) if isinstance(literal,str) and re.fullmatch(r'[0-9]{4}(?:/[^\r\n]*)?',literal) else None
+    if doi is not None:_text(doi,128)
+    if title is not None:_text(title,2000)
+    if supplied_year is not None and not 1<=supplied_year<=9999:raise ValueError('declared year outside 1 to 9999')
+    identifiers=dict.fromkeys(IDENTIFIERS);identifiers['doi']=doi
+    return dict(identifiers=identifiers,declared_title=title,declared_year=supplied_year,
+        source_export=dict(format='ris',census_id=mapping_row['census_id'],entry_sha256=mapping_row['entry_sha256']),
+        status='DECLARED_RIS_NOT_RESOLVED')
+
+
+def from_ris(value,raw,mapping,operator_id,declared_at):
+    record=template(value,operator_id,declared_at);records,digest=_ris_export(raw);selected=_mapping(mapping,records,digest)
+    if not set(selected)<={p['paper_id'] for p in record['papers']}:raise ValueError('mapping contains paper outside supplied runtime package')
+    record.pop('payload_sha256');record.update(schema=RIS_SCHEMA,export_sha256=digest,mapping_sha256=payload_sha256(mapping))
+    for paper in record['papers']:
+        if paper['paper_id'] in selected:
+            row,entry=selected[paper['paper_id']];paper.update(_ris_copy(entry,row))
+    return _seal(record)
+
+
+def _verify_ris(record,raw,mapping):
+    validate_record(record)
+    if record['export_sha256'] is None:raise ValueError('empty declaration has no RIS copy to replay')
+    records,digest=_ris_export(raw);selected=_mapping(mapping,records,digest)
+    if digest!=record['export_sha256'] or payload_sha256(mapping)!=record['mapping_sha256']:raise ValueError('declaration export/mapping binding mismatch')
+    declared={row['paper_id']:row for row in record['papers'] if row['status']!='NOT_DECLARED'}
+    if set(declared)!=set(selected):raise ValueError('declared and mapped paper sets differ')
+    for pid,(mapping_row,entry) in selected.items():
+        if any(declared[pid][key]!=val for key,val in _ris_copy(entry,mapping_row).items()):raise ValueError('declared RIS copy differs from supplied export')
+    return dict(schema=VERIFY_SCHEMA,status='RIS_COPY_REPLAY_MATCH_NOT_AUTHENTICATED',declaration_sha256=record['payload_sha256'],
+        export_sha256=digest,mapping_sha256=record['mapping_sha256'],replayed_rows=len(selected),
+        unmapped_export_occurrences=len(records)-len({row['census_id'] for row,_ in selected.values()}),
+        package_binding_verification='NOT_PERFORMED',operator_identity_verification='NOT_PERFORMED',boundary=BOUNDARY)
+
+
 def validate_record(record):
     _keys(record,TOP_KEYS)
-    if record['schema']!=SCHEMA or record['boundary']!=BOUNDARY:raise ValueError('unsupported paper identity declaration')
+    if record['schema'] not in (SCHEMA,RIS_SCHEMA) or record['boundary']!=BOUNDARY:raise ValueError('unsupported paper identity declaration')
     for key in ('author_id','version','build_id'):_text(record[key],2000)
     _identifier(record['operator_id'],'operator_id');_date(record['declared_at'])
     for key in ('persona_payload_sha256','knowledge_papers_sha256','payload_sha256'):_hash(record[key],key)
@@ -149,10 +198,10 @@ def validate_record(record):
         if row['status']=='NOT_DECLARED':
             if any(row['identifiers'].values()) or row['declared_title'] is not None or y is not None or row['source_export'] is not None:
                 raise ValueError('undeclared row cannot contain identity values')
-        elif row['status']=='DECLARED_CSL_NOT_RESOLVED':
+        elif row['status']==('DECLARED_RIS_NOT_RESOLVED' if record['schema']==RIS_SCHEMA else 'DECLARED_CSL_NOT_RESOLVED'):
             _keys(row['source_export'],{'format','census_id','entry_sha256'})
             source=row['source_export']
-            if source['format']!='csl-json' or type(source['census_id']) is not str or not re.fullmatch(r'census-[0-9]{6}',source['census_id']) or not 1<=int(source['census_id'][7:])<=MAX_ROWS:
+            if source['format']!=('ris' if record['schema']==RIS_SCHEMA else 'csl-json') or type(source['census_id']) is not str or not re.fullmatch(r'census-[0-9]{6}',source['census_id']) or not 1<=int(source['census_id'][7:])<=MAX_ROWS:
                 raise ValueError('invalid declared export occurrence')
             _hash(source['entry_sha256'],'entry_sha256');declared+=1
         else:raise ValueError('unsupported declaration status')
@@ -162,6 +211,7 @@ def validate_record(record):
 
 
 def verify(record,raw,mapping):
+    if isinstance(record,dict) and record.get('schema')==RIS_SCHEMA:return _verify_ris(record,raw,mapping)
     validate_record(record)
     if record['export_sha256'] is None:raise ValueError('empty template has no CSL copy to replay')
     records,digest=_export(raw);selected=_mapping(mapping,records,digest)
@@ -194,7 +244,7 @@ def check(record,value):
     for row in record['papers']:
         pid=row['paper_id'];paper=by_id.get(pid)
         state='PAPER_ID_ABSENT' if paper is None else 'SOURCE_HASH_MATCH' if row['source_sha256']==paper['source_sha256'] else 'SOURCE_HASH_DIFFERS'
-        visible=state=='SOURCE_HASH_MATCH' and row['status']=='DECLARED_CSL_NOT_RESOLVED'
+        visible=state=='SOURCE_HASH_MATCH' and row['status'] in ('DECLARED_CSL_NOT_RESOLVED','DECLARED_RIS_NOT_RESOLVED')
         item=dict(paper_id=pid,source_binding_status=state,declaration_status=row['status'],values_displayed=visible)
         if visible:
             item.update(identifiers=copy.deepcopy(row['identifiers']),declared_title=row['declared_title'],declared_year=row['declared_year'])
@@ -245,22 +295,24 @@ def review_package_output(args):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);sub=parser.add_subparsers(dest='command',required=True)
-    for name in ('template','from-csl','check','verify'):
+    for name in ('template','from-csl','from-ris','check','verify'):
         cmd=sub.add_parser(name)
-        if name in ('template','from-csl'):cmd.add_argument('package',type=Path)
+        if name in ('template','from-csl','from-ris'):cmd.add_argument('package',type=Path)
         else:cmd.add_argument('record',type=Path)
         if name=='check':cmd.add_argument('package',type=Path)
-        if name in ('from-csl','verify'):cmd.add_argument('export',type=Path);cmd.add_argument('mapping',type=Path)
-        if name in ('template','from-csl'):cmd.add_argument('--operator-id',required=True);cmd.add_argument('--declared-at',required=True)
+        if name in ('from-csl','from-ris','verify'):cmd.add_argument('export',type=Path);cmd.add_argument('mapping',type=Path)
+        if name in ('template','from-csl','from-ris'):cmd.add_argument('--operator-id',required=True);cmd.add_argument('--declared-at',required=True)
         else:cmd.add_argument('--format',choices=('json','text'),default='json')
         add_output_argument(cmd)
     args=parser.parse_args()
+    if args.command=='from-ris' and args.output is None:parser.error('from-ris requires --output')
     if args.command in ('template','from-csl') and args.output is None:parser.error('template/from-csl require --output')
     preflight(parser,args.output)
     try:
         read=reader()
         if args.command=='template':result=template(read(args.package),args.operator_id,args.declared_at)
         elif args.command=='from-csl':result=from_csl(read(args.package),read(args.export,True),read(args.mapping),args.operator_id,args.declared_at)
+        elif args.command=='from-ris':result=from_ris(read(args.package),read(args.export,True),read(args.mapping),args.operator_id,args.declared_at)
         elif args.command=='check':result=check(read(args.record),read(args.package))
         else:result=verify(read(args.record),read(args.export,True),read(args.mapping))
         raw=render(result).encode('utf-8') if getattr(args,'format','json')=='text' else encode(result)
