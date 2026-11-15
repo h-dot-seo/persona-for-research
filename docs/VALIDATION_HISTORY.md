@@ -3495,3 +3495,36 @@ no product code or release-index checks changed. A new freeze and full run follo
 Final evidence is reported separately for the exact frozen commit.
 Expected counts:1598 tests,219 Python files,386 manifest entries and387 audit files;
 CLI62 and SKILL8187. Existing source/payload/approval boundaries remain unchanged.
+
+## 2026-11-15 Repository rights-state consistency (0.126-repository-rights-consistency)
+
+Roadmap #86's adjusted drift-prevention scope is implemented as test-only checks
+and a short flat REPOSITORY_CHOICES guide. The name distinguishes maintainer
+choices from operator adoption/review decisions. Existing rights statements remain
+unchanged; only links are appended to the two README indexes. All product modules,
+examples, RIGHTS and WORKFLOWS bytes are unchanged. No license candidate, SPDX
+identifier, tag spelling, branch deletion or repository setting is selected.
+
+Four normalized statement signals plus manifest license_status must agree on
+NOT_SELECTED versus a synthetic alternate state. Actual and listed mechanically
+recognized LICENSE/COPYING filenames must be absent when unselected, or exactly
+one identical path when selected. The test recognizes case-insensitive basenames
+LICENSE/COPYING and dot-suffix variants; it does not infer document meaning.
+Strict JSON, existing inventory/portable-path inspection, duplicate/case-collision
+checks and explicit UTF-8 reads are reused. General manifest hashes/inventory
+completeness remain the publication verifier's responsibility, not this test's.
+
+Thirteen new tests cover current and fictional alternate states, each statement's
+partial transition, manifest-only/file-only edits, absent/duplicate/mismatched
+license paths, malformed and strict-JSON inputs, empty/wrong-type labels, wrapping
+and UTF-8, naming scope, symlinks and invalid paths. Initial focused40 tests passed
+in0.805s; audit389 passed. Synthetic selected labels and contents are not a license
+grant or recommendation. Mechanical consistency does not validate SPDX, ownership,
+legal effectiveness, contribution terms or user approval. The guide coordinates
+five existing locations and links existing publication/security/layout material;
+it adds no executable guide block or private maintenance details.
+
+Final independent/full/new-head CI outcomes are checked against the frozen tree.
+Expected counts:1611 tests,220 Python files,388 manifest entries and389 audit files;
+CLI62 and SKILL8187. Product outputs, source/payload and scientific/approval policy
+remain unchanged.

@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.125-private-markdown-notes",
+  "release": "0.126-repository-rights-consistency",
   "date": "2026-11-15",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 386,
+  "file_count": 388,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 22990,
-      "sha256": "3bed15a4ca2e8a2e20acb9850e0d2189c31db34a69866b002f6849e7ff9a7972"
+      "bytes": 23445,
+      "sha256": "34b83e288f98a55585b0896cfbed24682c056ac51933be9cb1401c3164a78464"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 21852,
-      "sha256": "89c4390d1a613ea10c16a9e7662f2405193ab3ec2efa54ed033fdd53ae44a8d3"
+      "bytes": 22010,
+      "sha256": "9412af3dc2c3976a5a9c22b366d0855c93ff0644fe93c4581dd9cac86ff3b4b1"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 13234,
-      "sha256": "a38531ed79673d0f2843f4cdb61998bb99d12c48bd42d863ab51fb3a5a1a1748"
+      "bytes": 13449,
+      "sha256": "6ec45ead20d8c1d0c57f0278e18e5ee60334b391725f511764b11746bd624c63"
     },
     {
       "path": "answer_context.py",
@@ -465,8 +465,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 25517,
-      "sha256": "ea1406f8009dde18a58df14b9bac63f5addfb20e95b416851d9b67b67b1d94a5"
+      "bytes": 25701,
+      "sha256": "e680b68e435dcd3a17fde1ffdc5780ef340b322e57fbed10222daa72c8d40b88"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -482,6 +482,11 @@
       "path": "docs/RELEASE_RECORD.md",
       "bytes": 5445,
       "sha256": "f5769952fcaf287fe40c1b73a3256cf1fe8c386461f01661667c0bca1181a4da"
+    },
+    {
+      "path": "docs/REPOSITORY_CHOICES.md",
+      "bytes": 4686,
+      "sha256": "6a967062c47fd815f5e8c25ee23235ada70e1b1dec2ec0da867b25a1ffbe6ead"
     },
     {
       "path": "docs/RESEARCH_JOURNEY.md",
@@ -575,8 +580,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 245227,
-      "sha256": "8cb71296ea297bfc705e25c23c24250bf768d57462d9d11b8d17866f35eebe1e"
+      "bytes": 247426,
+      "sha256": "7b15e29a372563e954f1185ed6685987ea93c6f2bd9ec3b3df2f51f45809c371"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1802,6 +1807,11 @@
       "path": "tests/test_revision_impact.py",
       "bytes": 8598,
       "sha256": "15516abb166ba046d9a1e32669259ba10edb61db17811d448e2f255968a23093"
+    },
+    {
+      "path": "tests/test_rights_consistency.py",
+      "bytes": 10491,
+      "sha256": "0f2af1471e87b9f992e9bbcf159614d2eecfcddfbc2cd362bfeacc2cec078e8b"
     },
     {
       "path": "tests/test_rule_correspondence.py",

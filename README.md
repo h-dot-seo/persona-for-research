@@ -288,3 +288,5 @@ RIS occurrence mapping and separate timeline bibliography: [RIS_PAPER_IDENTITY.m
 A later opt-in increment now supports external context through explicit v2 cards and fresh mixed-version comparison: [EXTERNAL_JOURNEY.md](docs/EXTERNAL_JOURNEY.md). The original v1/default path above remains unchanged.
 
 [Private Markdown review notes](docs/MARKDOWN_REPORTS.md): optional source, human-record and comparison views for local notes, not sharing clearance.
+
+[Repository choices checklist](docs/REPOSITORY_CHOICES.md): coordinated future owner decisions and mechanical rights-state consistency, not a policy choice.
