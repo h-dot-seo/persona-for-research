@@ -1096,6 +1096,46 @@
     },
     {
       "schema_id": null,
+      "workflow": "completed-structure",
+      "role": "catalog",
+      "variant": "manual-cards",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [],
+      "producer": {
+        "module": "schema_catalog.py",
+        "api": "main",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/SCHEMA_CATALOG.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Untagged list subcommand output containing the two fixed catalog choices and their schema-document URNs. URNs identify completed-structure documents, not artifact instance schema IDs. The show subcommand emits the selected schema document itself. No private input is checked by list/show; no downstream report consumer is established."
+    },
+    {
+      "schema_id": null,
+      "workflow": "completed-structure",
+      "role": "check-report",
+      "variant": "manual-cards",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [],
+      "producer": {
+        "module": "schema_catalog.py",
+        "api": "check",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/SCHEMA_CATALOG.md",
+      "source_mentions": [],
+      "response_contract": null,
+      "note": "Untagged completed-structure check result for explicitly selected manual append/revision input cards. Reports static errors only; no manifest/source reads, import validation, hash binding, semantic check or approval. Python consumers of the cards are authoritative but do not consume this report. Existing editor profiles accept placeholders and describe a different acceptance set."
+    },
+    {
+      "schema_id": null,
       "workflow": "documentation-audit",
       "role": "maintainer-report",
       "variant": "supported-subset",
@@ -1219,6 +1259,99 @@
       "source_mentions": [],
       "response_contract": null,
       "note": "Exactly handoff_sha256 and candidates at top level in all ten exercised templates; no schema field may be inserted. Candidate fields come from the bound handoff.response_contract. Empty template is not evidence of execution or approval."
+    },
+    {
+      "schema_id": "persona.paper-identity-check.v1",
+      "workflow": "paper-identity",
+      "role": "check-report",
+      "variant": "v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [],
+      "producer": {
+        "module": "paper_identity.py",
+        "api": "check",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/PAPER_IDENTITY.md",
+      "source_mentions": [
+        "paper_identity.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
+    },
+    {
+      "schema_id": "persona.paper-identity-declaration.v1",
+      "workflow": "paper-identity",
+      "role": "declaration",
+      "variant": "v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [],
+      "producer": {
+        "module": "paper_identity.py",
+        "api": "from_csl",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "paper_identity.py",
+        "api": "check",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/PAPER_IDENTITY.md",
+      "source_mentions": [
+        "paper_identity.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
+    },
+    {
+      "schema_id": "persona.paper-identity-mapping.v1",
+      "workflow": "paper-identity",
+      "role": "mapping",
+      "variant": "v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [],
+      "producer": null,
+      "consumer": {
+        "module": "paper_identity.py",
+        "api": "from_csl",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/PAPER_IDENTITY.md",
+      "source_mentions": [
+        "paper_identity.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
+    },
+    {
+      "schema_id": "persona.paper-identity-replay.v1",
+      "workflow": "paper-identity",
+      "role": "replay-report",
+      "variant": "v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [],
+      "producer": {
+        "module": "paper_identity.py",
+        "api": "verify",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": null,
+      "guide": "docs/PAPER_IDENTITY.md",
+      "source_mentions": [
+        "paper_identity.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
     },
     {
       "schema_id": null,
@@ -2439,99 +2572,6 @@
       ],
       "response_contract": null,
       "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
-    },
-    {
-      "schema_id": "persona.paper-identity-mapping.v1",
-      "workflow": "paper-identity",
-      "role": "mapping",
-      "variant": "v1",
-      "category": "public",
-      "mode": "opt-in",
-      "selection_flags": [],
-      "producer": null,
-      "consumer": {
-        "module": "paper_identity.py",
-        "api": "from_csl",
-        "evidence": "SOURCE_REVIEWED",
-        "test": null
-      },
-      "guide": "docs/PAPER_IDENTITY.md",
-      "source_mentions": [
-        "paper_identity.py"
-      ],
-      "response_contract": null,
-      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
-    },
-    {
-      "schema_id": "persona.paper-identity-declaration.v1",
-      "workflow": "paper-identity",
-      "role": "declaration",
-      "variant": "v1",
-      "category": "public",
-      "mode": "opt-in",
-      "selection_flags": [],
-      "producer": {
-        "module": "paper_identity.py",
-        "api": "from_csl",
-        "evidence": "SOURCE_REVIEWED",
-        "test": null
-      },
-      "consumer": {
-        "module": "paper_identity.py",
-        "api": "check",
-        "evidence": "SOURCE_REVIEWED",
-        "test": null
-      },
-      "guide": "docs/PAPER_IDENTITY.md",
-      "source_mentions": [
-        "paper_identity.py"
-      ],
-      "response_contract": null,
-      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
-    },
-    {
-      "schema_id": "persona.paper-identity-check.v1",
-      "workflow": "paper-identity",
-      "role": "check-report",
-      "variant": "v1",
-      "category": "public",
-      "mode": "opt-in",
-      "selection_flags": [],
-      "producer": {
-        "module": "paper_identity.py",
-        "api": "check",
-        "evidence": "SOURCE_REVIEWED",
-        "test": null
-      },
-      "consumer": null,
-      "guide": "docs/PAPER_IDENTITY.md",
-      "source_mentions": [
-        "paper_identity.py"
-      ],
-      "response_contract": null,
-      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
-    },
-    {
-      "schema_id": "persona.paper-identity-replay.v1",
-      "workflow": "paper-identity",
-      "role": "replay-report",
-      "variant": "v1",
-      "category": "public",
-      "mode": "opt-in",
-      "selection_flags": [],
-      "producer": {
-        "module": "paper_identity.py",
-        "api": "verify",
-        "evidence": "SOURCE_REVIEWED",
-        "test": null
-      },
-      "consumer": null,
-      "guide": "docs/PAPER_IDENTITY.md",
-      "source_mentions": [
-        "paper_identity.py"
-      ],
-      "response_contract": null,
-      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
     }
   ]
 }

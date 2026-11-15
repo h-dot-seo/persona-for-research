@@ -924,3 +924,15 @@ usage: paper_identity.py verify [-h] [--format {json,text}] [--output NEW_FILE] 
 ```
 
 Guide: [Detached CSL bibliography](PAPER_IDENTITY.md).
+
+### `schema_catalog.py`
+
+Fixed manual append/revision completed-structure preflight, not import acceptance.
+See [SCHEMA_CATALOG.md](SCHEMA_CATALOG.md). No output files or source reads.
+
+```text
+usage: schema_catalog.py [-h] {list,show,check} ...
+usage: schema_catalog.py list [-h] [--text]
+usage: schema_catalog.py show [-h] {manual-append,manual-revision}
+usage: schema_catalog.py check [-h] [--text] {manual-append,manual-revision} file
+```

@@ -828,3 +828,5 @@ Use the [descriptive artifact index](SCHEMAS.md) to find identifiers, evidenced 
 ## Detached bibliography after package construction
 
 See [CSL bibliography](PAPER_IDENTITY.md) for explicit occurrence mapping, replay of supplied copies and source-matching review display. This does not replace census selection, alter package fields or authenticate identity.
+
+Manual append/revision completed-structure preflight: [SCHEMA_CATALOG.md](SCHEMA_CATALOG.md). Static shape only; existing Python consumers remain authoritative.

@@ -68,13 +68,24 @@ schema generations from that field or rename it. Adoption decisions and provenan
 remain operator-authored declarations; no decision, rater identity or provider/run
 provenance is inferred by the index. Empty templates are not completed assessments.
 
-## Relation to future schemas
+## Relation to editor and completed-structure schemas
 
-An editor-oriented document permitting empty template placeholders and an
-import-ready structural checker describe different acceptance sets. This index
-implements neither. Any later schema publication must choose and label its purpose,
-use drift tests against the existing consumers, and preserve open corpus forms.
-There is no new subset validator, editor configuration or hidden integration.
+An editor-oriented document permitting empty template placeholders and a
+completed-structure preflight describe different acceptance sets. This descriptive
+index implements neither; it now links the separate [manual-card preflight](SCHEMA_CATALOG.md).
+That limited checker does not guarantee import acceptance and leaves existing
+Python consumers authoritative. Open corpus forms and the seven editor profiles
+remain unchanged; no editor configuration or hidden integration is installed.
+
+The completed-structure workflow has two untagged output rows: the list catalog
+(produced by schema_catalog.main in its list branch) and the check report (produced
+by schema_catalog.check). Their producer relationships are SOURCE_REVIEWED; no
+downstream report consumer is asserted. The show command returns a fixed JSON
+Schema document. The two completed-structure URNs identify those documents, not
+instance schema IDs, and are not added to the identifier inventory below. An
+instance must never gain a catalog label or $schema field. The check report
+performs neither binding validation nor source reading, and is not an approval.
+The index remains descriptive rather than adopting the checker as its validator.
 
 ## Identifier inventory
 

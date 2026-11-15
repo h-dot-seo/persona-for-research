@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:persona-for-research:completed-structure:manual-observation-revision-card:v1",
+  "title": "manual-observation-revision-card: completed structure INPUT CARD, not import acceptance",
+  "type": "object",
+  "properties": {
+    "schema": {
+      "const": "persona.manual-observation-revision.v1",
+      "type": "string"
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true
+    },
+    "paper_id": {
+      "type": "string",
+      "readOnly": true,
+      "pattern": "\\S"
+    },
+    "observation": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "condition": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "limitation": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "locator": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "topic": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "evidence_quote": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "claim_type": {
+          "type": "string",
+          "enum": [
+            "explicit_statement",
+            "operator_interpretation"
+          ]
+        },
+        "stance": {
+          "type": "string",
+          "enum": [
+            "support",
+            "challenge"
+          ]
+        },
+        "reasoning": {
+          "type": "object",
+          "properties": {
+            "question_framing": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "locator": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "evidence_quote": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            },
+            "alternative_explanation": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "locator": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "evidence_quote": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            },
+            "evidence_standard": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "locator": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "evidence_quote": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            },
+            "falsification_check": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "locator": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "evidence_quote": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            },
+            "uncertainty": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "locator": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "evidence_quote": {
+                  "type": "string",
+                  "pattern": "\\S"
+                },
+                "claim_type": {
+                  "type": "string",
+                  "enum": [
+                    "explicit_statement",
+                    "operator_interpretation"
+                  ]
+                }
+              },
+              "required": [
+                "text",
+                "locator",
+                "evidence_quote",
+                "claim_type"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "method",
+        "condition",
+        "limitation",
+        "locator",
+        "topic",
+        "evidence_quote",
+        "claim_type",
+        "stance"
+      ],
+      "additionalProperties": false
+    },
+    "observation_index": {
+      "type": "integer",
+      "minimum": 0,
+      "readOnly": true
+    },
+    "previous_observation_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true
+    },
+    "operator_id": {
+      "type": "string",
+      "maxLength": 2000,
+      "pattern": "\\S"
+    },
+    "revision_reason": {
+      "type": "string",
+      "maxLength": 2000,
+      "pattern": "\\S"
+    },
+    "new_version": {
+      "type": "string",
+      "maxLength": 2000,
+      "pattern": "\\S"
+    },
+    "new_build_id": {
+      "type": "string",
+      "maxLength": 2000,
+      "pattern": "\\S"
+    }
+  },
+  "required": [
+    "schema",
+    "manifest_sha256",
+    "paper_id",
+    "observation",
+    "observation_index",
+    "previous_observation_sha256",
+    "operator_id",
+    "revision_reason",
+    "new_version",
+    "new_build_id"
+  ],
+  "additionalProperties": false,
+  "description": "Static preflight only. Python checks bindings, membership, quotes and revision relationships. No approval or authentication."
+}
