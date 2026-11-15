@@ -374,13 +374,17 @@ def main():
     checking.add_argument('record', type=Path)
     checking.add_argument('persona', type=Path)
     checking.add_argument('knowledge', type=Path, nargs='?')
-    checking.add_argument('--text', action='store_true')
+    check_format = checking.add_mutually_exclusive_group()
+    check_format.add_argument('--text', action='store_true')
+    check_format.add_argument('--markdown', action='store_true', help='Private local Markdown note; not cleared for sharing')
     status = sub.add_parser('status', help='Read-only axis report; NOT_PERFORMED without records')
     status.add_argument('persona', type=Path)
     status.add_argument('knowledge', type=Path, nargs='?')
     status.add_argument('--human-validation', type=Path, action='append', default=[],
                         help='Checked record(s) to report; repeatable')
-    status.add_argument('--text', action='store_true')
+    status_format = status.add_mutually_exclusive_group()
+    status_format.add_argument('--text', action='store_true')
+    status_format.add_argument('--markdown', action='store_true', help='Private local Markdown note; not cleared for sharing')
     add_output_argument(checking)
     add_output_argument(status)
     args = parser.parse_args()
@@ -404,6 +408,10 @@ def main():
         else:
             result = axis(persona, knowledge, [read(path) for path in args.human_validation])
             output = render_status(result) if args.text else json.dumps(result, indent=2) + '\n'
+        if args.command != 'template' and args.markdown:
+            from private_markdown import render as markdown
+            output = markdown('Human validation ' + args.command, result, max_bytes=MAX_OUTPUT_BYTES,
+                              limit_message='human validation output exceeds 16 MiB')
         output = _bounded(output)
     except (ValueError, OSError, KeyError, TypeError, AttributeError, RecursionError) as exc:
         parser.exit(1, str(exc) + '\n')

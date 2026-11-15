@@ -251,7 +251,7 @@ Guide: [Revision impact](REVISION_IMPACT.md).
 Recheck every supplied source file and stored quote without changing a package.
 
 ```text
-usage: source_recheck.py [-h] [--template] [--operator-id OPERATOR_ID] [--source-root SOURCE_ROOT] [--format {json,text}] [--explain-rejection] [--output NEW_FILE] package [selection]
+usage: source_recheck.py [-h] [--template] [--operator-id OPERATOR_ID] [--source-root SOURCE_ROOT] [--format {json,text,markdown}] [--explain-rejection] [--output NEW_FILE] package [selection]
 ```
 
 Guide: [Source recheck](SOURCE_RECHECK.md). Opt-in [source-input rejection details](SOURCE_REJECTION_DETAILS.md).
@@ -295,8 +295,8 @@ Record and check a detached human validation assessment bound to one persona pac
 ```text
 usage: human_validation.py [-h] {template,check,status} ...
 usage: human_validation.py template [-h] --output OUTPUT persona [knowledge]
-usage: human_validation.py check [-h] [--text] [--output NEW_FILE] record persona [knowledge]
-usage: human_validation.py status [-h] [--human-validation HUMAN_VALIDATION] [--text] [--output NEW_FILE] persona [knowledge]
+usage: human_validation.py check [-h] [--text | --markdown] [--output NEW_FILE] record persona [knowledge]
+usage: human_validation.py status [-h] [--human-validation HUMAN_VALIDATION] [--text | --markdown] [--output NEW_FILE] persona [knowledge]
 ```
 
 Subcommands:
@@ -737,7 +737,7 @@ usage: journey_inputs.py inspect [-h] [--output NEW_FILE] --input-root INPUT_ROO
 Compare two freshly reopened input cards without inferring research progress or approval.
 
 ```text
-usage: journey_compare.py [-h] --previous-root PREVIOUS_ROOT --current-root CURRENT_ROOT [--previous-source-root PREVIOUS_SOURCE_ROOT] [--current-source-root CURRENT_SOURCE_ROOT] [--format {json,text,html}] [--output NEW_FILE] previous current
+usage: journey_compare.py [-h] --previous-root PREVIOUS_ROOT --current-root CURRENT_ROOT [--previous-source-root PREVIOUS_SOURCE_ROOT] [--current-source-root CURRENT_SOURCE_ROOT] [--format {json,text,html,markdown}] [--output NEW_FILE] previous current
 ```
 
 Guide: [Journey comparison](JOURNEY_COMPARISON.md).
@@ -968,3 +968,5 @@ usage: schema_catalog.py list [-h] [--text]
 usage: schema_catalog.py show [-h] {manual-append,manual-revision}
 usage: schema_catalog.py check [-h] [--text] {manual-append,manual-revision} file
 ```
+
+Private Markdown notes: human-validation check/status accept `--markdown` instead of `--text`; source recheck and journey comparison accept `--format markdown`. See [Private notes](MARKDOWN_REPORTS.md). `private_markdown.py` is a library formatter, not a command, validator or sharing sanitizer.

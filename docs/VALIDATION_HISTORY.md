@@ -3453,3 +3453,45 @@ Expected counts:1585 tests,217 Python files,383 manifest entries and384 audit fi
 CLI62 and SKILL8187. New text reads explicitly use UTF-8; subprocess comparisons
 preserve native newlines, not trimming or normalizing away failures. Prior entries
 and public provenance/approval boundaries are preserved.
+
+## 2026-11-15 Private Markdown review notes (0.125-private-markdown-notes)
+
+Roadmap #91 reader adjustment PR3 adds one optional local-note presentation bundle:
+human_validation check/status --markdown (exclusive with --text), source_recheck
+--format markdown, and journey_compare --format markdown. The separate commands
+are not a mandatory serial workflow. Existing result computation, source checks,
+read ordering, input and output budgets, exclusive output and default formats are
+preserved. No source/identity authentication, new assessment, scientific approval,
+STALE reassignment, automatic publishing or external communication is added.
+
+The display applies existing control escaping followed by escaping every ASCII
+punctuation character. A complete sorted ensure_ascii JSON snapshot follows in a
+four-space-indented code block; it preserves JSON meaning, not original bytes or
+numeric lexical spelling. Markdown is not a sanitizer or CSP. Renderer extensions
+and automatic links differ, and private filenames, quotations, identities and human
+assessments can be present. The first paragraph warns against public pasting and
+requires review before sharing. Markdown duplication can exceed a limit even when
+JSON fits. Source recheck keeps its 8 MiB output limit, HV/comparison keep 16 MiB.
+
+Thirteen synthetic regressions execute the guide's preparation and four commands,
+compare complete snapshots to fresh JSON results, check current/stale/absent and
+unfinished human records, malformed inputs, mixed flags, exact byte budgets,
+exclusive output, actual source reads and four-command read ordering/counts.
+Two hash seeds produce identical Markdown. Changed source bytes/card bytes reject, and mixed v1/v2 external-context snapshots preserve the existing separate context boundaries. Focused115 tests passed in18.015s. Baseline52 actual subprocess parity
+covers 36 default executions (18 successes and18 existing rejections), preserving
+stdout/stderr/exit bytes. Existing examples remain unchanged. Guide path tokens
+are substituted after shlex splitting, and text fixture reads explicitly use UTF-8.
+
+The first combined pre-metadata run reported four catalog/description failures
+because modified files still had the prior manifest digests; these are retained
+as a moving-state verification failure, not ignored final results. Manifest updates
+and final independent/full/CI checks are performed against a frozen tree afterward.
+
+This release is based on confirmed 0.124. The first frozen full run completed
+1598 tests in390.976s with one changelog failure (and two platform skips): using
+0.126 skipped a number required by the existing consecutive-release index. The
+release label was corrected to the next main label, 0.125-private-markdown-notes;
+no product code or release-index checks changed. A new freeze and full run follow.
+Final evidence is reported separately for the exact frozen commit.
+Expected counts:1598 tests,219 Python files,386 manifest entries and387 audit files;
+CLI62 and SKILL8187. Existing source/payload/approval boundaries remain unchanged.

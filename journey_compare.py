@@ -201,10 +201,14 @@ def compare(previous_card,previous_root,current_card,current_root,*,previous_sou
 
 
 def render(previous_card,previous_root,current_card,current_root,*,previous_source_root=None,current_source_root=None,format='json'):
-    if format not in ('json','text','html'):raise ValueError('comparison format must be json, text or html')
+    if format not in ('json','text','html','markdown'):raise ValueError('comparison format must be json, text or html')
     result=compare(previous_card,previous_root,current_card,current_root,
         previous_source_root=previous_source_root,current_source_root=current_source_root)
     if format=='json':return _encode(result).decode('utf-8')
+    if format=='markdown':
+        from private_markdown import render as markdown
+        return markdown('Research journey comparison',result,max_bytes=MAX_OUTPUT_BYTES,
+            limit_message='Markdown journey comparison exceeds 16 MiB')
     if format=='html':
         from journey_compare_html import render as render_html
         return render_html(result)
@@ -245,7 +249,7 @@ def main():
     parser.add_argument('previous',type=Path);parser.add_argument('current',type=Path)
     parser.add_argument('--previous-root',type=Path,required=True);parser.add_argument('--current-root',type=Path,required=True)
     parser.add_argument('--previous-source-root',type=Path);parser.add_argument('--current-source-root',type=Path)
-    parser.add_argument('--format',choices=('json','text','html'),default='json');add_output_argument(parser); args=parser.parse_args()
+    parser.add_argument('--format',choices=('json','text','html','markdown'),default='json');add_output_argument(parser); args=parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
     try:
         output=render(inputs._load_card(args.previous),args.previous_root,inputs._load_card(args.current),args.current_root,

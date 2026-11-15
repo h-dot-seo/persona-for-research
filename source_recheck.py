@@ -151,7 +151,7 @@ def _load(path):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('package',type=Path);parser.add_argument('selection',type=Path,nargs='?')
     parser.add_argument('--template',action='store_true');parser.add_argument('--operator-id');parser.add_argument('--source-root',type=Path)
-    parser.add_argument('--format',choices=('json','text'),default='json')
+    parser.add_argument('--format',choices=('json','text','markdown'),default='json')
     parser.add_argument('--explain-rejection',action='store_true');add_output_argument(parser); args=parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
     try:
@@ -164,6 +164,10 @@ def main():
             result=audit(package,load_input(_load,args.selection,'selection',args.explain_rejection),args.source_root,
                 **({'rejection_label':'selection'} if args.explain_rejection else {}))
         output=render(result) if args.format=='text' else json.dumps(result,ensure_ascii=True,indent=2)+'\n'
+        if args.format=='markdown':
+            from private_markdown import render as markdown
+            output=markdown('Source recheck',result,max_bytes=MAX_JSON_BYTES,
+                limit_message='source recheck output exceeds 8 MiB')
         if len(output.encode('utf-8'))>MAX_JSON_BYTES: raise ValueError('source recheck output exceeds 8 MiB')
     except (ValueError,OSError,KeyError,TypeError,AttributeError,RecursionError) as exc: exit_rejected(parser,exc,args.explain_rejection)
     emit(parser, output.encode('utf-8'), getattr(args, 'output', None))
