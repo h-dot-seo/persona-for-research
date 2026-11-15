@@ -3305,3 +3305,24 @@ CLI61. Existing examples/core payload modules are unchanged. SKILL remains8187
 bytes; README/ko, WORKFLOWS, COMMANDS and the dedicated guide provide navigation
 without rewriting unrelated skill text to evade its size bound. RIS, timeline,
 HTML and journey integration are not included.
+
+
+Pre-merge Windows CI correction: initial PR run43663853707 passed both Ubuntu
+versions but failed the new actual-guide test on Windows. The guide's read_text()
+used the host cp1252 default and raised UnicodeDecodeError on byte0x9d, rather
+than reading the repository's UTF-8 document. Windows3.10 ran1543 tests in425.668
+seconds with1 error/skip3; Windows3.12 had the same error in678.728 seconds.
+The guide loader now names UTF-8 explicitly. One new
+regression spies on Path.read_text while rerunning the actual five commands and
+asserts UTF-8 use against the original Unicode guide. No product/guide/fixture
+content was changed to mask the failure.
+
+All new/changed49 and50 test files and the complete new/changed product files
+were audited for read_text/write_text/text-open. This was the only missing
+encoding; the next schema guide already named UTF-8, four dispatcher opens are
+intentional binary rb, and new input loaders are bounded binary readers. No
+intentional locale-dependent text call was found. The Windows checklist now
+includes explicit UTF-8 for repository text, alongside native stderr newlines,
+canonical path fixtures and Python-version-independent source hashes. Corrected
+local identity18 tests passed in0.811 seconds. Corrected suite size is1544; final
+full/independent/new-head matrix checks follow without merging the failed head.

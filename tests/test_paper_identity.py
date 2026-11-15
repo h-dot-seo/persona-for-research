@@ -206,8 +206,22 @@ class PaperIdentityTests(unittest.TestCase):
             self.assertEqual(ex.exception.code,1);p.validate_record(json.loads(out.read_bytes()))
 
 
+    def test_guide_loader_explicit_utf8(self):
+        # Exercise the actual guide loader; do not change the process locale.
+        # Existing Unicode punctuation cannot be decoded by Windows cp1252.
+        guide=ROOT/'docs/PAPER_IDENTITY.md'
+        self.assertTrue(any(byte >= 128 for byte in guide.read_bytes()))
+        original=Path.read_text;seen=[]
+        def read_text(path,*args,**kwargs):
+            if path == guide:
+                self.assertEqual(kwargs.get('encoding'),'utf-8')
+                seen.append(path)
+            return original(path,*args,**kwargs)
+        with patch.object(Path,'read_text',read_text):self.test_actual_synthetic_guide()
+        self.assertEqual(seen,[guide])
+
     def test_actual_synthetic_guide(self):
-        blocks=re.findall(r'```sh\n(.*?)```',(ROOT/'docs/PAPER_IDENTITY.md').read_text(),re.S);self.assertEqual(len(blocks),1)
+        blocks=re.findall(r'```sh\n(.*?)```',(ROOT/'docs/PAPER_IDENTITY.md').read_text(encoding='utf-8'),re.S);self.assertEqual(len(blocks),1)
         with tempfile.TemporaryDirectory(prefix='bibliography guide space ') as td:
             mapping={'OUTPUT/'+n:str(Path(td)/n) for n in ('empty.json','declared.json','replay.json','check.json','review.txt')}
             lines=blocks[0].splitlines();self.assertEqual(len(lines),5)

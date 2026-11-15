@@ -129,7 +129,7 @@ Optional synthetic capacity grids: see [capacity observations](docs/CAPACITY.md)
 Optional maintainer timing: `python -m tests.timing tests.test_skill_contract`; see
 [local timing observations](docs/TEST_TIMING.md). The default/CI commands below are unchanged.
 
-- `python -m unittest discover -q` — the current tree runs 1543 synthetic tests
+- `python -m unittest discover -q` — the current tree runs 1544 synthetic tests
   (platform-specific cases may skip on other hosts). The final local verification result is recorded in the release history. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.
