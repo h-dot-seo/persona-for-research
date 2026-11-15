@@ -296,3 +296,5 @@ RIS occurrence mapping and separate timeline bibliography: [RIS_PAPER_IDENTITY.m
 A later opt-in increment now supports external context through explicit v2 cards and fresh mixed-version comparison: [EXTERNAL_JOURNEY.md](EXTERNAL_JOURNEY.md). The original v1/default path above remains unchanged.
 
 [비공개 Markdown 검토 노트](MARKDOWN_REPORTS.md): 원문 재검사·사람 평가 기록·여정 비교의 선택적 표시이며 공유 허가가 아닙니다.
+
+[저장소 선택 절차](REPOSITORY_CHOICES.md): 향후 소유자 결정의 동시 변경 지점과 기계적 권리 상태 일관성. 정책을 선택하는 문서가 아닙니다.

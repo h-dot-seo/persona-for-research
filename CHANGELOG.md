@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.126-repository-rights-consistency — 2026-11-15
+
+A test-only rights-state consistency check and a short maintainer coordination checklist detect drift across existing statements, metadata and license-file inventory. No license, tag, branch policy or legal conclusion is selected; product behavior remains unchanged.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-15-repository-rights-state-consistency-0126-repository-rights-consistency).
+
 ## 0.125-private-markdown-notes — 2026-11-15
 
 Optional private Markdown notes expose existing human-validation check/status, source recheck and journey comparison results with complete sorted JSON snapshots. They add no assessment, source authentication, approval or sharing permission. Existing default formats and checks remain unchanged.
