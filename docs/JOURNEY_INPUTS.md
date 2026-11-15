@@ -171,3 +171,5 @@ A history-only edit invalidates the card even if the displayed adopted steps are
 unchanged. Explicit answer-review presence/content remains part of argument binding.
 
 For supported result commands, prefer `--output NEW_FILE` to shell redirection; see [exclusive output](EXCLUSIVE_OUTPUT.md). Existing shell blocks above remain valid but retain shell overwrite and re-encoding risks.
+
+A later opt-in increment now supports external context through explicit v2 cards and fresh mixed-version comparison: [EXTERNAL_JOURNEY.md](EXTERNAL_JOURNEY.md). The original v1/default path above remains unchanged.

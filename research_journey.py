@@ -60,13 +60,14 @@ def encode_result(value):
 
 
 def inspect(package, patterns, context, links, proposal, draft, argument, publication_relations,
-            pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None):
+            pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None, external=None):
     if (source_selection is None) != (source_root is None):
         raise ValueError('live source recheck needs both source_selection and source_root')
     supplied = dict(zip(INPUT_NAMES, (package, patterns, context, links, proposal, draft, argument,
         publication_relations)), pattern_id=pattern_id, declared_review=declared_review)
     if source_selection is not None: supplied['source_selection'] = source_selection
     if method_applications is not None: supplied['method_applications'] = method_applications
+    if external is not None: supplied['external'] = external
     values = _inputs(supplied)
     package, patterns, context, links, proposal, draft, argument, publication_relations = [values[k] for k in INPUT_NAMES]
     declared_review = values['declared_review']; pattern_id = values['pattern_id']
@@ -215,6 +216,11 @@ def inspect(package, patterns, context, links, proposal, draft, argument, public
         result['review_agenda'].extend(dict(domain='method_application', **copy.deepcopy(prompt)) for prompt in application_review['review_prompts'])
         result.update(method_application_review=application_review,
             method_application_scope='DECLARED_PATTERN_TO_STEP_INTENT_NOT_EXECUTION_OR_CITATION_TRANSFER')
+    if external is not None:
+        from external_evidence import review as review_external
+        external_review=review_external(package,draft,values['external'],declared_review)
+        result['external_evidence_review']=external_review
+        result['review_agenda'].extend(dict(domain='external_evidence',code='EXTERNAL_CONTEXT_ONLY_NOT_PERSONA_KNOWLEDGE',external_id=row['external_id']) for row in external_review['items'])
     encode_result(result)
     if source_selection is not None:
         from source_recheck import audit as recheck_sources
@@ -278,9 +284,9 @@ def _argument_render_reusable(result, package, draft, argument, declared_review)
 
 
 def render(package, patterns, context, links, proposal, draft, argument, publication_relations,
-           pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None):
+           pattern_id, declared_review=None, *, source_selection=None, source_root=None, method_applications=None, external=None):
     result = inspect(package, patterns, context, links, proposal, draft, argument, publication_relations, pattern_id, declared_review,
-        source_selection=source_selection, source_root=source_root, method_applications=method_applications)
+        source_selection=source_selection, source_root=source_root, method_applications=method_applications, **({'external':external} if external is not None else {}))
     lines = ['Source-to-method-to-argument review journey', 'Status: ' + result['status'],
         'Question: ' + display(result['question']), 'Topic: ' + display(result['topic']),
         'Reference year: ' + str(result['reference_year']), 'Journey input sha256: ' + result['journey_input_sha256'],
@@ -327,6 +333,9 @@ def render(package, patterns, context, links, proposal, draft, argument, publica
     if 'source_recheck' in result:
         from source_recheck import render as render_source_recheck
         lines.extend(['Full current local source recheck, including unused papers:', render_source_recheck(result['source_recheck']).rstrip('\n')])
+    if 'external_evidence_review' in result:
+        from external_evidence import render_text
+        lines.extend(['External evidence (not persona knowledge):',render_text(result['external_evidence_review']).decode('utf-8').rstrip('\n')])
     output = '\n'.join(lines) + '\n'
     if len(output.encode('utf-8')) > MAX_OUTPUT_BYTES: raise ValueError('journey report exceeds 16 MiB; narrow supplied artifacts explicitly')
     return output
@@ -346,14 +355,23 @@ def main():
     parser.add_argument('--pattern-id', required=True); parser.add_argument('--review', type=Path)
     parser.add_argument('--source-selection', type=Path); parser.add_argument('--source-root', type=Path)
     parser.add_argument('--method-applications', type=Path)
+    parser.add_argument('--external',type=Path)
     parser.add_argument('--format', choices=('json', 'text', 'html'), default='json'); add_output_argument(parser); args = parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
     try:
-        values = [_load(getattr(args, name)) for name in INPUT_NAMES] + [args.pattern_id, _load(args.review) if args.review else None]
+        read=_load
+        if args.external is not None:
+            from human_validation import bounded_reader
+            read=bounded_reader()
+        values = [read(getattr(args, name)) for name in INPUT_NAMES] + [args.pattern_id, read(args.review) if args.review else None]
         if (args.source_selection is None) != (args.source_root is None):
             raise ValueError('live source recheck needs both --source-selection and --source-root')
-        options = dict(source_selection=_load(args.source_selection) if args.source_selection else None, source_root=args.source_root,
-            method_applications=_load(args.method_applications) if args.method_applications else None)
+        options = dict(source_selection=read(args.source_selection) if args.source_selection else None, source_root=args.source_root,
+            method_applications=read(args.method_applications) if args.method_applications else None)
+        if args.external is not None:
+            options['external']=read(args.external)
+            if options['external'] is None:raise ValueError('explicit external sidecar must not be JSON null')
+            if args.review is not None and values[-1] is None:raise ValueError('explicit answer review must not be JSON null')
         if args.format == 'html':
             from journey_html import render as render_html
             output = render_html(*values, **options).encode('utf-8')

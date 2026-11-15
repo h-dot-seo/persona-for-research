@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.124-external-journey-cards — 2026-11-15
+
+Explicit external context can be reviewed separately in a journey, pinned with opt-in v2 input cards, moved and freshly re-inspected, and compared across v1/v2 cards. Default v1 contracts remain unchanged. External declarations do not become persona knowledge, citation support or approval.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-15-explicit-external-journey-cards-0124-external-journey-cards).
+
 ## 0.123-ris-bibliography-timeline — 2026-11-15
 
 `paper_identity.py from-ris` copies a narrow explicit RIS bibliography using census occurrence mappings and separate copy replay. `publication_timeline.py --paper-identities` displays supplied declarations separately without changing the existing timeline or CSL results. Neither establishes identity, source rights or approval.

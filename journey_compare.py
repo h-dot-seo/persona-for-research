@@ -42,8 +42,8 @@ def _changed_fields(before,after):
 
 def _files(before,after):
     rows=[]
-    for name in inputs.NAMES:
-        old=before['artifacts'][name];new=after['artifacts'][name]
+    for name in dict.fromkeys((*inputs.names_for(before),*inputs.names_for(after))):
+        old=before['artifacts'].get(name);new=after['artifacts'].get(name)
         if old is None and new is None:status='NOT_SUPPLIED_ON_EITHER_SIDE'
         elif old is None:status='ONLY_CURRENT_SELECTION'
         elif new is None:status='ONLY_PREVIOUS_SELECTION'
@@ -113,6 +113,8 @@ def _declarations(args,report):
                 review_note=row['review_note'],reviewed_step=copy.deepcopy(row['reviewed_step'])) for row in packet['candidates']]),
             argument_proposal_import=('record_id',[dict(record_id='declared-import',scope=copy.deepcopy(packet['scope']),
                 import_record=copy.deepcopy(packet['import_record']),reviewer_id=packet['reviewer_id'])]))
+    if 'external_evidence_review' in report:
+        groups['external_items']=('external_id',copy.deepcopy(report['external_evidence_review']['items']))
     return groups
 
 
@@ -189,6 +191,11 @@ def compare(previous_card,previous_root,current_card,current_root,*,previous_sou
         semantic_comparison='NOT_PERFORMED',researcher_fidelity_evaluation='NOT_PERFORMED',human_review_authenticated=False,
         provider_invoked=False,external_transmission=False,automatic_rebinding=False,automatic_approval=False,
         scientific_execution=False,canonical_update_performed=False,boundary=BOUNDARY)
+    if previous[0]['schema']==inputs.CARD_SCHEMA_V2 or current[0]['schema']==inputs.CARD_SCHEMA_V2:
+        result['external_slot_comparison']=dict(previous_card_schema=previous[0]['schema'],current_card_schema=current[0]['schema'],
+            previous='NOT_SUPPORTED_BY_CARD_VERSION' if 'external' not in previous[0]['artifacts'] else 'NOT_SUPPLIED' if previous[0]['artifacts']['external'] is None else 'SUPPLIED',
+            current='NOT_SUPPORTED_BY_CARD_VERSION' if 'external' not in current[0]['artifacts'] else 'NOT_SUPPLIED' if current[0]['artifacts']['external'] is None else 'SUPPLIED',
+            identity_scope='EXACT_EXTERNAL_ID_ONLY_NOT_SEMANTIC_IDENTITY')
     _encode(result)
     return result
 
@@ -206,6 +213,8 @@ def render(previous_card,previous_root,current_card,current_root,*,previous_sour
         'Logical journey inputs changed: '+str(result['logical_journey_inputs_changed']),
         'Input card changed (paths/bytes included): '+str(result['input_card_changed']),
         'Context changes (not assumed equivalent questions):']
+    if 'external_slot_comparison' in result:
+        lines.append('External evidence slot/version declarations (not persona knowledge): '+display(json.dumps(result['external_slot_comparison'],sort_keys=True)))
     for row in result['context_comparison']:
         lines.append('  '+row['field']+': '+display(row['previous'])+' -> '+display(row['current'])+' | changed='+str(row['changed']))
     lines.append('Named artifact changes:')

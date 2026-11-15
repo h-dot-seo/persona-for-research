@@ -47,6 +47,8 @@ def render(result):
     sections=(('overview','Identity and context'),('artifacts','Selected file changes'),('routes','Exact-reference route changes'),
               ('declarations','Declared record changes'),('prompts','Exact prompt counts'),('evidence','Previous/current evidence'),
               ('reports','Both complete fresh reports'),('snapshot','Complete JSON snapshot'))
+    if 'external_slot_comparison' in result:
+        sections=sections+(('external-context','External evidence (not persona knowledge)'),)
     doc.add('<nav aria-label="Comparison sections"><ul>')
     for key,label in sections:doc.add('<li><a href="#'+key+'">'+label+'</a></li>')
     doc.add('</ul></nav><main><section id="overview"><h2>Identity and context</h2>')
@@ -64,6 +66,13 @@ def render(result):
         doc.add('</p>');doc.data({k:v for k,v in row.items() if k!='reference'});doc.add('</article>')
     doc.add('</section><section id="declarations"><h2>Declared record changes</h2>');doc.data(result['declared_record_comparison'])
     doc.add('</section><section id="prompts"><h2>Exact prompt counts</h2><p>Counts are not scores or proof of resolution.</p>');doc.data(result['exact_prompt_comparison'])
+    if 'external_slot_comparison' in result:
+        doc.add('</section><section id="external-context"><h2>External evidence (not persona knowledge)</h2>')
+        doc.data(result['external_slot_comparison'])
+        for side,report in reports.items():
+            doc.add('<h3>'+side.title()+' external declarations</h3>')
+            if 'external_evidence_review' in report:doc.data(report['external_evidence_review'])
+            else:doc.add('<p>Not supplied; not proof of absence outside these inputs.</p>')
     doc.add('</section><section id="evidence"><h2>Previous/current evidence</h2><div class="record-grid">')
     for side,report in reports.items():
         doc.add('<div><h3>'+side.title()+' supplied routes</h3>')

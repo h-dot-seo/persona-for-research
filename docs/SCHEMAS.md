@@ -134,7 +134,9 @@ status remain in the JSON/text output rather than duplicating a large second tab
 - `persona.folder-inventory.v1`
 - `persona.journey-comparison.v1`
 - `persona.journey-file-selection.v1`
+- `persona.journey-file-selection.v2`
 - `persona.journey-input-card.v1`
+- `persona.journey-input-card.v2`
 - `persona.journey-input-file-check.v1`
 - `persona.manifest-regeneration.v1`
 - `persona.manual-observation-revision.v1`

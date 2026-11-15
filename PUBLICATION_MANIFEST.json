@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.123-ris-bibliography-timeline",
+  "release": "0.124-external-journey-cards",
   "date": "2026-11-15",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 381,
+  "file_count": 383,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 22066,
-      "sha256": "0b67a99640dde197cbc76ef87faf40cc27a51d9bcc1a2d484f91f5cc29332588"
+      "bytes": 22527,
+      "sha256": "c7afb4e5b7f23ac7fd9b9fe29910c4f75aa9481d23d9ab392c9cf15864a58cba"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 21480,
-      "sha256": "5686b227972268d857173186cdc0d2151950f131e09152c8563acd9c6416fcb2"
+      "bytes": 21701,
+      "sha256": "2220d88fb3ce28583884787d93319301d9685acb79d43f25783aa9e426eb5876"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 12812,
-      "sha256": "7960d722bcb39ffe470fbf2a849eec4d557026d3f1c1f9b0386dabe8c6e475b9"
+      "bytes": 13013,
+      "sha256": "0084d62eb33d40631c07d3b4792bf9d9c32359bbc7eac4b1eed3199306e33b71"
     },
     {
       "path": "answer_context.py",
@@ -235,8 +235,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 48385,
-      "sha256": "a2b8125470fdb9f95b9e060002f358bbc30d877c1fd9a5206d1b3aae90dc8d55"
+      "bytes": 48619,
+      "sha256": "e06f4072d6ae01e1568854935f848521d2d2f07ac2ba4a8ccab1ec4cb724e87e"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -305,8 +305,13 @@
     },
     {
       "path": "docs/EXTERNAL_EVIDENCE.md",
-      "bytes": 9909,
-      "sha256": "d39aebadf1dcec976203c8f0d288d63f86d1288a5bcb55b451c1dc45d00088e4"
+      "bytes": 10125,
+      "sha256": "0761c139b53edd6fbde6591b96abf084f2cab87a7f4d6fe54a6993a22481937c"
+    },
+    {
+      "path": "docs/EXTERNAL_JOURNEY.md",
+      "bytes": 7619,
+      "sha256": "e56b1581d12f6c79b6a35888404e3e98a4718b9337e28074d27e1a6dffe5aae2"
     },
     {
       "path": "docs/EXTRACTION_CONTRACT.md",
@@ -345,8 +350,8 @@
     },
     {
       "path": "docs/JOURNEY_INPUTS.md",
-      "bytes": 10552,
-      "sha256": "a4e3bd3665450976689d146d159668d7810729aacedad29c9a797f25f7ae52b2"
+      "bytes": 10768,
+      "sha256": "a381d630076faea1fe370fdd84767a1fe66be28e174db7a0a18e2aeb050a1417"
     },
     {
       "path": "docs/LINK_DESIGN_EDITOR_SCHEMAS.md",
@@ -455,8 +460,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 25132,
-      "sha256": "496f6ebe91096e36479e3ac3e441e4cf9ee5207b2149a3dee58d095a3ca8b932"
+      "bytes": 25348,
+      "sha256": "c60b9900dc00b5fdd1e10d8744bc6f890bf067a08f7e45b94363bb16c36b2578"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -510,8 +515,8 @@
     },
     {
       "path": "docs/SCHEMAS.md",
-      "bytes": 10046,
-      "sha256": "ebec1d72402db6c141827fd44a4dc67edcb00384544fb843014653e72ab296c6"
+      "bytes": 10118,
+      "sha256": "684af8abda8226c9efee53cba0c4b4f22e1ce306bb47d985b372fccac5468942"
     },
     {
       "path": "docs/SCHEMA_CATALOG.md",
@@ -565,13 +570,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 239089,
-      "sha256": "ecaf7de23fdce1de58fb5072efe34d020aa35bd496ac768e786b1bcac0df1499"
+      "bytes": 242149,
+      "sha256": "f3b76550e70e62226e44867e2dfa74ab66d86d526745396212fd04fea561f0a8"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 51170,
-      "sha256": "c64f89927ae5b7515fa6f6cbc4acf245b8c1b85bf609d2b9f7ac074f2008c1c8"
+      "bytes": 51386,
+      "sha256": "b68b802d9bc8b2eb872d5d1bba9e8488ff4efb50eae2b74e8d554bcf49c1e3cf"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -580,8 +585,8 @@
     },
     {
       "path": "docs/artifact-schema-index.json",
-      "bytes": 88538,
-      "sha256": "5b8ba42d9877b4d40a70b1e0ea238751662223089ab7e3e598fc2662c51dca62"
+      "bytes": 90643,
+      "sha256": "913c059d8140726e84f80043aad10d2885d37081a8c509871a741b599415fce6"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -945,23 +950,23 @@
     },
     {
       "path": "journey_compare.py",
-      "bytes": 17663,
-      "sha256": "979f11db8a7567bb4888bc7719477f6805ef2598e03287f101a989366d8eac0a"
+      "bytes": 18762,
+      "sha256": "ca61201ec42ea11f1f237c99fe91abb92884227d57700ec39153c1b6603200e0"
     },
     {
       "path": "journey_compare_html.py",
-      "bytes": 6773,
-      "sha256": "17de59df507b60924569e59d45df1c2f2e7ec4864c0884d63053504bb53d5891"
+      "bytes": 7425,
+      "sha256": "713449d3b1563de97f22880c37f899501d22e34fa46587c8b697bfdf344648c5"
     },
     {
       "path": "journey_html.py",
-      "bytes": 16670,
-      "sha256": "628d05208f5045c0c5409730e0c1963286e458174482d7f57466a012b0c2d4d1"
+      "bytes": 16887,
+      "sha256": "ae52b1f8af26dc6c11371e88b12bdcf4d1ff6fd18636870e85de0f240e5d6c4b"
     },
     {
       "path": "journey_inputs.py",
-      "bytes": 11688,
-      "sha256": "53f523427ffcf4981389a458bcc6c87c1f456373b5e67b348f415b301c6e21de"
+      "bytes": 12864,
+      "sha256": "2b6710ac5aea23bebeb87fd2ce92d8219f5bb7a30cbd42ce23fe57effbfe54c6"
     },
     {
       "path": "method_application.py",
@@ -1090,8 +1095,8 @@
     },
     {
       "path": "research_journey.py",
-      "bytes": 25678,
-      "sha256": "169d6f5ddf2cbe76d384b533b8baa6a35fd0df8190a237bf0e243d33edf3aadc"
+      "bytes": 27021,
+      "sha256": "98a4600ea599e30af78490d8408731e7c0e7d1d6b39706b115880439361d2f14"
     },
     {
       "path": "research_workflow.py",
@@ -1502,6 +1507,11 @@
       "path": "tests/test_external_evidence.py",
       "bytes": 11885,
       "sha256": "3cf35bfbfb93de4a4f60168de6ffc3b40f646f596d3bf8b8d50e77bfec32060a"
+    },
+    {
+      "path": "tests/test_external_journey.py",
+      "bytes": 16928,
+      "sha256": "02fe143017d68c6ab8b7b490db0e3ac1c853850db6750e99364c05b789bb6243"
     },
     {
       "path": "tests/test_extraction_adapter.py",

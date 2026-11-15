@@ -2599,6 +2599,64 @@
       ],
       "response_contract": null,
       "note": "Explicit RIS census occurrence copies; ordered logical entry and raw export hashes, not authenticated identity. Only DO, TI/T1 and PY/Y1 are copied. check and verify consume the distinct declaration; optional timeline display does not change its calculations. Older CSL-only readers reject this declaration."
+    },
+    {
+      "schema_id": "persona.journey-file-selection.v2",
+      "workflow": "persona.journey-file-selection",
+      "role": "artifact",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-external"
+      ],
+      "producer": {
+        "module": "journey_inputs.py",
+        "api": "template",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "journey_inputs.py",
+        "api": "prepare",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/EXTERNAL_JOURNEY.md",
+      "source_mentions": [
+        "journey_inputs.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit v2 supports the external slot; v1 defaults and exact slots are preserved. --include-external selects the template only, not a recipe for every command. The bound card is not authenticated approval; raw/logical consistency and fresh inspection do not incorporate external material into knowledge."
+    },
+    {
+      "schema_id": "persona.journey-input-card.v2",
+      "workflow": "persona.journey-input-card",
+      "role": "artifact",
+      "variant": "v2",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [
+        "--include-external"
+      ],
+      "producer": {
+        "module": "journey_inputs.py",
+        "api": "prepare",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "journey_inputs.py",
+        "api": "inspect",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/EXTERNAL_JOURNEY.md",
+      "source_mentions": [
+        "journey_inputs.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit v2 supports the external slot; v1 defaults and exact slots are preserved. --include-external selects the template only, not a recipe for every command. The bound card is not authenticated approval; raw/logical consistency and fresh inspection do not incorporate external material into knowledge."
     }
   ]
 }

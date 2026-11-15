@@ -17,9 +17,12 @@ from strict_json import loads
 
 SELECTION_SCHEMA='persona.journey-file-selection.v1'
 CARD_SCHEMA='persona.journey-input-card.v1'
+SELECTION_SCHEMA_V2='persona.journey-file-selection.v2'
+CARD_SCHEMA_V2='persona.journey-input-card.v2'
 REQUIRED=journey.INPUT_NAMES
 OPTIONAL=('declared_review','method_applications','source_selection')
 NAMES=REQUIRED+OPTIONAL
+NAMES_V2=NAMES+('external',)
 MAX_CARD_BYTES=128*1024
 MAX_ARTIFACT_BYTES=8*1024*1024
 MAX_OUTPUT_BYTES=16*1024*1024
@@ -37,8 +40,13 @@ def _detach(value):
     return loads(raw)
 
 
-def template():
-    return dict(schema=SELECTION_SCHEMA,pattern_id=None,artifacts={name:None for name in NAMES})
+def template(*,include_external=False):
+    if type(include_external) is not bool:raise ValueError('include_external must be a boolean')
+    return dict(schema=SELECTION_SCHEMA_V2 if include_external else SELECTION_SCHEMA,pattern_id=None,artifacts={name:None for name in (NAMES_V2 if include_external else NAMES)})
+
+
+def names_for(value):
+    return NAMES_V2 if value.get('schema') in (SELECTION_SCHEMA_V2,CARD_SCHEMA_V2) else NAMES
 
 
 def _relative(value):
@@ -58,13 +66,14 @@ def _digest(value):
 
 def _descriptor(value, *, bound):
     value=_detach(value)
-    if not isinstance(value,dict) or set(value)!={'schema','pattern_id','artifacts'} or value['schema']!=(CARD_SCHEMA if bound else SELECTION_SCHEMA):
+    if not isinstance(value,dict) or set(value)!={'schema','pattern_id','artifacts'} or value['schema'] not in ((CARD_SCHEMA,CARD_SCHEMA_V2) if bound else (SELECTION_SCHEMA,SELECTION_SCHEMA_V2)):
         raise ValueError('input selection/card has missing or unsupported fields')
     _text(value['pattern_id'],'pattern_id',128)
-    if not isinstance(value['artifacts'],dict) or set(value['artifacts'])!=set(NAMES):
+    names=names_for(value)
+    if not isinstance(value['artifacts'],dict) or set(value['artifacts'])!=set(names):
         raise ValueError('provide every named artifact slot; optional slots must be explicitly null')
     seen=set()
-    for name in NAMES:
+    for name in names:
         item=value['artifacts'][name]
         if item is None:
             if name in REQUIRED:raise ValueError('required artifact path not supplied: '+name)
@@ -126,8 +135,9 @@ def _load_artifacts(descriptor,root,source_root,*,bound):
         raise ValueError('selected source-selection artifact and explicit source_root must be supplied together')
     names={name:(item['path'] if bound else item) for name,item in descriptor['artifacts'].items() if item is not None}
     paths=_paths(names,root)
-    values={name:None for name in NAMES};records={name:None for name in NAMES};remaining=MAX_ARTIFACT_BYTES
-    for name in NAMES:
+    ordered=names_for(descriptor)
+    values={name:None for name in ordered};records={name:None for name in ordered};remaining=MAX_ARTIFACT_BYTES
+    for name in ordered:
         if name not in paths:continue
         # Reuse the regular-descriptor stability checks, with a bounded read.
         raw=read_source_bytes(paths[name],max_bytes=remaining);remaining-=len(raw)
@@ -143,6 +153,10 @@ def _load_artifacts(descriptor,root,source_root,*,bound):
         records[name]=dict(path=names[name],bytes=len(raw),raw_sha256=actual,json_sha256=logical)
     args=[values[name] for name in REQUIRED]+[descriptor['pattern_id'],values['declared_review']]
     options=dict(method_applications=values['method_applications'],source_selection=values['source_selection'],source_root=source_root)
+    if 'external' in values and descriptor['artifacts']['external'] is not None:
+        if values['external'] is None:raise ValueError('explicit external sidecar must not be JSON null')
+        if descriptor['artifacts']['declared_review'] is not None and values['declared_review'] is None:raise ValueError('explicit answer review must not be JSON null')
+        options['external']=values['external']
     return descriptor,records,args,options
 
 
@@ -150,7 +164,7 @@ def prepare(selection,root,*,source_root=None):
     """Validate selected current inputs and return a new detached card; never save/approve it."""
     selection,records,args,options=_load_artifacts(selection,root,source_root,bound=False)
     journey.inspect(*args,**options)
-    return dict(schema=CARD_SCHEMA,pattern_id=selection['pattern_id'],artifacts=records)
+    return dict(schema=CARD_SCHEMA_V2 if selection['schema']==SELECTION_SCHEMA_V2 else CARD_SCHEMA,pattern_id=selection['pattern_id'],artifacts=records)
 
 
 def _verification(card,records):
@@ -198,7 +212,8 @@ def _load_card(path):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__);commands=parser.add_subparsers(dest='command',required=True)
-    add_output_argument(commands.add_parser('template'))
+    template_parser=commands.add_parser('template');add_output_argument(template_parser)
+    template_parser.add_argument('--include-external',action='store_true')
     for name in ('prepare','inspect'):
         command=commands.add_parser(name); add_output_argument(command);command.add_argument('input',type=Path)
         command.add_argument('--input-root',type=Path,required=True);command.add_argument('--source-root',type=Path)
@@ -206,7 +221,7 @@ def main():
     args=parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
     try:
-        if args.command=='template':output=json.dumps(template(),ensure_ascii=True,indent=2)+'\n'
+        if args.command=='template':output=json.dumps(template(include_external=args.include_external),ensure_ascii=True,indent=2)+'\n'
         elif args.command=='prepare':output=json.dumps(prepare(_load_card(args.input),args.input_root,source_root=args.source_root),ensure_ascii=True,indent=2)+'\n'
         else:output=render(_load_card(args.input),args.input_root,source_root=args.source_root,format=args.format)
         if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES:raise ValueError('bound journey output exceeds 16 MiB')
