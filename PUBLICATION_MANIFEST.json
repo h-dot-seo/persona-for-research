@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.118-source-rejection-details",
+  "release": "0.119-link-design-editor",
   "date": "2026-11-14",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 359,
+  "file_count": 363,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 19433,
-      "sha256": "e9b17f003f1e7764e555309aa44d36ac17aa671f62d0ffb8c5817ff0f5d06d57"
+      "bytes": 19910,
+      "sha256": "b5cb50993001a1fdf4ed0ad7eff634e908277b67079be9302e6d2bf8dd1a6b3f"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 20698,
-      "sha256": "0068b78ee03c6b4b5c2d92e537dc82b889210bb39c9f36a56b4b266db9303a8c"
+      "bytes": 20854,
+      "sha256": "5fc4efc4696feeeb1673dcb294f1e29b4e01c8723d9d4ea6aa0eddc070d9e2fd"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 11860,
-      "sha256": "456575abbf48a5d5d3d1829c601843dce12469d3778efa7db2afab9ca00c8d3e"
+      "bytes": 12032,
+      "sha256": "14898cba0fd7bbf2192f9847915d73115b3f6044dc6e1db59df614f772561b29"
     },
     {
       "path": "answer_context.py",
@@ -344,6 +344,11 @@
       "sha256": "a4e3bd3665450976689d146d159668d7810729aacedad29c9a797f25f7ae52b2"
     },
     {
+      "path": "docs/LINK_DESIGN_EDITOR_SCHEMAS.md",
+      "bytes": 7581,
+      "sha256": "6759dc22f8a6fb58a2b09722e270ce0113a33964f82f2f65273a3926cb629bc3"
+    },
+    {
       "path": "docs/LOCAL_HTML_REVIEW.md",
       "bytes": 9963,
       "sha256": "70875d07e77343a234616dbb30e7d9b254e434569ec059178db14d0f4c1085b8"
@@ -540,8 +545,8 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 223554,
-      "sha256": "3501dd4add13b06b0c50508a70460b1958ff1d8137d86a508ebaf1e7e38e907e"
+      "bytes": 225635,
+      "sha256": "200af42f58a9b634dde7ca99ffc266fc70e48e0567b278347beee8252fb874fc"
     },
     {
       "path": "docs/WORKFLOWS.md",
@@ -1084,6 +1089,11 @@
       "sha256": "fa7851003b67b5fa791b878d15bbc15ba0be8d11ae6d290239e3531db5fffc3f"
     },
     {
+      "path": "schemas/design-scenario.editor.schema.json",
+      "bytes": 5296,
+      "sha256": "c491298577bae46645fcb9df211bf3f72e8f1826024c7177cf46804675fe8851"
+    },
+    {
       "path": "schemas/human-validation-record.editor.schema.json",
       "bytes": 4561,
       "sha256": "5aa3b0ba786faa899deefc1cf2e6f962ff6f056c93d1b226da91c70f2ac9e99f"
@@ -1097,6 +1107,11 @@
       "path": "schemas/manual-observation-revision-card.editor.schema.json",
       "bytes": 7408,
       "sha256": "ead5fa14559733df4100c2782470cc98ea29fbc140b4b1f213e8509af3401a43"
+    },
+    {
+      "path": "schemas/reasoning-links.editor.schema.json",
+      "bytes": 5358,
+      "sha256": "0218841b5fa288894bd2c295b803cad7c6510751cf6ee02f52c713d997688d64"
     },
     {
       "path": "schemas/source-recheck-selection.editor.schema.json",
@@ -1477,6 +1492,11 @@
       "path": "tests/test_journey_inputs.py",
       "bytes": 23685,
       "sha256": "2d0d6ad580271fc46593ae0fb9a3f92b3bba134677e2b26fae43cef291d6ae9d"
+    },
+    {
+      "path": "tests/test_link_design_editor_schemas.py",
+      "bytes": 13092,
+      "sha256": "813b372b78c626bacb13bae3e3fbbc40cb3a1cd95cb8fcc63628b67d33af2efb"
     },
     {
       "path": "tests/test_local_model_handoff.py",

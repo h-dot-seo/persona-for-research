@@ -3177,3 +3177,35 @@ validation. Manifest regeneration precedes the final immutable-tree suite.
 Final counts:1510 tests,208 Python files,359 manifest entries and360 audit files;
 CLI60 and SKILL8187 unchanged. Full/independent/remote results are recorded
 externally after freezing; local syntax checks do not replace Windows/3.10 CI.
+
+
+## 2026-11-14 Connected link/design editor profiles (0.119-link-design-editor)
+
+Roadmap #70 adds two optional input editor profiles and one connected synthetic
+authoring guide, not a new analysis or design workflow. Existing reasoning_links
+and design_scenario APIs remain the mechanical validators of record. Their
+inputs have no discriminator; separate profile URNs/editor associations must not
+be inserted as new $schema, schema or version instance fields. Hash readOnly is
+an annotation, not enforcement or permission. No runtime dependency/checker added.
+
+Endpoint dimension null selects the observation itself. The four required nullable
+design fields may validly remain undeclared; empty links, steps and link_uses are
+valid no-declaration states, not incomplete imports or approvals. Unfinished blank
+strings differ: editor shape permits them where Python requires nonblank text.
+JSON Schema integer accepts0.0, while Python requires exact int. Dynamic endpoint
+existence, hash freshness, self/duplicate links, reverse contrasts, step/link IDs
+and per-step role duplicates remain Python checks, not schema uniqueness claims.
+The supplied link artifact, not its generated review report, binds the design.
+
+Seven new tests compare exact keys/enums/length constraints, mutate every nested
+object, exercise valid null/empty states and dynamic editor-pass/Python-reject
+cases, and run the actual template, supplied-link review, design template and
+supplied-step review sequence using explicit fictional choices. Existing product
+modules, five profiles, examples and guide blocks are byte-identical. Initial
+combined64 tests passed in4.585 seconds; publication audit364 passed. Actual
+JSON Schema validator comparison belongs to independent verification, not a new
+product dependency. Final frozen results are recorded externally.
+
+Final counts:1517 tests,209 Python files,363 manifest entries and364 audit files;
+CLI60 and SKILL8187 unchanged. This connected flow completes the chosen editor
+increment; adding more profiles without reassessing practical value is not assumed.

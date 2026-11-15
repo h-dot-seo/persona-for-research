@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:persona-for-research:editor-profile:design-scenario:v1",
+  "title": "Design scenario INPUT editor profile (empty text allowed; required nullable fields are valid non-declarations)",
+  "description": "Optional editor documentation, not an import-ready checker or a generated review report. No discriminator exists in this input: choose by editor file association; never insert $schema or version. Empty arrays are valid no-declaration states; empty or whitespace-only strings are unfinished where Python requires nonblank text. No relation, role, action or judgement is inferred: transcribe only explicitly supplied choices. Shape is not binding freshness, semantic support, scientific validation, authenticated review or permission. See docs/LINK_DESIGN_EDITOR_SCHEMAS.md.",
+  "type": "object",
+  "properties": {
+    "persona_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true,
+      "description": "Copy from the template; readOnly is an editor annotation, not enforcement. Python checks binding freshness. Never repair stale hashes to force acceptance."
+    },
+    "knowledge_papers_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true,
+      "description": "Copy from the template; readOnly is an editor annotation, not enforcement. Python checks binding freshness. Never repair stale hashes to force acceptance."
+    },
+    "link_artifact_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}(?![\\s\\S])",
+      "readOnly": true,
+      "description": "Copy from the template; readOnly is an editor annotation, not enforcement. Python checks binding freshness. Never repair stale hashes to force acceptance. This binds the original supplied links input, not the generated link-review report."
+    },
+    "operator_id": {
+      "type": "string",
+      "maxLength": 128
+    },
+    "question": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step_id": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "proposed_action": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "rationale": {
+            "type": "string",
+            "maxLength": 2000
+          },
+          "hypothesis": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "description": "The key is required. Null is a valid explicit non-declaration, not an execution-blocking placeholder. Non-null text must be nonblank for Python review; editor permits unfinished empty text."
+          },
+          "falsification_check": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "description": "The key is required. Null is a valid explicit non-declaration, not an execution-blocking placeholder. Non-null text must be nonblank for Python review; editor permits unfinished empty text."
+          },
+          "alternative_explanation": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "description": "The key is required. Null is a valid explicit non-declaration, not an execution-blocking placeholder. Non-null text must be nonblank for Python review; editor permits unfinished empty text."
+          },
+          "uncertainty": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 2000,
+            "description": "The key is required. Null is a valid explicit non-declaration, not an execution-blocking placeholder. Non-null text must be nonblank for Python review; editor permits unfinished empty text."
+          },
+          "link_uses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "link_id": {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "motivation",
+                    "constraint",
+                    "counterargument"
+                  ]
+                },
+                "applicability_note": {
+                  "type": "string",
+                  "maxLength": 2000
+                }
+              },
+              "required": [
+                "link_id",
+                "role",
+                "applicability_note"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "step_id",
+          "proposed_action",
+          "rationale",
+          "hypothesis",
+          "falsification_check",
+          "alternative_explanation",
+          "uncertainty",
+          "link_uses"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "persona_sha256",
+    "knowledge_papers_sha256",
+    "link_artifact_sha256",
+    "operator_id",
+    "question",
+    "steps"
+  ],
+  "additionalProperties": false
+}
