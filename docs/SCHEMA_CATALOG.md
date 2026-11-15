@@ -104,3 +104,5 @@ placeholder rejection, control/private-value non-disclosure and structural-pass 
 authoritative-rejection counterexamples. They are not a claim of whole-product
 validation or a guarantee that an arbitrary JSON Schema engine implements the same
 restricted support policy. Existing consumers perform their normal checks again.
+
+The [first-observation correction flow](OBSERVATION_PREFLIGHT.md) adds observation-response and declared-provenance profiles. Arrays, bounded items, string-or-null and the fixed provenance control pattern are supported; this is still not a general JSON Schema implementation. Oversized arrays report MAX_ITEMS without inspecting their rows.

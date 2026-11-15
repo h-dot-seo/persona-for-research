@@ -965,8 +965,8 @@ See [SCHEMA_CATALOG.md](SCHEMA_CATALOG.md). No output files or source reads.
 ```text
 usage: schema_catalog.py [-h] {list,show,check} ...
 usage: schema_catalog.py list [-h] [--text]
-usage: schema_catalog.py show [-h] {manual-append,manual-revision}
-usage: schema_catalog.py check [-h] [--text] {manual-append,manual-revision} file
+usage: schema_catalog.py show [-h] {manual-append,manual-revision,observation-response,declared-provenance}
+usage: schema_catalog.py check [-h] [--text] {manual-append,manual-revision,observation-response,declared-provenance} file
 ```
 
 Private Markdown notes: human-validation check/status accept `--markdown` instead of `--text`; source recheck and journey comparison accept `--format markdown`. See [Private notes](MARKDOWN_REPORTS.md). `private_markdown.py` is a library formatter, not a command, validator or sharing sanitizer.

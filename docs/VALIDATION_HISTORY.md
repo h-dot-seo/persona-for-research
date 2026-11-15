@@ -3528,3 +3528,45 @@ Final independent/full/new-head CI outcomes are checked against the frozen tree.
 Expected counts:1611 tests,220 Python files,388 manifest entries and389 audit files;
 CLI62 and SKILL8187. Product outputs, source/payload and scientific/approval policy
 remain unchanged.
+
+## 2026-11-15 First observation import preflight (0.127-observation-import-preflight)
+
+Roadmap #88's closed-input priority is applied to one connected first-observation
+response correction flow, not the full response family. Fixed observation-response
+and declared-provenance profiles join the existing manual append/revision catalog.
+The closed subset adds bounded arrays/items/maxItems, string-or-null and one exact
+allowlisted provenance pattern. Unsupported keywords/references/regex still reject;
+no schema URI is fetched. The two new URNs identify schema documents, never fields
+to inject into the input. Existing manual/editor profiles and all importer/decision
+modules and example fixtures remain unchanged.
+
+A synthetic multi-error response and provenance require sequential importer repairs
+without this convenience: missing model text, invalid execution location, candidate
+unknown key and empty method precede a quote mismatch. The preflight reports those
+static problems together. This is a demonstrated synthetic correction path, not an
+observed claim about user error frequency. The Python guide actually extracts the
+literal bound response, reports four static errors, makes explicit synthetic fixes,
+imports and obtains an incomplete deferred review. It does not run a provider,
+automatically repair quotes/hashes or promote canonical/runtime knowledge.
+
+Empty candidates and nullable condition/limitation/topic remain valid. Bounds match
+the existing 128 candidates,500 quote characters and2000 other observation text,
+and128 provenance characters with local/remote/unknown and no C0/DEL controls.
+Errors expose fixed field names, decimal array indices and codes only; neither
+private values nor unknown keys are echoed. MAX_ITEMS rejects without descending
+into oversized arrays. The check retains 8 MiB input/16 MiB output; this does not
+supersede the import handoff's existing2 MiB logical bound. Structurally conforming
+wrong quotes, unknown papers and stale hashes still reject in the existing importer.
+
+Eleven new regressions and focused59 tests passed in5.121s. Baseline55 actual manual
+CLI stdout/stderr/exit bytes matched across32 combinations of two profiles, two
+seeds,JSON/text and malformed inputs. Independent24 tests passed; with socket access
+blocked, installed Draft202012Validator checked both metaschemas and399 nested
+mutations against the real subset checker with identical conformity results. This
+adds no runtime dependency or universal JSON Schema support. Existing importer and
+other root products80 files and all existing schemas were independently byte-equal.
+
+Final independent/full/new-head CI outcomes follow the frozen tree. Expected counts:
+1622 tests,221 Python files,392 manifest entries and393 audit files; CLI62/SKILL8187.
+No scientific assessment, identity authentication, authorization or source/quote
+support is inferred by structural conformance.
