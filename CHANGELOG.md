@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.120-journey-comparison-html — 2026-11-15
+
+`journey_compare.py --format html` passively presents one fresh comparison with separate previous/current evidence targets and both complete reports plus a sorted JSON snapshot. Existing JSON/text and journey HTML defaults remain unchanged. Current reads are not historical source snapshots; visual/keyboard/print QA is unverified after a restricted-browser launch failure.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-15-passive-journey-comparison-html-0120-journey-comparison-html).
+
 ## 0.119-link-design-editor — 2026-11-14
 
 Optional reasoning-link and design-scenario input editor profiles accompany one connected synthetic authoring guide. Valid null/empty declarations differ from unfinished strings; Python still checks freshness, endpoints, duplicate edges and role references. No new analysis, runtime checker or payload fields.

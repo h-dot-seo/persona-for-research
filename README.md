@@ -276,3 +276,5 @@ Maintainers: [read-only documentation subset audit](docs/DOCUMENTATION_AUDIT.md)
 - [Repair local source selection errors](docs/SOURCE_REJECTION_DETAILS.md): opt-in bounded diagnostics across preparation and recheck; no new approval.
 
 - [Edit evidence links and a linked design](docs/LINK_DESIGN_EDITOR_SCHEMAS.md): two optional input profiles; existing Python checks remain authoritative.
+
+- [Compare freshly reopened journeys in local HTML](docs/JOURNEY_COMPARISON_HTML.md): passive navigation over both complete reports, not approval.

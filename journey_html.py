@@ -46,14 +46,15 @@ def _reference_label(ref):
     return str(ref['paper_id'])+' / observation '+str(ref['observation_index'])+' / '+(ref['dimension'] or 'base observation')
 
 
-def _tree(value, known_refs):
+def _tree(value, known_refs, *, anchor_prefix=''):
     """Render data only. Keys and values never become raw markup, URLs, CSS or IDs."""
+    if anchor_prefix not in ('', 'previous-', 'current-'):raise ValueError('unsupported internal evidence anchor prefix')
     if isinstance(value, dict):
         if set(value) == {'paper_id', 'observation_index', 'dimension'}:
             digest = payload_sha256(value)
             label = _escape(_reference_label(value))
             if digest in known_refs:
-                yield '<a href="#evidence-'+digest+'" title="Same exact record; this link adds no evidence or approval">'+label+'</a>'
+                yield '<a href="#'+anchor_prefix+'evidence-'+digest+'" title="Same exact record; this link adds no evidence or approval">'+label+'</a>'
             else:
                 yield '<span>'+label+' <span class="muted">(outside the displayed route index)</span></span>'
             return
@@ -64,9 +65,9 @@ def _tree(value, known_refs):
             yield '<dt>'+_escape(key)+'</dt><dd>'
             if isinstance(item, (dict, list)) and item:
                 yield '<details><summary>'+('Object fields' if isinstance(item, dict) else 'List entries')+' ('+str(len(item))+')</summary>'
-                yield from _tree(item, known_refs)
+                yield from _tree(item, known_refs, anchor_prefix=anchor_prefix)
                 yield '</details>'
-            else: yield from _tree(item, known_refs)
+            else: yield from _tree(item, known_refs, anchor_prefix=anchor_prefix)
             yield '</dd>'
         yield '</dl>'
     elif isinstance(value, list):
@@ -74,7 +75,7 @@ def _tree(value, known_refs):
             yield '<span class="empty">Empty list; no entries supplied.</span>'; return
         yield '<ol class="tree-list">'
         for item in value:
-            yield '<li>'; yield from _tree(item, known_refs); yield '</li>'
+            yield '<li>'; yield from _tree(item, known_refs, anchor_prefix=anchor_prefix); yield '</li>'
         yield '</ol>'
     else: yield _scalar(value)
 
