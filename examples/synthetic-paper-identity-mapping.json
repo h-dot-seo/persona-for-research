@@ -1,0 +1,16 @@
+{
+  "schema": "persona.paper-identity-mapping.v1",
+  "export_sha256": "6d8fd9acf71238f97cfdb4b4955a36e3d443214edd6c878ccca996abbacaefc1",
+  "papers": [
+    {
+      "paper_id": "synthetic-2020-a",
+      "census_id": "census-000001",
+      "entry_sha256": "4820a7a2059ccad8447e028fe4ab6c0a21fd8f5cd0cb024f4a141036cabf3f89"
+    },
+    {
+      "paper_id": "synthetic-2022-b",
+      "census_id": "census-000002",
+      "entry_sha256": "81ef33f32e4cd383a10e7719874f28b5e8c849ca1906e688f8073fd00845bb69"
+    }
+  ]
+}

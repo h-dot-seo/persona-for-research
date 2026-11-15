@@ -148,8 +148,17 @@ def main():
                         help='Detached pre-holdout candidate findings; repeatable, read-only')
     parser.add_argument('--release-decision', type=Path,
                         help='Supplied operator release decision, not tool approval')
+    parser.add_argument('--paper-identities',type=Path,help='Detached CSL declaration; source-matching rows only, not resolved identity')
     add_output_argument(parser); args = parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
+    if args.paper_identities is not None:
+        try:
+            from paper_identity import review_package_output
+            text=review_package_output(args)
+        except (ValueError,OSError,KeyError,TypeError,AttributeError,RecursionError,RuntimeError):
+            parser.exit(1,'Invalid detached bibliography review input.\n')
+        emit(parser,text.encode('utf-8'),getattr(args,'output',None))
+        return
     try:
         records = None
         split = None

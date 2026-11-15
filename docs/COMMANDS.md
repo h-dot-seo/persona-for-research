@@ -273,7 +273,7 @@ Guide: [Topic discovery](TOPIC_DISCOVERY.md).
 Render a compact read-only review from a validated bound scholarly package.
 
 ```text
-usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--split SPLIT] [--challenge-record CHALLENGE_RECORD] [--release-decision RELEASE_DECISION] [--output NEW_FILE] package
+usage: review_package.py [-h] --question QUESTION --topic TOPIC [--evidence-details] [--human-validation HUMAN_VALIDATION] [--split SPLIT] [--challenge-record CHALLENGE_RECORD] [--release-decision RELEASE_DECISION] [--paper-identities PAPER_IDENTITIES] [--output NEW_FILE] package
 ```
 
 Guide: [Evidence details](EVIDENCE_DETAILS.md), [Human validation](HUMAN_VALIDATION.md), [Workflows: review a candidate release and a bound package](WORKFLOWS.md#review-a-candidate-release-and-a-bound-package).
@@ -910,3 +910,17 @@ Maintainer-only documentation audit: `python -m tests.doc_conformance` (no priva
 
 Comparison HTML formatting uses the internal library `journey_compare_html.py` (no CLI).
 See [passive comparison HTML](JOURNEY_COMPARISON_HTML.md).
+
+### `paper_identity.py`
+
+Declare supplied CSL bibliography beside a package; never resolve publication identity.
+
+```text
+usage: paper_identity.py [-h] {template,from-csl,check,verify} ...
+usage: paper_identity.py template [-h] --operator-id OPERATOR_ID --declared-at DECLARED_AT [--output NEW_FILE] package
+usage: paper_identity.py from-csl [-h] --operator-id OPERATOR_ID --declared-at DECLARED_AT [--output NEW_FILE] package export mapping
+usage: paper_identity.py check [-h] [--format {json,text}] [--output NEW_FILE] record package
+usage: paper_identity.py verify [-h] [--format {json,text}] [--output NEW_FILE] record export mapping
+```
+
+Guide: [Detached CSL bibliography](PAPER_IDENTITY.md).

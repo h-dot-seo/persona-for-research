@@ -3252,3 +3252,56 @@ The synthetic browser fixture and failure log are retained outside publication.
 Final counts:1526 tests,211 Python files,366 manifest entries and367 audit files;
 CLI60 and SKILL8187 unchanged. Final full/independent/remote results are recorded
 externally after freeze; this entry does not turn browser-launch failure into UI QA.
+
+
+## 2026-11-15 Detached supplied bibliography (0.121-paper-identity-declaration)
+
+Roadmap #89 adds a bounded package-adjacent declaration, not another census or
+automatic bibliography lookup. Typed CSL ID mapping in the original proposal is
+explicitly replaced by existing census occurrence IDs plus exact raw export and
+entry hashes. Duplicate CSL IDs remain separate occurrences; order/bytes changes
+are not silently rematched. Partial explicit mapping creates NOT_DECLARED rows
+for all unmapped package papers. The4096-row original bound is preserved rather
+than widened to census10000. Identifiers/title/URL have explicit128/2000/2048
+character bounds; abstract, note and CSL ID values are not copied.
+
+Package CURRENT/STALE and row SOURCE_HASH_MATCH/DIFFERS/PAPER_ID_ABSENT are separate.
+Package-only STALE with matching source may display supplied values with both
+labels; differing/absent rows hide their old values. Newly added package papers
+are separately undeclared, and declared-author mismatch rejects. Exact DOI and
+ASCII-casefold groups are not same-publication or independence authentication.
+No network, source reread, knowledge field, four-axis decision, HV or permission
+is added. Review's existing render/API is unchanged; only an opt-in CLI branch
+appends a separate section with a combined input/output budget.
+
+Normal writing supports empty template or from-CSL generation, not manual identity
+editing. This is not anti-forgery: a caller can recompute the self-digest, and
+check/review may show manipulated supplied values on a source-matching row while
+explicitly reporting export_copy_replayed NOT_PERFORMED. verify alone replays
+selected values from supplied original export/mapping and rejects a changed copy;
+it does not authenticate the original package binding, source or operator.
+Generated records are statically validated before emission.
+
+Every CLI invocation shares8MiB raw inputs, output is bounded16MiB. A larger
+generated declaration can exceed a later check/verify invocation's input budget.
+An attempted self-review change to reserve future replay input capacity before
+generation was removed as an unapproved new restriction; the approved asymmetric
+limits are documented and regression-tested instead. Normal small-flow replay
+and structural output validity are not universal large-output roundtrip promises.
+Explicit null bibliography/split reject; existing release-null means undeclared
+and is preserved. Prior review validation/options are not weakened.
+
+Seventeen new tests exercise an actual five-command synthetic export/mapping/copy/
+replay/review flow, partial/duplicate/unknown mappings, source changes, hidden
+values, digest-tamper limits, boundary sizes, malformed inputs and no-network use.
+Focused56 passed in6.599 seconds. Sixteen default round48/49 option combinations
+had identical raw stdout/stderr/exit; eight valid opt-in combinations preserve
+the original report prefix and eight prior refusals remain refused. Initial
+independent36 tests plus real census-generated mapping and4096/4097 limits passed;
+final frozen independent/full/remote results are recorded externally.
+
+Final counts:1543 tests,213 Python files,372 manifest entries and373 audit files;
+CLI61. Existing examples/core payload modules are unchanged. SKILL remains8187
+bytes; README/ko, WORKFLOWS, COMMANDS and the dedicated guide provide navigation
+without rewriting unrelated skill text to evade its size bound. RIS, timeline,
+HTML and journey integration are not included.

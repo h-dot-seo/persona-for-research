@@ -175,3 +175,10 @@ Three separate optional authoring profiles now cover source selection, declared 
 Comparator structural inventory: `persona.comparator-corpus.v1` is operator-authored input; `persona.comparator-overlap.v1` is a detached report. See [guide](COMPARATOR_OVERLAP.md); no specificity or independence assessment is produced.
 
 Optional comparator-only source mapping `persona.comparator-source-selection.v1` and report `persona.comparator-source-recheck.v1`: [source guide](COMPARATOR_SOURCES.md).
+
+Detached bibliography identifiers (see [contract](PAPER_IDENTITY.md)):
+
+- `persona.paper-identity-mapping.v1`
+- `persona.paper-identity-declaration.v1`
+- `persona.paper-identity-check.v1`
+- `persona.paper-identity-replay.v1`
