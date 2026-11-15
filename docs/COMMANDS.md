@@ -421,10 +421,16 @@ Guide: [Design chain](DESIGN_CHAIN.md).
 Review publication-dated question and method records, without career inference.
 
 ```text
-usage: publication_timeline.py [-h] --topic TOPIC [--format {json,text}] [--publication-relations PUBLICATION_RELATIONS] [--output NEW_FILE] package
+
 ```
 
 Guide: [Publication timeline](PUBLICATION_TIMELINE.md).
+
+RIS bibliography/timeline extension: [RIS_PAPER_IDENTITY.md](RIS_PAPER_IDENTITY.md).
+
+```text
+usage: publication_timeline.py [-h] --topic TOPIC [--format {json,text}] [--publication-relations PUBLICATION_RELATIONS] [--paper-identities PAPER_IDENTITIES] [--output NEW_FILE] package
+```
 
 ### `reasoning_links.py`
 
@@ -916,14 +922,25 @@ See [passive comparison HTML](JOURNEY_COMPARISON_HTML.md).
 Declare supplied CSL bibliography beside a package; never resolve publication identity.
 
 ```text
-usage: paper_identity.py [-h] {template,from-csl,check,verify} ...
-usage: paper_identity.py template [-h] --operator-id OPERATOR_ID --declared-at DECLARED_AT [--output NEW_FILE] package
-usage: paper_identity.py from-csl [-h] --operator-id OPERATOR_ID --declared-at DECLARED_AT [--output NEW_FILE] package export mapping
-usage: paper_identity.py check [-h] [--format {json,text}] [--output NEW_FILE] record package
-usage: paper_identity.py verify [-h] [--format {json,text}] [--output NEW_FILE] record export mapping
+
+
+
+
+
 ```
 
 Guide: [Detached CSL bibliography](PAPER_IDENTITY.md).
+
+RIS bibliography/timeline extension: [RIS_PAPER_IDENTITY.md](RIS_PAPER_IDENTITY.md).
+
+```text
+usage: paper_identity.py [-h] {template,from-csl,from-ris,check,verify} ...
+usage: paper_identity.py template [-h] --operator-id OPERATOR_ID --declared-at DECLARED_AT [--output NEW_FILE] package
+usage: paper_identity.py from-csl [-h] --operator-id OPERATOR_ID --declared-at DECLARED_AT [--output NEW_FILE] package export mapping
+usage: paper_identity.py from-ris [-h] --operator-id OPERATOR_ID --declared-at DECLARED_AT [--output NEW_FILE] package export mapping
+usage: paper_identity.py check [-h] [--format {json,text}] [--output NEW_FILE] record package
+usage: paper_identity.py verify [-h] [--format {json,text}] [--output NEW_FILE] record export mapping
+```
 
 ### `schema_catalog.py`
 

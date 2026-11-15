@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.122-manual-structure-preflight",
+  "release": "0.123-ris-bibliography-timeline",
   "date": "2026-11-15",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 377,
+  "file_count": 381,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 21563,
-      "sha256": "bf2b0bd42893af2250f2d647921502a716d459b40094df1c748efe9b410b05fe"
+      "bytes": 22066,
+      "sha256": "0b67a99640dde197cbc76ef87faf40cc27a51d9bcc1a2d484f91f5cc29332588"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 21318,
-      "sha256": "b09230768356aa394d2b338dd460520293d76337bdf6bb931715b7e279362b5f"
+      "bytes": 21480,
+      "sha256": "5686b227972268d857173186cdc0d2151950f131e09152c8563acd9c6416fcb2"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 12634,
-      "sha256": "9bf565e2e5f10b2a5ab55c41f9bae3ba824e3fcfac3c314d1030f1b8471b0ae4"
+      "bytes": 12812,
+      "sha256": "7960d722bcb39ffe470fbf2a849eec4d557026d3f1c1f9b0386dabe8c6e475b9"
     },
     {
       "path": "answer_context.py",
@@ -235,8 +235,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 48000,
-      "sha256": "58720d4f09efd107b0a1b1620afbb23476a16d92d727a6505fa53127994b1649"
+      "bytes": 48385,
+      "sha256": "a2b8125470fdb9f95b9e060002f358bbc30d877c1fd9a5206d1b3aae90dc8d55"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -455,8 +455,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 24975,
-      "sha256": "5446de0e0f439317a5fcb5627c3cc6baa0456ac227d4283917cf70e551f2bb77"
+      "bytes": 25132,
+      "sha256": "496f6ebe91096e36479e3ac3e441e4cf9ee5207b2149a3dee58d095a3ca8b932"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -499,14 +499,19 @@
       "sha256": "19eab7f870aae03d6568edfae206b7ac8eb160f59f0680b38c2b0c72a7a3e565"
     },
     {
+      "path": "docs/RIS_PAPER_IDENTITY.md",
+      "bytes": 7084,
+      "sha256": "0ff3a627ed5a808c8d6e86487becb6ef5f90fe89d7a5c866c9415fb6d077951c"
+    },
+    {
       "path": "docs/RULE_CORRESPONDENCE.md",
       "bytes": 7963,
       "sha256": "643331578e30dc84c5a7faeb2313972c89aadef33c9fd15e8d941629b8d6a4a6"
     },
     {
       "path": "docs/SCHEMAS.md",
-      "bytes": 10000,
-      "sha256": "7d6d92a201529897c287bbda89a88f26568782e414dcf1f72d790c94c1b13eb3"
+      "bytes": 10046,
+      "sha256": "ebec1d72402db6c141827fd44a4dc67edcb00384544fb843014653e72ab296c6"
     },
     {
       "path": "docs/SCHEMA_CATALOG.md",
@@ -560,13 +565,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 235914,
-      "sha256": "c49ee2814ba5a0b0c8d94ed8074edfd600141abff5a69cea88b9bc7c063f1356"
+      "bytes": 239089,
+      "sha256": "ecaf7de23fdce1de58fb5072efe34d020aa35bd496ac768e786b1bcac0df1499"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 51013,
-      "sha256": "38501c4f6a5ae8b1d1e5c57d77bb7566692cd70f437df8ed85a93476ebf12d07"
+      "bytes": 51170,
+      "sha256": "c64f89927ae5b7515fa6f6cbc4acf245b8c1b85bf609d2b9f7ac074f2008c1c8"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -575,8 +580,8 @@
     },
     {
       "path": "docs/artifact-schema-index.json",
-      "bytes": 86875,
-      "sha256": "9d5d86d2320c0fc026b7ee9c40e8d41d5ccd0e3345617afdd857896fa63d6071"
+      "bytes": 88538,
+      "sha256": "5b8ba42d9877b4d40a70b1e0ea238751662223089ab7e3e598fc2662c51dca62"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -774,9 +779,19 @@
       "sha256": "6d8fd9acf71238f97cfdb4b4955a36e3d443214edd6c878ccca996abbacaefc1"
     },
     {
+      "path": "examples/synthetic-paper-identity-export.ris",
+      "bytes": 288,
+      "sha256": "e2bb70c5032983024a890a4f4d65b0d325faf7a81e63bdb00fb87bf60fe61858"
+    },
+    {
       "path": "examples/synthetic-paper-identity-mapping.json",
       "bytes": 509,
       "sha256": "f2d4c01a13df8e0d9a4a33f558857340460029432bc038b24b29d5b80ea52bd4"
+    },
+    {
+      "path": "examples/synthetic-paper-identity-ris-mapping.json",
+      "bytes": 333,
+      "sha256": "fb6dd6a6d6ddb5018547cd5d1208a056d0d896f9f49a7d90c6ef32336c264e03"
     },
     {
       "path": "examples/synthetic-rule-reordered-package.json",
@@ -1000,8 +1015,8 @@
     },
     {
       "path": "paper_identity.py",
-      "bytes": 15973,
-      "sha256": "968ee28cc298b26c0c4d7de27b81c41fcc0d4c92f1642f898af7cfbbe18eba4e"
+      "bytes": 19873,
+      "sha256": "a8cb8295ed664b0c5f27351e733c31f3aa3386371782761bad74d28da5057aae"
     },
     {
       "path": "pattern_hypotheses.py",
@@ -1045,8 +1060,8 @@
     },
     {
       "path": "publication_timeline.py",
-      "bytes": 10187,
-      "sha256": "0925cdead922a7a52c9c06fcc571c2b17a4b2130a0618f00acdf9dd681e7bab3"
+      "bytes": 11802,
+      "sha256": "b22888be8ac92d6b1bc5812ed955a16683e831c3ac9e799ef043fb5c0fd55611"
     },
     {
       "path": "reasoning_cards.py",
@@ -1622,6 +1637,11 @@
       "path": "tests/test_paper_identity.py",
       "bytes": 18449,
       "sha256": "a6a279ee22056dde44fda9dc4d2014368cf52a598f1e9b82ffb8675ec4ce3c19"
+    },
+    {
+      "path": "tests/test_paper_identity_ris.py",
+      "bytes": 14207,
+      "sha256": "74c5ae92b75994bd5cfabebd3fe8cd080289fd1030f773073df9ccffdbfee711"
     },
     {
       "path": "tests/test_pattern_evidence_reasons.py",

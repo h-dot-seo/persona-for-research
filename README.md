@@ -282,3 +282,5 @@ Maintainers: [read-only documentation subset audit](docs/DOCUMENTATION_AUDIT.md)
 - [Detached CSL bibliography](docs/PAPER_IDENTITY.md): explicit occurrence mapping, copy replay and current-source display without package changes.
 
 Manual append/revision completed-structure preflight: [SCHEMA_CATALOG.md](docs/SCHEMA_CATALOG.md). Static shape only; existing Python consumers remain authoritative.
+
+RIS occurrence mapping and separate timeline bibliography: [RIS_PAPER_IDENTITY.md](docs/RIS_PAPER_IDENTITY.md). No automatic identity matching or source access.

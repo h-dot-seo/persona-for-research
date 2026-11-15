@@ -1,0 +1,11 @@
+{
+  "schema": "persona.paper-identity-mapping.v1",
+  "export_sha256": "e2bb70c5032983024a890a4f4d65b0d325faf7a81e63bdb00fb87bf60fe61858",
+  "papers": [
+    {
+      "paper_id": "synthetic-2020-a",
+      "census_id": "census-000001",
+      "entry_sha256": "bcd3f6d457e1fa534c6570b2379ae59de19e94146197eb017f519fa4d10780bd"
+    }
+  ]
+}

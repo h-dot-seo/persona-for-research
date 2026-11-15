@@ -135,14 +135,39 @@ def render(value, topic, publication_relations=None):
     return '\n'.join(lines) + '\n'
 
 
+def _with_paper_identities(args):
+    from paper_identity import reader,check,render as identity_render,MAX_OUTPUT_BYTES
+    read=reader();value=read(args.package)
+    relations=read(args.publication_relations) if args.publication_relations is not None else None
+    record=read(args.paper_identities)
+    review=check(record,value)
+    # Existing timeline/render remain unmodified; no bibliography affects ordering.
+    if args.format=='text':
+        base=render(value,args.topic,relations)
+        digest=payload_sha256(dict(package=value,topic=args.topic,publication_relations=relations,paper_identity_declaration_sha256=record['payload_sha256']))
+        output=base+'Detached bibliography input sha256: '+digest+'\n'+identity_render(review)
+    else:
+        result=timeline(value,args.topic,relations)
+        result['paper_identity_review']=review
+        result['paper_identity_input_sha256']=payload_sha256(dict(package=value,topic=args.topic,publication_relations=relations,paper_identity_declaration_sha256=record['payload_sha256']))
+        output=json.dumps(result,indent=2)+'\n'
+    if len(output.encode('utf-8'))>MAX_OUTPUT_BYTES:raise ValueError('combined timeline output exceeds 16 MiB')
+    return output
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('package', type=Path)
     parser.add_argument('--topic', required=True)
     parser.add_argument('--format', choices=('json', 'text'), default='json')
     parser.add_argument('--publication-relations',type=Path)
+    parser.add_argument('--paper-identities',type=Path)
     add_output_argument(parser); args = parser.parse_args()
     preflight(parser, getattr(args, 'output', None))
+    if args.paper_identities is not None:
+        try: output=_with_paper_identities(args)
+        except (ValueError,OSError,KeyError,TypeError,AttributeError,RecursionError,RuntimeError):parser.exit(1,'Invalid detached bibliography timeline input.\n')
+        emit(parser,output.encode('utf-8'),getattr(args,'output',None));return
     try:
         value = load(args.package)
         if args.publication_relations:

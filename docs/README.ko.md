@@ -290,3 +290,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 - [분리형 CSL 서지 선언](PAPER_IDENTITY.md): 명시 매핑·복사 재현·현재 출처별 표시이며 신원·권리 인증이 아닙니다.
 
 Manual append/revision completed-structure preflight: [SCHEMA_CATALOG.md](SCHEMA_CATALOG.md). Static shape only; existing Python consumers remain authoritative.
+
+RIS occurrence mapping and separate timeline bibliography: [RIS_PAPER_IDENTITY.md](RIS_PAPER_IDENTITY.md). No automatic identity matching or source access.

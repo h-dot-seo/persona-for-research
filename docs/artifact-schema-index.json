@@ -1280,7 +1280,7 @@
         "paper_identity.py"
       ],
       "response_contract": null,
-      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
+      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels. RIS uses a distinct declaration schema; mapping, check and replay report shapes are also used by the explicit RIS flow described in docs/RIS_PAPER_IDENTITY.md."
     },
     {
       "schema_id": "persona.paper-identity-declaration.v1",
@@ -1307,7 +1307,7 @@
         "paper_identity.py"
       ],
       "response_contract": null,
-      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
+      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels. RIS uses a distinct declaration schema; mapping, check and replay report shapes are also used by the explicit RIS flow described in docs/RIS_PAPER_IDENTITY.md."
     },
     {
       "schema_id": "persona.paper-identity-mapping.v1",
@@ -1329,7 +1329,7 @@
         "paper_identity.py"
       ],
       "response_contract": null,
-      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
+      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels. RIS uses a distinct declaration schema; mapping, check and replay report shapes are also used by the explicit RIS flow described in docs/RIS_PAPER_IDENTITY.md."
     },
     {
       "schema_id": "persona.paper-identity-replay.v1",
@@ -1351,7 +1351,7 @@
         "paper_identity.py"
       ],
       "response_contract": null,
-      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels."
+      "note": "Explicit supplied CSL occurrence declarations and replay, not authenticated identity. Mapping is operator-authored. Template also creates empty declarations; verify additionally consumes declarations and mappings. See the guide for distinct evidence levels. RIS uses a distinct declaration schema; mapping, check and replay report shapes are also used by the explicit RIS flow described in docs/RIS_PAPER_IDENTITY.md."
     },
     {
       "schema_id": null,
@@ -2572,6 +2572,33 @@
       ],
       "response_contract": null,
       "note": "Identifier occurrence only; producer/consumer and mode not established by this index. No field-shape claim."
+    },
+    {
+      "schema_id": "persona.paper-identity-ris-declaration.v1",
+      "workflow": "paper-identity",
+      "role": "declaration",
+      "variant": "ris-v1",
+      "category": "public",
+      "mode": "opt-in",
+      "selection_flags": [],
+      "producer": {
+        "module": "paper_identity.py",
+        "api": "from_ris",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "consumer": {
+        "module": "paper_identity.py",
+        "api": "check",
+        "evidence": "SOURCE_REVIEWED",
+        "test": null
+      },
+      "guide": "docs/RIS_PAPER_IDENTITY.md",
+      "source_mentions": [
+        "paper_identity.py"
+      ],
+      "response_contract": null,
+      "note": "Explicit RIS census occurrence copies; ordered logical entry and raw export hashes, not authenticated identity. Only DO, TI/T1 and PY/Y1 are copied. check and verify consume the distinct declaration; optional timeline display does not change its calculations. Older CSL-only readers reject this declaration."
     }
   ]
 }
