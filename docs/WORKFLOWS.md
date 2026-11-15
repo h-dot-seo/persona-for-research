@@ -824,3 +824,7 @@ Use the [descriptive artifact index](SCHEMAS.md) to find identifiers, evidenced 
 [Editor schema documentation](EDITOR_SCHEMAS.md) supports source-recheck selections, declared provenance and human records as separate optional workflows. No schema checker, payload fields, judgment defaults or editor settings are installed.
 
 [Comparator exact-string inventory](COMPARATOR_OVERLAP.md): separately declared observations, never author specificity or persona knowledge.
+
+## Detached bibliography after package construction
+
+See [CSL bibliography](PAPER_IDENTITY.md) for explicit occurrence mapping, replay of supplied copies and source-matching review display. This does not replace census selection, alter package fields or authenticate identity.

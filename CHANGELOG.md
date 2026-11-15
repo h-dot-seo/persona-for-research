@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.121-paper-identity-declaration — 2026-11-15
+
+`paper_identity.py` supplies template/from-csl/check/verify and `review_package.py --paper-identities` adds a separate declared-bibliography section. Exact export occurrences and operator mappings are not publication identity. Package currentness, row source matching and export-copy replay are distinct; default review and canonical payload remain unchanged.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-15-detached-supplied-bibliography-0121-paper-identity-declaration).
+
 ## 0.120-journey-comparison-html — 2026-11-15
 
 `journey_compare.py --format html` passively presents one fresh comparison with separate previous/current evidence targets and both complete reports plus a sorted JSON snapshot. Existing JSON/text and journey HTML defaults remain unchanged. Current reads are not historical source snapshots; visual/keyboard/print QA is unverified after a restricted-browser launch failure.

@@ -1,12 +1,12 @@
 {
   "project": "persona-for-research",
-  "release": "0.120-journey-comparison-html",
+  "release": "0.121-paper-identity-declaration",
   "date": "2026-11-15",
   "private_history_imported": false,
   "actual_corpora_included": false,
   "synthetic_examples_only": true,
   "license_status": "NOT_SELECTED",
-  "file_count": 366,
+  "file_count": 372,
   "files": [
     {
       "path": ".gitattributes",
@@ -25,8 +25,8 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 20456,
-      "sha256": "065ed60e082a0bffc1ed894860009ba18cf8a4692c068cf03ecf863b595a10a6"
+      "bytes": 20993,
+      "sha256": "5734098a9db3ba2f904121aa71b0682244f9f015978a17c95cf0db124e5dcf71"
     },
     {
       "path": "PUBLICATION.md",
@@ -35,8 +35,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 21002,
-      "sha256": "e44ebb03069910e88fde9d7bcc1f86ade696508fa9cac747b34b46396aea7582"
+      "bytes": 21151,
+      "sha256": "7008e5490d9a54c88974fb14852b54b54c3e83349d94ef8996e3393d885d2090"
     },
     {
       "path": "RIGHTS.md",
@@ -55,8 +55,8 @@
     },
     {
       "path": "VALIDATION.md",
-      "bytes": 12238,
-      "sha256": "efc638cc64f0ead5a0db43c37d92ac4af93b7fd1161ec1412cc39c941cfd6786"
+      "bytes": 12452,
+      "sha256": "e81dfbb4dd136443fc58bf89caabe7e1dbde0e5b459af49dbe956f8a6ae859c3"
     },
     {
       "path": "answer_context.py",
@@ -235,8 +235,8 @@
     },
     {
       "path": "docs/COMMANDS.md",
-      "bytes": 46819,
-      "sha256": "b1d4896624fa67cfa8b891553e14d1a7c7b470466cc65c2ef62705d5b45d745a"
+      "bytes": 47556,
+      "sha256": "b42ad2375f423ae63196cdfecd739a61200d3e3cc95359a6b7702d1898dff9bf"
     },
     {
       "path": "docs/COMMAND_CATALOG.md",
@@ -414,6 +414,11 @@
       "sha256": "45c272c0714f0d7e0b4023419da89809330d6544fc7c12ab98e9c7aa2b9a9817"
     },
     {
+      "path": "docs/PAPER_IDENTITY.md",
+      "bytes": 10002,
+      "sha256": "eea255ec0de157ea81d42d689ceadfb7d2eabe342fee5a4fdeebfef99b0de78f"
+    },
+    {
       "path": "docs/PATTERN_HYPOTHESES.md",
       "bytes": 6288,
       "sha256": "84573bf9ae5e383e9fa5903a3e5e964dbeec1273e9b4e46a46cb9b9dba9768fe"
@@ -450,8 +455,8 @@
     },
     {
       "path": "docs/README.ko.md",
-      "bytes": 24661,
-      "sha256": "0495f9941ab292d1674fdac4c38402eb804fe8158f7302cf5c4700ff04409c8e"
+      "bytes": 24813,
+      "sha256": "380ba049544dbbaf80547717064ce4d786abdaf5a5c1fd817a78d6a243225287"
     },
     {
       "path": "docs/REASONING_LINKS.md",
@@ -500,8 +505,8 @@
     },
     {
       "path": "docs/SCHEMAS.md",
-      "bytes": 8941,
-      "sha256": "e7d93fe9f11be62766576d2f55b58da0cf4ff83ffbbb14378dfa42462b341e65"
+      "bytes": 9167,
+      "sha256": "2077a7e138df2005339e800d42b8a0653c2e1835b0707cc23c67c3568c81b44a"
     },
     {
       "path": "docs/SOURCE_RECHECK.md",
@@ -550,13 +555,13 @@
     },
     {
       "path": "docs/VALIDATION_HISTORY.md",
-      "bytes": 228524,
-      "sha256": "b8c445bad386d34585058a306ddf840e446b6d7b02791f21cc5086689e523483"
+      "bytes": 233387,
+      "sha256": "eb1a608be955ef1ddca8cc0a06b21e1b7f38fe5628cee1b63a371864180ab52f"
     },
     {
       "path": "docs/WORKFLOWS.md",
-      "bytes": 50573,
-      "sha256": "e7d708c6d037b5f4f82af1c7656dd65b7ba70c7ece0a8f61df870c8334e3c762"
+      "bytes": 50851,
+      "sha256": "4a0045d19ed4b697d39c6f6576fa9a834a627e25bac960dd720f9c11dd3834a7"
     },
     {
       "path": "docs/WORKFLOW_REVIEW.md",
@@ -565,8 +570,8 @@
     },
     {
       "path": "docs/artifact-schema-index.json",
-      "bytes": 81688,
-      "sha256": "65677e132e20af6d386711eb178b6b7cdf4c31e9a5ec784f1fdc16c478d47211"
+      "bytes": 85127,
+      "sha256": "e12cbb256685ea1501233224c98682788b787398128b7fe4a919598fdae3e1a1"
     },
     {
       "path": "evaluate_synthetic.py",
@@ -752,6 +757,21 @@
       "path": "examples/synthetic-journey-inputs.json",
       "bytes": 585,
       "sha256": "cd6d2e055b8700bc2a1d52c36b681eb4a32a219c2da1fad782df294323c15722"
+    },
+    {
+      "path": "examples/synthetic-paper-identities.json",
+      "bytes": 3758,
+      "sha256": "725ef0ca92e3b2c5c32b3bc3fb8f68babc98d1559f22af4ae91eb6416918f097"
+    },
+    {
+      "path": "examples/synthetic-paper-identity-export.csl.json",
+      "bytes": 689,
+      "sha256": "6d8fd9acf71238f97cfdb4b4955a36e3d443214edd6c878ccca996abbacaefc1"
+    },
+    {
+      "path": "examples/synthetic-paper-identity-mapping.json",
+      "bytes": 509,
+      "sha256": "f2d4c01a13df8e0d9a4a33f558857340460029432bc038b24b29d5b80ea52bd4"
     },
     {
       "path": "examples/synthetic-rule-reordered-package.json",
@@ -974,6 +994,11 @@
       "sha256": "355dc2e40a14d4141ee3d898ed6d3b24b1d3aa46e6d6a6500a5aab23b82935fb"
     },
     {
+      "path": "paper_identity.py",
+      "bytes": 15973,
+      "sha256": "968ee28cc298b26c0c4d7de27b81c41fcc0d4c92f1642f898af7cfbbe18eba4e"
+    },
+    {
       "path": "pattern_hypotheses.py",
       "bytes": 10829,
       "sha256": "18379638625c590ad63121f1c96d1c240d33e45412e9e3280805e95a92a75389"
@@ -995,8 +1020,8 @@
     },
     {
       "path": "persona_cli.py",
-      "bytes": 25434,
-      "sha256": "485be60dabe0bbf0026d0a66d0721f346511668117965564eed87a70d1ff1448"
+      "bytes": 25455,
+      "sha256": "d475d910e9ab90c421aeda066907328dc7eded0ce1ef73a33df0be14eb0f53fa"
     },
     {
       "path": "prepare_local_manifest.py",
@@ -1060,8 +1085,8 @@
     },
     {
       "path": "review_package.py",
-      "bytes": 12930,
-      "sha256": "c87b78d3216ab1a86ab1cf124b408feefc5fc3a9b6d6411639a6cb0890b2c47a"
+      "bytes": 13488,
+      "sha256": "d94284e07d181b4b8a4524a489a9bbcf590db96a7b246af867e945fe20b6f9d9"
     },
     {
       "path": "review_workspace.py",
@@ -1572,6 +1597,11 @@
       "path": "tests/test_package_overview.py",
       "bytes": 13733,
       "sha256": "27064111c931bbbedf1f7d490fa0e5aa9004f521849a9c5f5916d6f7c1829d24"
+    },
+    {
+      "path": "tests/test_paper_identity.py",
+      "bytes": 18449,
+      "sha256": "a6a279ee22056dde44fda9dc4d2014368cf52a598f1e9b82ffb8675ec4ce3c19"
     },
     {
       "path": "tests/test_pattern_evidence_reasons.py",

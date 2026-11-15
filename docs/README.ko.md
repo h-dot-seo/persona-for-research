@@ -286,3 +286,5 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 [선택적 편집용 스키마](EDITOR_SCHEMAS.md): 원문 선택·출처 선언·분리형 사람 평가 기록의 작성 지원 문서입니다. 빈 값 허용은 검증 통과나 승인을 뜻하지 않습니다.
 
 [Comparator exact-string inventory](COMPARATOR_OVERLAP.md): separately declared observations, never author specificity or persona knowledge.
+
+- [분리형 CSL 서지 선언](PAPER_IDENTITY.md): 명시 매핑·복사 재현·현재 출처별 표시이며 신원·권리 인증이 아닙니다.

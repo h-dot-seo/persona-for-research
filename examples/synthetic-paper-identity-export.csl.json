@@ -1,0 +1,36 @@
+[
+  {
+    "id": "same-private-id",
+    "DOI": "10.0000/fictional-A",
+    "PMID": "999999999901",
+    "PMCID": "fictional-pmc-1",
+    "ISBN": "fictional-isbn",
+    "URL": "https://example.invalid/fictional",
+    "title": "Synthetic bibliography A",
+    "issued": {
+      "date-parts": [
+        [
+          "2020"
+        ]
+      ]
+    },
+    "abstract": "SYNTHETIC_OMITTED_ABSTRACT",
+    "note": "SYNTHETIC_OMITTED_NOTE"
+  },
+  {
+    "id": "same-private-id",
+    "DOI": "10.0000/fictional-a",
+    "title": "Synthetic bibliography B",
+    "issued": {
+      "date-parts": [
+        [
+          2021
+        ]
+      ]
+    }
+  },
+  {
+    "id": 1,
+    "title": "SYNTHETIC_UNMAPPED_TITLE"
+  }
+]

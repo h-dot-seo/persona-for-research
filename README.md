@@ -278,3 +278,5 @@ Maintainers: [read-only documentation subset audit](docs/DOCUMENTATION_AUDIT.md)
 - [Edit evidence links and a linked design](docs/LINK_DESIGN_EDITOR_SCHEMAS.md): two optional input profiles; existing Python checks remain authoritative.
 
 - [Compare freshly reopened journeys in local HTML](docs/JOURNEY_COMPARISON_HTML.md): passive navigation over both complete reports, not approval.
+
+- [Detached CSL bibliography](docs/PAPER_IDENTITY.md): explicit occurrence mapping, copy replay and current-source display without package changes.

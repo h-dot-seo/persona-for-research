@@ -1,0 +1,99 @@
+{
+  "schema": "persona.paper-identity-declaration.v1",
+  "author_id": "synthetic-scholar",
+  "version": "1",
+  "build_id": "synthetic-trajectory-conditions",
+  "persona_payload_sha256": "8060447e24362bdd4a49ba63830758cc889ac7dcaeb34ba04b2ec259f862b498",
+  "knowledge_papers_sha256": "598a25e888e37f9f6f03826a5b2cbed691a41b7fc1dc1504e94174e895ca6d6e",
+  "operator_id": "synthetic-bibliography-operator",
+  "declared_at": "2026-11-15",
+  "export_sha256": "6d8fd9acf71238f97cfdb4b4955a36e3d443214edd6c878ccca996abbacaefc1",
+  "mapping_sha256": "e160eeaefb959769e797c7dd1fe3e3f4f58e474aff9de4f0abd5e21dbd1128d7",
+  "papers": [
+    {
+      "paper_id": "synthetic-2020-a",
+      "source_sha256": "72be33991210896ecce7cfc125bcf61340696ad35ed818dc458d54592cae02f3",
+      "identifiers": {
+        "doi": "10.0000/fictional-A",
+        "pmid": "999999999901",
+        "pmcid": "fictional-pmc-1",
+        "isbn": "fictional-isbn",
+        "url": "https://example.invalid/fictional"
+      },
+      "declared_title": "Synthetic bibliography A",
+      "declared_year": 2020,
+      "source_export": {
+        "format": "csl-json",
+        "census_id": "census-000001",
+        "entry_sha256": "4820a7a2059ccad8447e028fe4ab6c0a21fd8f5cd0cb024f4a141036cabf3f89"
+      },
+      "status": "DECLARED_CSL_NOT_RESOLVED"
+    },
+    {
+      "paper_id": "synthetic-2022-b",
+      "source_sha256": "3c70ec921f4d6b17c8091f10ca1079bb3dc284bfe230fd9dfc38bc7908c51257",
+      "identifiers": {
+        "doi": "10.0000/fictional-a",
+        "pmid": null,
+        "pmcid": null,
+        "isbn": null,
+        "url": null
+      },
+      "declared_title": "Synthetic bibliography B",
+      "declared_year": 2021,
+      "source_export": {
+        "format": "csl-json",
+        "census_id": "census-000002",
+        "entry_sha256": "81ef33f32e4cd383a10e7719874f28b5e8c849ca1906e688f8073fd00845bb69"
+      },
+      "status": "DECLARED_CSL_NOT_RESOLVED"
+    },
+    {
+      "paper_id": "synthetic-2023-review",
+      "source_sha256": "d7bc82bc888776391fd761fe0383a0c10492d93119b945ee48e337fc9d02fb16",
+      "identifiers": {
+        "doi": null,
+        "pmid": null,
+        "pmcid": null,
+        "isbn": null,
+        "url": null
+      },
+      "declared_title": null,
+      "declared_year": null,
+      "source_export": null,
+      "status": "NOT_DECLARED"
+    },
+    {
+      "paper_id": "synthetic-2024-a-challenge",
+      "source_sha256": "829e954f4ffa4611880ff70a1d0f998badbdb51035fa1d70a7e108b45818a486",
+      "identifiers": {
+        "doi": null,
+        "pmid": null,
+        "pmcid": null,
+        "isbn": null,
+        "url": null
+      },
+      "declared_title": null,
+      "declared_year": null,
+      "source_export": null,
+      "status": "NOT_DECLARED"
+    },
+    {
+      "paper_id": "synthetic-2024-a-support",
+      "source_sha256": "9fca88992948bfdb206c9ec3aaa4ebe17a7308af4ca2531393b760609d2264c4",
+      "identifiers": {
+        "doi": null,
+        "pmid": null,
+        "pmcid": null,
+        "isbn": null,
+        "url": null
+      },
+      "declared_title": null,
+      "declared_year": null,
+      "source_export": null,
+      "status": "NOT_DECLARED"
+    }
+  ],
+  "boundary": "Operator-declared bibliography, not resolved publication identity, source authenticity, rights clearance or authenticated review. Exact or ASCII-casefold DOI equality does not prove identical publications or independence. No lookup, network, source reread, knowledge ingestion, review decision or canonical update. Titles, identifiers and URLs may be private; URLs can contain account or session data. Keep local unless separately authorized to share. Hashes are consistency checks, not signatures.",
+  "payload_sha256": "f62ec768ba8e8977d699d173db08069df6e9259b82f90fd0ddb6b2ad2f084a9e"
+}
