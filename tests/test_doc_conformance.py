@@ -104,9 +104,10 @@ python ignored.py
         old_fields=node._fields
         # Simulate Python3.12's extra type_params versus Python3.10 AST layout.
         node._fields=tuple(k for k in old_fields if k!='type_params')
-        older=ast.dump(node,include_attributes=False)
+        self.assertNotIn('type_params',dict(ast.iter_fields(node)))
+        self.assertEqual(digest,d.method_source_sha256(source,node))
         node._fields=node._fields+('type_params',);node.type_params=[]
-        self.assertNotEqual(older,ast.dump(node,include_attributes=False))
+        self.assertIn('type_params',dict(ast.iter_fields(node)))
         self.assertEqual(digest,d.method_source_sha256(source,node))
         for raw in (source.replace('\n','\r\n'),source.replace('\n','\r')):
             normalized=raw.replace('\r\n','\n').replace('\r','\n')

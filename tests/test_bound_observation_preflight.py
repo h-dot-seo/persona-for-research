@@ -160,12 +160,14 @@ class BoundObservationPreflightTests(unittest.TestCase):
         self.assertEqual(report['errors'], [
             dict(path=['response'], code='INPUT_UNREADABLE_OR_INVALID'),
             dict(path=['provenance', 'operator_id'], code='NOT_UTF8_ENCODABLE')])
-        for options in [('--format', 'PRIVATE'), ('--PRIVATE',)]:
+        destination = self.root / 'PRIVATE-report.json'
+        for options in [('--format', 'PRIVATE'), ('--PRIVATE',), ('--output', destination)]:
             result = self.cli('preflight-observations', *options)
             self.assertEqual(result.returncode, 2)
             self.assertEqual(result.stdout, b'')
             self.assertNotIn(b'PRIVATE', result.stderr)
             self.assertIn(b'--help', result.stderr)
+        self.assertFalse(destination.exists())
 
     def test_quote_is_confined_to_named_segment_and_exact_unicode(self):
         row = self.response['candidates'][0]

@@ -185,7 +185,7 @@ class ReasoningLinksTests(unittest.TestCase):
             supplied = json.loads(empty.stdout); self.assertEqual(supplied['links'], [])
             supplied['links'] = [self.link]; links.write_text(json.dumps(supplied))
             for format in ('json', 'text'):
-                output = subprocess.run(command + [str(links), '--format', format], capture_output=True, text=True, timeout=20)
+                output = subprocess.run(command + [str(links), '--format', format], capture_output=True, encoding='utf-8', timeout=20)
                 self.assertEqual(output.returncode, 0, output.stderr)
                 self.assertIn('synthetic-0', output.stdout); self.assertIn('synthetic-1', output.stdout)
             for extras in ([str(links), '--template'], ['--template', '--format', 'text'],

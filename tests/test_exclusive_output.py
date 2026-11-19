@@ -164,7 +164,9 @@ class ExclusiveOutputTests(unittest.TestCase):
             for leaf in leaves(parser):
                 with self.subTest(parser=leaf.prog):
                     options = {o for a in leaf._actions for o in a.option_strings}
-                    if name == 'revise_local' and leaf.prog.endswith(' apply'):
+                    command = (name, leaf.prog.split()[-1])
+                    if command in {('revise_local', 'apply'),
+                                   ('model_handoff', 'preflight-observations')}:
                         self.assertNotIn('--output', options)
                     else:
                         self.assertIn('--output', options)

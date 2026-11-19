@@ -73,7 +73,7 @@ class PatternTransferTests(unittest.TestCase):
             for name,value in zip(('package','patterns','context','links','proposal','draft'),self.inputs()[:-1]):
                 p=Path(d)/(name+'.json');p.write_text(json.dumps(value));paths.append(p)
             before=[p.read_bytes() for p in paths]
-            r=subprocess.run([sys.executable,str(ROOT/'pattern_transfer_review.py'),*map(str,paths),'--pattern-id','comparison','--format','text'],cwd=d,capture_output=True,text=True,timeout=20)
+            r=subprocess.run([sys.executable,str(ROOT/'pattern_transfer_review.py'),*map(str,paths),'--pattern-id','comparison','--format','text'],cwd=d,capture_output=True,encoding='utf-8',timeout=20)
             self.assertEqual(r.returncode,0,r.stderr);self.assertIn('EXCLUDED_OBSERVATION_HAS_SHARED_DESIGN_REFERENCE',r.stdout)
             self.assertEqual(before,[p.read_bytes() for p in paths])
 

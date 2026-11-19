@@ -58,7 +58,7 @@ def main():
                                    source_root=args.source_root)
         except SchemaError:
             parser.exit(2, 'Invalid fixed catalog schema.\n')
-        sys.stdout.buffer.write(render(report, args.format))
+        emit(parser, render(report, args.format))
         return 1 if report['errors'] else 0
     preflight(parser, getattr(args, 'output', None))
     try:
