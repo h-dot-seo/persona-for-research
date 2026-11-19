@@ -67,7 +67,7 @@ class SyntheticWalkthroughTests(unittest.TestCase):
             default=json.loads((target/'deferred-application-review.json').read_text())
             self.assertTrue(all(r['decision']=='defer' and 'reviewed_application' not in r for r in default['decisions']))
             self.assertEqual(method['applications'][0]['decision'],'consider')
-            text=(target/'research-journey.txt').read_text()
+            text=(target/'research-journey.txt').read_text(encoding='utf-8')
             for phrase in ('Canned synthetic model application rationale','Consider this synthetic comparison hypothesis',
                            'Rejected synthetic direct-use alternative','Canned imported','Fixed synthetic reviewer'):
                 self.assertIn(phrase,text)
@@ -143,9 +143,9 @@ class SyntheticWalkthroughTests(unittest.TestCase):
             self.assertEqual(len(lineage['imported_origin_components']), 2)
             self.assertEqual(lineage['mock_origin_components'], [])
             self.assertTrue(all(r['audit_status'] == 'REPLAYED_CURRENT_REVISION' for r in lineage['candidate_origin_components']))
-            self.assertIn('RECORDED_IMPORTED_CANDIDATE_ORIGIN', (target/'reader-scope.txt').read_text())
-            self.assertIn('AFTER_REFERENCE_YEAR', (target/'review-packet.txt').read_text())
-            self.assertIn('Defeater: NOT_SUPPLIED', (target/'argument-map.txt').read_text())
+            self.assertIn('RECORDED_IMPORTED_CANDIDATE_ORIGIN', (target/'reader-scope.txt').read_text(encoding='utf-8'))
+            self.assertIn('AFTER_REFERENCE_YEAR', (target/'review-packet.txt').read_text(encoding='utf-8'))
+            self.assertIn('Defeater: NOT_SUPPLIED', (target/'argument-map.txt').read_text(encoding='utf-8'))
             self.assertTrue((target/'COMPLETE.json').exists())
             self.assertFalse((target/'FAILED.txt').exists())
 
@@ -271,7 +271,7 @@ class SyntheticWalkthroughTests(unittest.TestCase):
             self.assertTrue(report['source_recheck']['all_stored_quotes_match'])
             self.assertIsNone(method['applications'][0]['failure_condition'])
             self.assertIn('CONSIDERED_APPLICATION_HAS_EXCLUDED_SOURCE_CONTEXT',[row['code'] for row in method['review_prompts']])
-            text=(target/'method-applications.txt').read_text()
+            text=(target/'method-applications.txt').read_text(encoding='utf-8')
             self.assertIn('failure_condition: NOT_SUPPLIED',text);self.assertIn('Required checks (not executed)',text)
             self.assertTrue((target/'COMPLETE.json').exists());self.assertFalse((target/'FAILED.txt').exists())
 

@@ -7,7 +7,20 @@ of roadmap #87, not a new dispatcher or a description of artifact schemas.
 ```sh
 python persona_cli.py list --json
 python persona_cli.py list
+python persona_cli.py list --search "source quote"
+python persona_cli.py list --search "source quote" --json
 ```
+
+For example, `"source quote"` finds `source_recheck.py`, whose description mentions
+checking a stored quote. Quote a multi-word search so the shell passes it as one
+argument. Each whitespace-separated term must occur somewhere in the filename or
+the first docstring sentence. Terms can appear in any order and match parts of
+words using Unicode case folding.
+
+Matches use the usual filename order and output format. A search with no matches
+exits 0 and prints `No matching scripts.` in text mode or an empty `scripts` array
+in the JSON object. An empty or whitespace-only search exits 2 with a usage error
+on stderr and empty stdout.
 
 The JSON object has exactly schema (`persona.command-list.v1`), scripts and boundary.
 Each scripts row has script (exact file name) and first_sentence (the first module

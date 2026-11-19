@@ -156,7 +156,7 @@ class ComparisonHtmlTests(unittest.TestCase):
                 tokens=shlex.split(line);self.assertEqual(tokens[0],'python');self.assertIn(tokens[1],('synthetic_walkthrough.py','journey_inputs.py','journey_compare.py'))
                 args=[sys.executable,str(ROOT/tokens[1]),*[mapping.get(t,t) for t in tokens[2:]]]
                 p=subprocess.run(args,cwd=ROOT,capture_output=True,timeout=90);self.assertEqual(p.returncode,0,p.stderr)
-            text=(root/'comparison.html').read_text();self.passive(text);r=snapshot(text)
+            text=(root/'comparison.html').read_text(encoding='utf-8');self.passive(text);r=snapshot(text)
             self.assertFalse(r['logical_journey_inputs_changed']);self.assertFalse(r['automatic_approval'])
             self.assertEqual(r['previous_report'],r['current_report'])
 

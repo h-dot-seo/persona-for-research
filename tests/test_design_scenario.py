@@ -174,7 +174,7 @@ class DesignScenarioTests(unittest.TestCase):
             design = json.loads(empty.stdout); self.assertEqual(design['steps'], [])
             design['steps'] = [self.step]; proposal.write_text(json.dumps(design))
             for format in ('json', 'text'):
-                output = subprocess.run(command + [str(proposal), '--format', format], capture_output=True, text=True, timeout=20)
+                output = subprocess.run(command + [str(proposal), '--format', format], capture_output=True, encoding='utf-8', timeout=20)
                 self.assertEqual(output.returncode, 0, output.stderr)
                 self.assertIn('criterion-link', output.stdout); self.assertIn('synthetic-1', output.stdout)
             for extras in ([], [str(proposal), '--template'], [str(proposal), '--question', 'other'], ['--template', '--format', 'text']):

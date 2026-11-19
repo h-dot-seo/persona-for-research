@@ -1,6 +1,36 @@
 # Correcting a first-observation response before import
 
-This optional correction aid collects multiple **static** errors in a supplied first-observation response and its separately declared provenance. It is not a new extraction method, import acceptance, model authentication, permission, or scientific validation. The demonstrated errors are synthetic, not a claim about their frequency in actual use.
+## Check the response against its sources
+
+Use the same four files you intend to import. The order is corpus, saved observation handoff, response, then separately declared provenance. These examples run from the repository root with inputs in an adjacent private directory. For a corpus with embedded segments, run the following command.
+
+```sh
+python model_handoff.py preflight-observations ../private/corpus.json ../private/observation-handoff.json ../private/response.json ../private/provenance.json
+```
+
+For a local manifest, supply the same source root used to prepare the handoff. Add `--format text` for a line per problem.
+
+```sh
+python model_handoff.py preflight-observations ../private/manifest.json ../private/observation-handoff.json ../private/response.json ../private/provenance.json --source-root ../private/sources --format text
+```
+
+The command prints a report to stdout. Exit 0 means the checks passed for this read. Exit 1 means the report contains problems. Exit 2 covers invalid arguments or an invalid installed schema. Reports use fixed names, codes and zero-based candidate positions. They omit filenames, IDs, hashes, quotes, unexpected keys, source text and raw parser errors.
+
+| Status | What to do |
+| --- | --- |
+| `STRUCTURE_ERRORS` | Correct the listed response and provenance fields together. An unreadable or ambiguous JSON file is identified by its role. A `NOT_UTF8_ENCODABLE` value contains a lone surrogate. The command stops before opening the corpus or handoff. |
+| `CORPUS_REJECTED` | Check the corpus input and its training selection. With local files, also check the source root, filenames, pinned bytes and section structure. The complete corpus must pass authorization before source files are read. |
+| `BINDING_ERRORS` | `HANDOFF_NOT_CURRENT` means the saved handoff differs from a fresh observation handoff for this corpus. `RESPONSE_BINDING_MISMATCH` means the response belongs to a different saved handoff. Locate the matching originals or prepare a fresh handoff and response. Editing a digest would discard evidence of which handoff produced the response. |
+| `EVIDENCE_ERRORS` | Inspect each reported row in the original response. Check paper membership for `UNKNOWN_PAPER`, the section in that paper for `UNKNOWN_LOCATOR`, and verbatim text in that section for `QUOTE_MISMATCH`. A missing paper or locator suppresses dependent checks for that row. |
+| `CHECKS_PASSED` | Run the existing `model_handoff.py import` command with the same four files, `--task observations` and the same source-root choice. Review the resulting proposals separately. An empty response can pass with zero rows checked. |
+
+For example, `/response/candidates/3/evidence_quote` points to the fourth candidate. Evidence checking starts only after both bindings match. It examines rows in their original order and compares each quote only with its named segment. `source_basis` records whether the check used supplied, hash-checked segments or freshly read, pinned local files. `UNVERIFIED` means corpus checking did not complete.
+
+The command accepts bounded strict JSON (8 MiB per file). Local sources share the importer's 2 MiB total raw-source budget, and the reconstructed handoff retains its 2 MiB logical limit. Checks read current inputs each time. No proposal bundle, corrected input, persisted verification receipt, or review decision is produced. A match establishes only that the supplied quote occurs there.
+
+## Check structure alone
+
+Use the standalone schema catalog when only the response or its separately declared provenance is available. It collects multiple **static** errors without opening source files. The demonstrated errors are synthetic.
 
 `schema_catalog.py check observation-response FILE` and `check declared-provenance FILE` use fixed completed-structure profiles. The existing manual profiles and seven editor profiles retain their meanings. These profile URNs identify schema documents, not instance fields: do not add `schema` or `$schema` to a response or provenance declaration. The provenance editor permits placeholders; this completed profile rejects blank strings. Null condition, limitation and topic are valid missing information. An empty candidates list is valid and does not authorize anything.
 

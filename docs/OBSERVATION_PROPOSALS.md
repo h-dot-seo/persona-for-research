@@ -53,6 +53,8 @@ Original research/review labels and publication years remain supplied metadata.
 
 ## Import with a separate provenance declaration
 
+To check the import inputs together, run `model_handoff.py preflight-observations` with the corpus, handoff, response and provenance in import order. It reports candidate positions and fixed error codes for exact-quote, locator and paper mismatches. Supply the same `--source-root` when using a local manifest. [Preflight command and repair guide](OBSERVATION_PREFLIGHT.md).
+
 Use the same bounded provider/model/run/operator/execution-location declaration
 as the [reasoning handoff](MODEL_HANDOFF.md). These identifiers are unauthenticated;
 do not store credentials, account secrets or raw provider logs in them.

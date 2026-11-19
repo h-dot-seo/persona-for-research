@@ -156,13 +156,21 @@ class ContextSourceChecksTests(unittest.TestCase):
                 with self.assertRaises((ValueError, OSError)):
                     ap.inspect_context(self.p, self.s, source_selection=selection, source_root=self.root)
 
-    def test_symlink_escape_root_and_authorization_fail_closed(self):
+    def test_symlink_escape_fails_before_read(self):
         outside = Path(self.tmp.name)/'outside.md'; outside.write_text('Synthetic only.')
-        link = self.root/'link.md'; link.symlink_to(outside)
+        link = self.root/'link.md'
+        try:
+            link.symlink_to(outside)
+        except OSError as exc:
+            if getattr(exc, 'winerror', None) != 1314:
+                raise
+            self.skipTest('Windows symlink privilege unavailable')
         self.selection['sources'][-1]['source_file'] = 'link.md'
         with patch.object(sr, 'read_source_bytes', side_effect=AssertionError('read forbidden')):
             with self.assertRaises(ValueError): self.report()
-            self.selection = self.form()
+
+    def test_missing_root_and_unauthorized_paper_fail_before_read(self):
+        with patch.object(sr, 'read_source_bytes', side_effect=AssertionError('read forbidden')):
             with self.assertRaises(OSError): ap.inspect_context(self.p, self.s, source_selection=self.selection, source_root=self.root/'absent')
             self.p['knowledge']['papers'][-1]['authorized'] = False
             with self.assertRaises(ValueError): self.report()

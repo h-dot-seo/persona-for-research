@@ -87,7 +87,7 @@ python ignored.py
             root=Path(td).resolve();self.make_root(root)
             test='class Owner:\n    def test_guide(self):\n        pass\n';(root/'tests/test_owner.py').write_text(test)
             node=ast.parse(test).body[0].body[0]
-            block=d.parse_markdown((root/'docs/a.md').read_text())['blocks'][0]
+            block=d.parse_markdown((root/'docs/a.md').read_text(encoding='utf-8'))['blocks'][0]
             row=dict(path='docs/a.md',ordinal=1,raw_sha256=block['raw_sha256'],test='tests.test_owner.Owner.test_guide',test_source_sha256=d.method_source_sha256(test,node),coverage='PARTIAL_BLOCK',substitution='Synthetic declared partial fixture',manual_steps='Explicit fixture step',note='Test existence alone is not proof; this is a synthetic registry test.')
             reg=root/'tests/doc_block_evidence.json';reg.write_text(json.dumps([row]))
             with patch.object(d,'ROOT',root):
@@ -104,9 +104,10 @@ python ignored.py
         old_fields=node._fields
         # Simulate Python3.12's extra type_params versus Python3.10 AST layout.
         node._fields=tuple(k for k in old_fields if k!='type_params')
-        older=ast.dump(node,include_attributes=False)
+        self.assertNotIn('type_params',dict(ast.iter_fields(node)))
+        self.assertEqual(digest,d.method_source_sha256(source,node))
         node._fields=node._fields+('type_params',);node.type_params=[]
-        self.assertNotEqual(older,ast.dump(node,include_attributes=False))
+        self.assertIn('type_params',dict(ast.iter_fields(node)))
         self.assertEqual(digest,d.method_source_sha256(source,node))
         for raw in (source.replace('\n','\r\n'),source.replace('\n','\r')):
             normalized=raw.replace('\r\n','\n').replace('\r','\n')

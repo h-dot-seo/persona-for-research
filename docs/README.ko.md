@@ -91,6 +91,10 @@ UTF-8(BOM 없음)·LF 바이트를 출력합니다. Windows의 기존 ANSI 인�
 
 ## 주요 명령
 
+출처와 인용문을 다시 확인할 도구를 찾으려면 `python persona_cli.py list --search "source quote"`를
+실행하세요. 파일 이름과 설명에 두 검색어가 모두 들어간 명령이 표시됩니다.
+결과를 다른 프로그램에서 읽으려면 `--json`을 덧붙이세요. [명령 검색](COMMAND_LIST.md)
+
 모든 명령은 저장소 루트에서 `python <스크립트>.py ...` 형태로 실행합니다. 입력을 거부하면
 0이 아닌 종료 코드로 끝나며, 각 안내서가 정확한 실패 동작과 한계를 설명합니다. 전체 목록과
 하위 명령의 정확한 사용법은 [COMMANDS.md](COMMANDS.md)에, 기능별 서술과 경계는
@@ -299,4 +303,4 @@ A later opt-in increment now supports external context through explicit v2 cards
 
 [저장소 선택 절차](REPOSITORY_CHOICES.md): 향후 소유자 결정의 동시 변경 지점과 기계적 권리 상태 일관성. 정책을 선택하는 문서가 아닙니다.
 
-첫 관찰 응답의 정적 오류 수정과 기존 import·보류 검토 흐름은 [관찰 preflight 안내](OBSERVATION_PREFLIGHT.md)를 참고하세요.
+첫 관찰 응답을 가져오기 전에 `model_handoff.py preflight-observations`로 응답·출처 선언의 형식, 현재 자료와의 연결, 각 인용문의 위치와 원문 일치 여부를 확인할 수 있습니다. 보고서는 원문이나 식별자를 출력하지 않고 수정할 필드와 행 번호를 표시합니다. [관찰 preflight 안내](OBSERVATION_PREFLIGHT.md).

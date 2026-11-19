@@ -69,6 +69,15 @@ def _observation(value):
         raise ValueError('choose support or challenge explicitly')
 
 
+def quote_issue(segments, locator, quote):
+    """Identify the first failed link for a structurally valid candidate."""
+    if locator not in segments:
+        return 'locator', 'UNKNOWN_LOCATOR'
+    if quote not in segments[locator]:
+        return 'evidence_quote', 'QUOTE_MISMATCH'
+    return None
+
+
 def import_observation_response(corpus, handoff, response, provenance):
     expected = prepare_observation_handoff(corpus)
     if payload_sha256(handoff) != payload_sha256(expected):
@@ -92,7 +101,7 @@ def import_observation_response(corpus, handoff, response, provenance):
         obs = {field: copy.deepcopy(row[field]) for field in FIELDS}
         obs.update(claim_type=row['proposed_claim_type'], stance=row['proposed_stance'])
         _observation(obs)
-        if obs['evidence_quote'] not in paper['segments'].get(obs['locator'], ''):
+        if quote_issue(paper['segments'], obs['locator'], obs['evidence_quote']):
             raise ValueError('observation candidate quote does not match its source locator')
         proposals.append(dict(candidate_id='observation-candidate-' + str(len(proposals)+1),
             paper_id=paper['paper_id'], source_sha256=paper['source_sha256'], segments_sha256=paper['segments_sha256'],

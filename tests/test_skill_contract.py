@@ -22,14 +22,15 @@ class SkillContractTests(unittest.TestCase):
 
     def test_all_named_scripts_and_documents_exist(self):
         entries=set(entry_point_scripts())|{'persona_cli.py'}
+        commands=(ROOT/'docs/COMMANDS.md').read_text(encoding='utf-8')
         for name in set(re.findall(r'\b[a-z_]+\.py\b',self.text)):
             self.assertTrue((ROOT/name).is_file(),name)
             # Library references are allowed; entry points must appear in COMMANDS.
-            if name in entries:self.assertIn('### `'+name+'`',(ROOT/'docs/COMMANDS.md').read_text())
+            if name in entries:self.assertIn('### `'+name+'`',commands)
         for name in set(re.findall(r'(?<![\w/])(?:docs/)?[A-Z_]+\.md\b',self.text)):
             self.assertTrue((ROOT/name).is_file(),name)
 
     def test_explicit_script_subcommands_are_documented(self):
-        commands=(ROOT/'docs/COMMANDS.md').read_text()
+        commands=(ROOT/'docs/COMMANDS.md').read_text(encoding='utf-8')
         for script,command in re.findall(r'\b([a-z_]+\.py) ([a-z][a-z-]*)\b',self.text):
             self.assertIn('usage: '+script+' '+command,commands)

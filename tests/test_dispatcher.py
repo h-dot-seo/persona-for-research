@@ -1,4 +1,5 @@
 """Tests for persona_cli.py: list output, in-process run, rejected names and no side effects in the current directory."""
+import io
 import json
 import os
 import re
@@ -6,7 +7,9 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
+from unittest.mock import patch
 
 import persona_cli
 
@@ -71,6 +74,54 @@ class DispatcherTests(unittest.TestCase):
         documented = set(re.findall(r'^### `([a-z_]+\.py)`$', reference, re.M))
         listed = {line.split(None, 1)[0] for line in self.listed()}
         self.assertEqual(listed | {'persona_cli.py'}, documented)
+
+    def test_list_search_matches_all_terms_across_filename_and_first_sentence(self):
+        sources = {
+            'strasse_index.py': 'Map corporate records.',
+            'corpus_map.py': 'Map Straße identifiers.',
+            'corpus_only.py': 'Map identifiers. Straße appears later.',
+            'street.py': 'Map Straße identifiers.',
+        }
+        for name, description in sources.items():
+            (self.cwd / name).write_text(
+                f'"""{description}"""\nraise AssertionError("discovery executed a script")\n'
+                'if __name__ == "__main__": pass\n', encoding='utf-8')
+        stdout = io.StringIO()
+        with patch.object(persona_cli, 'ROOT', self.cwd), redirect_stdout(stdout):
+            self.assertEqual(persona_cli.main(['list', '--search', '  sTRAß\tCoRp  ']), 0)
+        expected = [('corpus_map.py', 'Map Straße identifiers.'), ('strasse_index.py', 'Map corporate records.')]
+        self.assertEqual(stdout.getvalue(), persona_cli.render(expected))
+
+    def test_list_search_json_is_the_filtered_inventory(self):
+        full = json.loads(self.dispatch('list', '--json').stdout)
+        full['scripts'] = [row for row in full['scripts'] if row['script'] == 'safe_canonical_read.py']
+        self.assertEqual(len(full['scripts']), 1)
+        result = self.dispatch('list', '--search', 'holdout safe_canonical_read.py', '--json')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stderr, b'')
+        self.assertEqual(json.loads(result.stdout), full)
+        self.assertNotIn(b'\r', result.stdout)
+        self.assertEqual(os.listdir(self.cwd), [])
+
+    def test_list_search_no_matches_succeeds_in_both_formats(self):
+        query = 'no-such-research-script'
+        plain = self.dispatch('list', '--search', query)
+        self.assertEqual(plain.returncode, 0, plain.stderr)
+        self.assertEqual(plain.stderr, b'')
+        self.assertEqual(plain.stdout.splitlines(), [b'No matching scripts.'])
+        machine = self.dispatch('list', '--json', '--search', query)
+        self.assertEqual(machine.returncode, 0, machine.stderr)
+        self.assertEqual(machine.stderr, b'')
+        self.assertEqual(machine.stdout, persona_cli.render_json([]).encode('utf-8'))
+
+    def test_list_search_requires_a_nonblank_term(self):
+        for value in ('', ' \t\n '):
+            with self.subTest(value=value):
+                result = self.dispatch('list', '--json', '--search', value)
+                self.assertEqual(result.returncode, 2)
+                self.assertEqual(result.stdout, b'')
+                self.assertIn(b'--search', result.stderr)
+                self.assertIn(b'non-whitespace search term', result.stderr)
 
     def test_first_sentence_and_entry_point_helpers(self):
         self.assertEqual(persona_cli.first_sentence('One. Two.'), 'One.')

@@ -54,6 +54,10 @@ No durability guarantee beyond normal file close is made.
 
 ## Coverage and exceptions
 
+`model_handoff.py preflight-observations` writes its diagnostic report only to stdout.
+It rejects `--output` and emits no saved-file receipt, which would expose a destination path.
+The `prepare`, `response-template` and `import` subcommands support exclusive file output.
+
 All 40 previously stdout-only result CLIs now accept the option on their result
 modes. `human_validation.py check/status` also accept it; `template` keeps its
 required output and original template receipt, using the same exclusive writer.

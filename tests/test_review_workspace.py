@@ -86,7 +86,7 @@ class ReviewWorkspaceTests(unittest.TestCase):
         (self.dest/'design.json').write_text(json.dumps(proposal))
         commands=load(self.dest/'next-commands.json')['commands']
         for command in commands:
-            result=subprocess.run(command['argv'],cwd=self.tmp.name,capture_output=True,text=True,timeout=20);self.assertEqual(result.returncode,0,result.stderr)
+            result=subprocess.run(command['argv'],cwd=self.tmp.name,capture_output=True,encoding='utf-8',timeout=20);self.assertEqual(result.returncode,0,result.stderr)
             if command['argv'][1].endswith('review_journey.py'):
                 self.assertIn('AFTER_REFERENCE_YEAR',result.stdout);self.assertIn('UNCERTAINTY_NOT_SUPPLIED',result.stdout);self.assertIn('NO_LINKED_EVIDENCE',result.stdout)
         self.assertEqual(before,source.read_bytes())
@@ -99,7 +99,7 @@ class ReviewWorkspaceTests(unittest.TestCase):
         self.assertNotIn('SYNTHETIC_UNTRUSTED_ENVELOPE',(self.dest/'package.json').read_text())
         command=load(self.dest/'next-commands.json')['commands'][0]['argv']
         self.assertIn('--question='+question,command)
-        self.assertNotIn('\nREADY forged',(self.dest/'initial-review.txt').read_text())
+        self.assertNotIn('\nREADY forged',(self.dest/'initial-review.txt').read_text(encoding='utf-8'))
         self.assertFalse((self.dest/'NOT_EXECUTED').exists())
         self.assertEqual(load(self.dest/'answer.json')['question'],question)
 

@@ -837,4 +837,4 @@ A later opt-in increment now supports external context through explicit v2 cards
 
 [Private Markdown notes](MARKDOWN_REPORTS.md) preserve existing source-recheck, human-validation and journey-comparison results. These independent display options do not create a required sequence or new assessment.
 
-Optional [first-observation preflight](OBSERVATION_PREFLIGHT.md) collects structural response/provenance errors before the unchanged importer and deferred review.
+Before importing first-observation proposals, check response/provenance structure alone or run `model_handoff.py preflight-observations` with the current corpus and handoff to locate binding and evidence errors. [First-observation preflight](OBSERVATION_PREFLIGHT.md).

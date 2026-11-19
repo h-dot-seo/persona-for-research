@@ -127,7 +127,7 @@ class ScaleBoundsTests(unittest.TestCase):
             self.assertEqual(len((out/'READY.json').read_bytes()),7)
 
     def test_guide_executes_native_path_after_shlex(self):
-        guide=(ROOT/'docs/CAPACITY.md').read_text()
+        guide=(ROOT/'docs/CAPACITY.md').read_text(encoding='utf-8')
         blocks=re.findall(r'```sh\n(.*?)```',guide,re.S);self.assertEqual(len(blocks),1)
         with tempfile.TemporaryDirectory(prefix='capacity space ') as temp:
             for line in blocks[0].splitlines():

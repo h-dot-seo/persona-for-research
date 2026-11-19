@@ -67,7 +67,7 @@ Discover and run the root command-line scripts from any directory, without chang
 
 ```text
 usage: persona_cli.py [-h] [--version] {list,describe,run} ...
-usage: persona_cli.py list [-h] [--json]
+usage: persona_cli.py list [-h] [--json] [--search TEXT]
 usage: persona_cli.py describe [-h] [--all] [--json] [script]
 usage: persona_cli.py run [-h] script ...
 ```
@@ -341,10 +341,11 @@ Guide: [Extraction contract](EXTRACTION_CONTRACT.md).
 Prepare or import a local model handoff without invoking or transmitting to a model.
 
 ```text
-usage: model_handoff.py [-h] {prepare,response-template,import} ...
+usage: model_handoff.py [-h] {prepare,response-template,import,preflight-observations} ...
 usage: model_handoff.py prepare [-h] [--output NEW_FILE] [--format {json,text}] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus
 usage: model_handoff.py response-template [-h] [--output NEW_FILE] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus handoff
 usage: model_handoff.py import [-h] [--output NEW_FILE] [--task {reasoning,observations}] [--source-root SOURCE_ROOT] corpus handoff response provenance
+usage: model_handoff.py preflight-observations [-h] [--format {json,text}] [--source-root SOURCE_ROOT] corpus handoff response provenance
 ```
 
 Subcommands:
@@ -352,6 +353,7 @@ Subcommands:
 - `prepare` — Export source-containing local request JSON.
 - `response-template` — Prepare an empty response bound to the current handoff.
 - `import` — Check a bound response and separate declared provenance.
+- `preflight-observations` — Report first-observation structure, binding and evidence problems with field paths and fixed codes. [Correction guide](OBSERVATION_PREFLIGHT.md).
 
 Guide: [Model handoff](MODEL_HANDOFF.md).
 

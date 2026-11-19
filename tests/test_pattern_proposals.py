@@ -249,7 +249,7 @@ class PatternProposalTests(unittest.TestCase):
             before = {p.name:p.read_bytes() for p in folder.iterdir()}
             def run(script, *arguments, valid=True):
                 completed = subprocess.run([sys.executable, str(ROOT/script), *map(str, arguments)], cwd=folder,
-                    capture_output=True, text=True, timeout=30)
+                    capture_output=True, encoding='utf-8', timeout=30)
                 if valid: self.assertEqual(completed.returncode, 0, completed.stderr)
                 else: self.assertNotEqual(completed.returncode, 0); self.assertEqual(completed.stdout, '')
                 return completed.stdout
