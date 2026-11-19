@@ -1,11 +1,13 @@
 # Validation record
 
-Current release: `0.127-observation-import-preflight`, 2026-11-15. This file is the current
+Current release: `0.128-bound-observation-preflight`, 2026-11-19. This file is the current
 verification snapshot. Every earlier dated entry is preserved verbatim, in its original
 order, in [docs/VALIDATION_HISTORY.md](docs/VALIDATION_HISTORY.md), which also receives
 the full entry for each new release.
 
 ## Latest change
+
+- 2026-11-19 Bound observation preflight (`0.128-bound-observation-preflight`) adds staged checks of structure, current bindings and exact candidate evidence, with content-free JSON and text reports. The command inventory also supports search by filename and description.
 
 - 2026-11-15 First observation import preflight (`0.127-observation-import-preflight`): multiple static diagnostics for response/provenance correction before the unchanged authoritative importer.
 
@@ -141,19 +143,19 @@ Optional synthetic capacity grids: see [capacity observations](docs/CAPACITY.md)
 Optional maintainer timing: `python -m tests.timing tests.test_skill_contract`; see
 [local timing observations](docs/TEST_TIMING.md). The default/CI commands below are unchanged.
 
-- `python -m unittest discover -q` — the current tree runs 1622 synthetic tests
-  (platform-specific cases may skip on other hosts). The final local verification result is recorded in the release history. One module runs as
+- `python -m unittest discover -q` — run the full synthetic suite
+  (platform-specific cases may skip on other hosts). Focused observations are recorded in the release history. One module runs as
   `python -m unittest tests.test_<name> -v`. On restricted Windows hosts, set `TEMP` and
   `TMP` to an authorized writable directory first.
-- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 392
+- `python verify_manifest.py` — expects `{"valid": true, "errors": []}` for the 394
   listed files. Regenerate the manifest after every other edit of a release using
   `python regenerate_manifest.py --release REL --date YYYY-MM-DD --output ../NEW.json`,
   explicitly naming new/deleted paths with --add/--remove. Review the external candidate
   before manually replacing the original manifest; see PUBLICATION.md.
-- `python audit_publication.py` — expects `"pass": true`; the current tree has 393 text
+- `python audit_publication.py` — expects `"pass": true`; the current tree has 395 text
   files including the manifest. A pass is a limited file-type and secret-pattern scan, not
   proof of anonymity or rights clearance.
-- `python -m compileall -q .` — 221 Python files compile cleanly and parse with
+- `python -m compileall -q .` — check the 223 Python files, which also parse with
   Python 3.10 grammar.
 - `python synthetic_walkthrough.py ../persona-synthetic-demo` — the 15-stage demo must exit 0
   and write `COMPLETE.json` into a new directory outside the repository.

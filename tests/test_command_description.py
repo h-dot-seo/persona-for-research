@@ -27,7 +27,7 @@ class CommandDescriptionTests(unittest.TestCase):
         self.assertEqual(out['schema'],'persona.command-description.v1')
         self.assertEqual(out['generated_from'],'argparse --help')
         self.assertEqual([x['name'] for x in out['subcommands']],['template','check','status'])
-        reference=(ROOT/'docs/COMMANDS.md').read_text()
+        reference=(ROOT/'docs/COMMANDS.md').read_text(encoding='utf-8')
         for usage in out['usage']:self.assertIn(usage,reference)
         self.assertEqual(out['source_sha256'],hashlib.sha256((ROOT/'release_record.py').read_bytes()).hexdigest())
         self.assertEqual(out['input_artifact_schema'],'NOT_DERIVED')
@@ -148,7 +148,7 @@ sys.stderr.write(json.dumps(dict(code=code,added=sorted(set(sys.modules)-before)
             self.assertEqual(run.returncode,2);self.assertEqual(run.stdout,b'')
 
     def test_all_allowlisted_usage_matches_command_reference(self):
-        reference=(ROOT/'docs/COMMANDS.md').read_text()
+        reference=(ROOT/'docs/COMMANDS.md').read_text(encoding='utf-8')
         for name in c.TRUSTED_HELP_SCRIPTS:
             with self.subTest(script=name):
                 out=self.description if name=='release_record.py' else c.describe_script(name)

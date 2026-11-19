@@ -15,6 +15,13 @@ from strict_json import read_bounded, InputLimitError, loads
 MAX_INPUT_BYTES = 8 * 1024 * 1024
 
 
+class HandoffParser(argparse.ArgumentParser):
+    def error(self, message):
+        if sys.argv[1:2] == ['preflight-observations']:
+            self.exit(2, 'Invalid preflight arguments. See model_handoff.py preflight-observations --help.\n')
+        super().error(message)
+
+
 def load(path):
     try:
         raw = read_bounded(path, MAX_INPUT_BYTES)
@@ -24,7 +31,7 @@ def load(path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = HandoffParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
     prepare = commands.add_parser('prepare', help='Export source-containing local request JSON'); add_output_argument(prepare)
     prepare.add_argument('corpus', type=Path)
@@ -33,12 +40,26 @@ def main():
     response_template.add_argument('corpus', type=Path)
     response_template.add_argument('handoff', type=Path)
     ingest = commands.add_parser('import', help='Check a bound response and separate declared provenance'); add_output_argument(ingest)
-    for name in ('corpus', 'handoff', 'response', 'provenance'):
-        ingest.add_argument(name, type=Path)
+    inspect = commands.add_parser('preflight-observations', help='Report observation structure, binding and evidence errors before import')
+    inspect.add_argument('--format', choices=('json', 'text'), default='json')
+    for command in (ingest, inspect):
+        for name in ('corpus', 'handoff', 'response', 'provenance'):
+            command.add_argument(name, type=Path)
     for command in (prepare, response_template, ingest):
         command.add_argument('--task', choices=('reasoning', 'observations'), default='reasoning')
+    for command in (prepare, response_template, ingest, inspect):
         command.add_argument('--source-root', type=Path, help='Read and recheck files from a local manifest instead of supplied segments')
     args = parser.parse_args()
+    if args.command == 'preflight-observations':
+        from observation_preflight import inspect_files, render
+        from schema_catalog import SchemaError
+        try:
+            report = inspect_files(args.corpus, args.handoff, args.response, args.provenance,
+                                   source_root=args.source_root)
+        except SchemaError:
+            parser.exit(2, 'Invalid fixed catalog schema.\n')
+        sys.stdout.buffer.write(render(report, args.format))
+        return 1 if report['errors'] else 0
     preflight(parser, getattr(args, 'output', None))
     try:
         corpus = load(args.corpus)
@@ -64,4 +85,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

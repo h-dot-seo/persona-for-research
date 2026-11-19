@@ -51,7 +51,8 @@ class ManualConsultationReferenceTests(unittest.TestCase):
         self.assertFalse(result['processing']['external_transmission'])
 
     def test_prose_scope_is_manual_and_conditional(self):
-        text=(ROOT/'docs/WORKFLOWS.md').read_text().split('### Cite an adopted consultation by hand\n',1)[1].split('\n### ',1)[0]
+        guide=(ROOT/'docs/WORKFLOWS.md').read_text(encoding='utf-8')
+        text=guide.split('### Cite an adopted consultation by hand\n',1)[1].split('\n### ',1)[0]
         for term in ('Check the installed','bundle.import_record.provenance','DECLARED_NOT_VERIFIED',
                      'raw file-byte hash','private author identifier','required sharing permission',
                      'no exporter','recording review','INTERPRETIVE_SIMULATION'):

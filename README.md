@@ -291,4 +291,4 @@ A later opt-in increment now supports external context through explicit v2 cards
 
 [Repository choices checklist](docs/REPOSITORY_CHOICES.md): coordinated future owner decisions and mechanical rights-state consistency, not a policy choice.
 
-See [first-observation structural correction](docs/OBSERVATION_PREFLIGHT.md) before the unchanged import and deferred review.
+Before importing first-observation proposals, use `model_handoff.py preflight-observations` to find structural errors, stale handoffs and rows whose quoted evidence does not match the selected paper and locator. Reports identify the affected fields without echoing source text. [First-observation correction guide](docs/OBSERVATION_PREFLIGHT.md).

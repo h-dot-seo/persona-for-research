@@ -3570,3 +3570,9 @@ Final independent/full/new-head CI outcomes follow the frozen tree. Expected cou
 1622 tests,221 Python files,392 manifest entries and393 audit files; CLI62/SKILL8187.
 No scientific assessment, identity authentication, authorization or source/quote
 support is inferred by structural conformance.
+
+## 2026-11-19 Bound observation preflight (0.128-bound-observation-preflight)
+
+`model_handoff.py preflight-observations` checks the two completed profiles before opening the corpus. It reconstructs the handoff using the existing authorization, local source loading and hash checks. Once both bindings match, it collects paper, locator and exact-quote errors across the batch. The importer and the preflight share the locator/quote predicate. The report contains fixed paths, zero-based row positions and codes. No input values, source text, filenames or digests are emitted.
+
+Synthetic tests cover correction through actual import, stale and wrong-task handoffs, the 128-row boundary, local byte changes, both source modes, ambiguous JSON, text encoding, argument redaction and denial of source access for a late holdout or unauthorized paper. The focused run covered 81 tests, with 80 passed and one platform skip. Full-suite and remote outcomes require separate verification. This release also adds filename and description search to `persona_cli.py list`.

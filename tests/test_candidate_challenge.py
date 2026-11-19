@@ -117,7 +117,7 @@ class CandidateChallengeTests(unittest.TestCase):
             self.assertEqual(before,p.read_bytes())
 
     def test_cli_and_documented_guide_commands(self):
-        guide=(ROOT/'docs/CANDIDATE_CHALLENGE.md').read_text()
+        guide=(ROOT/'docs/CANDIDATE_CHALLENGE.md').read_text(encoding='utf-8')
         with tempfile.TemporaryDirectory(prefix='candidate space ') as tmp:
             for block in re.findall(r'```sh\n(.*?)```',guide,re.S):
                 for line in block.splitlines():

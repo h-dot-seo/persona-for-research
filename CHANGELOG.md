@@ -6,6 +6,12 @@ Earlier releases are retained there, not reconstructed here. These are repositor
 release labels, not Git tags, signatures, rights clearance or persona approval.
 No artifact-schema inventory is inferred by this index.
 
+## 0.128-bound-observation-preflight — 2026-11-19
+
+`model_handoff.py preflight-observations` checks a response and provenance together, verifies handoff bindings, and identifies candidate rows with source, locator or quote errors before import. `persona_cli.py list --search` filters the command inventory by filename and description.
+
+[Validation record](docs/VALIDATION_HISTORY.md#2026-11-19-bound-observation-preflight-0128-bound-observation-preflight).
+
 ## 0.127-observation-import-preflight — 2026-11-15
 
 Two fixed completed-structure profiles support correcting multiple static errors in a first observation response and declared provenance before import. Quote, source, binding and freshness checks remain with the unchanged importer; structural conformance is not import acceptance or approval.

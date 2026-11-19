@@ -98,7 +98,8 @@ class CommandCatalogTests(unittest.TestCase):
         self.assertTrue(all(not row['description']['argparse'] for row in out['scripts']))
 
     def test_real_guide_catalog_and_reference_usage(self):
-        guide=(ROOT/'docs/COMMAND_CATALOG.md').read_text();reference=(ROOT/'docs/COMMANDS.md').read_text()
+        guide=(ROOT/'docs/COMMAND_CATALOG.md').read_text(encoding='utf-8')
+        reference=(ROOT/'docs/COMMANDS.md').read_text(encoding='utf-8')
         for block in re.findall(r'```sh\n(.*?)```',guide,re.S):
             for line in block.splitlines():
                 if not line.startswith('python '):continue

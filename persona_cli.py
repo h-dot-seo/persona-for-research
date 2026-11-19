@@ -141,6 +141,22 @@ def root_scripts():
     return rows
 
 
+def search_terms(text):
+    terms = text.casefold().split()
+    if not terms:
+        raise argparse.ArgumentTypeError('provide at least one non-whitespace search term')
+    return terms
+
+
+def matching_scripts(rows, terms):
+    matches = []
+    for name, sentence in rows:
+        searchable = f'{name} {sentence}'.casefold()
+        if all(term in searchable for term in terms):
+            matches.append((name, sentence))
+    return matches
+
+
 def resolve_script(name):
     """Path of one root command-line script named exactly by its file name; ValueError otherwise."""
     if (not isinstance(name, str) or not name or '/' in name or '\\' in name or name.startswith('.')
@@ -435,9 +451,12 @@ def build_parser():
     parser.add_argument('--version', action=VersionAction, nargs=0,
                         help='show manifest release/date and Python version; not a hash check')
     commands = parser.add_subparsers(dest='command', required=True, metavar='{list,describe,run}')
-    listing = commands.add_parser('list', help='print every root script that has a command-line entry point, '
-                                     'one line each, with the first sentence of its docstring')
+    listing = commands.add_parser('list', help='list root scripts and their first docstring sentences, '
+                                              'or find matches with --search TEXT')
     listing.add_argument('--json', action='store_true', help='emit bounded schema/scripts/boundary JSON, not executable contracts')
+    listing.add_argument('--search', metavar='TEXT', type=search_terms,
+                         help='match every whitespace-separated term anywhere in the filename or first '
+                              'docstring sentence, ignoring case (quote multi-word searches)')
     describing = commands.add_parser('describe', help='capture one trusted script help; never run its workflow')
     selection = describing.add_mutually_exclusive_group(required=True)
     selection.add_argument('script', nargs='?', help='exact allowlisted root script filename')
@@ -473,7 +492,14 @@ def main(argv=None):
     if args.command == 'list':
         try:
             rows = root_scripts()
-            output = render_json(rows) if args.json else render(rows)
+            if args.search:
+                rows = matching_scripts(rows, args.search)
+            if args.json:
+                output = render_json(rows)
+            elif args.search and not rows:
+                output = 'No matching scripts.\n'
+            else:
+                output = render(rows)
         except (OSError, ValueError, RecursionError) as exc:
             message = 'cannot produce bounded command list JSON' if args.json else str(exc)
             parser.exit(1, SELF + ': error: ' + message + '\n')
